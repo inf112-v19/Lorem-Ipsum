@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-public class Tile implements iTile {
+public abstract class Tile implements iTile {
 
 
 	@Override
