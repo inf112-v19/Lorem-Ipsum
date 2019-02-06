@@ -11,7 +11,6 @@ public class DemoGameLauncher {
         config.height = 576;
 
 
-
         new LwjglApplication(new DemoGame(), config);
     }
 }
