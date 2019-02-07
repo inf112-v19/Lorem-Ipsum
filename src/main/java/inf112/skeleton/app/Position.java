@@ -35,6 +35,6 @@ public class Position {
 	 * @return y coodinate
 	 */
 	public int getY() {
-		return y;
+		return this.y;
 	}
 }
