@@ -17,6 +17,7 @@ public interface IArchive {
 	 * @param player
 	 * @param pos
 	 */
-	void setBackup(Player player, Position pos);
+	//requires a Player class
+	//void setBackup(Player player, Position pos);
 
 }
