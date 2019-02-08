@@ -10,7 +10,7 @@ public abstract class GameMap {
     protected ArrayList<Entity> entities;
 
     public GameMap() {
-        entities = new ArrayList<Entity>();
+        entities = new ArrayList<>();
         entities.add(new Player(0, 0, this));
     }
 
