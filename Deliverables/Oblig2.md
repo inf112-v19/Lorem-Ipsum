@@ -85,3 +85,14 @@ Mellom møtene jobber vi med oppgavene individuelt/sammen med andre fra gruppa, 
 På det første møtet vårt diskuterte vi om blant annet arbeidsfordelingen, og vi kom vi fram til at Henrik og Christopher skulle starte å sette seg inn i klassestrukturen og lage et klassediagram. Øyvind har fått oppgaven å sette seg inn i prosjektmetodikken kanban og vidreformidle det til gruppen og få en overordnet forståelse for libgdx. Emily skal jobbe med oppgave 3 og hjelpe til i utforminegen av interfaces. Kristoffer skalsette seg inn i Github project board og vidreformidle hvordan dette kan brukes i prosjektmetodikken til resten av gruppen. Etter at alle har gjort det de har blitt fordelt, tenkte vi å ha et møte igjen der vi kunne blant annet lære hverandre det vi har funnet ut og se gjennom hverandres arbeid.
 
 Vi oppbevarer og deler fellesdokumenter gjennom Google Docs og Slack. Git blir også brukt som en kodebase. Vi bruker Google docs til å ta korte referat av møtene. Google Docs ble valgt så alle lett kan få tilgang til dokumentet.
+
+** **
+## **Oppsumering:**
+Våre første to uker arbeidene på prosjektet har i helhet fungert bra. Vi ble raskt enige om arbeidsfordeling, prosjektmetodikk, git-oppsett og er fornøyd med hverandres insats i denne første perioden. 
+
+Vi møtte i midertidg også på utforderinger spessielt knytet til forståelse av libgdx og hvordan vi skulle benytte oss av dette rammeverket korrekt. 
+Dette førte videre til usikkerhet rundt klassedigrammet og den generellle utformingen av klassestrukturen.
+
+I ettertid innser vi at siden libgdx ser ut til å bli en så sentral del av prosjektet burde vi hatt mer fokus på det.
+Hvis vi i felleskap hadde tidligere fått en oversikt over rammeverket ville planlegging og gjennomrføring av videre 
+arbeid vært lettere og mer produktivt.
