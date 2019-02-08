@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.Interfaces.iTile;
+
 public abstract class Tile implements iTile {
 
 
