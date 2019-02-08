@@ -19,10 +19,12 @@ Kompetanse:
 * Nettverk
 
 **Emily**
+* Datateknologi
 * Java
 * Python
 
 **Øyvind**
+* Datateknologi
 * Java
 
 **Kristoffer Nilsen**
