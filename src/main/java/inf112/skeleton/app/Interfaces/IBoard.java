@@ -2,6 +2,8 @@ package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Position;
 
+/** Interface for board. */
+
 public interface IBoard<T> {
 
     /** @return The height of the grid. */
