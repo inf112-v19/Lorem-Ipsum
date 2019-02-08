@@ -59,7 +59,7 @@ Overordnet mål:
 * sette ut flagg
 * besøke flagg
 * backup
-* liv system
+* livsystem
 * lasere og andre "feller" som tar liv
 * flerspiller
 * fasebasert runder
@@ -74,20 +74,14 @@ Prioritert liste:
 ** **
 ## **Deloppgave 3:**
 
-SCRUM?
+Vi tenker å teste ut kanban som prosjektmetodikk og vil bruke github project board for å holde styr på og dele ut oppgaver. Vi tenker å først skrive kode og deretter teste koden med JUnit tester.
 
-GIT
+Vi planlegger først å starte med å møte hverandre minst én gang i uka, utenom de fastsatte gruppetimene, fredager klokka 12. Deretter tenker vi å sette opp flere møter dersom det er behov for det, og da vil det eventuelt bli på mandager siden det passer best for oss alle. På møtene tenker vi å snakke kort og greit gjennom hva vi har klart å fullføre, om det er noe verdt å diskutere, og hva vi trenger å jobbe med videre. 
 
-Java Docs
-
-Slack
-
-jUnit
-
-Vi tenker først å starte med å møte hverandre minst én gang i uka, og det er de fastsatte gruppetimene. Deretter tenker vi å bare sette opp flere møter dersom det er behov for det, og da vil det eventuelt bli på fredager/mandager siden det passer best for oss alle. På møtene tenker vi å snakke kort og greit gjennom hva vi har klart å fullføre, om det er noe verdt å diskutere, og hva vi trenger å jobbe med videre. 
+For å fungere godt som et team er det viktig med god og tydelig kommunikasjon og være hensynsfull over for hverandres timeplan. Det er også viktig å ta hensyn til varierende kompetanse og spille hverandre sterke. 
 
 Mellom møtene jobber vi med oppgavene individuelt/sammen med andre fra gruppa, og vi kommuniserer med resten av gjengen gjennom Slack. Vi passer også på å skrive koder med Java Docs slik at det blir litt mindre tidskrevende og enklere for resten av gruppa å lese og forstå hva som har blitt kodet. Det samme gjelder for fornuftige Commit-meldinger når endringer lastes opp i gruppens repo.
 
-På det første møtet vårt diskuterte vi om blant annet arbeidsfordelingen, og vi kom vi fram til at Henrik og Christopher skulle starte og gjøre oppgave 4, Emily og Øyvind skulle gjøre oppgave 3 (der Øyvind fokuserer mer på en bestemt prosjektmetodikk) og Kristoffer skulle sette opp det tekniske verktøyet vårt med Github Project Board. Etter at alle har gjort det de har blitt fordelt, tenkte vi å ha et møte igjen der vi kunne blant annet lære hverandre det vi har funnet ut og se gjennom hverandres arbeid.
+På det første møtet vårt diskuterte vi om blant annet arbeidsfordelingen, og vi kom vi fram til at Henrik og Christopher skulle starte å sette seg inn i klassestrukturen og lage et klassediagram. Øyvind har fått oppgaven å sette seg inn i prosjektmetodikken kanban og vidreformidle det til gruppen og få en overordnet forståelse for libgdx. Emily skal jobbe med oppgave 3 og hjelpe til i utforminegen av interfaces. Kristoffer skalsette seg inn i Github project board og vidreformidle hvordan dette kan brukes i prosjektmetodikken til resten av gruppen. Etter at alle har gjort det de har blitt fordelt, tenkte vi å ha et møte igjen der vi kunne blant annet lære hverandre det vi har funnet ut og se gjennom hverandres arbeid.
 
-Vi oppbevarer og deler fellesdokumenter gjennom Google Docs og Slack. Git blir også brukt som en kodebase.
+Vi oppbevarer og deler fellesdokumenter gjennom Google Docs og Slack. Git blir også brukt som en kodebase. Vi bruker Google docs til å ta korte referat av møtene. Google Docs ble valgt så alle lett kan få tilgang til dokumentet.
