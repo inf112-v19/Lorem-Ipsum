@@ -2,13 +2,13 @@ package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Position;
 
-public interface IArchive {
-	/**
-	 * Interface for backup.
-	 * Classes that implement this interface should call
-	 * players backup methods using the setBackup method.
-	 */
+/**
+ * Interface for backup.
+ * Classes that implement this interface should call
+ * players backup methods using the setBackup method.
+ */
 
+public interface IArchive {
 
 
 	/**
