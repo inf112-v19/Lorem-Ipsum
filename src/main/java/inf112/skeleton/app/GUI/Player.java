@@ -10,7 +10,7 @@ public class Player extends Entity {
     Texture image;
 
     public Player(float x, float y, GameMap map) {
-        super(x, y, EntityType.PLAYER, map);
+        super(x, y, "Player", map);
         image = new Texture("player.png");
     }
 

@@ -6,12 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Entity {
 
     protected Vector2 pos;
-    protected  EntityType type;
+    protected String EntityID;
     protected GameMap map;
 
-    public Entity(float x, float y, EntityType type, GameMap map) {
+    public Entity(float x, float y, String id, GameMap map) {
         this.pos = new Vector2(x, y);
-        this.type = type;
+        this.EntityID = id;
         this.map = map;
     }
 
@@ -39,22 +39,5 @@ public abstract class Entity {
     public float getY() {
         return pos.y;
     }
-
-    public EntityType getType() {
-        return type;
-    }
-
-    public int getHeight() {
-        return type.getHeight();
-    }
-
-    public int getWidth() {
-        return type.getWidth();
-    }
-
-    public int getWeight() {
-        return type.getWeight();
-    }
-
 
 }

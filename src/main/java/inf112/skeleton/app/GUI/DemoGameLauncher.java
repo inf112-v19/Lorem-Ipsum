@@ -9,7 +9,7 @@ public class DemoGameLauncher {
         config.title = "Robo Rally";
         config.width = 576;
         config.height = 576;
-        
+
         new LwjglApplication(new DemoGame(), config);
     }
 }
