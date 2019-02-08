@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public enum TileType {
 
-    DEFAULT(0, true, "DEFAULT"),
+    DEFAULT(5, true, "DEFAULT"),
     ;
 
     public static final int TILE_SIZE = 48;
@@ -35,6 +35,7 @@ public enum TileType {
     private static HashMap<Integer, TileType> tileMap;
 
     static {
+        tileMap = new HashMap<Integer, TileType>();
         for (TileType tileType : TileType.values()) {
             tileMap.put(tileType.getId(), tileType);
         }

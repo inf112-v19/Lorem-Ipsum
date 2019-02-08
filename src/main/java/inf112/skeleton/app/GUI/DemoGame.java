@@ -10,17 +10,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class DemoGame extends ApplicationAdapter {
     OrthographicCamera camera;
     SpriteBatch batch;
-    Texture img;
 
     GameMap gameMap;
 
     @Override
     public void create () {
         batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
 
         gameMap = new TiledGameMap();
@@ -28,15 +26,12 @@ public class DemoGame extends ApplicationAdapter {
 
     @Override
     public void render () {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameMap.render(camera);
+        gameMap.update(10);
+        gameMap.render(camera, batch);
     }
 
     @Override
     public void dispose () {
         batch.dispose();
-        img.dispose();
     }
 }
