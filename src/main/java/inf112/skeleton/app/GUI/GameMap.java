@@ -20,23 +20,11 @@ public abstract class GameMap {
         }
     }
 
-    public void update (float delta) {
+    public void update () {
         for (Entity entity : entities) {
-            entity.update(delta, -9.8f);
+            entity.update();
         }
     }
 
     public abstract void dispose ();
-
-    public TileType getTileTypeByLocation(int layer, float x, float y) {
-        return this.getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), (int) (y / TileType.TILE_SIZE));
-    }
-
-    public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
-
-    public abstract int getWidth();
-    public abstract int getHeight();
-    public abstract int getLayers();
-
-
 }

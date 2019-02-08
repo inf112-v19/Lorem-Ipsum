@@ -29,8 +29,8 @@ public class TiledGameMap extends GameMap {
     }
 
     @Override
-    public void update(float delta) {
-        super.update(delta);
+    public void update() {
+        super.update();
     }
 
     @Override
@@ -38,23 +38,4 @@ public class TiledGameMap extends GameMap {
         tiledMap.dispose();
     }
 
-    @Override
-    public TileType getTileTypeByCoordinate(int layer, int col, int row) {
-        return null;
-    }
-
-    @Override
-    public int getWidth() {
-        return 0;
-    }
-
-    @Override
-    public int getHeight() {
-        return 0;
-    }
-
-    @Override
-    public int getLayers() {
-        return 0;
-    }
 }

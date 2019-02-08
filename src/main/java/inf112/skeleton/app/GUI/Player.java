@@ -23,9 +23,9 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update(float deltatime, float gravity) {
+    public void update() {
 
-        super.update(deltatime, gravity);
+        super.update();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             moveX(-48);
