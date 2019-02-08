@@ -11,7 +11,7 @@ public abstract class GameMap {
 
     public GameMap() {
         entities = new ArrayList<>();
-        entities.add(new Player(0, 0, this));
+        entities.add(new Entity(0, 0, "Player", this));
     }
 
     public void render (OrthographicCamera camera, SpriteBatch batch) {
