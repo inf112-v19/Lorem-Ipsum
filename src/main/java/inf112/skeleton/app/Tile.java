@@ -1,8 +1,8 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.Interfaces.iTile;
+import inf112.skeleton.app.Interfaces.ITile;
 
-public abstract class Tile implements iTile {
+public abstract class Tile implements ITile {
 
 
 	@Override

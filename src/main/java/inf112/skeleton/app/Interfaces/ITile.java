@@ -5,7 +5,7 @@ package inf112.skeleton.app.Interfaces;
  *
  */
 
-public interface iTile {
+public interface ITile {
 
 
 	/**
