@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Entity {
 
-
-
     Texture image;
-
 
     public Player(float x, float y, GameMap map) {
         super(x, y, EntityType.PLAYER, map);
@@ -22,9 +19,11 @@ public class Player extends Entity {
         batch.draw(image, pos.x, pos.y);
     }
 
+    /**
+     * Player can be moved with arrow keys as a proof of concept
+     */
     @Override
     public void update() {
-
         super.update();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
@@ -42,8 +41,5 @@ public class Player extends Entity {
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             moveY(-48);
         }
-
-
     }
-
 }
