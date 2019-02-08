@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Position;
+
 /**
  * Interface for Tiles
  *
@@ -9,34 +11,28 @@ public interface ITile {
 
 
 	/**
-	 * gir posisjonen til tilen
+	 * get the Tiles Position
 	 *
-	 * @return int array burde endres til Position
+	 * @return Position object
 	 */
-	int[][] getPosition();
+	Position getPosition();
 
 
 	/**
-	 * en metode for å sjekke om et object er på tilen eller ikke
+	 * method for checking if an object is on the tile
 	 *
-	 * @return returnerer true hvis et object er på tilen
+	 * @return true is there is an object on tile
 	 */
 	boolean objectOnTile();
 
 	/**
-	 * gir et object på tilen dersom det finnes
+	 * method that returns any GameObject in the Tile.
+	 * Should be null if there is no GameObject on the Tile
 	 *
-	 * @return Object må endres til riktig type object som kan stå på en tile
+	 * @return GameObject
 	 */
-	Object getObjectOnTile();
-
-
-	/**
-	 * en metode for å finne ut om tilen er farlig eller ikke
-	 *
-	 * @return true hvis en spiller mister liv av å gå på tilen
-	 */
-	boolean isHostile();
+	//requires the GameObject class
+	//GameObject getObjectOnTile();
 
 
 

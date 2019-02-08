@@ -6,22 +6,12 @@ public abstract class Tile implements ITile {
 
 
 	@Override
-	public int[][] getPosition() {
-		return new int[0][0];
-	}
-
-	@Override
-	public boolean objectOnTile() {
-		return false;
-	}
-
-	@Override
-	public Object getObjectOnTile() {
+	public Position getPosition() {
 		return null;
 	}
 
 	@Override
-	public boolean isHostile() {
+	public boolean objectOnTile() {
 		return false;
 	}
 }
