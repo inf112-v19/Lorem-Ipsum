@@ -6,7 +6,7 @@ abstract class GameObject implements IGameObject {
 
     private Position position;
     private Board board;
-    private String objectID;
+    private String objectID;   //Not sure if we need objectID
 
     public GameObject(Position position, String objectID, Board board){
         this.board = board;
