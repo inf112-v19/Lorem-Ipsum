@@ -14,7 +14,7 @@ public interface IGameObject {
 
     /**
      * Place game object on the board
-     * @param postion
+     * @param position the object should be placed at
      */
     void place(Position position);
 

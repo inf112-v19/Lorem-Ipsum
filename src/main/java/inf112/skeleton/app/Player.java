@@ -6,7 +6,7 @@ public class Player {
 
     private Position playerPostition;
     private String playerID;
-    private ArrayList<Card> playerHand;
+//    private ArrayList<Card> playerHand;
     private Board board;
 
 

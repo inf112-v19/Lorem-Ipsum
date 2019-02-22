@@ -21,11 +21,11 @@ abstract class GameObject implements IGameObject {
 
     @Override
     public void place(Position position) {
-
+    board.place();   //has to be changed when board is finished
     }
 
     @Override
     public void remove() {
-
+    board.remove;    //has to be changed when board is finished
     }
 }
