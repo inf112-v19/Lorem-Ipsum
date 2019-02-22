@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DemoGame extends ApplicationAdapter {
+
+    public static final int WIDTH = 576;
+    public static final int HEIHGT = 576;
+
+    public static final String TITLE = "Robo Rally";
+
     OrthographicCamera camera;
     SpriteBatch batch;
     GameMap gameMap;
