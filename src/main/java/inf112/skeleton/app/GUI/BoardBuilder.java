@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class BoardBuilder {
+	private static int height;
+	private static int width;
 
 	/**
 	 * Creates a 2D tile grid array from an input text file
@@ -17,10 +19,10 @@ public class BoardBuilder {
 	 */
 	public static Tile[][] buildBoard(String fileName) throws IOException {
 		int[][] tileNumbers = readFromFile(fileName);
-		Tile[][] tiles = new Tile[tileNumbers.length][tileNumbers[0].length];
+		Tile[][] tiles = new Tile[height][width];
 
-		for (int i = 0; i < tileNumbers.length; i++) {
-			for (int x = 0; x < tileNumbers[0].length; x++) {
+		for (int i = 0; i < height; i++) {
+			for (int x = 0; x < width; x++) {
 				tiles[i][x] = findTile(tileNumbers[i][x]);
 			}
 		}
@@ -47,8 +49,8 @@ public class BoardBuilder {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 		//first two lines are the dimensions
-		int height = Integer.parseInt(bufferedReader.readLine());
-		int width = Integer.parseInt(bufferedReader.readLine());
+		height = Integer.parseInt(bufferedReader.readLine());
+		width = Integer.parseInt(bufferedReader.readLine());
 
 		int[][] tileNumbers = new int[height][width];
 
@@ -64,4 +66,11 @@ public class BoardBuilder {
 		return tileNumbers;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
 }
