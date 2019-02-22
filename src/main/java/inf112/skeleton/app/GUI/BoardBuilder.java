@@ -25,6 +25,7 @@ public class BoardBuilder {
 			}
 		}
 
+		return tiles;
 	}
 
 
