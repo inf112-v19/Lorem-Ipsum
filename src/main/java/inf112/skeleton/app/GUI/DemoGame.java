@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GUI.States.GameState;
 import inf112.skeleton.app.GUI.States.GameStateManager;
+import inf112.skeleton.app.GUI.States.MenuState;
 
 public class DemoGame extends ApplicationAdapter {
 
@@ -34,6 +35,7 @@ public class DemoGame extends ApplicationAdapter {
 
         //em
         Gdx.gl.glClearColor(1,0,0,1);
+        gsm.push(new MenuState(gsm));
     }
 
     @Override

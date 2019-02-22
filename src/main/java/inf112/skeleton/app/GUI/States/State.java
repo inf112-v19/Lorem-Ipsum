@@ -23,7 +23,7 @@ public abstract class State {
     protected abstract void handleInput();
 
     //take in a deltic time, difference betqween one frame window and the next frame window
-    public abstract void update(float);
+    public abstract void update(float dt);
 
     // spritebatch is contaonter for everyhting we need to render to the screen texture and all that, renders everything to the screen in a big blob
     public abstract void render(SpriteBatch sb);
