@@ -4,17 +4,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-/**
- * 22 February 2019
- */
-
 public abstract class State {
     protected OrthographicCamera cam;
     protected Vector3 mouse;
-    protected GameStateManager gms;
+    protected GameStateManager gsm;
 
     protected State (GameStateManager gsm) {
-        this.gms = gms;
+        this.gsm = gsm;
         cam = new OrthographicCamera();
         mouse = new Vector3();
     }
@@ -30,6 +26,5 @@ public abstract class State {
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
     public abstract void dispose();
-
 
 }

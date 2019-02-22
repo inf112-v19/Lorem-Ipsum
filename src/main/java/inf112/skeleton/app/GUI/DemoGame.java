@@ -17,12 +17,12 @@ public class DemoGame extends ApplicationAdapter {
     private SpriteBatch batch;
 
     OrthographicCamera camera;
-    //SpriteBatch batch;
     GameMap gameMap;
 
     @Override
     public void create () {
         batch = new SpriteBatch();
+
         //em
         gsm = new GameStateManager();
 
