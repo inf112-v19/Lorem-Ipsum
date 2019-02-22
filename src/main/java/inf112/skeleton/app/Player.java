@@ -26,7 +26,7 @@ public class Player extends GameObject {
      */
     public void turnPlayer(int numberOfTurns){
 
-        direktion = (direktion + numberOfTurns) % 4;
+        direction = (direction + numberOfTurns) % 4;
 
         switch (direction){
 
