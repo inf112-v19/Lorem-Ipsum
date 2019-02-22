@@ -5,10 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class DemoGame extends ApplicationAdapter {
+public class RoboRally extends ApplicationAdapter {
     OrthographicCamera camera;
     SpriteBatch batch;
-    GameMap gameMap;
+    BoardGUI gameMap;
 
     @Override
     public void create () {
@@ -18,7 +18,7 @@ public class DemoGame extends ApplicationAdapter {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
 
-        gameMap = new TiledGameMap();
+        gameMap = new BoardGUI();
     }
 
     @Override
