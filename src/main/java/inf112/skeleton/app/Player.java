@@ -14,8 +14,8 @@ public class Player extends GameObject {
 
 
 
-    public Player(Position playerPosition, String playerID, Board board) {
-        super(playerPosition, playerID, board);
+    public Player(Position playerPosition, Board board) {
+        super(playerPosition, board);
     }
 
 
