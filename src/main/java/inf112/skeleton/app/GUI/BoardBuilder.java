@@ -44,7 +44,7 @@ public class BoardBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	private static int[][] readFromFile(String filename) throws IOException {
+	public static int[][] readFromFile(String filename) throws IOException {
 		FileReader fileReader = new FileReader(filename);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
