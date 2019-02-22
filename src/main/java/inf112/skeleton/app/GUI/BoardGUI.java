@@ -22,7 +22,7 @@ public class BoardGUI {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //TODO - Draw the board
-        
+
 
 
         //super.render(camera, batch);
@@ -36,7 +36,7 @@ public class BoardGUI {
 
 
     public void dispose() {
-        board.dispose();
+        //board.dispose();
     }
 
 }
