@@ -1,6 +1,9 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Interfaces.ICardDeck;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -15,11 +18,22 @@ public class CardDeck implements ICardDeck {
 
     @Override
     public void shuffleDeck() {
-
+        Collections.shuffle(deck);
     }
 
     @Override
     public List<Card> drawCards(int numberOfCards) {
-        return null;
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < numberOfCards; i++) {
+            cards.add(deck.pop());
+        }
+
+        return cards;
+    }
+
+    @Override
+    public int numbersOfCardsLeft() {
+        return deck.size();
     }
 }
