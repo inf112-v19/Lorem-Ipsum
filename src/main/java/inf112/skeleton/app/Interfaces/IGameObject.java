@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Position;
+
 /**
  * Interface for game objects
  */
@@ -14,7 +16,7 @@ public interface IGameObject {
      * Place game object on the board
      * @param postion
      */
-    void place(Position postion);
+    void place(Position position);
 
     /**
      * Removes the object from the board
