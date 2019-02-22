@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-public class Board {
+public class Board{
 
 
 }

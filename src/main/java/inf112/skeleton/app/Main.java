@@ -11,7 +11,7 @@ public class Main {
 		config.width = 576;
 		config.height = 576;
 
-		new LwjglApplication(new DemoGame(), config);
+		new LwjglApplication(new RoboRally(), config);
 
 	}
 
