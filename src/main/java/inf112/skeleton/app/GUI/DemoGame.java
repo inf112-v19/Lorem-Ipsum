@@ -4,9 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.GUI.States.GameState;
-import inf112.skeleton.app.GUI.States.GameStateManager;
-import inf112.skeleton.app.GUI.States.MenuState;
+import inf112.skeleton.app.GUI.states.GameStateManager;
+import inf112.skeleton.app.GUI.states.MenuState;
 
 public class DemoGame extends ApplicationAdapter {
 

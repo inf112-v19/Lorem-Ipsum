@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI.States;
+package inf112.skeleton.app.GUI.states;
 
 public class GameState {
 }

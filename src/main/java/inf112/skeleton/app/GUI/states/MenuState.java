@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI.States;
+package inf112.skeleton.app.GUI.states;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,6 +32,12 @@ public class MenuState extends State {
         sb.draw(background, 0, 0, DemoGame.WIDTH, DemoGame.HEIHGT);
         sb.draw(playButton, (DemoGame.WIDTH / 2) - (playButton.getWidth() / 2), (DemoGame.HEIHGT / 2));
         sb.end();
+    }
+
+    @Override
+    public void dispose() {
+    background.dispose();
+    playButton.dispose();
     }
 }
 
