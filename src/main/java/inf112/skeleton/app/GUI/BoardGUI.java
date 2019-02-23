@@ -19,13 +19,15 @@ import static com.badlogic.gdx.Gdx.gl;
 public class BoardGUI {
 
     Board board;
+    int xOffset;
+    int yOffset;
     OrthographicCamera camera;
     SpriteBatch batch;
 
 
-    int tilesize = (Gdx.graphics.getWidth() + Gdx.graphics.getHeight())/20;
-    int boardWidth = 400;
-    int boardHeight = 400;
+    int tilesize = 100;
+    int boardWidth = 200;
+    int boardHeight = 200;
     Texture texture = new Texture("RoboRallyTiles.png");
     TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 
@@ -33,6 +35,9 @@ public class BoardGUI {
     public BoardGUI(OrthographicCamera camera, SpriteBatch batch) {
         this.camera = camera;
         this.batch = batch;
+
+        xOffset = Gdx.graphics.getWidth()/2 - boardWidth/2;
+        yOffset = Gdx.graphics.getHeight()/2 - boardHeight/2;
 
     }
 
@@ -58,8 +63,8 @@ public class BoardGUI {
     public void drawBoard(){
         batch.begin();
 
-        for (int i = 0; i < boardHeight; i+= tilesize){
-            for (int j = 0; j < boardWidth; j+= tilesize){
+        for (int i = yOffset; i < boardHeight + yOffset; i+= tilesize){
+            for (int j = xOffset; j < boardWidth + xOffset; j+= tilesize){
                 batch.draw(spriteSheet[0][4], i, j, tilesize, tilesize);
             }
         }
