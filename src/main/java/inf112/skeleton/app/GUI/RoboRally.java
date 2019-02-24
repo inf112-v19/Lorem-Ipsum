@@ -13,7 +13,7 @@ public class RoboRally extends ApplicationAdapter {
     OrthographicCamera camera;
     SpriteBatch batch;
     Viewport viewport;
-    BoardGUI BoardGUI;
+    BoardGUI boardGUI;
 
     public RoboRally() {
         super();
@@ -31,7 +31,7 @@ public class RoboRally extends ApplicationAdapter {
         camera = new OrthographicCamera();
         camera.update();
 
-        BoardGUI = new BoardGUI(camera, batch);
+        boardGUI = new BoardGUI(camera, batch);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RoboRally extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //redering BoardGUI
-        BoardGUI.render();
+        boardGUI.render();
 
     }
 
@@ -56,6 +56,7 @@ public class RoboRally extends ApplicationAdapter {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        boardGUI.resize();
     }
 
     @Override
