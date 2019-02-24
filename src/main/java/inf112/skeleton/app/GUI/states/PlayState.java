@@ -16,12 +16,10 @@ public class PlayState extends State{
 
     @Override
     protected void handleInput() {
-
     }
 
     @Override
     public void update(float dt) {
-
     }
 
     @Override
@@ -34,6 +32,5 @@ public class PlayState extends State{
 
     @Override
     public void dispose() {
-
     }
 }

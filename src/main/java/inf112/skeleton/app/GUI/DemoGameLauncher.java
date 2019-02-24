@@ -10,7 +10,7 @@ public class DemoGameLauncher {
 
         //em
         config.width = DemoGame.WIDTH;
-        config.height = DemoGame.HEIHGT;
+        config.height = DemoGame.HEIGHT;
         config.title = DemoGame.TITLE;
 
         config.title = "Robo Rally";

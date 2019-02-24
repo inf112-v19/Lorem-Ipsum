@@ -15,10 +15,9 @@ public abstract class State {
         mouse = new Vector3();
     }
 
-    //show you why later
     protected abstract void handleInput();
 
-    //take in a deltic time, difference betqween one frame window and the next frame window
+    //take in a delta time, difference between one frame window and the next frame window
     public abstract void update(float dt);
 
     // spritebatch is contaonter for everyhting we need to render to the screen texture and all that, renders everything to the screen in a big blob

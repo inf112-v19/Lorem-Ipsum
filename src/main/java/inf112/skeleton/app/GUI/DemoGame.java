@@ -11,7 +11,7 @@ public class DemoGame extends ApplicationAdapter {
 
     //em
     public static final int WIDTH = 576;
-    public static final int HEIHGT = 576;
+    public static final int HEIGHT = 576;
     public static final String TITLE = "Robo Rally";
     private GameStateManager gsm;
     private SpriteBatch batch;

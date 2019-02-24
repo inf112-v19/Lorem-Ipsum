@@ -12,8 +12,8 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        background = new Texture("tempBG.png");
-        playButton = new Texture("player.png");
+        background = new Texture("tempStart.jpg");
+        playButton = new Texture("tapToStart.gif");
     }
 
     @Override
@@ -26,14 +26,14 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
-        handleInput();M
+        handleInput();
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(background, 0, 0, DemoGame.WIDTH, DemoGame.HEIHGT);
-        sb.draw(playButton, (DemoGame.WIDTH / 2) - (playButton.getWidth() / 2), (DemoGame.HEIHGT / 4));
+        sb.draw(background, 0, 0, DemoGame.WIDTH, DemoGame.HEIGHT);
+        sb.draw(playButton, (DemoGame.WIDTH / 2) - (playButton.getWidth() / 2), (DemoGame.HEIGHT)-((playButton.getHeight())*2));
         sb.end();
     }
 
