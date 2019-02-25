@@ -9,23 +9,13 @@ public class NormalTile extends Tile {
 
 	}
 
-	@Override
 	public int getSpriteX() {
 		return SPRITE_X;
 	}
 
-	@Override
+
 	public int getSpriteY() {
 		return SPRITE_Y;
 	}
 
-	@Override
-	public Position getPosition() {
-		return super.getPosition();
-	}
-
-	@Override
-	public boolean objectOnTile() {
-		return super.objectOnTile();
-	}
 }

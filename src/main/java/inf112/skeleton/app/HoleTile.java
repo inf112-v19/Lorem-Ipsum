@@ -8,12 +8,10 @@ public class HoleTile extends Tile {
 
 	}
 
-	@Override
 	public int getSpriteX() {
 		return SPRITE_X;
 	}
 
-	@Override
 	public int getSpriteY() {
 		return SPRITE_Y;
 	}
