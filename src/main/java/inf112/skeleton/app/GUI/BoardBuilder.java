@@ -1,9 +1,6 @@
 package inf112.skeleton.app.GUI;
 
-import inf112.skeleton.app.HoleTile;
-import inf112.skeleton.app.NormalTile;
-import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tile;
+import inf112.skeleton.app.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,7 +46,7 @@ public class BoardBuilder {
 
 	/**
 	 * Maps the tileNumber to the corresponding Tile
-	 *
+	 * TODO - Add the rest of the tiles
 	 * @param tileNumber
 	 * @return
 	 */
@@ -57,7 +54,8 @@ public class BoardBuilder {
 		switch (tileNumber){
 			case 0: return new NormalTile();
 			case 1: return new HoleTile();
-			default: return null;
+			case 2: return new RepairTile();
+			default: return new NormalTile();
 		}
 	}
 
