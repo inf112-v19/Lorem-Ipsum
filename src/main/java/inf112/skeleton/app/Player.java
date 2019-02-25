@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
 
+    /*
     private Position playerPostition;
     private String playerID;
     private ArrayList<Card> playerHand;
@@ -15,6 +16,7 @@ public class Player {
         this.playerPostition = playerPosition;
         this.board = board;
     }
+    */
 
 
 }

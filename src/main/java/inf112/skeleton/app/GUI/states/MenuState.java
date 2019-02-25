@@ -3,7 +3,7 @@ package inf112.skeleton.app.GUI.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.GUI.DemoGame;
+import inf112.skeleton.app.GUI.RoboRally;
 
 public class MenuState extends State {
 
@@ -32,8 +32,8 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(background, 0, 0, DemoGame.WIDTH, DemoGame.HEIGHT);
-        sb.draw(playButton, (DemoGame.WIDTH / 2) - (playButton.getWidth() / 2), (DemoGame.HEIGHT)-((playButton.getHeight())*2));
+        sb.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        sb.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getWidth() / 2), (RoboRally.HEIGHT)-((playButton.getHeight())*2));
         sb.end();
     }
 

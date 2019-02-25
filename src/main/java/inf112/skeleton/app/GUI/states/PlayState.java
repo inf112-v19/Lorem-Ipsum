@@ -10,7 +10,7 @@ public class PlayState extends State{
     public PlayState(GameStateManager gsm) {
         super(gsm);
         car = new Texture("player.png");
-        //cam.setToOrtho(false, DemoGame.WIDTH/2, DemoGame.WIDTH / 2);  zoomer inn
+        //cam.setToOrtho(false, RoboRally.WIDTH/2, RoboRally.WIDTH / 2);  zoomer inn
     }
 
     @Override

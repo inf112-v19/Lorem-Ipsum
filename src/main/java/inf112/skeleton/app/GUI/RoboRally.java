@@ -8,12 +8,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.skeleton.app.GUI.states.GameStateManager;
+import inf112.skeleton.app.GUI.states.MenuState;
 
 public class RoboRally extends ApplicationAdapter {
-    OrthographicCamera camera;
-    SpriteBatch batch;
-    Viewport viewport;
-    BoardGUI boardGUI;
+    //em
+    public static final int WIDTH = 576;
+    public static final int HEIGHT = 576;
+    public static final String TITLE = "Robo Rally";
+
+    private GameStateManager gsm;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
+    private BoardGUI boardGUI;
 
     public RoboRally() {
         super();
@@ -26,12 +33,17 @@ public class RoboRally extends ApplicationAdapter {
         //camera = new OrthographicCamera();
         //camera.setToOrtho(true);
 
-
+        //em
+        gsm = new GameStateManager();
 
         camera = new OrthographicCamera();
         camera.update();
 
         boardGUI = new BoardGUI(camera, batch);
+
+        //em
+        //Gdx.gl.glClearColor(1,0,0,1);
+        gsm.push(new MenuState(gsm));
     }
 
     @Override
@@ -44,6 +56,10 @@ public class RoboRally extends ApplicationAdapter {
 
         //redering BoardGUI
         boardGUI.render();
+
+        //em
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
 
     }
 
