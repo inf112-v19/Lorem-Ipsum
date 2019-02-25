@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.Position;
 
 /**
@@ -30,4 +31,11 @@ public interface IGameObject {
      * @return TextureRegion that shuold be drawn to screen
      */
     TextureRegion getTexture();
+
+
+    /**
+     * function that returns a GameObject Direction on the Board
+     * @return Direction of the GameObject
+     */
+    Direction getDirection();
 }

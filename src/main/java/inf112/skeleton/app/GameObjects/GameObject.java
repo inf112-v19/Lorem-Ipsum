@@ -2,15 +2,17 @@ package inf112.skeleton.app.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 
 abstract class GameObject implements IGameObject {
 
-    private Board board;
+	Direction dir;
 
-    public GameObject(Board board){
-        this.board = board;
+
+    public GameObject(Direction dir){
+        this.dir = dir;
     }
 
     @Override
@@ -33,4 +35,9 @@ abstract class GameObject implements IGameObject {
     public TextureRegion getTexture() {
         return null;
     }
+
+	@Override
+	public Direction getDirection() {
+		return this.dir;
+	}
 }
