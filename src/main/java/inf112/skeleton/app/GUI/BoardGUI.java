@@ -27,9 +27,11 @@ public class BoardGUI {
     SpriteBatch batch;
 
 
-    int tilesize = 50;
-    int boardWidth = 400;
-    int boardHeight = 400;
+    int tilesize;
+    int boardWidth;
+    int boardHeight;
+    int boardTileWidth;
+    int boardTileHeight;
 
     Texture texture = new Texture("RoboRallyTiles.png");
     TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
@@ -39,10 +41,14 @@ public class BoardGUI {
         this.camera = camera;
         this.batch = batch;
 
+        board = new Board("BoardBuilderTest.txt");
+        boardWidth = board.getWidth();
+        boardHeight = board.getHeight();
 
-        //TODO - when board handles IOExeption and easy to use filepath.
-        //board = new Board("BoardBuilderTest.txt");
-        //tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/Math.min(board.getHeight(), board.getWidth());
+        tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*5);
+
+        boardTileWidth = boardWidth *tilesize;
+        boardTileHeight = boardHeight * tilesize;
 
         //setting initial position
         reposition();
@@ -81,8 +87,8 @@ public class BoardGUI {
      * is called from the constructor and resize();
      */
     public void reposition(){
-        yOffset = Gdx.graphics.getWidth()/2 - boardWidth/2;
-        xOffset = Gdx.graphics.getHeight()/2 - boardHeight/2;
+        yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
+        xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
     }
 
     /**
@@ -93,9 +99,9 @@ public class BoardGUI {
     public void drawBoard(){
         batch.begin();
 
-        for (int i = yOffset; i < boardHeight + yOffset; i+= tilesize){
-            for (int j = xOffset; j < boardWidth + xOffset; j+= tilesize){
-                batch.draw(spriteSheet[0][4], i, j, tilesize, tilesize);
+        for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
+            for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
+                batch.draw(spriteSheet[0][4], x, y, tilesize, tilesize);
             }
         }
 
