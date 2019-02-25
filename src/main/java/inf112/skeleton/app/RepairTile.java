@@ -6,7 +6,7 @@ public class RepairTile extends Tile {
 	private final int SPRITE_Y = 0;
 
 	public RepairTile() {
-		
+
 	}
 
 	@Override

@@ -107,7 +107,10 @@ public class BoardGUI {
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
                 Position pos = new Position(xPos, yPos);
                 Tile curTile = board.getTile(pos);
-                batch.draw(spriteSheet[curTile.getSpriteY()][curTile.getSpriteX()], x, y, tilesize, tilesize);
+                int spriteX = curTile.getSpriteX();
+                int spriteY = curTile.getSpriteY();
+                TextureRegion tileSprite = spriteSheet[spriteX][spriteY];
+                batch.draw(tileSprite, x, y, tilesize, tilesize);
                 xPos++;
             }
             yPos++;
