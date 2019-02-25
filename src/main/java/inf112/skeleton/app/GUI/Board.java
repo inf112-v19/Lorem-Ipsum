@@ -4,12 +4,11 @@ import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tile;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Board implements IBoard {
 	private HashMap<Position, Tile> tileMap;
-	//private HashMap<Player, Position> playerPosition = new HashMap<>();
+	//private HashMap<Player, Position> playerPositions = new HashMap<>();
 	private int height;
 	private int width;
 
@@ -31,12 +30,12 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public void setObject(Position pos, Object element) {
+	public void setGameObject(Position pos, Object element) {
 
 	}
 
 	@Override
-	public Object getObject(Position pos) {
+	public Object getGameObject(Position pos) {
 		return null;
 	}
 
@@ -51,7 +50,17 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean isValid(Position pos) {
+	public boolean isValidPos(Position pos) {
 		return false;
+	}
+
+	@Override
+	public Tile getTile(Position pos) {
+		if (!isValidPos(pos)){
+			System.err.println("Invalid position");
+			System.exit(1);
+		}
+
+		return tileMap.get(pos);
 	}
 }
