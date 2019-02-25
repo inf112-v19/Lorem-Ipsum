@@ -46,7 +46,7 @@ public class BoardBuilder {
 
 	/**
 	 * Maps the tileNumber to the corresponding Tile
-	 * TODO - Add the rest of the tiles
+	 * TODO - Add the rest of the tiles and handle gameobjects
 	 * @param tileNumber
 	 * @return
 	 */
