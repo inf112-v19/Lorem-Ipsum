@@ -2,12 +2,25 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 
+
+    //TODO:fill hand with cards method
+    //TODO:move forward method(ask board)
+    //TODO:set backup method
+    //TODO:move to backup method
+    //TODO:keep track of burned down cards(and tell board)
+    //TODO:Let player hold its own sprite/picture
+    //TODO:Take damage method
+    //TODO:Restore health method
+    //
+
+
 public class Player extends GameObject {
 
     private Position playerPostition;
     private String playerID;
 //    private ArrayList<Card> playerHand;
     private Board board;
+    private int playerHealth = 5;
 
     String playerDirection; //Direction the player is facing
     private int direction = 0;  //number used to turn player around
@@ -47,8 +60,10 @@ public class Player extends GameObject {
         }
     }
 
-    public moveX(){
-
+    public moveForward(){
+        if(playerDirection == "North"){
+            
+        }
     }
 
 }
