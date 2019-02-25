@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Position;
+import inf112.skeleton.app.Tile;
 
 /** Interface for board. */
 
@@ -25,7 +26,7 @@ public interface IBoard<T> {
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
      */
-    void setObject(Position pos, T element);
+    void setGameObject(Position pos, T element);
 
     /**
      * Get the contents of the cell in the given x,y location.
@@ -39,7 +40,7 @@ public interface IBoard<T> {
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
      */
-    T getObject(Position pos);
+    T getGameObject(Position pos);
 
     /**
      * Move the current player in the given direction.
@@ -73,6 +74,15 @@ public interface IBoard<T> {
      *            is this position/coordinates valid?
      * @return true if the (x,y) position is within the grid
      */
-    boolean isValid(Position pos);
+    boolean isValidPos(Position pos);
+
+
+	/**
+	 * Gets the tile on a given position
+	 *
+	 * @param pos
+	 * @return
+	 */
+	Tile getTile(Position pos);
 
 }

@@ -4,7 +4,6 @@ import inf112.skeleton.app.Interfaces.ITile;
 
 public abstract class Tile implements ITile {
 
-
 	@Override
 	public Position getPosition() {
 		return null;
@@ -13,5 +12,10 @@ public abstract class Tile implements ITile {
 	@Override
 	public boolean objectOnTile() {
 		return false;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getClass() == obj.getClass();
 	}
 }
