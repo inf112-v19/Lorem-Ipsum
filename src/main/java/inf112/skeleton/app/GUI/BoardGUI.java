@@ -13,21 +13,21 @@ import inf112.skeleton.app.Tiles.Tile;
 
 public class BoardGUI {
 
-    Board board;
-    int xOffset;
-    int yOffset;
-    OrthographicCamera camera;
-    SpriteBatch batch;
+    private Board board;
+    private int xOffset;
+    private int yOffset;
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
 
 
-    int tilesize;
-    int boardWidth;
-    int boardHeight;
-    int boardTileWidth;
-    int boardTileHeight;
+    private int tilesize;
+    private int boardWidth;
+    private int boardHeight;
+    private int boardTileWidth;
+    private int boardTileHeight;
 
-    Texture texture = new Texture("RoboRallyTiles.png");
-    TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
+    private Texture texture = new Texture("RoboRallyTiles.png");
+    private TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 
 
     public BoardGUI(OrthographicCamera camera, SpriteBatch batch) {
