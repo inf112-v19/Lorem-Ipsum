@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class CardDeck implements ICardDeck {
+public class ProgramCardDeck implements ICardDeck {
 
     Stack<Card> deck = new Stack<>();
 
@@ -35,5 +35,10 @@ public class CardDeck implements ICardDeck {
     @Override
     public int numbersOfCardsLeft() {
         return deck.size();
+    }
+
+    @Override
+    public CardType getCardType(Card card) {
+        return card.getCardType();
     }
 }

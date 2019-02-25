@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Card;
+import inf112.skeleton.app.CardType;
 
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface ICardDeck {
 
     int numbersOfCardsLeft();
 
+    CardType getCardType(Card card);
 
 }
