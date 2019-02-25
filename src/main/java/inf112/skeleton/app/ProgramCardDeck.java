@@ -13,7 +13,7 @@ public class ProgramCardDeck implements ICardDeck {
 
     @Override
     public void createNewDeck() {
-
+        clearDeck();
         int priority;
 
         // rotate R, number: 18, priority 80-420, step 20
