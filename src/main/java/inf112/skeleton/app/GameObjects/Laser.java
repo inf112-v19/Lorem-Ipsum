@@ -14,8 +14,20 @@ public class Laser extends GameObject{
 	public Laser(Direction dir) {
 		super(dir);
 		spriteSheet = new SpriteSheet();
-		//TODO - this texture point north/south. should maybe rotate according to Direction
-		texture = spriteSheet.getTexture(6,5);
+		switch (dir){
+			case NORTH:
+			case SOUTH:
+				texture = spriteSheet.getTexture(6,5);
+				break;
+			case WEST:
+			case EAST:
+				texture = spriteSheet.getTexture(6,4);
+				break;
+			default:
+				System.err.println("Direction not valid in Laser");
+				break;
+		}
+
 	}
 
 	@Override
