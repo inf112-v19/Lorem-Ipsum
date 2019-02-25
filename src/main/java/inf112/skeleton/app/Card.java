@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-public class Card {
+public class Card implements Comparable<Card>{
     CardType type;
     int priority;
 
@@ -11,5 +11,10 @@ public class Card {
 
     public CardType getCardType() {
         return this.type;
+    }
+
+    @Override
+    public int compareTo(Card other) {
+        return Integer.compare(this.priority, other.priority);
     }
 }
