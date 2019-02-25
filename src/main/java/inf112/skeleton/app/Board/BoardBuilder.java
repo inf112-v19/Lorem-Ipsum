@@ -17,11 +17,10 @@ public class BoardBuilder {
 	private static int width;
 
 	/**
-	 * Creates a 2D tile grid array from an input text file
+	 * Creates a hashmap of the board based on an input text file
 	 *
 	 * @param fileName
-	 * @return
-	 * @throws IOException
+	 * @return Hashmap containing all possible positions with corresponding tiles
 	 */
 	public static HashMap<Position, Tile> buildBoard(String fileName)  {
 		int[][] tileNumbers;
