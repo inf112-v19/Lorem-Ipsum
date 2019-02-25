@@ -1,10 +1,15 @@
 package inf112.skeleton.app.GUI;
 
+import inf112.skeleton.app.HoleTile;
+import inf112.skeleton.app.NormalTile;
+import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tile;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class BoardBuilder {
 	private static int height;
@@ -17,23 +22,43 @@ public class BoardBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Tile[][] buildBoard(String fileName) throws IOException {
-		int[][] tileNumbers = readFromFile(fileName);
-		Tile[][] tiles = new Tile[height][width];
+	public static HashMap<Position, Tile> buildBoard(String fileName)  {
+		int[][] tileNumbers;
+		try {
+			tileNumbers = readFromFile(fileName);
+		} catch (IOException e) {
+			System.err.println("Error while reading file in BoardBuilder");
+			e.printStackTrace();
+			return null;
+		}
 
-		for (int i = 0; i < height; i++) {
+		HashMap<Position, Tile> tileMap = new HashMap<>();
+
+		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tiles[i][x] = findTile(tileNumbers[i][x]);
+				Position curPos = new Position(x, y);
+				Tile curTile = findTile(tileNumbers[y][x]);
+				tileMap.put(curPos, curTile);
+
 			}
 		}
 
-		return tiles;
+		return tileMap;
 	}
 
 
-	// TODO - need to return the corresponding tile according to the tile number
+	/**
+	 * Maps the tileNumber to the corresponding Tile
+	 *
+	 * @param tileNumber
+	 * @return
+	 */
 	private static Tile findTile(int tileNumber) {
-		return null;
+		switch (tileNumber){
+			case 0: return new NormalTile();
+			case 1: return new HoleTile();
+			default: return null;
+		}
 	}
 
 
@@ -45,7 +70,10 @@ public class BoardBuilder {
 	 * @throws IOException
 	 */
 	public static int[][] readFromFile(String filename) throws IOException {
-		FileReader fileReader = new FileReader(filename);
+		ClassLoader classLoader = BoardBuilder.class.getClassLoader();
+		File file = new File(classLoader.getResource(filename).getFile());
+
+		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 		//first two lines are the dimensions
@@ -54,12 +82,12 @@ public class BoardBuilder {
 
 		int[][] tileNumbers = new int[height][width];
 
-		for (int i=0; i<height; i++){
+		for (int y=0; y<height; y++){
 			String line = bufferedReader.readLine();
 			String[] numbers = line.split(" ");
 
 			for (int x=0; x<width; x++){
-				tileNumbers[i][x] = Integer.parseInt(numbers[x]);
+				tileNumbers[y][x] = Integer.parseInt(numbers[x]);
 			}
 		}
 

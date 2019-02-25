@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Board implements IBoard {
-	private Tile[][] tileGrid;
+	private HashMap<Position, Tile> tileMap;
 	//private HashMap<Player, Position> playerPosition = new HashMap<>();
 	private int height;
 	private int width;
 
-	public Board(String filename) throws IOException {
+	public Board(String filename) {
 		BoardBuilder builder = new BoardBuilder();
-		tileGrid = builder.buildBoard(filename);
+		tileMap = builder.buildBoard(filename);
 		height = builder.getHeight();
 		width = builder.getWidth();
 	}

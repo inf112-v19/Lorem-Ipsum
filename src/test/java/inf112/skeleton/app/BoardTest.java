@@ -10,7 +10,8 @@ import static org.junit.Assert.assertArrayEquals;
 public class BoardTest {
 
 	/**
-	 * TODO - Need to fix correct filepath for test to work
+	 * Testing that the readFromFile method in boardBuilder returns the correct 2D int array
+	 *
 	 * @throws IOException
 	 */
 	@Test
@@ -22,8 +23,8 @@ public class BoardTest {
 		BoardBuilder bb = new BoardBuilder();
 
 		int tileNumbers[][] = bb.readFromFile(testFile);
-		assertArrayEquals(tileNumbers, correctNumbers);
 
+		assertArrayEquals(tileNumbers, correctNumbers);
 	}
 
 }
