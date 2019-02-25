@@ -9,8 +9,6 @@ public interface ICardDeck {
 
     void createNewDeck();
 
-    void shuffleDeck();
-
     List<Card> drawCards(int numberOfCards);
 
     int numbersOfCardsLeft();

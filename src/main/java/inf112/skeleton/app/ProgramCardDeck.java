@@ -58,9 +58,10 @@ public class ProgramCardDeck implements ICardDeck {
             deck.add(new Card(CardType.BACKWARD_1, priority));
             priority += 10;
         }
+
+        shuffleDeck();
     }
 
-    @Override
     public void shuffleDeck() {
         Collections.shuffle(deck);
     }
