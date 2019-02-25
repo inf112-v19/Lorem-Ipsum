@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import inf112.skeleton.app.Position;
+import inf112.skeleton.app.Tile;
 
 import java.io.IOException;
 
@@ -41,7 +43,7 @@ public class BoardGUI {
         this.camera = camera;
         this.batch = batch;
 
-        board = new Board("BoardBuilderTest.txt");
+        board = new Board("BoardBuilderTest2.txt");
         boardWidth = board.getWidth();
         boardHeight = board.getHeight();
 
@@ -98,11 +100,17 @@ public class BoardGUI {
     //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
+        int xPos = 0;
+        int yPos = 0;
 
         for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
-                batch.draw(spriteSheet[0][4], x, y, tilesize, tilesize);
+                Position pos = new Position(xPos, yPos);
+                Tile curTile = board.getTile(pos);
+                batch.draw(spriteSheet[curTile.getSpriteY()][curTile.getSpriteX()], x, y, tilesize, tilesize);
+                xPos++;
             }
+            yPos++;
         }
 
         batch.end();
