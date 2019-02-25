@@ -93,7 +93,7 @@ public class Player {
         else{
             return -1;
         }
-        return 1
+        return 1;
     }
 
 
@@ -106,10 +106,10 @@ public class Player {
     public void moveForward(int numberOfSteps) {
         for (int i = 0; i < numberOfSteps; i++) {
 
-            board.movePlayer(playerID, playerDirection);
+            //board.movePlayer(playerID, playerDirection);
         }
     }
-    */
+
 
 
 
