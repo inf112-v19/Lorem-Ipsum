@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.GUI.Board;
+
 import java.util.ArrayList;
 
 
