@@ -1,5 +1,6 @@
 package inf112.skeleton.app.GameObjects;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
@@ -26,5 +27,10 @@ abstract class GameObject implements IGameObject {
     @Override
     public void remove() {
         //board.removeObject();    //has to be changed when board is finished
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null;
     }
 }
