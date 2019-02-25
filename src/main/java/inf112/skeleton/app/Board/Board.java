@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI;
+package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.Position;

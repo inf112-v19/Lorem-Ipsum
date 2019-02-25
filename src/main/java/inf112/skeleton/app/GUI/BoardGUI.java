@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.Board.Board;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 

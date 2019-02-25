@@ -1,11 +1,9 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.GUI.Board;
-
-import java.util.ArrayList;
+import inf112.skeleton.app.Board.Board;
 
 
-    //TODO:fill hand with cards method
+//TODO:fill hand with cards method
     //TODO:move forward method(ask board)
     //TODO:set backup method
     //TODO:move to backup method

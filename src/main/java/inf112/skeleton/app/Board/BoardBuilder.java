@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI;
+package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.*;
 import inf112.skeleton.app.Tiles.HoleTile;

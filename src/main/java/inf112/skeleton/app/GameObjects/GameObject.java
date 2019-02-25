@@ -1,6 +1,6 @@
 package inf112.skeleton.app.GameObjects;
 
-import inf112.skeleton.app.GUI.Board;
+import inf112.skeleton.app.Board.Board;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 
