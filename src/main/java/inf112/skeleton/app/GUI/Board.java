@@ -51,7 +51,7 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean isValidPos(Position pos) {
-		return false;
+		return ((pos.getX()<width && pos.getX()>=0) && (pos.getY()<height && pos.getY()>=0));
 	}
 
 	@Override
