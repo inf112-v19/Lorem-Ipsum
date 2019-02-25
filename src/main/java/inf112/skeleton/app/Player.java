@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Player {
 
+
     private String playerID;
 //    private ArrayList<Card> playerHand;
     private Board board;
@@ -106,6 +107,7 @@ public class Player {
             board.movePlayer(playerID, playerDirection);
         }
     }
+    */
 
 
 
