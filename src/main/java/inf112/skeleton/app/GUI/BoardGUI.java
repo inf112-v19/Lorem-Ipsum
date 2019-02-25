@@ -30,6 +30,7 @@ public class BoardGUI {
     int tilesize = 50;
     int boardWidth = 400;
     int boardHeight = 400;
+
     Texture texture = new Texture("RoboRallyTiles.png");
     TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 
@@ -80,7 +81,6 @@ public class BoardGUI {
      * is called from the constructor and resize();
      */
     public void reposition(){
-        //TODO - implement repositioning logic
         yOffset = Gdx.graphics.getWidth()/2 - boardWidth/2;
         xOffset = Gdx.graphics.getHeight()/2 - boardHeight/2;
     }
