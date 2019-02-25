@@ -29,7 +29,7 @@ public class BoardTest {
 		assertArrayEquals(tileNumbers, correctNumbers);
 	}
 
-	
+
 	@Test
 	public void boardBuilderBuildBoardTest() {
 		int[][] correctNumbers = {{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1}};

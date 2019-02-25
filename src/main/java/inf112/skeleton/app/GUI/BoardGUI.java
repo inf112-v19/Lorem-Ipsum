@@ -100,8 +100,8 @@ public class BoardGUI {
     //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
-        int xPos = 1;
-        int yPos = 1;
+        int xPos = 0;
+        int yPos = 0;
 
         for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
@@ -109,10 +109,11 @@ public class BoardGUI {
                 Tile curTile = board.getTile(pos);
                 int spriteX = curTile.getSpriteX();
                 int spriteY = curTile.getSpriteY();
-                TextureRegion tileSprite = spriteSheet[spriteX][spriteY];
+                TextureRegion tileSprite = spriteSheet[spriteY][spriteX];
                 batch.draw(tileSprite, x, y, tilesize, tilesize);
                 xPos++;
             }
+            xPos = 0;
             yPos++;
         }
 
