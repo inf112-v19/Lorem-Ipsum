@@ -2,7 +2,6 @@ package inf112.skeleton.app.GUI.states;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.GUI.DemoGame;
 
 public class PlayState extends State{
 
