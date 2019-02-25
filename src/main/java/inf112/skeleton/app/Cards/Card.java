@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Cards;
 
 public class Card implements Comparable<Card>{
     CardType type;

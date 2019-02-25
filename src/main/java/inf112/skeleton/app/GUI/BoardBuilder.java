@@ -1,6 +1,10 @@
 package inf112.skeleton.app.GUI;
 
 import inf112.skeleton.app.*;
+import inf112.skeleton.app.Tiles.HoleTile;
+import inf112.skeleton.app.Tiles.NormalTile;
+import inf112.skeleton.app.Tiles.RepairTile;
+import inf112.skeleton.app.Tiles.Tile;
 
 import java.io.BufferedReader;
 import java.io.File;

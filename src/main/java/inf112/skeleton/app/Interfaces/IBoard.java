@@ -1,7 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tile;
+import inf112.skeleton.app.Tiles.Tile;
 
 /** Interface for board. */
 

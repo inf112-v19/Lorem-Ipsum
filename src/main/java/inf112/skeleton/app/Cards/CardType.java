@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Cards;
 
 public enum CardType {
     FORWARD_1 (0, 1),

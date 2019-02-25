@@ -1,6 +1,10 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.GUI.BoardBuilder;
+import inf112.skeleton.app.Tiles.HoleTile;
+import inf112.skeleton.app.Tiles.NormalTile;
+import inf112.skeleton.app.Tiles.RepairTile;
+import inf112.skeleton.app.Tiles.Tile;
 import org.junit.Test;
 
 import java.io.IOException;

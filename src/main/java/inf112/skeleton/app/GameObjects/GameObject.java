@@ -1,7 +1,8 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.GameObjects;
 
 import inf112.skeleton.app.GUI.Board;
 import inf112.skeleton.app.Interfaces.IGameObject;
+import inf112.skeleton.app.Position;
 
 abstract class GameObject implements IGameObject {
 

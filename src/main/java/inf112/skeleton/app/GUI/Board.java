@@ -2,7 +2,7 @@ package inf112.skeleton.app.GUI;
 
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tile;
+import inf112.skeleton.app.Tiles.Tile;
 
 import java.util.HashMap;
 

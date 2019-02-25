@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Tiles;
 
 public class HoleTile extends Tile {
 	private final int SPRITE_X = 5;

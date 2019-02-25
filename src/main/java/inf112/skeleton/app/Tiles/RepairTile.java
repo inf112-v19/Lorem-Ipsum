@@ -1,4 +1,6 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Tiles;
+
+import inf112.skeleton.app.Position;
 
 public class RepairTile extends Tile {
 

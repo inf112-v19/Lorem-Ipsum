@@ -1,23 +1,13 @@
 package inf112.skeleton.app.GUI;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tile;
-
-import java.io.IOException;
-
-import static com.badlogic.gdx.Gdx.gl;
+import inf112.skeleton.app.Tiles.Tile;
 
 
 public class BoardGUI {
