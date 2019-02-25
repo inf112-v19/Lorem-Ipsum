@@ -34,14 +34,14 @@ public class BoardGUI {
         this.camera = camera;
         this.batch = batch;
 
-        board = new Board("BoardBuilderTest2.txt");
-        boardWidth = board.getWidth();
-        boardHeight = board.getHeight();
+        this.board = new Board("BoardBuilderTest2.txt");
+        this.boardWidth = board.getWidth();
+        this.boardHeight = board.getHeight();
 
-        tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*5);
+        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*5);
 
-        boardTileWidth = boardWidth *tilesize;
-        boardTileHeight = boardHeight * tilesize;
+        this.boardTileWidth = boardWidth *tilesize;
+        this.boardTileHeight = boardHeight * tilesize;
 
         //setting initial position
         reposition();
@@ -62,8 +62,8 @@ public class BoardGUI {
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-        camera.setToOrtho(false);
-        batch.setProjectionMatrix(camera.combined);
+        this.camera.setToOrtho(false);
+        this.batch.setProjectionMatrix(camera.combined);
         reposition();
 
         //TODO - implement resize logic (maybe not needed becaus of the batch.setProjectMatrix)
@@ -80,15 +80,16 @@ public class BoardGUI {
      * is called from the constructor and resize();
      */
     public void reposition(){
-        yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
-        xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
+        this.yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
+        this.xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
     }
 
     /**
      * function that draws the board using the spriteSheet and a double for-loop
+     * the function is getting Tiles on Positions, and then getting right x and y
+     * coordinates for the sprite sheet.
      *
      */
-    //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
         int xPos = 0;
