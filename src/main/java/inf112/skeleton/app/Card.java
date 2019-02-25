@@ -13,6 +13,10 @@ public class Card implements Comparable<Card>{
         return this.type;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     @Override
     public int compareTo(Card other) {
         return Integer.compare(this.priority, other.priority);

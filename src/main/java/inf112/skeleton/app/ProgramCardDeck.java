@@ -11,6 +11,9 @@ public class ProgramCardDeck implements ICardDeck {
 
     Stack<Card> deck = new Stack<>();
 
+    /**
+     * Creates new program card deck containing 84 cards
+     */
     @Override
     public void createNewDeck() {
         clearDeck();
