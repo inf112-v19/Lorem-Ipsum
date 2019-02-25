@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.Interfaces.IBoard;
+import inf112.skeleton.app.Player;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -8,7 +9,7 @@ import java.util.HashMap;
 
 public class Board implements IBoard {
 	private HashMap<Position, Tile> tileMap;
-	//private HashMap<Player, Position> playerPositions = new HashMap<>();
+	private HashMap<Player, Position> playerPositions = new HashMap<>();
 	private int height;
 	private int width;
 
