@@ -4,7 +4,7 @@ import inf112.skeleton.app.Cards.Card;
 import inf112.skeleton.app.Position;
 
 public interface IPlayer {
-	
+
 	void turnPlayer(int numberOfTurns);
 
 	int getDirection();
