@@ -100,8 +100,8 @@ public class BoardGUI {
     //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
-        int xPos = 0;
-        int yPos = 0;
+        int xPos = 1;
+        int yPos = 1;
 
         for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){

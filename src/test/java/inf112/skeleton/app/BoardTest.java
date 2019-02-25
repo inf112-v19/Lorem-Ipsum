@@ -29,9 +29,7 @@ public class BoardTest {
 		assertArrayEquals(tileNumbers, correctNumbers);
 	}
 
-	/**
-	 * TODO - must override the equals methods in Tile and Position for assert to work
-	 */
+	
 	@Test
 	public void boardBuilderBuildBoardTest() {
 		int[][] correctNumbers = {{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1}};
@@ -42,11 +40,13 @@ public class BoardTest {
 				Position curPos = new Position(x, y);
 				Tile curTile;
 				switch(correctNumbers[y][x]){
-					case 1: curTile = new NormalTile();
+					case 0: curTile = new NormalTile();
 						break;
-					case 2: curTile = new HoleTile();
+					case 1: curTile = new HoleTile();
 						break;
-					default: curTile = null;
+					case 2: curTile = new RepairTile();
+						break;
+					default: curTile = new NormalTile();
 				}
 				correctTileMap.put(curPos, curTile);
 			}

@@ -13,4 +13,9 @@ public abstract class Tile implements ITile {
 	public boolean objectOnTile() {
 		return false;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getClass() == obj.getClass();
+	}
 }
