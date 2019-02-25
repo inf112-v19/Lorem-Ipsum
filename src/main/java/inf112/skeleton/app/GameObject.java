@@ -4,12 +4,10 @@ import inf112.skeleton.app.Interfaces.IGameObject;
 
 abstract class GameObject implements IGameObject {
 
-    private Position position;
     private Board board;
 
-    public GameObject(Position position, Board board){
+    public GameObject(Board board){
         this.board = board;
-        this.position = position;
     }
 
     @Override

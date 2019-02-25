@@ -14,7 +14,7 @@ import java.util.ArrayList;
     //
 
 
-public class Player extends GameObject {
+public class Player {
 
     private Position playerPostition;
     private String playerID;
@@ -27,8 +27,9 @@ public class Player extends GameObject {
 
 
 
-    public Player(Position playerPosition, Board board) {
-        super(playerPosition, board);
+    public Player(String playerID, Board board) {
+    this.board = board;
+    this.playerID = playerID;
     }
 
 
@@ -60,9 +61,15 @@ public class Player extends GameObject {
         }
     }
 
-    public moveForward(){
-        if(playerDirection == "North"){
-            
+    /**
+     * Tries to move the player 'numberOfSteps' in the direction the player is facing
+     * @param numberOfSteps to move
+     */
+    public void moveForward(int numberOfSteps) {
+
+        for (int i = 0; i < numberOfSteps; i++) {
+
+            board.movePlayer(playerID, playerDirection);
         }
     }
 
