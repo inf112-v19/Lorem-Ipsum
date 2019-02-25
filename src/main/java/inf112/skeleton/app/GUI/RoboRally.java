@@ -27,9 +27,6 @@ public class RoboRally extends ApplicationAdapter {
     public void create () {
         batch = new SpriteBatch();
 
-        //camera = new OrthographicCamera();
-        //camera.setToOrtho(true);
-
         //em
         gsm = new GameStateManager();
 
