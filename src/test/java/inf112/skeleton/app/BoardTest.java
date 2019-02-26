@@ -3,9 +3,7 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.Board.BoardBuilder;
 import inf112.skeleton.app.GameObjects.Laser;
 import inf112.skeleton.app.Interfaces.IGameObject;
-import inf112.skeleton.app.Tiles.HoleTile;
 import inf112.skeleton.app.Tiles.NormalTile;
-import inf112.skeleton.app.Tiles.RepairTile;
 import inf112.skeleton.app.Tiles.Tile;
 import org.junit.Test;
 
@@ -18,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class BoardTest {
 
 	/**
-	 * Testing that the readFromFile method in boardBuilder returns the correct 2D int array
+	 * Testing that the readFromFile method in boardBuilder returns the correct 2D String array
 	 *
 	 * @throws IOException
 	 */
@@ -66,11 +64,9 @@ public class BoardTest {
 		BoardBuilder bb = new BoardBuilder();
 		IGameObject[] gameObjects = {new Laser(Direction.NORTH)};
 		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
-
 		Tile testTile = bb.getTile("00100");
 
 		assertEquals(correctTile, testTile);
-
 	}
 
 }
