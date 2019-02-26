@@ -31,9 +31,13 @@ public final class SpriteSheet extends Sprite {
 		spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 	}
 
+
+	/*
 	public TextureRegion getTexture(int x, int y){
 		return spriteSheet[y][x];
 	}
+	*/
+
 
 	public TextureRegion getTexure(SpriteType spriteType){
 		return spriteSheet[spriteType.getY()][spriteType.getX()];

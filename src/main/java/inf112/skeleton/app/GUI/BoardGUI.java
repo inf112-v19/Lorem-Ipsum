@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
 import inf112.skeleton.app.GUI.states.GameStateManager;
+import inf112.skeleton.app.GameObjects.GameObject;
+import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -97,10 +99,11 @@ public class BoardGUI {
         batch.begin();
         int xPos = 0;
         int yPos = 0;
+        Position pos;
 
         for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
-                Position pos = new Position(xPos, yPos);
+                pos = new Position(xPos, yPos);
                 Tile curTile = board.getTile(pos);
                 SpriteType spriteType = curTile.getSpriteType();
                 TextureRegion tileSprite = spriteSheet.getTexure(spriteType);
