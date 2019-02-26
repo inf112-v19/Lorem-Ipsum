@@ -105,7 +105,6 @@ public class BoardGUI {
                 int spriteX = curTile.getSpriteX();
                 int spriteY = curTile.getSpriteY();
                 //TextureRegion tileSprite = spriteSheet[spriteY][spriteX];
-                spriteSheet.initializeTexture();
                 TextureRegion tileSprite = spriteSheet.getTexture(spriteX,spriteY);
                 batch.draw(tileSprite, x, y, tilesize, tilesize);
                 xPos++;

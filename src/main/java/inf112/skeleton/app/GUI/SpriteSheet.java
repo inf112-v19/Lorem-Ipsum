@@ -71,15 +71,17 @@ public final class SpriteSheet extends Sprite {
 		classLoader = SpriteSheet.class.getClassLoader();
 		file = new File(classLoader.getResource("RoboRallyTiles.png").getFile());
 		fileHandle = new FileHandle(file);
+		texture = new Texture(fileHandle);
+		spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 	}
 
 	public TextureRegion getTexture(int x, int y){
 		return spriteSheet[y][x];
 	}
 
-	public void initializeTexture(){
+	/*public void initializeTexture(){
 		texture = new Texture(fileHandle);
 		spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
-	}
+	}*/
 
 }

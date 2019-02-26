@@ -5,9 +5,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GUI.SpriteSheet;
 
 public class Laser extends GameObject{
-	TextureRegion texture;
-	SpriteSheet spriteSheet;
-
 
 	//TODO - need two lasers. one LaserBase and one Laser. This class now functions ass a Laser
 	public Laser(Direction dir) {
@@ -22,7 +19,6 @@ public class Laser extends GameObject{
 	@Override
 	public void initializeTexture() {
 		super.initializeTexture();
-		spriteSheet = new SpriteSheet();
 		switch (dir){
 			case NORTH:
 			case SOUTH:

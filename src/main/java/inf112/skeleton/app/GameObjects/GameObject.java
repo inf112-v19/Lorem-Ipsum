@@ -46,6 +46,7 @@ abstract class GameObject implements IGameObject {
 
 	@Override
 	public void initializeTexture(){
-		spriteSheet.initializeTexture();
+    	spriteSheet = new SpriteSheet();
+		//spriteSheet.initializeTexture();
 	}
 }

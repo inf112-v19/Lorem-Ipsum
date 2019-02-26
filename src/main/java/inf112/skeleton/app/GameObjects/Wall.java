@@ -5,9 +5,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GUI.SpriteSheet;
 
 public class Wall extends GameObject {
-	TextureRegion texture;
-	SpriteSheet spriteSheet;
-
 
 	public Wall(Direction dir) {
 		super(dir);
@@ -22,8 +19,6 @@ public class Wall extends GameObject {
 	@Override
 	public void initializeTexture() {
 		super.initializeTexture();
-		spriteSheet = new SpriteSheet();
-
 		switch (dir){
 			case NORTH:
 				texture = spriteSheet.getTexture(4, 3);
