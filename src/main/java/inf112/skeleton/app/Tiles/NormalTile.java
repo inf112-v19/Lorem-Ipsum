@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Tiles;
 
 import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GUI.SpriteSheet;
 import inf112.skeleton.app.Interfaces.IGameObject;
 
 public class NormalTile extends Tile {

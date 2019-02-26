@@ -1,14 +1,24 @@
 package inf112.skeleton.app.GUI;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.Board.BoardBuilder;
 
-public final class SpriteSheet {
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+
+public final class SpriteSheet extends Sprite {
 	/**
 	 * RoboRallyTiles.png is a 7x13 spritesheet
 	 */
-
-	private enum SpriteType{
+	public enum SpriteType{
 		NORMAL_TILE(4, 0),
 		HOLE_TILE(5,0),
 		REPAIR_TILE(6,0),
@@ -19,14 +29,14 @@ public final class SpriteSheet {
 		LASERSOURCE_EAST(5, 4),
 		LASERSOURCE_WEST(5,5),
 
-		LASER_VERTICAL(7,5),
-		LASER_HORIZONTAL(7,4),
+		LASER_VERTICAL(6,5),
+		LASER_HORIZONTAL(6,4),
 
 		//wall blocking the given direction
-		WALL_NORTH(),
-		WALL_SOUTH(),
-		WALL_EAST(),
-		WALL_WEST(),
+		WALL_NORTH(6,3),
+		WALL_SOUTH(4,3),
+		WALL_EAST(6,2),
+		WALL_WEST(5,3),
 
 		FLAG(),
 		PLAYER();
@@ -50,11 +60,26 @@ public final class SpriteSheet {
 
 	}
 
-	private final Texture sheet = new Texture("RoboRallyTiles.png");
-	private final TextureRegion[][] spriteSheet = new TextureRegion(sheet,336,624).split(336/7, 624/13);
+
+	private ClassLoader classLoader;
+	private File file;
+	private FileHandle fileHandle;
+	private Texture texture;
+	private TextureRegion[][] spriteSheet;
+
+	public SpriteSheet(){
+		classLoader = SpriteSheet.class.getClassLoader();
+		file = new File(classLoader.getResource("RoboRallyTiles.png").getFile());
+		fileHandle = new FileHandle(file);
+	}
 
 	public TextureRegion getTexture(int x, int y){
 		return spriteSheet[y][x];
+	}
+
+	public void initializeTexture(){
+		texture = new Texture(fileHandle);
+		spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 	}
 
 }

@@ -12,6 +12,16 @@ public class Laser extends GameObject{
 	//TODO - need two lasers. one LaserBase and one Laser. This class now functions ass a Laser
 	public Laser(Direction dir) {
 		super(dir);
+	}
+
+	@Override
+	public TextureRegion getTexture() {
+		return texture;
+	}
+
+	@Override
+	public void initializeTexture() {
+		super.initializeTexture();
 		spriteSheet = new SpriteSheet();
 		switch (dir){
 			case NORTH:
@@ -28,9 +38,5 @@ public class Laser extends GameObject{
 		}
 
 	}
-
-	@Override
-	public TextureRegion getTexture() {
-		return texture;
-	}
 }
+

@@ -11,6 +11,17 @@ public class Wall extends GameObject {
 
 	public Wall(Direction dir) {
 		super(dir);
+
+	}
+
+	@Override
+	public TextureRegion getTexture() {
+		return texture;
+	}
+
+	@Override
+	public void initializeTexture() {
+		super.initializeTexture();
 		spriteSheet = new SpriteSheet();
 
 		switch (dir){
@@ -30,13 +41,5 @@ public class Wall extends GameObject {
 				System.err.println("No valid Direction in Wall!");
 				break;
 		}
-
 	}
-
-	@Override
-	public TextureRegion getTexture() {
-		return texture;
-	}
-
-
 }

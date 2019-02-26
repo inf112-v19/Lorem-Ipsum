@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.GUI.states.GameStateManager;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -19,6 +20,7 @@ public class BoardGUI {
     OrthographicCamera camera;
     SpriteBatch batch;
 
+    SpriteSheet spriteSheet;
 
     int tilesize;
     int boardWidth;
@@ -27,12 +29,14 @@ public class BoardGUI {
     int boardTileHeight;
 
     Texture texture = new Texture("RoboRallyTiles.png");
-    TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
+    //TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 
 
     public BoardGUI(OrthographicCamera camera, SpriteBatch batch) {
         this.camera = camera;
         this.batch = batch;
+
+        this.spriteSheet = new SpriteSheet();
 
         board = new Board("BoardBuilderTest2.txt");
         boardWidth = board.getWidth();
@@ -100,7 +104,9 @@ public class BoardGUI {
                 Tile curTile = board.getTile(pos);
                 int spriteX = curTile.getSpriteX();
                 int spriteY = curTile.getSpriteY();
-                TextureRegion tileSprite = spriteSheet[spriteY][spriteX];
+                //TextureRegion tileSprite = spriteSheet[spriteY][spriteX];
+                spriteSheet.initializeTexture();
+                TextureRegion tileSprite = spriteSheet.getTexture(spriteX,spriteY);
                 batch.draw(tileSprite, x, y, tilesize, tilesize);
                 xPos++;
             }

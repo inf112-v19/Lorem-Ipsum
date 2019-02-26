@@ -3,12 +3,15 @@ package inf112.skeleton.app.GameObjects;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
 import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GUI.SpriteSheet;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 
 abstract class GameObject implements IGameObject {
 
 	Direction dir;
+	TextureRegion texture;
+	SpriteSheet spriteSheet;
 
 
     public GameObject(Direction dir){
@@ -39,5 +42,10 @@ abstract class GameObject implements IGameObject {
 	@Override
 	public Direction getDirection() {
 		return this.dir;
+	}
+
+	@Override
+	public void initializeTexture(){
+		spriteSheet.initializeTexture();
 	}
 }
