@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Position;
 
 /**
@@ -8,19 +9,6 @@ import inf112.skeleton.app.Position;
  */
 
 public interface ITile {
-
-	/**
-	 * Get the x coordinat to sprite in sprite sheet
-	 * @return int coordinat to use in a sprite sheet
-	 */
-	int getSpriteX();
-
-	/**
-	 * Get the y coordinat to sprite in sprite sheet
-	 * @return int coordinat to use in a sprite sheet
-	 */
-	int getSpriteY();
-
 
 	/**
 	 * get the Tiles Position
@@ -47,6 +35,10 @@ public interface ITile {
 	//GameObject getObjectOnTile();
 
 
+	/**
+	 * @return SpritType of the Tile
+	 */
+	SpriteType getSpriteType();
 
 
 

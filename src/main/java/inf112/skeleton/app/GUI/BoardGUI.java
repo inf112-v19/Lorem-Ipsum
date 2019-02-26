@@ -38,7 +38,7 @@ public class BoardGUI {
 
         this.spriteSheet = new SpriteSheet();
 
-        board = new Board("BoardBuilderTest2.txt");
+        board = new Board("ExampleBoard.txt");
         boardWidth = board.getWidth();
         boardHeight = board.getHeight();
 
@@ -102,10 +102,8 @@ public class BoardGUI {
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
                 Position pos = new Position(xPos, yPos);
                 Tile curTile = board.getTile(pos);
-                int spriteX = curTile.getSpriteX();
-                int spriteY = curTile.getSpriteY();
-                //TextureRegion tileSprite = spriteSheet[spriteY][spriteX];
-                TextureRegion tileSprite = spriteSheet.getTexture(spriteX,spriteY);
+                SpriteType spriteType = curTile.getSpriteType();
+                TextureRegion tileSprite = spriteSheet.getTexure(spriteType);
                 batch.draw(tileSprite, x, y, tilesize, tilesize);
                 xPos++;
             }
