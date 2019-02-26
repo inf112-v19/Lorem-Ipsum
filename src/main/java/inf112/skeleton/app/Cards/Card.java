@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Cards;
 
+import com.badlogic.gdx.graphics.Texture;
+
 public class Card implements Comparable<Card>{
     CardType type;
     int priority;
@@ -15,6 +17,10 @@ public class Card implements Comparable<Card>{
 
     public int getPriority() {
         return priority;
+    }
+
+    public Texture getImage() {
+        return type.getImage();
     }
 
     @Override

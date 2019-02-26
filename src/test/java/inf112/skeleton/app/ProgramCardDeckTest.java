@@ -17,7 +17,7 @@ public class ProgramCardDeckTest {
     }
 
     @Test
-    public void deckShouldContain0cardsAfterClearDeck() {
+    public void DeckShouldContain0cardsAfterClearDeck() {
         ICardDeck deck = new ProgramCardDeck();
         deck.createNewDeck();
         ((ProgramCardDeck) deck).clearDeck();
