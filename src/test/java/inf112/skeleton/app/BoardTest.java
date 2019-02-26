@@ -62,7 +62,7 @@ public class BoardTest {
 	 * Testing that the getTile works as expected
 	 */
 	@Test
-	public void boarBuilderGetTileTest() {
+	public void boardBuilderGetTileTest() {
 		BoardBuilder bb = new BoardBuilder();
 		IGameObject[] gameObjects = {new Laser(Direction.NORTH)};
 		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
