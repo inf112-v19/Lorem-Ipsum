@@ -23,6 +23,7 @@ public final class SpriteSheet extends Sprite {
 	private Texture texture;
 	private TextureRegion[][] spriteSheet;
 
+
 	public SpriteSheet(){
 		classLoader = SpriteSheet.class.getClassLoader();
 		file = new File(classLoader.getResource("RoboRallyTiles.png").getFile());
@@ -41,6 +42,10 @@ public final class SpriteSheet extends Sprite {
 
 	public TextureRegion getTexure(SpriteType spriteType){
 		return spriteSheet[spriteType.getY()][spriteType.getX()];
+	}
+
+	public TextureRegion getTexture(SpriteType spriteType){
+		return
 	}
 
 }

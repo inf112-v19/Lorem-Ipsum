@@ -25,18 +25,24 @@ public enum SpriteType{
 	WALL_EAST(6,2),
 	WALL_WEST(5,3),
 
-	FLAG(),
-	PLAYER();
+	//FLAG(),
+	//PLAYER(),
+
+	CARD_BACKUP("BackUp.png");
+
+
 
 	private int x;
 	private int y;
+	String filename;
 
 	SpriteType (int x, int y){
 		this.x = x;
 		this.y = y;
 	}
 
-	SpriteType(){
+	SpriteType(String filename){
+		this.filename = filename;
 		//constructor to avoid errors (#hack)
 	}
 
