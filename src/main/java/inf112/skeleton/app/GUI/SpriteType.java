@@ -37,21 +37,20 @@ public enum SpriteType{
 	ROTATE_90_R("CardImages/RightTurn.png");
 
 
-
-
-
 	private int x;
 	private int y;
-	String filename;
+	private String filename;
+	private boolean usingCoordinates;
 
 	SpriteType (int x, int y){
 		this.x = x;
 		this.y = y;
+		this.usingCoordinates = true;
 	}
 
 	SpriteType(String filename){
 		this.filename = filename;
-		//constructor to avoid errors (#hack)
+		this.usingCoordinates = false;
 	}
 
 	public int getX() {
@@ -64,6 +63,10 @@ public enum SpriteType{
 
 	public String getFilename(){
 		return filename;
+	}
+
+	public boolean isUsingCoordinates(){
+		return usingCoordinates;
 	}
 
 }
