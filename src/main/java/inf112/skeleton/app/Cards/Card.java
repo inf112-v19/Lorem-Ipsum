@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Cards;
 
 import com.badlogic.gdx.graphics.Texture;
+import inf112.skeleton.app.GUI.SpriteType;
 
 public class Card implements Comparable<Card>{
     CardType type;
@@ -19,8 +20,8 @@ public class Card implements Comparable<Card>{
         return priority;
     }
 
-    public Texture getImage() {
-        return type.getImage();
+    public SpriteType getSprite() {
+        return type.getSprite();
     }
 
     @Override

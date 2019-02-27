@@ -28,7 +28,15 @@ public enum SpriteType{
 	//FLAG(),
 	//PLAYER(),
 
-	CARD_BACKUP("BackUp.png");
+	BACKWARD_1("CardImages/BackUp.png"),
+	FORWARD_1("CardImages/Move1.png"),
+	FORWARD_2("CardImages/Move2.png"),
+	FORWARD_3("CardImages/Move3.png"),
+	ROTATE_180("CardImages/U-Turn.png"),
+	ROTATE_90_L("CardImages/LeftTurn.png"),
+	ROTATE_90_R("CardImages/RightTurn.png");
+
+
 
 
 

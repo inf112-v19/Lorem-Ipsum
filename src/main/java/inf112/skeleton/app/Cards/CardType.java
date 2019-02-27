@@ -1,24 +1,25 @@
 package inf112.skeleton.app.Cards;
 
 import com.badlogic.gdx.graphics.Texture;
+import inf112.skeleton.app.GUI.SpriteType;
 
 public enum CardType {
-    BACKWARD_1(0, -1, new Texture("CardImages/BackUp.png")),
-    FORWARD_1(0, 1, new Texture("CardImages/Move1.png")),
-    FORWARD_2(0, 2, new Texture("CardImages/Move2.png")),
-    FORWARD_3(0, 3, new Texture("CardImages/Move3.png")),
-    ROTATE_180(2, 0, new Texture("CardImages/U-Turn.png")),
-    ROTATE_90_L(-1, 0, new Texture("CardImages/LeftTurn.png")),
-    ROTATE_90_R(1, 0, new Texture("CardImages/RightTurn.png"));
+    BACKWARD_1(0, -1, SpriteType.BACKWARD_1),
+    FORWARD_1(0, 1, SpriteType.FORWARD_1),
+    FORWARD_2(0, 2, SpriteType.FORWARD_2),
+    FORWARD_3(0, 3, SpriteType.FORWARD_3),
+    ROTATE_180(2, 0, SpriteType.ROTATE_180),
+    ROTATE_90_L(-1, 0, SpriteType.ROTATE_90_L),
+    ROTATE_90_R(1, 0, SpriteType.ROTATE_90_R);
 
     private final int rotation;
     private final int movement;
-    private Texture image;
+    private SpriteType sprite;
 
-    CardType(int rotation, int movement, Texture image) {
+    CardType(int rotation, int movement, SpriteType sprite) {
         this.rotation = rotation;
         this.movement = movement;
-        this.image = image;
+        this.sprite = sprite;
     }
 
     public int getRotation() {
@@ -29,7 +30,7 @@ public enum CardType {
         return movement;
     }
 
-    public Texture getImage() {
-        return image;
+    public SpriteType getSprite() {
+        return sprite;
     }
 }
