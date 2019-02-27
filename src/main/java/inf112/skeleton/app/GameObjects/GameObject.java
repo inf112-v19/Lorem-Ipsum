@@ -11,7 +11,6 @@ import inf112.skeleton.app.Position;
 public abstract class GameObject implements IGameObject {
 
 	protected Direction dir;
-	private SpriteSheet spriteSheet;
 	protected SpriteType spriteType;
 
 
@@ -45,13 +44,5 @@ public abstract class GameObject implements IGameObject {
 		return this.dir;
 	}
 
-	@Override
-	public void initializeTexture(){
-    	spriteSheet = new SpriteSheet();
-		//spriteSheet.initializeTexture();
-	}
 
-	public SpriteType getSpriteType() {
-		return spriteType;
-	}
 }

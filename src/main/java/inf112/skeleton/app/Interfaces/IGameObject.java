@@ -39,11 +39,4 @@ public interface IGameObject {
      */
     Direction getDirection();
 
-
-    /**
-     * function that initializes the texture.
-     * must run before drawing.
-     * Should not be run when testing because libGDX isn't part of the testing.
-     */
-    void initializeTexture();
 }

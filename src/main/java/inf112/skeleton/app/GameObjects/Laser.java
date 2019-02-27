@@ -9,11 +9,6 @@ public class Laser extends GameObject{
 
 	public Laser(Direction dir) {
 		super(dir);
-	}
-
-	@Override
-	public void initializeTexture() {
-		super.initializeTexture();
 		switch (dir){
 			case NORTH:
 			case SOUTH:
@@ -29,7 +24,7 @@ public class Laser extends GameObject{
 				System.err.println("Direction not valid in Laser");
 				break;
 		}
-
 	}
+
 }
 

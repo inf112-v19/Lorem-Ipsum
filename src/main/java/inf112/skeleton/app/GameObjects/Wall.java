@@ -9,13 +9,6 @@ public class Wall extends GameObject {
 
 	public Wall(Direction dir) {
 		super(dir);
-
-	}
-
-
-	@Override
-	public void initializeTexture() {
-		super.initializeTexture();
 		switch (dir){
 			case NORTH:
 				spriteType = SpriteType.WALL_NORTH;
@@ -37,5 +30,7 @@ public class Wall extends GameObject {
 				System.err.println("No valid Direction in Wall!");
 				break;
 		}
+
 	}
+
 }
