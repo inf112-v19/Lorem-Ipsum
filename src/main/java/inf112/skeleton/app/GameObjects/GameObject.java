@@ -1,15 +1,22 @@
 package inf112.skeleton.app.GameObjects;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GUI.SpriteSheet;
+import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 
-abstract class GameObject implements IGameObject {
+public abstract class GameObject implements IGameObject {
 
-    private Board board;
+	protected Direction dir;
+	private SpriteSheet spriteSheet;
+	protected SpriteType spriteType;
 
-    public GameObject(Board board){
-        this.board = board;
+
+    public GameObject(Direction dir){
+        this.dir = dir;
     }
 
     @Override
@@ -27,4 +34,24 @@ abstract class GameObject implements IGameObject {
     public void remove() {
         //board.removeObject();    //has to be changed when board is finished
     }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null;
+    }
+
+	@Override
+	public Direction getDirection() {
+		return this.dir;
+	}
+
+	@Override
+	public void initializeTexture(){
+    	spriteSheet = new SpriteSheet();
+		//spriteSheet.initializeTexture();
+	}
+
+	public SpriteType getSpriteType() {
+		return spriteType;
+	}
 }

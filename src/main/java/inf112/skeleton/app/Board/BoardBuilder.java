@@ -1,6 +1,9 @@
 package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.*;
+import inf112.skeleton.app.GameObjects.Laser;
+import inf112.skeleton.app.GameObjects.Wall;
+import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Tiles.HoleTile;
 import inf112.skeleton.app.Tiles.NormalTile;
 import inf112.skeleton.app.Tiles.RepairTile;
@@ -29,11 +32,13 @@ public class BoardBuilder {
 	 * G is the GameObject-type and D is the direction. The last two letters are repeated for the number of
 	 * GameObjects on the tile.
 	 *
+	 *
+	 *
 	 * @param fileName
 	 * @return Hashmap containing all possible positions with corresponding tiles
 	 */
 	public static HashMap<Position, Tile> buildBoard(String fileName)  {
-		int[][] tileNumbers;
+		String[][] tileNumbers;
 		try {
 			tileNumbers = readFromFile(fileName);
 		} catch (IOException e) {
@@ -47,9 +52,8 @@ public class BoardBuilder {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Position curPos = new Position(x, y);
-				Tile curTile = findTile(tileNumbers[y][x]);
+				Tile curTile = getTile(tileNumbers[y][x]);
 				tileMap.put(curPos, curTile);
-
 			}
 		}
 
@@ -58,17 +62,75 @@ public class BoardBuilder {
 
 
 	/**
-	 * Maps the tileNumber to the corresponding Tile
-	 * TODO - Add the rest of the tiles and handle gameobjects
+	 * Maps the tileNumber to the corresponding Tile with the rotation and any related GameObjects
+	 * TODO - add the rest of the tiles
 	 * @param tileNumber
 	 * @return
 	 */
-	private static Tile findTile(int tileNumber) {
-		switch (tileNumber){
-			case 0: return new NormalTile();
-			case 1: return new HoleTile();
-			case 2: return new RepairTile();
-			default: return new NormalTile();
+	public static Tile getTile(String tileNumber) {
+		int tileType = Integer.parseInt(tileNumber.substring(0,1));
+		int tileRotation = Integer.parseInt(tileNumber.substring(1,2));
+		int numberOfGO = Integer.parseInt(tileNumber.substring(2,3));
+		IGameObject[] gameObjects = new IGameObject[numberOfGO];
+		Direction tileDirection = getDirection(tileRotation);
+
+		//builds array of Game Objects related to the tile
+		int j = 0;
+		for (int i = 0; i < numberOfGO*2; i+=2) {
+			int gameObjectType = Integer.parseInt(tileNumber.substring(3+i,4+i));
+			int gameObjectDir = Integer.parseInt(tileNumber.substring(4+i,5+i));
+			gameObjects[j] = getGameObject(gameObjectType, gameObjectDir);
+			j++;
+		}
+
+
+		switch (tileType){
+			case 0: return new NormalTile(gameObjects, tileDirection);
+			case 1: return new HoleTile(gameObjects, tileDirection);
+			case 2: return new RepairTile(gameObjects, tileDirection);
+			default: return new NormalTile(gameObjects, tileDirection);
+		}
+	}
+
+
+	/**
+	 * Returns the GameObject corresponding to the int type and direction:
+	 *
+	 * @param type
+	 * @param dir
+	 * @return
+	 */
+	private static IGameObject getGameObject(int type, int dir){
+		Direction direction = getDirection(dir);
+
+		switch (type){
+			case 0:
+				System.out.println("Wall");
+				return new Wall(direction);
+			case 1:
+				System.out.println("Laser");
+				return new Laser(direction);
+			default:
+				System.err.println("Error while getting Game Object in BoardBuilder");
+				System.exit(1);
+				return null;
+		}
+	}
+
+
+	/**
+	 * Maps int to corresponding Direction
+	 *
+	 * @param dir
+	 * @return
+	 */
+	private static Direction getDirection(int dir){
+		switch (dir){
+			case 0: return Direction.NORTH;
+			case 1: return Direction.SOUTH;
+			case 2: return Direction.EAST;
+			case 3: return Direction.WEST;
+			default: return Direction.NORTH;
 		}
 	}
 
@@ -80,7 +142,7 @@ public class BoardBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	public static int[][] readFromFile(String filename) throws IOException {
+	public static String[][] readFromFile(String filename) throws IOException {
 		ClassLoader classLoader = BoardBuilder.class.getClassLoader();
 		File file = new File(classLoader.getResource(filename).getFile());
 
@@ -91,14 +153,14 @@ public class BoardBuilder {
 		height = Integer.parseInt(bufferedReader.readLine());
 		width = Integer.parseInt(bufferedReader.readLine());
 
-		int[][] tileNumbers = new int[height][width];
+		String[][] tileNumbers = new String[height][width];
 
 		for (int y=0; y<height; y++){
 			String line = bufferedReader.readLine();
 			String[] numbers = line.split(" ");
 
 			for (int x=0; x<width; x++){
-				tileNumbers[y][x] = Integer.parseInt(numbers[x]);
+				tileNumbers[y][x] = numbers[x];
 			}
 		}
 

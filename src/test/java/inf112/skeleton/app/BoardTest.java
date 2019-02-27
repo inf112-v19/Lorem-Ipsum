@@ -1,9 +1,9 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Board.BoardBuilder;
-import inf112.skeleton.app.Tiles.HoleTile;
+import inf112.skeleton.app.GameObjects.Laser;
+import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Tiles.NormalTile;
-import inf112.skeleton.app.Tiles.RepairTile;
 import inf112.skeleton.app.Tiles.Tile;
 import org.junit.Test;
 
@@ -16,19 +16,19 @@ import static org.junit.Assert.assertEquals;
 public class BoardTest {
 
 	/**
-	 * Testing that the readFromFile method in boardBuilder returns the correct 2D int array
+	 * Testing that the readFromFile method in boardBuilder returns the correct 2D String array
 	 *
 	 * @throws IOException
 	 */
 	@Test
 	public void boardBuilderReadFromFileTest() throws IOException {
 
-		int[][] correctNumbers = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15}};
+		String[][] correctNumbers = {{"1","2","3","4","5"},{"6","7","8","9","10"},{"11","12","13","14","15"}};
 
 		String testFile = "BoardBuilderTest1.txt";
 		BoardBuilder bb = new BoardBuilder();
 
-		int tileNumbers[][] = bb.readFromFile(testFile);
+		String tileNumbers[][] = bb.readFromFile(testFile);
 
 		assertArrayEquals(tileNumbers, correctNumbers);
 	}
@@ -38,22 +38,12 @@ public class BoardTest {
 	 */
 	@Test
 	public void boardBuilderBuildBoardTest() {
-		int[][] correctNumbers = {{1,2,1,2,1},{1,2,1,2,1},{1,2,1,2,1}};
 		HashMap<Position, Tile> correctTileMap = new HashMap<>();
 
-		for (int y = 0; y < correctNumbers.length; y++) {
-			for (int x = 0; x < correctNumbers[0].length; x++) {
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 5; x++) {
 				Position curPos = new Position(x, y);
-				Tile curTile;
-				switch(correctNumbers[y][x]){
-					case 0: curTile = new NormalTile();
-						break;
-					case 1: curTile = new HoleTile();
-						break;
-					case 2: curTile = new RepairTile();
-						break;
-					default: curTile = new NormalTile();
-				}
+				Tile curTile = new NormalTile(null, Direction.NORTH);
 				correctTileMap.put(curPos, curTile);
 			}
 		}
@@ -63,6 +53,20 @@ public class BoardTest {
 		HashMap<Position, Tile> tileMapTest = bb.buildBoard(testFile);
 
 		assertEquals(correctTileMap, tileMapTest);
+	}
+
+
+	/**
+	 * Testing that the getTile works as expected
+	 */
+	@Test
+	public void boardBuilderGetTileTest() {
+		BoardBuilder bb = new BoardBuilder();
+		IGameObject[] gameObjects = {new Laser(Direction.NORTH)};
+		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
+		Tile testTile = bb.getTile("00100");
+
+		assertEquals(correctTile, testTile);
 	}
 
 }
