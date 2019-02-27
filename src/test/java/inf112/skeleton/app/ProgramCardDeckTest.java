@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class ProgramCardDeckTest {
 
     @Test
-    public void NewCardDeckShouldContain84Cards() {
+    public void newCardDeckShouldContain84CardsTest() {
         ICardDeck deck = new ProgramCardDeck();
         deck.createNewDeck();
 
@@ -17,7 +17,7 @@ public class ProgramCardDeckTest {
     }
 
     @Test
-    public void DeckShouldContain0cardsAfterClearDeck() {
+    public void deckShouldContain0cardsAfterClearDeckTest() {
         ICardDeck deck = new ProgramCardDeck();
         deck.createNewDeck();
         ((ProgramCardDeck) deck).clearDeck();
