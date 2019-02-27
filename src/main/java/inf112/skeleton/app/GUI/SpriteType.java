@@ -54,4 +54,8 @@ public enum SpriteType{
 		return y;
 	}
 
+	public String getFilename(){
+		return filename;
+	}
+
 }

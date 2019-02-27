@@ -44,8 +44,10 @@ public final class SpriteSheet extends Sprite {
 		return spriteSheet[spriteType.getY()][spriteType.getX()];
 	}
 
+	/*
 	public TextureRegion getTexture(SpriteType spriteType){
 		return
 	}
+	*/
 
 }
