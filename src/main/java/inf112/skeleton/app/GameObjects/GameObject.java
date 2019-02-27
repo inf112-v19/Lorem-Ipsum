@@ -34,10 +34,10 @@ public abstract class GameObject implements IGameObject {
         //board.removeObject();    //has to be changed when board is finished
     }
 
-    @Override
-    public TextureRegion getTexture() {
-        return null;
-    }
+	@Override
+	public SpriteType getSpriteType() {
+		return spriteType;
+	}
 
 	@Override
 	public Direction getDirection() {
