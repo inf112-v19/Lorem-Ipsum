@@ -13,6 +13,10 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
 
+/**
+ * shameless copy paste from https://badlogicgames.com/forum/viewtopic.php?f=11&t=10115
+ * this code makes test in LibGDX possible
+ */
 public class GdxTestInit extends BlockJUnit4ClassRunner {
 	public GdxTestInit(Class<?> klass) throws InitializationError {
 		super(klass);
