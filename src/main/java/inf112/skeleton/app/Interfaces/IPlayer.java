@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Cards.Card;
+import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Direction;
 
@@ -27,6 +28,8 @@ public interface IPlayer {
 	void setBackup();
 
 	Position getBackup();
+
+	SpriteType getSpriteType();
 
 
 
