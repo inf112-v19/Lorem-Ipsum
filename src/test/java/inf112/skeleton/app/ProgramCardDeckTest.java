@@ -33,4 +33,19 @@ public class ProgramCardDeckTest {
         deck.drawCards(10);
     }
 
+    @Test
+    public void deckShouldContain83cardsAfterOneIsDrawnTest() {
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+        deck.drawCards(1);
+        assertEquals(83, deck.numbersOfCardsLeft());
+    }
+
+    @Test
+    public void deckShouldContain74cardsAfterOneIsDrawnTest() {
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+        deck.drawCards(10);
+        assertEquals(74, deck.numbersOfCardsLeft());
+    }
 }
