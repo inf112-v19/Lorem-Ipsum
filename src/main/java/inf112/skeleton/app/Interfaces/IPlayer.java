@@ -2,12 +2,13 @@ package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Cards.Card;
 import inf112.skeleton.app.Position;
+import inf112.skeleton.app.Direction;
 
 public interface IPlayer {
 
 	void turnPlayer(int numberOfTurns);
 
-	int getDirection();
+	Direction getDirection();
 
 	void setPlayerDirection(String direction);
 
