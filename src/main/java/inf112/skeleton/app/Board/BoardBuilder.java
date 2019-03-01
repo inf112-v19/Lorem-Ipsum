@@ -105,10 +105,8 @@ public class BoardBuilder {
 
 		switch (type){
 			case 0:
-				System.out.println("Wall");
 				return new Wall(direction);
 			case 1:
-				System.out.println("Laser");
 				return new Laser(direction);
 			default:
 				System.err.println("Error while getting Game Object in BoardBuilder");
