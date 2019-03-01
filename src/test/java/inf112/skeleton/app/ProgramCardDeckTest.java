@@ -24,4 +24,13 @@ public class ProgramCardDeckTest {
 
         assertEquals(0, deck.numbersOfCardsLeft());
     }
+
+    @Test(expected = NullPointerException.class)
+    public void deckShouldThrowErrorIfNotEnoughCardsInDeckTest() {
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+        ((ProgramCardDeck) deck).clearDeck();
+        deck.drawCards(10);
+    }
+
 }
