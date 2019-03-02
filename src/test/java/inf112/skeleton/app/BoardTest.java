@@ -25,7 +25,7 @@ public class BoardTest {
 
 		String[][] correctNumbers = {{"1","2","3","4","5"},{"6","7","8","9","10"},{"11","12","13","14","15"}};
 
-		String testFile = "BoardBuilderTest1.txt";
+		String testFile = "Boards/BoardBuilderTest1.txt";
 		BoardBuilder bb = new BoardBuilder();
 
 		String tileNumbers[][] = bb.readFromFile(testFile);
@@ -48,7 +48,7 @@ public class BoardTest {
 			}
 		}
 
-		String testFile = "BoardBuilderTest2.txt";
+		String testFile = "Boards/BoardBuilderTest2.txt";
 		BoardBuilder bb = new BoardBuilder();
 		HashMap<Position, Tile> tileMapTest = bb.buildBoard(testFile);
 

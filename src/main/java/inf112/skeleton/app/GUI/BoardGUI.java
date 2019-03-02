@@ -7,9 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
-import inf112.skeleton.app.GUI.states.GameStateManager;
-import inf112.skeleton.app.GameObjects.GameObject;
-import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -40,7 +37,7 @@ public class BoardGUI {
 
         this.spriteSheet = new SpriteSheet();
 
-        board = new Board("ExampleBoard.txt");
+        board = new Board("Boards/ExampleBoard.txt");
         boardWidth = board.getWidth();
         boardHeight = board.getHeight();
 
