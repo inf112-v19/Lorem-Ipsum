@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Position;
 
@@ -23,7 +24,7 @@ public interface ITile {
 	 *
 	 * @return true is there is an object on tile
 	 */
-	boolean objectOnTile();
+	boolean hasObjectOnTile();
 
 	/**
 	 * method that returns any GameObject in the Tile.
@@ -39,6 +40,16 @@ public interface ITile {
 	 * @return SpritType of the Tile
 	 */
 	SpriteType getSpriteType();
+
+
+	/**
+	 * method that returns GameObjects on the Tile
+	 * @return GameObject[]
+	 */
+	IGameObject[] getGameObjects();
+
+
+	Direction getDirection();
 
 
 

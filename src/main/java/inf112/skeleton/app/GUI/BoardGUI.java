@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.GameObjects.GameObject;
+import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -41,7 +43,7 @@ public class BoardGUI {
         boardWidth = board.getWidth();
         boardHeight = board.getHeight();
 
-        tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*5);
+        tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*2);
 
         boardTileWidth = boardWidth *tilesize;
         boardTileHeight = boardHeight * tilesize;
@@ -91,7 +93,6 @@ public class BoardGUI {
      * function that draws the board using the spriteSheet and a double for-loop
      *
      */
-    //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
         int xPos = 0;
@@ -105,6 +106,14 @@ public class BoardGUI {
                 SpriteType spriteType = curTile.getSpriteType();
                 TextureRegion tileSprite = spriteSheet.getTexure(spriteType);
                 batch.draw(tileSprite, x, y, tilesize, tilesize);
+                if (curTile.hasObjectOnTile()){
+                    for(int i = 0; i < curTile.getGameObjects().length; i++){
+                        IGameObject[] gameObjects = curTile.getGameObjects();
+                        SpriteType gameObjectSpriteType = gameObjects[i].getSpriteType();
+                        TextureRegion gameObjectTexture = spriteSheet.getTexure(gameObjectSpriteType);
+                        batch.draw(gameObjectTexture, x, y, tilesize, tilesize);
+                    }
+                }
                 xPos++;
             }
             xPos = 0;
