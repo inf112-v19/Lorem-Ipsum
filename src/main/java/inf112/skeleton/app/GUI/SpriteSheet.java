@@ -23,6 +23,15 @@ public final class SpriteSheet extends Sprite {
 	public SpriteSheet(){
 		texture = new Texture("RoboRallyTiles.png");
 		spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
+		flip();
+	}
+
+	private void flip(){
+		for (int i = 0; i < spriteSheet.length; i++){
+			for(int j = 0; j < spriteSheet[i].length; j++){
+				spriteSheet[i][j].flip(false, true);
+			}
+		}
 	}
 
 

@@ -32,6 +32,7 @@ public class RoboRally extends ApplicationAdapter {
         gsm = new GameStateManager();
 
         camera = new OrthographicCamera();
+        camera.setToOrtho(true);
         camera.update();
 
         boardGUI = new BoardGUI(camera, batch);

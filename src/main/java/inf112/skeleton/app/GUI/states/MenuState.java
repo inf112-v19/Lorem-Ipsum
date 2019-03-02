@@ -32,6 +32,7 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
+
         sb.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         sb.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getWidth() / 2), (RoboRally.HEIGHT)-((playButton.getHeight())*2));
         sb.end();
