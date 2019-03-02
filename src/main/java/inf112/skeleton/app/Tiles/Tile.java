@@ -76,6 +76,7 @@ public abstract class Tile implements ITile {
 				j++;
 			}
 		}
+		gameObjects = newGameObjects;
 		return true;
 	}
 
