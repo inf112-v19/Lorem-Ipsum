@@ -66,7 +66,10 @@ public class Board implements IBoard {
 		if (!isValidPos(pos)){
 			//TODO - handle invalid position exception
 		}
-		tileMap.get(pos).removeGameObject(gameObject);
+		if (!tileMap.get(pos).removeGameObject(gameObject)) {
+		    //TODO - handle case where given GameObject was not present on tile
+        }
+
 	}
 
 	@Override
