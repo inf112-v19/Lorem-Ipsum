@@ -8,7 +8,7 @@ import inf112.skeleton.app.Interfaces.IGameObject;
 
 public class NormalTile extends Tile {
 
-	public NormalTile(IGameObject[] gameObjects, Direction direction) {
+	public NormalTile(GameObject[] gameObjects, Direction direction) {
 		this.gameObjects = gameObjects;
 		this.direction = direction;
 		super.spriteType = SpriteType.NORMAL_TILE;

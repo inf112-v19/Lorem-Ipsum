@@ -8,7 +8,7 @@ import inf112.skeleton.app.Position;
 
 public class RepairTile extends Tile {
 
-	public RepairTile(IGameObject[] gameObjects, Direction direction) {
+	public RepairTile(GameObject[] gameObjects, Direction direction) {
 		this.gameObjects = gameObjects;
 		this.direction = direction;
 		super.spriteType = SpriteType.REPAIR_TILE;
