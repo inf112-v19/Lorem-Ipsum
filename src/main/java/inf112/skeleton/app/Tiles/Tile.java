@@ -80,13 +80,8 @@ public abstract class Tile implements ITile {
 		return true;
 	}
 
-	/**
-	 * method that checks if a given GameObject is present on the tile
-	 *
-	 * @param gameObject
-	 * @return int of the index position of the GameObject, or possibly -1 if not present
-	 */
-	private int hasGameObject(GameObject gameObject){
+	@Override
+	public int hasGameObject(GameObject gameObject){
 		for (int i = 0; i < gameObjects.length; i++) {
 			if (gameObjects[i].equals(gameObject)) {
 				return i;

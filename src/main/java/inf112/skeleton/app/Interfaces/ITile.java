@@ -66,5 +66,13 @@ public interface ITile {
 	 */
 	boolean removeGameObject(GameObject gameObject);
 
+	/**
+	 * method that checks if a given GameObject is present on the tile
+	 *
+	 * @param gameObject
+	 * @return int of the index position of the GameObject, or possibly -1 if not present
+	 */
+	int hasGameObject(GameObject gameObject);
+
 
 }

@@ -46,14 +46,20 @@ public interface IBoard<T> {
     T getGameObject(Position pos);
 
     /**
+     *
+     *
+
+     */
+    /**
      * Move the player in the given direction.
      *
      * @param player
      *            player to be moved
      * @param dir
      *            try to move player this direction
+     * @return true if movement happened or false if player did not move
      */
-    void movePlayer(Player player, Direction dir);
+    boolean movePlayer(Player player, Direction dir);
 
     /**
      * Remove a Game Object from the tile at the given x,y location.
