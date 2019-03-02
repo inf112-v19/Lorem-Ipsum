@@ -92,7 +92,7 @@ public class BoardGUI {
 
     private void drawTile(Tile tile, int x, int y){
 		SpriteType spriteType = tile.getSpriteType();
-		textureRegion = spriteSheet.getTexure(spriteType);
+		textureRegion = spriteSheet.getTexture(spriteType);
 		batch.draw(textureRegion, x, y, tilesize, tilesize);
 
 	}
@@ -103,7 +103,7 @@ public class BoardGUI {
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				IGameObject[] gameObjects = tile.getGameObjects();
 				SpriteType gameObjectSpriteType = gameObjects[i].getSpriteType();
-				textureRegion = spriteSheet.getTexure(gameObjectSpriteType);
+				textureRegion = spriteSheet.getTexture(gameObjectSpriteType);
 				batch.draw(textureRegion, x, y, tilesize, tilesize);
 			}
 		}
