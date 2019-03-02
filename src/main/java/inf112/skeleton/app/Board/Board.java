@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Board;
 
+import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.Position;
@@ -30,24 +32,41 @@ public class Board implements IBoard {
 		return width;
 	}
 
+
+
 	@Override
-	public void setGameObject(Position pos, Object element) {
+	public GameObject[] getGameObject(Position pos) {
+		if (!isValidPos(pos)){
+			//TODO - handle invalid position exception
+		}
+
+		return tileMap.get(pos).getGameObjects();
+	}
+
+	@Override
+	public void movePlayer(Player player, Direction dir) {
+		if(!playerPositions.containsKey(player)) {
+			//TODO - handle player not found exception
+		}
+
 
 	}
 
 	@Override
-	public Object getGameObject(Position pos) {
-		return null;
+	public void setGameObject(Position pos, GameObject gameObject) {
+		if (!isValidPos(pos)){
+			//TODO - handle invalid position exception
+		}
+
+		tileMap.get(pos).addGameObject(gameObject);
 	}
 
 	@Override
-	public void movePlayer(Position pos) {
-
-	}
-
-	@Override
-	public void removeObject(Position pos, Object element) {
-
+	public void removeObject(Position pos, GameObject gameObject) {
+		if (!isValidPos(pos)){
+			//TODO - handle invalid position exception
+		}
+		tileMap.get(pos).removeGameObject(gameObject);
 	}
 
 	@Override
@@ -58,8 +77,7 @@ public class Board implements IBoard {
 	@Override
 	public Tile getTile(Position pos) {
 		if (!isValidPos(pos)){
-			System.err.println("Invalid position");
-			System.exit(1);
+			//TODO - handle invalid position exception
 		}
 
 		return tileMap.get(pos);

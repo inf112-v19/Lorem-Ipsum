@@ -3,11 +3,9 @@ package inf112.skeleton.app.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
-import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
@@ -101,7 +99,7 @@ public class BoardGUI {
 
 
 	private void drawGameObjects(Tile tile, int x, int y){
-		if (tile.hasObjectOnTile()){
+		if (tile.hasAnyGameObjects()){
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				IGameObject[] gameObjects = tile.getGameObjects();
 				SpriteType gameObjectSpriteType = gameObjects[i].getSpriteType();
