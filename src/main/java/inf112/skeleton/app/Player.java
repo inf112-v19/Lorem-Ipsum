@@ -96,20 +96,9 @@ public class Player {
     }
 
 
-//TODO:add a way to move backwards and tell board what way player is facing
 
-    /**
-     * Tries to move the player 'numberOfSteps' in the direction the player is facing
-     * @param numberOfSteps to move
-     */
-    public void moveForward(int numberOfSteps) {
-        for (int i = 0; i < numberOfSteps; i++) {
 
-            //board.movePlayer(playerID, playerDirection);
-        }
-    }
 
-    
 
 
 
