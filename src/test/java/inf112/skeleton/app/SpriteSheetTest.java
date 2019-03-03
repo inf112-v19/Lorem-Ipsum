@@ -123,4 +123,12 @@ public class SpriteSheetTest {
 		assertEquals(player.getSpriteType(), playerSprite);
 	}
 
+
+	//TODO - make this test for all the CardTypes
+	@Test
+	public void backwardCardTextureTest() {
+		Card card = new Card(CardType.BACKWARD_1, 1);
+		assertEquals(spriteSheet.getTexture(card), spriteSheet.getTexture(SpriteType.BACKWARD_1));
+	}
+
 }

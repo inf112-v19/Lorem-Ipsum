@@ -27,20 +27,19 @@ public enum SpriteType{
 
 	//FLAG(),
 
-	PLAYER("player.png"),
+	PLAYER(),
 
-	BACKWARD_1("CardImages/BackUp.png"),
-	FORWARD_1("CardImages/Move1.png"),
-	FORWARD_2("CardImages/Move2.png"),
-	FORWARD_3("CardImages/Move3.png"),
-	ROTATE_180("CardImages/U-Turn.png"),
-	ROTATE_90_L("CardImages/LeftTurn.png"),
-	ROTATE_90_R("CardImages/RightTurn.png");
+	BACKWARD_1(),
+	FORWARD_1(),
+	FORWARD_2(),
+	FORWARD_3(),
+	ROTATE_180(),
+	ROTATE_90_L(),
+	ROTATE_90_R();
 
 
 	private int x;
 	private int y;
-	private String filename;
 	private boolean usingCoordinates;
 
 	SpriteType (int x, int y){
@@ -49,8 +48,7 @@ public enum SpriteType{
 		this.usingCoordinates = true;
 	}
 
-	SpriteType(String filename){
-		this.filename = filename;
+	SpriteType(){
 		this.usingCoordinates = false;
 	}
 
@@ -60,10 +58,6 @@ public enum SpriteType{
 
 	public int getY() {
 		return y;
-	}
-
-	public String getFilename(){
-		return filename;
 	}
 
 	public boolean isUsingCoordinates(){
