@@ -138,6 +138,11 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public int getHealth(){
+        return playerHealth;
+    }
+
+    @Override
     public void setBackup(Position backupPosition) {
 
     }

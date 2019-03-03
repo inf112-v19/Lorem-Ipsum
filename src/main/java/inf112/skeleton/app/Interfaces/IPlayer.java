@@ -25,6 +25,8 @@ public interface IPlayer {
 
 	void increaseHealth();
 
+	int getHealth();
+
 	void setBackup(Position backupPosition);
 
 	Position getBackup();
