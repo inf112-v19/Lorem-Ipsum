@@ -18,6 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 
+/**
+ * This class handles all the sprites used in the game
+ */
 public final class SpriteSheet extends Sprite {
 
 	private Texture texture;
@@ -48,7 +51,6 @@ public final class SpriteSheet extends Sprite {
 		this.spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 		flip();
 
-		/*
 		this.texture = new Texture("CardImages/BackUp.png");
 		this.backUpSprite = new TextureRegion(texture);
 		this.backUpSprite.flip(false, true);
@@ -85,11 +87,15 @@ public final class SpriteSheet extends Sprite {
 		this.clickAnywhereSprite = new TextureRegion(texture);
 		this.clickAnywhereSprite.flip(false, true);
 
-		*/
 
 	}
 
 
+	/**
+	 * Private method that flips the textures in the spriteSheet.
+	 * This is necessary because 0,0 is top left and therefore the sprites are drawn
+	 * upside down. Flipping the textures is a fix fore this
+	 */
 	private void flip(){
 		for (int i = 0; i < spriteSheet.length; i++){
 			for(int j = 0; j < spriteSheet[i].length; j++){
@@ -98,27 +104,71 @@ public final class SpriteSheet extends Sprite {
 		}
 	}
 
-
-	public TextureRegion getTexture(SpriteType spriteType){
-		if (spriteType.isUsingCoordinates()) {
+	/**
+	 * Private method that finds the correct texture for the given SpriteType
+	 * @param spriteType
+	 * @return TextureRegion for a given SpriteType
+	 */
+	private TextureRegion findCorrectTexture(SpriteType spriteType){
+		if(spriteType.isUsingCoordinates()){
 			return spriteSheet[spriteType.getY()][spriteType.getX()];
 		}
-		Texture tex = new Texture(spriteType.getFilename());
-		return new TextureRegion(tex);
+		switch (spriteType){
+			case BACKWARD_1:
+				return backUpSprite;
+			case FORWARD_1:
+				return move1Sprite;
+			case FORWARD_2:
+				return move2Sprite;
+			case FORWARD_3:
+				return move3Sprite;
+			case ROTATE_180:
+				return uTurnSprite;
+			case ROTATE_90_L:
+				return leftTurnSprite;
+			case ROTATE_90_R:
+				return rightTurnSprite;
+			default:
+				System.err.println("No sprite found");
+				return null;
+		}
 	}
 
+
+	/**
+	 * Method that return correct sprite for a given SpriteType.
+	 * @param spriteType
+	 * @return TextureRegion for a given SpriteType
+	 */
+	public TextureRegion getTexture(SpriteType spriteType){
+		return findCorrectTexture(spriteType);
+	}
+
+	/**
+	 * Method that return correct sprite for a given Tile
+	 * @param card
+	 * @return TextureRegion for the given Tile
+	 */
 	public TextureRegion getTexture(Card card){
-		String filename = card.getSprite().getFilename();
-		Texture texture = new Texture(filename);
-		return new TextureRegion(texture);
+		return findCorrectTexture(card.getSprite());
 	}
 
+	/**
+	 * Method that return correct sprite for a given Tile
+	 * @param tile
+	 * @return TextureRegion for the given GameObject
+	 */
 	public TextureRegion getTexture(Tile tile){
-		return spriteSheet[tile.getSpriteType().getY()][tile.getSpriteType().getX()];
+		return findCorrectTexture(tile.getSpriteType());
 	}
 
+	/**
+	 * Method that return correct sprite for a given GameObject.
+	 * @param gameObject
+	 * @return TextureRegion for the given GameObject
+	 */
 	public TextureRegion getTexture(GameObject gameObject){
-		return spriteSheet[gameObject.getSpriteType().getY()][gameObject.getSpriteType().getX()];
+		return findCorrectTexture(gameObject.getSpriteType());
 	}
 
 
