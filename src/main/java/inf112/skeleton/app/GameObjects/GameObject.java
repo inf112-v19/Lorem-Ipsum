@@ -44,5 +44,8 @@ public abstract class GameObject implements IGameObject {
 		return this.dir;
 	}
 
-
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass() == obj.getClass();
+    }
 }
