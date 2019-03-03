@@ -96,6 +96,7 @@ public class Player implements IPlayer {
         return playerDirection;
     }
 
+
     @Override
     public Card[] getCardSequence() {
         return new Card[0];
