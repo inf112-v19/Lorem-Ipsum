@@ -111,14 +111,19 @@ public class Player implements IPlayer {
 
     }
 
-
-
    //TODO: should have a way to tell board if the player is dead
+
+    /**
+     * Decrease the players health by 1
+     */
     @Override
     public void decreaseHealth() {
         playerHealth--;
     }
 
+    /**
+     * Increase the players health by 1
+     */
     @Override
     public void increaseHealth() {
         playerHealth++;
@@ -134,8 +139,11 @@ public class Player implements IPlayer {
         return null;
     }
 
+    /**
+     * @return returns the players current sprite
+     */
     @Override
     public SpriteType getSpriteType() {
-        return null;
+        return spriteType;
     }
 }
