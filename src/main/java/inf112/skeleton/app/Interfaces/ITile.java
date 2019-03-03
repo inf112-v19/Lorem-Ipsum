@@ -74,5 +74,13 @@ public interface ITile {
 	 */
 	int hasGameObject(GameObject gameObject);
 
+	/**
+	 * Checks if tile has a wall in the given direction
+	 *
+	 * @param dir
+	 * @return true if wall is present or false if not
+	 */
+	boolean hasWallInDir(Direction dir);
+
 
 }
