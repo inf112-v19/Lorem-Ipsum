@@ -1,20 +1,9 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.Cards.Card;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
-
-
-//TODO:fill hand with cards method
-    //TODO:move forward method(ask board)
-    //TODO:set backup method
-    //TODO:move to backup method
-    //TODO:keep track of burned down cards(and tell board)
-    //TODO:Let player hold its own sprite/picture
-    //TODO:Take damage method
-    //TODO:Restore health method
-
-
 
 public class Player implements IPlayer {
 
@@ -94,12 +83,59 @@ public class Player implements IPlayer {
     }
 
 
+    /**
+     *
+     * @return players Direction
+     */
+    public Direction getDirection() {
+        return playerDirection;
+    }
+
+    @Override
+    public Card[] getCardSequence() {
+        return new Card[0];
+    }
+
+    @Override
+    public void setCardSequence() {
+
+    }
+
+    @Override
+    public void setCardHand() {
+
+    }
+
+    @Override
+    public void sortCardSeqence() {
+
+    }
 
 
 
+   //TODO: should have a way to tell board if the player is dead
+    @Override
+    public void decreaseHealth() {
+        playerHealth--;
+    }
 
+    @Override
+    public void increaseHealth() {
+        playerHealth++;
+    }
 
+    @Override
+    public void setBackup() {
 
+    }
 
+    @Override
+    public Position getBackup() {
+        return null;
+    }
 
+    @Override
+    public SpriteType getSpriteType() {
+        return null;
+    }
 }
