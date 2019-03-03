@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.*;
+import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.GameObjects.Laser;
 import inf112.skeleton.app.GameObjects.Wall;
 import inf112.skeleton.app.Interfaces.IGameObject;
@@ -71,7 +72,7 @@ public class BoardBuilder {
 		int tileType = Integer.parseInt(tileNumber.substring(0,1));
 		int tileRotation = Integer.parseInt(tileNumber.substring(1,2));
 		int numberOfGO = Integer.parseInt(tileNumber.substring(2,3));
-		IGameObject[] gameObjects = new IGameObject[numberOfGO];
+		GameObject[] gameObjects = new GameObject[numberOfGO];
 		Direction tileDirection = getDirection(tileRotation);
 
 		//builds array of Game Objects related to the tile
@@ -100,7 +101,7 @@ public class BoardBuilder {
 	 * @param dir
 	 * @return
 	 */
-	private static IGameObject getGameObject(int type, int dir){
+	private static GameObject getGameObject(int type, int dir){
 		Direction direction = getDirection(dir);
 
 		switch (type){

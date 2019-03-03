@@ -1,6 +1,8 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.Position;
 
 /**
@@ -23,7 +25,7 @@ public interface ITile {
 	 *
 	 * @return true is there is an object on tile
 	 */
-	boolean objectOnTile();
+	boolean hasAnyGameObjects();
 
 	/**
 	 * method that returns any GameObject in the Tile.
@@ -41,6 +43,36 @@ public interface ITile {
 	SpriteType getSpriteType();
 
 
+	/**
+	 * method that returns GameObjects on the Tile
+	 * @return GameObject[]
+	 */
+	IGameObject[] getGameObjects();
+
+
+	Direction getDirection();
+
+	/**
+	 * method that places a GameObject to the tile
+	 *
+	 * @param gameObject
+	 */
+	void addGameObject(GameObject gameObject);
+
+	/**
+	 * method that removes a specified GameObject from the tile if present
+	 *
+	 * @param gameObject
+	 */
+	boolean removeGameObject(GameObject gameObject);
+
+	/**
+	 * method that checks if a given GameObject is present on the tile
+	 *
+	 * @param gameObject
+	 * @return int of the index position of the GameObject, or possibly -1 if not present
+	 */
+	int hasGameObject(GameObject gameObject);
 
 
 }

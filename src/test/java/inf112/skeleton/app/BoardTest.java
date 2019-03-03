@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Board.BoardBuilder;
+import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.GameObjects.Laser;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Tiles.NormalTile;
@@ -25,7 +26,7 @@ public class BoardTest {
 
 		String[][] correctNumbers = {{"1","2","3","4","5"},{"6","7","8","9","10"},{"11","12","13","14","15"}};
 
-		String testFile = "BoardBuilderTest1.txt";
+		String testFile = "Boards/BoardBuilderTest1.txt";
 		BoardBuilder bb = new BoardBuilder();
 
 		String tileNumbers[][] = bb.readFromFile(testFile);
@@ -48,7 +49,7 @@ public class BoardTest {
 			}
 		}
 
-		String testFile = "BoardBuilderTest2.txt";
+		String testFile = "Boards/BoardBuilderTest2.txt";
 		BoardBuilder bb = new BoardBuilder();
 		HashMap<Position, Tile> tileMapTest = bb.buildBoard(testFile);
 
@@ -62,7 +63,7 @@ public class BoardTest {
 	@Test
 	public void boardBuilderGetTileTest() {
 		BoardBuilder bb = new BoardBuilder();
-		IGameObject[] gameObjects = {new Laser(Direction.NORTH)};
+		GameObject[] gameObjects = {new Laser(Direction.NORTH)};
 		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
 		Tile testTile = bb.getTile("00100");
 

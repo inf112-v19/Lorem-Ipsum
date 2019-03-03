@@ -14,7 +14,7 @@ public class ProgramCardDeck implements ICardDeck {
     Stack<Card> deck = new Stack<>();
 
     /**
-     * Creates new program card deck containing 84 cards
+     * Creates new program card deck containing 84 cards AND also shuffles deck
      */
     @Override
     public void createNewDeck() {
@@ -67,19 +67,23 @@ public class ProgramCardDeck implements ICardDeck {
         shuffleDeck();
     }
 
-    public void shuffleDeck() {
+    private void shuffleDeck() {
         Collections.shuffle(deck);
     }
 
     @Override
     public List<Card> drawCards(int numberOfCards) {
-        List<Card> cards = new ArrayList<>();
+        if (numbersOfCardsLeft() < numberOfCards) {
+            throw new NullPointerException("not enough cards in deck");
+        } else {
+            List<Card> cards = new ArrayList<>();
 
-        for (int i = 0; i < numberOfCards; i++) {
-            cards.add(deck.pop());
+            for (int i = 0; i < numberOfCards; i++) {
+                cards.add(deck.pop());
+            }
+
+            return cards;
         }
-
-        return cards;
     }
 
     @Override

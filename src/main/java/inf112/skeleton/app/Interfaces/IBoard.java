@@ -1,5 +1,8 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GameObjects.GameObject;
+import inf112.skeleton.app.Player;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
 
@@ -14,28 +17,28 @@ public interface IBoard<T> {
     int getWidth();
 
     /**
-     * Set the contents of the cell in the given x,y location.
+     * Set the Game Object on the tile in the given x,y location.
      *
      * y must be greater than or equal to 0 and less than getHeight(). x must be
      * greater than or equal to 0 and less than getWidth().
      *
      * @param pos
      *            given position you want to set the object
-     * @param element
-     *            The contents the cell is to have.
+     * @param gameObject
+     *            the Game Object being placed
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
      */
-    void setGameObject(Position pos, T element);
+    void setGameObject(Position pos, GameObject gameObject);
 
     /**
-     * Get the contents of the cell in the given x,y location.
+     * Get the Game Objects on the tile in the given x,y location.
      *
      * y must be greater than or equal to 0 and less than getHeight(). x must be
      * greater than or equal to 0 and less than getWidth().
      *
      * @param pos
-     *            position to the object
+     *            position to the objects
      * @return the object that you are getting
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
@@ -43,27 +46,35 @@ public interface IBoard<T> {
     T getGameObject(Position pos);
 
     /**
-     * Move the current player in the given direction.
      *
-     * @param pos
-     *            move to this position/coordinates
+     *
+
      */
-    void movePlayer(Position pos);
+    /**
+     * Move the player in the given direction.
+     *
+     * @param player
+     *            player to be moved
+     * @param dir
+     *            try to move player this direction
+     * @return true if movement happened or false if player did not move
+     */
+    boolean movePlayer(Player player, Direction dir);
 
     /**
-     * Remove an element from the cell at the given x,y location.
+     * Remove a Game Object from the tile at the given x,y location.
      *
      * y must be greater than or equal to 0 and less than getHeight(). x must be
      * greater than or equal to 0 and less than getWidth().
      *
      * @param pos
      *            remove the object in this position
-     * @param element
-     *            An element to be removed from the cell
+     * @param gameObject
+     *            An element to be removed from the tile
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
      */
-    void removeObject(Position pos, T element);
+    void removeObject(Position pos, GameObject gameObject);
 
     /**
      * Check if coordinates are valid.

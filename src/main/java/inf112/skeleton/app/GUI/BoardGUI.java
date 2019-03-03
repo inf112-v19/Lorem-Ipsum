@@ -3,12 +3,9 @@ package inf112.skeleton.app.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.Board.Board;
-import inf112.skeleton.app.GUI.states.GameStateManager;
-import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Position;
 import inf112.skeleton.app.Tiles.Tile;
@@ -16,21 +13,24 @@ import inf112.skeleton.app.Tiles.Tile;
 
 public class BoardGUI {
 
-    Board board;
-    int xOffset;
-    int yOffset;
-    OrthographicCamera camera;
-    SpriteBatch batch;
+    private Board board;
 
-    SpriteSheet spriteSheet;
+    private int xOffset;
+    private int yOffset;
 
-    int tilesize;
-    int boardWidth;
-    int boardHeight;
-    int boardTileWidth;
-    int boardTileHeight;
+    private OrthographicCamera camera;
+	private SpriteBatch batch;
+	private TextureRegion textureRegion;
 
-    Texture texture = new Texture("RoboRallyTiles.png");
+	private SpriteSheet spriteSheet;
+
+	private int tilesize;
+	private int boardWidth;
+	private int boardHeight;
+	private int boardTileWidth;
+	private int boardTileHeight;
+
+	//private Texture texture = new Texture("RoboRallyTiles.png");
     //TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
 
 
@@ -40,14 +40,14 @@ public class BoardGUI {
 
         this.spriteSheet = new SpriteSheet();
 
-        board = new Board("ExampleBoard.txt");
-        boardWidth = board.getWidth();
-        boardHeight = board.getHeight();
+        this.board = new Board("Boards/ExampleBoard.txt");
+        this.boardWidth = board.getWidth();
+        this.boardHeight = board.getHeight();
 
-        tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*5);
+        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*2);
 
-        boardTileWidth = boardWidth *tilesize;
-        boardTileHeight = boardHeight * tilesize;
+        this.boardTileWidth = boardWidth *tilesize;
+        this.boardTileHeight = boardHeight * tilesize;
 
         //setting initial position
         reposition();
@@ -68,7 +68,7 @@ public class BoardGUI {
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-        camera.setToOrtho(false);
+		camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // 0,0 is top left
         batch.setProjectionMatrix(camera.combined);
         reposition();
 
@@ -90,11 +90,30 @@ public class BoardGUI {
         xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
     }
 
+    private void drawTile(Tile tile, int x, int y){
+		SpriteType spriteType = tile.getSpriteType();
+		textureRegion = spriteSheet.getTexture(spriteType);
+		batch.draw(textureRegion, x, y, tilesize, tilesize);
+
+	}
+
+
+	private void drawGameObjects(Tile tile, int x, int y){
+		if (tile.hasAnyGameObjects()){
+			for(int i = 0; i < tile.getGameObjects().length; i++){
+				IGameObject[] gameObjects = tile.getGameObjects();
+				SpriteType gameObjectSpriteType = gameObjects[i].getSpriteType();
+				textureRegion = spriteSheet.getTexture(gameObjectSpriteType);
+				batch.draw(textureRegion, x, y, tilesize, tilesize);
+			}
+		}
+
+	}
+
     /**
-     * function that draws the board using the spriteSheet and a double for-loop
+     * function that loops through the tiles of a Board and then calles the drawTiles() and drawGameObjects()
      *
      */
-    //TODO - should work width different tiles
     public void drawBoard(){
         batch.begin();
         int xPos = 0;
@@ -105,9 +124,8 @@ public class BoardGUI {
             for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
                 pos = new Position(xPos, yPos);
                 Tile curTile = board.getTile(pos);
-                SpriteType spriteType = curTile.getSpriteType();
-                TextureRegion tileSprite = spriteSheet.getTexure(spriteType);
-                batch.draw(tileSprite, x, y, tilesize, tilesize);
+                drawTile(curTile, x, y);
+                drawGameObjects(curTile, x, y);
                 xPos++;
             }
             xPos = 0;
