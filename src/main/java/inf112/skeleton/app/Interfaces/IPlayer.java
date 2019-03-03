@@ -11,7 +11,7 @@ public interface IPlayer {
 
 	Direction getDirection();
 
-	void setPlayerDirection(Direction direction);
+	void setPlayerDirection(Direction dir);
 
 	Card[] getCardSequence();
 
