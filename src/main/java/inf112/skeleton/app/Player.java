@@ -38,6 +38,8 @@ public class Player implements IPlayer {
     public void turnPlayer(int numberOfTurns){
 
         directionNumber = (directionNumber + numberOfTurns) % 4;
+        if(directionNumber < 0) directionNumber += 4;
+
 
         switch (directionNumber){
 
