@@ -12,6 +12,7 @@ public class Player implements IPlayer {
 //    private ArrayList<Card> playerHand;
     private Board board;
     private int playerHealth = 5;
+    private Position backup;
 
 
     private Direction playerDirection; //Direction the player is facing
@@ -130,7 +131,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setBackup() {
+    public void setBackup(Position backupPosition) {
 
     }
 
