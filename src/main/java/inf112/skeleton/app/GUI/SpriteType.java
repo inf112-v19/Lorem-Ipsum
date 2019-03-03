@@ -26,7 +26,8 @@ public enum SpriteType{
 	WALL_WEST(5,3),
 
 	//FLAG(),
-	//PLAYER(),
+
+	PLAYER("player.png"),
 
 	BACKWARD_1("CardImages/BackUp.png"),
 	FORWARD_1("CardImages/Move1.png"),

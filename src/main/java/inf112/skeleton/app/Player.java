@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.GUI.SpriteType;
 
 
 //TODO:fill hand with cards method
@@ -16,7 +17,7 @@ import inf112.skeleton.app.Board.Board;
 
 public class Player {
 
-
+    private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
 //    private ArrayList<Card> playerHand;
     private Board board;
@@ -107,6 +108,8 @@ public class Player {
             //board.movePlayer(playerID, playerDirection);
         }
     }
+
+    
 
 
 
