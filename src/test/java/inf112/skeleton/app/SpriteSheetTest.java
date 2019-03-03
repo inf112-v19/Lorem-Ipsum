@@ -110,4 +110,17 @@ public class SpriteSheetTest {
 		assertTrue(WallNorthIsVertical && WallSouthIsVertical && WallEastIsHorizontal && WallWestIsHorizontal);
 	}
 
+	@Test
+	public void playerHasTextureTest(){
+		Player player = new Player("Player1", Direction.NORTH);
+		assertNotEquals(player.getSpriteType(), null);
+	}
+
+	@Test
+	public void playerTextureCorrectTest(){
+		Player player = new Player("Player1", Direction.NORTH);
+		SpriteType playerSprite = SpriteType.PLAYER;
+		assertEquals(player.getSpriteType(), playerSprite);
+	}
+
 }
