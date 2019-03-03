@@ -45,19 +45,26 @@ public interface IBoard<T> {
      */
     T getGameObject(Position pos);
 
-    /**
-     *
-     *
+	/**
+	 * Tries to move the player in the direction the player is facing - potentially starts recursive calling
+	 * if player collision occurs
+	 *
+	 * @param player
+	 *            player to be moved
+	 * @return true if movement happened or false if player did not move
+	 */
+	boolean movePlayer(Player player);
 
-     */
     /**
-     * Tries to move the player in the direction the player is facing - potentially starts recursive calling if player collision occurs
+     * Recursively called in movePlayer - moving in a direction regardless of the direction where the player is facing
      *
      * @param player
      *            player to be moved
+	 * @param dir
+	 *            direction to be moved
      * @return true if movement happened or false if player did not move
      */
-    boolean movePlayer(Player player);
+    boolean movePlayer(Player player, Direction dir);
 
     /**
      * Remove a Game Object from the tile at the given x,y location.

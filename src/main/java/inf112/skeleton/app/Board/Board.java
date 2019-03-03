@@ -43,11 +43,15 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean movePlayer(Player player) {
+		return movePlayer(player, player.getDirection());
+	}
+
+	@Override
+	public boolean movePlayer(Player player, Direction dir) {
 		if(!playerPositions.containsKey(player)) {
 			//TODO - handle player not found exception
 		}
 
-		Direction dir = player.getDirection();
 		Position curPos = playerPositions.get(player);
 		Position newPos = calcNewPos(curPos, dir);
 		Tile curTile = tileMap.get(curPos);
@@ -63,20 +67,23 @@ public class Board implements IBoard {
 
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
-                        if (movePlayer(otherPlayer)){
-                            //TODO - handle changing player position
+                        if (movePlayer(otherPlayer, dir)){
+							//TODO - handle walking on a hole tile
+							playerPositions.put(player, newPos);
                         }
                     }
 
                     //no player in direction trying to move - moves player to newPos
                     else {
-                        //TODO - handle changing player position
+						//TODO - handle walking on a hole tile
+						playerPositions.put(player, newPos);
                     }
                 }
             }
             //player walks off the board
             else {
-                //TODO - handle player walking of the board
+            	//TODO - handle player loosing life when falling off the board
+				playerPositions.put(player, player.getBackup());
             }
         }
 
@@ -154,6 +161,5 @@ public class Board implements IBoard {
                 return curPos;
         }
     }
-
 
 }
