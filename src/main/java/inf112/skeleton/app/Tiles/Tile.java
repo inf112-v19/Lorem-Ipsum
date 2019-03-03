@@ -4,7 +4,6 @@ import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.GameObjects.GameObject;
 import inf112.skeleton.app.GameObjects.Wall;
-import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.Interfaces.ITile;
 import inf112.skeleton.app.Position;
 
@@ -91,13 +90,8 @@ public abstract class Tile implements ITile {
 		return -1;
 	}
 
-	/**
-	 * Checks if tile has a wall in the given direction
-	 *
-	 * @param dir
-	 * @return true if wall is present or false if not
-	 */
-	private boolean hasWallInDir(Direction dir) {
+	@Override
+	public boolean hasWallInDir(Direction dir) {
 		Wall wall = new Wall(dir);
 		return (hasGameObject(wall) != -1);
 	}
