@@ -2,7 +2,6 @@ package inf112.skeleton.app.Board;
 
 import inf112.skeleton.app.Direction;
 import inf112.skeleton.app.GameObjects.GameObject;
-import inf112.skeleton.app.GameObjects.Wall;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.Player;
 import inf112.skeleton.app.Position;
@@ -33,8 +32,6 @@ public class Board implements IBoard {
 		return width;
 	}
 
-
-
 	@Override
 	public GameObject[] getGameObject(Position pos) {
 		if (!isValidPos(pos)) {
@@ -45,46 +42,41 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player, Direction dir) {
+	public boolean movePlayer(Player player) {
 		if(!playerPositions.containsKey(player)) {
 			//TODO - handle player not found exception
 		}
 
+		Direction dir = player.getDirection();
 		Position curPos = playerPositions.get(player);
-		Position newPos;
+		Position newPos = calcNewPos(curPos, dir);
+		Tile curTile = tileMap.get(curPos);
 
-		switch (dir) {
-            case NORTH:
-                newPos = new Position(curPos.getX(), curPos.getY()-1);
-                break;
-            case SOUTH:
-                newPos = new Position(curPos.getX(), curPos.getY()+1);
-                break;
-            case EAST:
-                newPos = new Position(curPos.getX()+1, curPos.getY());
-                break;
-            case WEST:
-                newPos = new Position(curPos.getX()-1, curPos.getY());
-                break;
-             default:
-                 newPos = curPos;
-        }
+		//if tile currently standing on has no wall blocking the player - proceed
+        if (!curTile.hasWallInDir(dir)){
+            if (isValidPos(newPos)) {
+                Tile newTile = tileMap.get(newPos);
 
-        if (isValidPos(newPos)) {
-            Player otherPlayer = posToPlayer(newPos);
-            if (otherPlayer != null){
-                if (movePlayer(otherPlayer, dir)){
-                	//TODO - handle player collision (recursively call movePlayer until either a movement happens or stand still)
-				}
+                //if tile walking on to has no wall blocking the player - proceed
+                if (!newTile.hasWallInDir(dir.oppositeDirection())) {
+                    Player otherPlayer = posToPlayer(newPos);
+
+                    if (otherPlayer != null){
+                        //proceed moving if the colliding player moved or stand still if no movement happened
+                        if (movePlayer(otherPlayer)){
+                            //TODO - handle changing player position
+                        }
+                    }
+
+                    //no player in direction trying to move - moves player to newPos
+                    else {
+                        //TODO - handle changing player position
+                    }
+                }
             }
-        }
-        // potentially walking off the board
-        else {
-            Tile curTile = tileMap.get(curPos);
-            Wall wall = new Wall(dir);
-            if (curTile.hasGameObject(wall) != -1){
-                //TODO - handle player walking off the board
-
+            //player walks off the board
+            else {
+                //TODO - handle player walking of the board
             }
         }
 
@@ -140,5 +132,28 @@ public class Board implements IBoard {
         }
         return null;
     }
+
+    /**
+     * Calculates the position in the given direction for a current position
+     *
+     * @param curPos
+     * @param dir
+     * @return
+     */
+    private Position calcNewPos(Position curPos, Direction dir) {
+        switch (dir) {
+            case NORTH:
+                return new Position(curPos.getX(), curPos.getY()-1);
+            case SOUTH:
+                return  new Position(curPos.getX(), curPos.getY()+1);
+            case EAST:
+                return  new Position(curPos.getX()+1, curPos.getY());
+            case WEST:
+                return new Position(curPos.getX()-1, curPos.getY());
+            default:
+                return curPos;
+        }
+    }
+
 
 }

@@ -51,15 +51,13 @@ public interface IBoard<T> {
 
      */
     /**
-     * Move the player in the given direction.
+     * Tries to move the player in the direction the player is facing - potentially starts recursive calling if player collision occurs
      *
      * @param player
      *            player to be moved
-     * @param dir
-     *            try to move player this direction
      * @return true if movement happened or false if player did not move
      */
-    boolean movePlayer(Player player, Direction dir);
+    boolean movePlayer(Player player);
 
     /**
      * Remove a Game Object from the tile at the given x,y location.
