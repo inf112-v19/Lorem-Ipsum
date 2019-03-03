@@ -19,10 +19,14 @@ public class Player implements IPlayer {
     private int directionNumber = 0;  //number used to turn player around
 
 
-
-    public Player(String playerID, Board board) {
-        this.board = board;
+    /**
+     * Create a player object
+     * @param playerID
+     * @param direction
+     */
+    public Player(String playerID, Direction direction) {
         this.playerID = playerID;
+        setPlayerDirection(direction);
     }
 
 
