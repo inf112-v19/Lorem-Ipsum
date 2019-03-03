@@ -28,6 +28,7 @@ public final class SpriteSheet extends Sprite {
 	//Div Sprites
 	private static TextureRegion tapToStartSprite;
 	private static TextureRegion clickAnywhereSprite;
+	private static TextureRegion playerSprite;
 
 	//Card Sprites
 	private static TextureRegion backUpSprite;
@@ -87,6 +88,10 @@ public final class SpriteSheet extends Sprite {
 		this.clickAnywhereSprite = new TextureRegion(texture);
 		this.clickAnywhereSprite.flip(false, true);
 
+		this.texture = new Texture("player.png");
+		this.playerSprite = new TextureRegion(texture);
+		this.playerSprite.flip(false,true);
+
 
 	}
 
@@ -128,6 +133,8 @@ public final class SpriteSheet extends Sprite {
 				return leftTurnSprite;
 			case ROTATE_90_R:
 				return rightTurnSprite;
+			case PLAYER:
+				return playerSprite;
 			default:
 				System.err.println("No sprite found");
 				return null;
