@@ -6,8 +6,8 @@ public enum Direction {
 	EAST,
 	WEST;
 
-	public Direction opositeDirection(Direction dir){
-		switch (dir){
+	public Direction oppositeDirection(){
+		switch (this){
 			case NORTH:
 				return Direction.SOUTH;
 			case SOUTH:
@@ -17,8 +17,8 @@ public enum Direction {
 			case WEST:
 				return Direction.EAST;
 			default:
-				System.err.println("No oposite direction found");
-				return dir;
+				System.err.println("No opposite direction found");
+				return this;
 		}
 	}
 }
