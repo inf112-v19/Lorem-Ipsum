@@ -18,34 +18,33 @@ public class MenuState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background;
     private TextureRegion playButton;
-    private SpriteBatch batch;
 
     private Stage stage;
     private ImageButton startButton;
+
     private boolean start;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
 
-        this.start = false;
-
         this.spriteSheet = new SpriteSheet();
-        this.batch = new SpriteBatch();
-        this.batch.setProjectionMatrix(camera.combined);
-        this.background = spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.playButton = spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
-
         this.stage = new Stage(new ScreenViewport());
+
+        this.stage.getBatch().setProjectionMatrix(camera.combined);
+        this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
+        this.playButton = this.spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
+
+        this.start = false;
         clickable();
     }
 
     private void clickable() {
-        startButton = new ImageButton(new TextureRegionDrawable(playButton));
-        startButton.setSize(358, 83);;
-        startButton.setPosition((RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2), RoboRally.HEIGHT-(playButton.getRegionHeight()*2));
+        this.startButton = new ImageButton(new TextureRegionDrawable(this.playButton));
+        this.startButton.setSize(358, 83);;
+        this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/2), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*2));
 
-        stage.addActor(startButton);
-        startButton.addListener(new InputListener() {
+        this.stage.addActor(this.startButton);
+        this.startButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Start game!");
@@ -53,12 +52,12 @@ public class MenuState extends State {
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
     public void handleInput() {
-        if (start) {
+        if (this.start) {
             gsm.set(new CardState(gsm));
             dispose();
         }
@@ -71,29 +70,22 @@ public class MenuState extends State {
 
     @Override
     public void render() {
-        /*
-        batch.begin();
-        batch.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        batch.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2), (playButton.getRegionHeight()));
-        batch.end();
-        */
-        stage.act();
-        stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        stage.getBatch().end();
-        stage.draw();
+        this.stage.act();
+        this.stage.getBatch().begin();
+        this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        this.stage.getBatch().end();
+        this.stage.draw();
     }
 
     @Override
     public void dispose() {
-        spriteSheet.dispose();
+        this.spriteSheet.dispose();
     }
 
     @Override
     public void resize() {
         super.resize();
-        //batch.setProjectionMatrix(camera.combined); //ikke resizable
-        stage.getBatch().setProjectionMatrix(camera.combined);  //reziable
+        this.stage.getBatch().setProjectionMatrix(camera.combined);
     }
 }
 
