@@ -81,7 +81,8 @@ public class BoardGUI {
      * is called from the constructor and resize();
      */
     public void reposition(){
-        yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
+        yOffset = 40;
+        //yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
         xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
     }
 

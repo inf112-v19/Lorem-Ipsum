@@ -40,7 +40,8 @@ public enum SpriteType{
 
 	//cardGUI
 	CARD_SUBMIT(),
-	CARD_CLEAR();
+	CARD_CLEAR(),
+	CARD_BAR();
 
 
 	private int x;

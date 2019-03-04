@@ -16,6 +16,7 @@ public final class SpriteSheet {
 	//CardGUI
 	private final TextureRegion cardGuiClearButton;
 	private final TextureRegion cardGuiSubmitButton;
+	private final TextureRegion cardBar;
 
 	//Div Sprites
 	private static TextureRegion tapToStartSprite;
@@ -102,6 +103,9 @@ public final class SpriteSheet {
 		this.cardGuiSubmitButton = new TextureRegion(texture);
 		//this.cardGuiSubmitButton.flip(false, true);
 
+		this.texture = new Texture("CardImages/cardBar.png");
+		this.cardBar = new TextureRegion(texture);
+
 
 	}
 
@@ -153,6 +157,8 @@ public final class SpriteSheet {
 				return cardGuiSubmitButton;
 			case CARD_CLEAR:
 				return cardGuiClearButton;
+			case CARD_BAR:
+				return cardBar;
 			default:
 				System.err.println("No sprite found");
 				return null;
