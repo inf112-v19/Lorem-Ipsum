@@ -88,11 +88,11 @@ public final class SpriteSheet {
 
 		this.texture = new Texture("tempStart.jpg");
 		this.menuBackground = new TextureRegion(texture);
-		this.menuBackground.flip(false, true);
+		//this.menuBackground.flip(false, false);
 
 		this.texture = new Texture("tapToStart.gif");
 		this.menuPlayButton = new TextureRegion(texture);
-		this.menuPlayButton.flip(false, true);
+		//this.menuPlayButton.flip(false, false);
 
 		this.texture = new Texture("clear.png");
 		this.cardGuiClearButton = new TextureRegion(texture);
