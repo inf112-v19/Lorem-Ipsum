@@ -13,6 +13,10 @@ public final class SpriteSheet {
 
 	private Texture texture;
 
+	//CardGUI
+	private final TextureRegion cardGuiClearButton;
+	private final TextureRegion cardGuiSubmitButton;
+
 	//Div Sprites
 	private static TextureRegion tapToStartSprite;
 	private static TextureRegion clickAnywhereSprite;
@@ -90,6 +94,14 @@ public final class SpriteSheet {
 		this.menuPlayButton = new TextureRegion(texture);
 		this.menuPlayButton.flip(false, true);
 
+		this.texture = new Texture("clear.png");
+		this.cardGuiClearButton = new TextureRegion(texture);
+		this.cardGuiClearButton.flip(false, true);
+
+		this.texture = new Texture("submit.png");
+		this.cardGuiSubmitButton = new TextureRegion(texture);
+		this.cardGuiSubmitButton.flip(false, true);
+
 
 	}
 
@@ -137,6 +149,10 @@ public final class SpriteSheet {
 				return menuBackground;
 			case MENU_PLAY_BUTTON:
 				return menuPlayButton;
+			case CARD_SUBMIT:
+				return cardGuiSubmitButton;
+			case CARD_CLEAR:
+				return cardGuiClearButton;
 			default:
 				System.err.println("No sprite found");
 				return null;
