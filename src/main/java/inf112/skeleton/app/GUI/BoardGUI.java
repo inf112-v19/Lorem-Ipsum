@@ -69,8 +69,9 @@ public class BoardGUI {
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-		camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // 0,0 is top left
-        batch.setProjectionMatrix(camera.combined);
+		//camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // 0,0 is top left
+        //batch.setProjectionMatrix(camera.combined);
+        //camera.update();
         reposition();
 
         //TODO - implement resize logic (maybe not needed becaus of the batch.setProjectMatrix)
