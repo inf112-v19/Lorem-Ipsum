@@ -97,7 +97,6 @@ public class Board implements IBoard {
         if (!curTile.hasWallInDir(dir)){
             if (isValidPos(newPos)) {
                 Tile newTile = tileMap.get(newPos);
-
                 //if tile walking on to has no wall blocking the player - proceed
                 if (!newTile.hasWallInDir(dir.oppositeDirection())) {
                     Player otherPlayer = posToPlayer(newPos);
@@ -161,13 +160,8 @@ public class Board implements IBoard {
 		return tileMap.get(pos);
 	}
 
-    /**
-     * Checks for players on a given position
-     *
-     * @param pos
-     * @return player on position, or potentially null if no player is present
-     */
-	private Player posToPlayer(Position pos) {
+	@Override
+	public Player posToPlayer(Position pos) {
         for (Player player : playerPositions.keySet()) {
             if (playerPositions.get(player).equals(pos)){
                 return player;
