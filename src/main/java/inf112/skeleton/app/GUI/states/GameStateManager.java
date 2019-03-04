@@ -1,7 +1,5 @@
 package inf112.skeleton.app.GUI.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.Stack;
 
 public class GameStateManager {
@@ -10,7 +8,6 @@ public class GameStateManager {
 
     public GameStateManager() {
         states = new Stack<State>();
-
     }
 
     public void push(State state) {
@@ -24,7 +21,6 @@ public class GameStateManager {
     public void set(State state) {
         states.pop();
         states.push(state);
-
     }
 
     public void update(float dt) {
@@ -36,7 +32,6 @@ public class GameStateManager {
     }
 
     public void resize() {
-        //super.resize(width, height);
         states.peek().resize();
     }
 }
