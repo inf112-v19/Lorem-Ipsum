@@ -1,17 +1,19 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.Cards.Card;
-import inf112.skeleton.app.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GUI.SpriteSheet;
 import inf112.skeleton.app.GUI.SpriteType;
 
 
-import inf112.skeleton.app.GameObjects.Laser;
-import inf112.skeleton.app.GameObjects.Wall;
-import inf112.skeleton.app.Tiles.HoleTile;
-import inf112.skeleton.app.Tiles.NormalTile;
-import inf112.skeleton.app.Tiles.RepairTile;
+import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
+import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
+import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
+import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
+import inf112.skeleton.app.GameMechanics.Tiles.RepairTile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

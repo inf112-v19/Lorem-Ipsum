@@ -1,7 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
-import inf112.skeleton.app.Cards.Card;
-import inf112.skeleton.app.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.CardType;
 
 import java.util.List;
 

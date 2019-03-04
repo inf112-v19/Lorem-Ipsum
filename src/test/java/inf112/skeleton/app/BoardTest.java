@@ -1,11 +1,12 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.Board.BoardBuilder;
-import inf112.skeleton.app.GameObjects.GameObject;
-import inf112.skeleton.app.GameObjects.Laser;
-import inf112.skeleton.app.Interfaces.IGameObject;
-import inf112.skeleton.app.Tiles.NormalTile;
-import inf112.skeleton.app.Tiles.Tile;
+import inf112.skeleton.app.GameMechanics.Board.BoardBuilder;
+import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
+import inf112.skeleton.app.GameMechanics.Position;
+import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import org.junit.Test;
 
 import java.io.IOException;

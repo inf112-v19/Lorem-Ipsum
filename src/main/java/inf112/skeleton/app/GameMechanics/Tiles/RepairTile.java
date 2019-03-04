@@ -1,10 +1,8 @@
-package inf112.skeleton.app.Tiles;
+package inf112.skeleton.app.GameMechanics.Tiles;
 
-import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
-import inf112.skeleton.app.GameObjects.GameObject;
-import inf112.skeleton.app.Interfaces.IGameObject;
-import inf112.skeleton.app.Position;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 
 public class RepairTile extends Tile {
 

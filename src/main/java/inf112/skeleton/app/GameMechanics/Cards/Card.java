@@ -1,6 +1,5 @@
-package inf112.skeleton.app.Cards;
+package inf112.skeleton.app.GameMechanics.Cards;
 
-import com.badlogic.gdx.graphics.Texture;
 import inf112.skeleton.app.GUI.SpriteType;
 
 public class Card implements Comparable<Card>{

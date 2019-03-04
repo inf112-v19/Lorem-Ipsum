@@ -1,11 +1,11 @@
-package inf112.skeleton.app.Board;
+package inf112.skeleton.app.GameMechanics.Board;
 
-import inf112.skeleton.app.Direction;
-import inf112.skeleton.app.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IBoard;
-import inf112.skeleton.app.Player;
-import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tiles.Tile;
+import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.GameMechanics.Position;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 import java.util.HashMap;
 

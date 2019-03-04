@@ -5,13 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import inf112.skeleton.app.Board.Board;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Interfaces.IGameObject;
-import inf112.skeleton.app.Position;
-import inf112.skeleton.app.Tiles.Tile;
-
-import java.awt.event.ContainerAdapter;
+import inf112.skeleton.app.GameMechanics.Position;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 
 public class BoardGUI {

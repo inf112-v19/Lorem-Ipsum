@@ -1,12 +1,9 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.skeleton.app.GameMechanics.GameObjects;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.Board.Board;
-import inf112.skeleton.app.Direction;
-import inf112.skeleton.app.GUI.SpriteSheet;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
-import inf112.skeleton.app.Position;
+import inf112.skeleton.app.GameMechanics.Position;
 
 public abstract class GameObject implements IGameObject {
 

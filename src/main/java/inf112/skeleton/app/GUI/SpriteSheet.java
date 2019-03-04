@@ -1,22 +1,10 @@
 package inf112.skeleton.app.GUI;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.Board.BoardBuilder;
-import inf112.skeleton.app.Cards.Card;
-import inf112.skeleton.app.Cards.CardType;
-import inf112.skeleton.app.GameObjects.GameObject;
-import inf112.skeleton.app.Tiles.Tile;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.FileHandler;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 /**
  * This class handles all the sprites used in the game

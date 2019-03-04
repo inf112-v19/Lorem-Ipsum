@@ -1,7 +1,7 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.GameMechanics;
 
-import inf112.skeleton.app.Board.Board;
-import inf112.skeleton.app.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 

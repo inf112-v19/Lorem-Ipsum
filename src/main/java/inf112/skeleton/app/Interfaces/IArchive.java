@@ -1,7 +1,5 @@
 package inf112.skeleton.app.Interfaces;
 
-import inf112.skeleton.app.Position;
-
 /**
  * Interface for backup.
  * Classes that implement this interface should call

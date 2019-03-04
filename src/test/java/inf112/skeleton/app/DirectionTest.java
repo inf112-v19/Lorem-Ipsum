@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import org.junit.Before;
+import inf112.skeleton.app.GameMechanics.Direction;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

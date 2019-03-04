@@ -1,9 +1,8 @@
 package inf112.skeleton.app.Interfaces;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.Direction;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
-import inf112.skeleton.app.Position;
+import inf112.skeleton.app.GameMechanics.Position;
 
 /**
  * Interface for game objects

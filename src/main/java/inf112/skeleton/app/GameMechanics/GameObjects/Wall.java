@@ -1,8 +1,6 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.skeleton.app.GameMechanics.GameObjects;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.Direction;
-import inf112.skeleton.app.GUI.SpriteSheet;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GUI.SpriteType;
 
 public class Wall extends GameObject {
