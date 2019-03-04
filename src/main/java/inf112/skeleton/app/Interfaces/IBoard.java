@@ -102,4 +102,12 @@ public interface IBoard<T> {
 	 */
 	Tile getTile(Position pos);
 
+
+	/**
+	 * Checks for players on a given position
+	 *
+	 * @param pos
+	 * @return player on position, or potentially null if no player is present
+	 */
+	Player posToPlayer(Position pos);
 }
