@@ -31,6 +31,7 @@ public class CardGUI {
         this.buttonArr = new ImageButton[cards.size()];
         stage = new Stage(new ScreenViewport());
         spriteSheet  = new SpriteSheet();
+        this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         create();
     }
