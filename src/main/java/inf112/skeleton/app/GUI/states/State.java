@@ -3,18 +3,20 @@ package inf112.skeleton.app.GUI.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 
 public abstract class State {
     protected OrthographicCamera camera;
     protected Vector3 mouse;
     protected GameStateManager gsm;
+    protected static Board board = new Board("Boards/ExampleBoard.txt", 1);
 
 
     protected State (GameStateManager gsm) {
         this.gsm = gsm;
         this.camera = new OrthographicCamera();
         this.mouse = new Vector3();
-        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     protected abstract void handleInput();
