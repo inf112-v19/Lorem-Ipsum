@@ -59,10 +59,6 @@ public class TileTest {
 	@Test
 	public void hasWallInDirFalseTest() {
 		Tile normalTile = new NormalTile(new GameObject[0], Direction.NORTH);
-		normalTile.addGameObject(new Wall(Direction.NORTH));
-		normalTile.addGameObject(new Wall(Direction.NORTH));
-		normalTile.addGameObject(new Wall(Direction.WEST));
-
 		assertFalse(normalTile.hasWallInDir(Direction.NORTH));
 	}
 }
