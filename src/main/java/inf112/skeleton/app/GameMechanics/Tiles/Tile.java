@@ -7,6 +7,8 @@ import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.Interfaces.ITile;
 import inf112.skeleton.app.GameMechanics.Position;
 
+import java.util.Arrays;
+
 public abstract class Tile implements ITile {
 
 	public SpriteType spriteType;
@@ -34,7 +36,8 @@ public abstract class Tile implements ITile {
 		}
 
 		Tile tile = (Tile) obj;
-		if(!tile.getGameObjects().equals(this.gameObjects)){
+
+		if(Arrays.equals(tile.getGameObjects(), this.gameObjects)){
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);
