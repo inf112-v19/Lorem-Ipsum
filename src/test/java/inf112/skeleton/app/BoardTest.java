@@ -5,6 +5,7 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,17 @@ public class BoardTest {
 	public void setUp() throws Exception {
 		testBoard = new Board("Boards/ExampleBoard.txt", 2);
 		players = testBoard.getAllPlayers();
+		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
+		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
+	}
+
+	/**
+	 * TearDown method that resets the position of the players
+	 *
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
 		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
 		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
 	}
@@ -78,13 +90,45 @@ public class BoardTest {
 
 
 	/**
-	 * Testing that it is possible to move player0 East - should move without any collision or exception
+	 * Testing that it is possible to move player[0] east two times and then south - should move without
+	 * any collision or exception
+	 *
 	 * @throws PlayerNotFoundException
 	 */
 	@Test
 	public void movePlayer0SouthTest() throws PlayerNotFoundException {
 		testBoard.movePlayer(players[0], Direction.EAST);
-		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(1,0));
+		testBoard.movePlayer(players[0], Direction.EAST);
+		testBoard.movePlayer(players[0], Direction.SOUTH);
+		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(2,1));
+
+		assertEquals(shouldBePlayer0, players[0]);
+	}
+
+	/**
+	 * Testing that it is possible to move player[0] south - should move and collide with player[1] pushing
+	 * it to tile (0,2)
+	 *
+	 * @throws PlayerNotFoundException
+	 */
+	@Test
+	public void movePlayerCollisionTest() throws PlayerNotFoundException {
+		testBoard.movePlayer(players[0], Direction.SOUTH);
+		Player shouldBePlayer1 = testBoard.posToPlayer(new Position(0,2));
+
+		assertEquals(shouldBePlayer1, players[1]);
+	}
+
+	/**
+	 * Testing that it is not possible to move a player where there is a wall - player[0] should still be
+	 * in its starting position (0,0)
+	 *
+	 * @throws PlayerNotFoundException
+	 */
+	@Test
+	public void movePlayerWallTest() throws PlayerNotFoundException {
+		testBoard.movePlayer(players[0], Direction.WEST);
+		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,0));
 
 		assertEquals(shouldBePlayer0, players[0]);
 	}

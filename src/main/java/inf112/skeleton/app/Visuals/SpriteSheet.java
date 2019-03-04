@@ -20,7 +20,6 @@ public final class SpriteSheet {
 
 	//Div Sprites
 	private static TextureRegion tapToStartSprite;
-	private static TextureRegion clickAnywhereSprite;
 	private static TextureRegion playerSprite;
 
 	//Menu
@@ -75,25 +74,21 @@ public final class SpriteSheet {
 		this.uTurnSprite = new TextureRegion(texture);
 		//this.uTurnSprite.flip(false, true);
 
-		this.texture = new Texture("tapToStart.gif");
+		this.texture = new Texture("StateImages/tapToStart.gif");
 		this.tapToStartSprite = new TextureRegion(texture);
-		this.tapToStartSprite.flip(false, true);
-
-		this.texture = new Texture("clickAnywhere.png");
-		this.clickAnywhereSprite = new TextureRegion(texture);
-		this.clickAnywhereSprite.flip(false, true);
+		//this.tapToStartSprite.flip(false, true);
 
 		this.texture = new Texture("player.png");
 		this.playerSprite = new TextureRegion(texture);
 		this.playerSprite.flip(false,true);
 
-		this.texture = new Texture("tempStart.jpg");
+		this.texture = new Texture("StateImages/tempBackground.jpg");
 		this.menuBackground = new TextureRegion(texture);
-		this.menuBackground.flip(false, true);
+		//this.menuBackground.flip(false, true);
 
-		this.texture = new Texture("tapToStart.gif");
+		this.texture = new Texture("StateImages/tapToStart.gif");
 		this.menuPlayButton = new TextureRegion(texture);
-		this.menuPlayButton.flip(false, true);
+		//this.menuPlayButton.flip(false, true);
 
 		this.texture = new Texture("clear.png");
 		this.cardGuiClearButton = new TextureRegion(texture);

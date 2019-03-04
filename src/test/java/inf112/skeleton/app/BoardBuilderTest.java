@@ -45,7 +45,7 @@ public class BoardBuilderTest {
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 5; x++) {
 				Position curPos = new Position(x, y);
-				Tile curTile = new NormalTile(null, Direction.NORTH);
+				Tile curTile = new NormalTile(new GameObject[0], Direction.NORTH);
 				correctTileMap.put(curPos, curTile);
 			}
 		}
@@ -66,7 +66,7 @@ public class BoardBuilderTest {
 		BoardBuilder bb = new BoardBuilder();
 		GameObject[] gameObjects = {new Laser(Direction.NORTH)};
 		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
-		Tile testTile = bb.getTile("00100");
+		Tile testTile = bb.getTile("00110");
 
 		assertEquals(correctTile, testTile);
 	}

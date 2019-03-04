@@ -13,7 +13,6 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class TileTest {
 
@@ -60,5 +59,16 @@ public class TileTest {
 	public void hasWallInDirFalseTest() {
 		Tile normalTile = new NormalTile(new GameObject[0], Direction.NORTH);
 		assertFalse(normalTile.hasWallInDir(Direction.NORTH));
+	}
+
+	/**
+	 * Testing that the overriden equals method of Tile works as expected
+	 */
+	@Test
+	public void tileEqualsTest(){
+		Tile tile1 = new NormalTile(new GameObject[]{new Wall(Direction.NORTH)}, Direction.NORTH);
+		Tile tile2 = new NormalTile(new GameObject[]{new Wall(Direction.NORTH)}, Direction.NORTH);
+
+		assertEquals(tile1, tile2);
 	}
 }

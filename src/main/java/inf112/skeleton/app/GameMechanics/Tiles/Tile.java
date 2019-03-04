@@ -29,6 +29,12 @@ public abstract class Tile implements ITile {
 		return true;
 	}
 
+	/**
+	 * Equals method checks that the objects are of the same type, has the same GameObjects and are the same direction
+	 *
+	 * @param obj
+	 * @return
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (!obj.getClass().isInstance(this)) {
@@ -36,8 +42,7 @@ public abstract class Tile implements ITile {
 		}
 
 		Tile tile = (Tile) obj;
-
-		if(Arrays.equals(tile.getGameObjects(), this.gameObjects)){
+		if(!Arrays.equals(tile.getGameObjects(), this.gameObjects)){
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);

@@ -17,9 +17,9 @@ public class CardState extends State{
 
     public CardState(GameStateManager gsm) {
         super(gsm);
-        batch = new SpriteBatch();
-        batch.setProjectionMatrix(camera.combined);
-        boardGUI = new BoardGUI(camera, batch);
+        this.batch = new SpriteBatch();
+        this.batch.setProjectionMatrix(camera.combined);
+        this.boardGUI = new BoardGUI(camera, batch);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
