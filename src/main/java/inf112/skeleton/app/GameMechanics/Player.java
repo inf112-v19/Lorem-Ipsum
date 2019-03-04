@@ -5,6 +5,8 @@ import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
+import java.util.List;
+
 public class Player implements IPlayer {
 
     private SpriteType spriteType = SpriteType.PLAYER;
@@ -13,6 +15,7 @@ public class Player implements IPlayer {
     private Board board;
     private int playerHealth = 5;
     private Position backup;
+    private boolean ready = false;
 
 
     private Direction playerDirection; //Direction the player is facing
@@ -110,7 +113,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setCardHand() {
+    public void setCardHand(List<Card> cards) {
 
     }
 
@@ -158,5 +161,15 @@ public class Player implements IPlayer {
     @Override
     public SpriteType getSpriteType() {
         return spriteType;
+    }
+
+    @Override
+    public boolean isReady() {
+        return ready;
+    }
+
+    @Override
+    public void setReady() {
+        ready = true;
     }
 }

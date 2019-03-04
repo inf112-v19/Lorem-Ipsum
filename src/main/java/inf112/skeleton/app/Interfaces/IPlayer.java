@@ -5,6 +5,8 @@ import inf112.skeleton.app.GUI.SpriteType;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Direction;
 
+import java.util.List;
+
 public interface IPlayer {
 
 	void turnPlayer(int numberOfTurns);
@@ -17,7 +19,7 @@ public interface IPlayer {
 
 	void setCardSequence();
 
-	void setCardHand();
+	void setCardHand(List<Card> cards);
 
 	void sortCardSeqence();
 
@@ -32,6 +34,10 @@ public interface IPlayer {
 	Position getBackup();
 
 	SpriteType getSpriteType();
+
+	boolean isReady();
+
+	void setReady();
 
 
 
