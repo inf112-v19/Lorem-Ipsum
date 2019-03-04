@@ -1,74 +1,51 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Board.BoardBuilder;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import junit.framework.AssertionFailedError;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
+	private Board testBoard;
+	private Player[] players;
 
 	/**
-	 * Testing that the readFromFile method in boardBuilder returns the correct 2D String array
+	 * Setup method for creating a board to test with containing two players
 	 *
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	@Test
-	public void boardBuilderReadFromFileTest() throws IOException {
-
-		String[][] correctNumbers = {{"1","2","3","4","5"},{"6","7","8","9","10"},{"11","12","13","14","15"}};
-
-		String testFile = "Boards/BoardBuilderTest1.txt";
-		BoardBuilder bb = new BoardBuilder();
-
-		String tileNumbers[][] = bb.readFromFile(testFile);
-
-		assertArrayEquals(tileNumbers, correctNumbers);
+	@Before
+	public void setUp() throws Exception {
+		testBoard = new Board("Boards/ExampleBoard.txt", 2);
+		players = testBoard.getAllPlayers();
+		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
+		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
 	}
 
 	/**
-	 * Testing that the buildBoard method works as expected
+	 * Testing that the MovePlayer method gives correct exception when Player is not found
 	 */
-	@Test
-	public void boardBuilderBuildBoardTest() {
-		HashMap<Position, Tile> correctTileMap = new HashMap<>();
-
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 5; x++) {
-				Position curPos = new Position(x, y);
-				Tile curTile = new NormalTile(null, Direction.NORTH);
-				correctTileMap.put(curPos, curTile);
-			}
-		}
-
-		String testFile = "Boards/BoardBuilderTest2.txt";
-		BoardBuilder bb = new BoardBuilder();
-		HashMap<Position, Tile> tileMapTest = bb.buildBoard(testFile);
-
-		assertEquals(correctTileMap, tileMapTest);
+	@Test(expected = PlayerNotFoundException.class)
+	public void boardMovePlayerPlayerNotFoundTest() throws PlayerNotFoundException {
+		testBoard.movePlayer(new Player("test", Direction.NORTH), Direction.NORTH);
 	}
 
 
-	/**
-	 * Testing that the getTile works as expected
-	 */
-	@Test
-	public void boardBuilderGetTileTest() {
-		BoardBuilder bb = new BoardBuilder();
-		GameObject[] gameObjects = {new Laser(Direction.NORTH)};
-		Tile correctTile = new NormalTile(gameObjects, Direction.NORTH);
-		Tile testTile = bb.getTile("00100");
-
-		assertEquals(correctTile, testTile);
-	}
 
 }
