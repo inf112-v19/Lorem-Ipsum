@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import inf112.skeleton.app.GUI.states.GameStateManager;
 import inf112.skeleton.app.GUI.states.MenuState;
-import inf112.skeleton.app.GUI.states.PlayState;
+import inf112.skeleton.app.GUI.states.CardState;
 
 public class RoboRally extends ApplicationAdapter {
 
@@ -22,7 +22,6 @@ public class RoboRally extends ApplicationAdapter {
     @Override
     public void create () {
         gsm = new GameStateManager();
-        gsm.push(new PlayState(gsm));
         gsm.push(new MenuState(gsm));
     }
 
