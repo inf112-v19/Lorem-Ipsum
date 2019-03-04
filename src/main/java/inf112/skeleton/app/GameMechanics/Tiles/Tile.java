@@ -29,7 +29,15 @@ public abstract class Tile implements ITile {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.getClass() == obj.getClass();
+		if (!obj.getClass().isInstance(this)) {
+			return false;
+		}
+
+		Tile tile = (Tile) obj;
+		if(!tile.getGameObjects().equals(this.gameObjects)){
+			return false;
+		}
+		return tile.getDirection().equals(this.direction);
 	}
 
 	@Override

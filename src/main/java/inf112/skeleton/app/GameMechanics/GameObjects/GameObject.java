@@ -10,7 +10,6 @@ public abstract class GameObject implements IGameObject {
 	protected Direction dir;
 	protected SpriteType spriteType;
 
-
     public GameObject(Direction dir){
         this.dir = dir;
     }
@@ -43,6 +42,10 @@ public abstract class GameObject implements IGameObject {
 
     @Override
     public boolean equals(Object obj) {
-        return this.getClass() == obj.getClass();
+    	if (!obj.getClass().isInstance(this)) {
+    		return false;
+		}
+		GameObject gameObject = (GameObject) obj;
+    	return gameObject.getDirection().equals(this.dir);
     }
 }
