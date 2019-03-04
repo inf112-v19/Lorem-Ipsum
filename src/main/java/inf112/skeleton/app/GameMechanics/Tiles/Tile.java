@@ -55,7 +55,7 @@ public abstract class Tile implements ITile {
 			newGameObjects[i] = gameObjects[i];
 		}
 
-		newGameObjects[gameObjects.length+1] = gameObject;
+		newGameObjects[gameObjects.length] = gameObject;
 		gameObjects = newGameObjects;
 	}
 
