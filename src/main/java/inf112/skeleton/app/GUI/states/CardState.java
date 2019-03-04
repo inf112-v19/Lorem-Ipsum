@@ -3,6 +3,7 @@ package inf112.skeleton.app.GUI.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GUI.BoardGUI;
+import inf112.skeleton.app.GUI.CardGUI;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -15,6 +16,7 @@ public class CardState extends State{
     private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
+    private CardGUI cardGUI;
 
     public CardState(GameStateManager gsm) {
         super(gsm);
@@ -24,6 +26,11 @@ public class CardState extends State{
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
+
+
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+        this.cardGUI = new CardGUI(camera, batch, board, deck.drawCards(9)); //test
     }
 
     @Override
@@ -51,6 +58,7 @@ public class CardState extends State{
     @Override
     public void render() {
         boardGUI.render();
+        cardGUI.render();
     }
 
     @Override
