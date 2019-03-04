@@ -1,8 +1,6 @@
 package inf112.skeleton.app.GUI.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GUI.RoboRally;
@@ -15,15 +13,12 @@ public class MenuState extends State {
     private TextureRegion background;
     private TextureRegion playButton;
     private SpriteBatch batch;
-    //private Texture background;
-    //private Texture playButton;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
         spriteSheet = new SpriteSheet();
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
-        //background = new Texture("tempStart.jpg");
         background = spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
         playButton = spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
     }
@@ -44,7 +39,6 @@ public class MenuState extends State {
     @Override
     public void render() {
         batch.begin();
-
         batch.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         batch.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2),
                 (playButton.getRegionHeight()));
@@ -54,8 +48,6 @@ public class MenuState extends State {
     @Override
     public void dispose() {
         spriteSheet.dispose();
-        //background.dispose();
-        //playButton.dispose();
     }
 
     @Override
