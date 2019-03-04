@@ -1,7 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.GameMechanics.Cards.Card;
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Direction;
 

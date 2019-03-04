@@ -1,11 +1,11 @@
-package inf112.skeleton.app.GUI.states;
+package inf112.skeleton.app.Visuals.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.GUI.RoboRally;
-import inf112.skeleton.app.GUI.SpriteSheet;
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.RoboRally;
+import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.SpriteType;
 
 public class MenuState extends State {
 

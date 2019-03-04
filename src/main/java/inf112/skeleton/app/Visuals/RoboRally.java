@@ -1,11 +1,10 @@
-package inf112.skeleton.app.GUI;
+package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import inf112.skeleton.app.GUI.states.GameStateManager;
-import inf112.skeleton.app.GUI.states.MenuState;
-import inf112.skeleton.app.GUI.states.CardState;
+import inf112.skeleton.app.Visuals.states.GameStateManager;
+import inf112.skeleton.app.Visuals.states.MenuState;
 
 public class RoboRally extends ApplicationAdapter {
 

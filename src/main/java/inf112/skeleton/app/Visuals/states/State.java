@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI.states;
+package inf112.skeleton.app.Visuals.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

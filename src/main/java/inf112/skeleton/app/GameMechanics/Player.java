@@ -2,7 +2,7 @@ package inf112.skeleton.app.GameMechanics;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
 import java.util.List;

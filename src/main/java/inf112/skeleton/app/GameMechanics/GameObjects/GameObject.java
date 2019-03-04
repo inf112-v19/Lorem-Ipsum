@@ -1,7 +1,7 @@
 package inf112.skeleton.app.GameMechanics.GameObjects;
 
 import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 

@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GUI.states;
+package inf112.skeleton.app.Visuals.states;
 
 import java.util.Stack;
 
