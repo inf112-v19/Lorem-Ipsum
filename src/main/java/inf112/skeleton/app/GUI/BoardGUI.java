@@ -30,10 +30,6 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
-	//private Texture texture = new Texture("RoboRallyTiles.png");
-    //TextureRegion[][] spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
-
-
     public BoardGUI(OrthographicCamera camera, SpriteBatch batch) {
         this.camera = camera;
         this.batch = batch;
@@ -69,8 +65,6 @@ public class BoardGUI {
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-		camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // 0,0 is top left
-        batch.setProjectionMatrix(camera.combined);
         reposition();
 
         //TODO - implement resize logic (maybe not needed becaus of the batch.setProjectMatrix)

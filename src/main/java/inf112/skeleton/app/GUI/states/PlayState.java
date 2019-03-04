@@ -1,16 +1,18 @@
 package inf112.skeleton.app.GUI.states;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.GUI.BoardGUI;
 
 public class PlayState extends State{
 
-    private Texture car;
+    private BoardGUI boardGUI;
+    private SpriteBatch batch;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        car = new Texture("player.png");
-        //cam.setToOrtho(false, RoboRally.WIDTH/2, RoboRally.WIDTH / 2);  zoomer inn
+        batch = new SpriteBatch();
+        batch.setProjectionMatrix(camera.combined);
+        boardGUI = new BoardGUI(camera, batch);
     }
 
     @Override
@@ -22,18 +24,18 @@ public class PlayState extends State{
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-
-
-
-
-        //sb.setProjectionMatrix(cam.combined); zoomer inn
-        //sb.begin();
-        //sb.draw(car, 50,50);
-        //sb.end();
+    public void render() {
+        boardGUI.render();
     }
 
     @Override
     public void dispose() {
+    }
+
+    @Override
+    public void resize() {
+        super.resize();
+        batch.setProjectionMatrix(camera.combined);
+        boardGUI.resize();
     }
 }

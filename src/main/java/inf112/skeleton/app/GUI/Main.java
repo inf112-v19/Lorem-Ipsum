@@ -8,7 +8,6 @@ public class Main {
     public static void main (String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-        //em
         config.width = RoboRally.WIDTH;
         config.height = RoboRally.HEIGHT;
         config.title = RoboRally.TITLE;
