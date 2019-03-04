@@ -40,8 +40,7 @@ public class MenuState extends State {
     public void render() {
         batch.begin();
         batch.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        batch.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2),
-                (playButton.getRegionHeight()));
+        batch.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2), (playButton.getRegionHeight()));
         batch.end();
     }
 
