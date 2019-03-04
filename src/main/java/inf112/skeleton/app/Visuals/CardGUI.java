@@ -65,6 +65,36 @@ public class CardGUI {
                 }
             });
         }
+
+        xpos += 10;
+
+        ImageButton clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
+        ImageButton submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+
+        clear.setSize(80,30);
+        clear.setPosition(xpos, 20);
+        stage.addActor(clear);
+        submit.setSize(80,30);
+        submit.setPosition(xpos, 70);
+        stage.addActor(submit);
+
+        clear.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("clear");
+                return true;
+            }
+        });
+
+        submit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("submit");
+                return true;
+            }
+        });
+
+
         Gdx.input.setInputProcessor(stage);
     }
 }
