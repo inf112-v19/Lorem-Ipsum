@@ -1,6 +1,4 @@
-package inf112.skeleton.app.GUI;
-
-import com.badlogic.gdx.graphics.Texture;
+package inf112.skeleton.app.Visuals;
 
 /**
  * RoboRallyTiles.png is a 7x13 spritesheet

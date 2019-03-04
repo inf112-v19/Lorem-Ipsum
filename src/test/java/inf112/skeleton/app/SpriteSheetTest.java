@@ -3,8 +3,8 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
-import inf112.skeleton.app.GUI.SpriteSheet;
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.SpriteType;
 
 
 import inf112.skeleton.app.GameMechanics.Direction;

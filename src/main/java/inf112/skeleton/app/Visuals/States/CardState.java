@@ -1,12 +1,9 @@
-package inf112.skeleton.app.GUI.states;
+package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.GUI.BoardGUI;
-import inf112.skeleton.app.GUI.CardGUI;
-import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.Visuals.BoardGUI;
+import inf112.skeleton.app.Visuals.CardGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
-import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 

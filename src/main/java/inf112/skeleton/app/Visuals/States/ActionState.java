@@ -1,7 +1,7 @@
-package inf112.skeleton.app.GUI.states;
+package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.GUI.BoardGUI;
+import inf112.skeleton.app.Visuals.BoardGUI;
 
 public class ActionState extends State {
 

@@ -1,6 +1,6 @@
 package inf112.skeleton.app.GameMechanics.Cards;
 
-import inf112.skeleton.app.GUI.SpriteType;
+import inf112.skeleton.app.Visuals.SpriteType;
 
 public enum CardType {
     BACKWARD_1(0, -1, SpriteType.BACKWARD_1),
