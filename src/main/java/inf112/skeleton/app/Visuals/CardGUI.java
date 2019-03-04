@@ -23,6 +23,9 @@ public class CardGUI {
     private ImageButton[] buttonArr;
     Stage stage;
     SpriteSheet spriteSheet;
+    private Card[] cardSeq;
+    private int cardPtr;
+    private int selectedCardDrawPos;
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, List<Card> cards) {
         this.camera = camera;
@@ -33,6 +36,9 @@ public class CardGUI {
         stage = new Stage(new ScreenViewport());
         spriteSheet  = new SpriteSheet();
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cardSeq = new Card[5];
+        cardPtr = 0;
+        selectedCardDrawPos = 0;
 
         create();
     }
@@ -57,11 +63,15 @@ public class CardGUI {
 
         for (int i = 0; i < buttonArr.length; i++) {
             final int finalI = i;
-            final int finalI1 = i;
             buttonArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("card priority: " + cards.get(finalI1).getPriority());
+                    if (cardPtr < 5) {
+                        cardSeq[cardPtr] = cards.get(finalI);
+                        //int oldXpos = (int)buttonArr[finalI].getX();
+                        cardPtr++;
+                    }
+                    System.out.println("card priority: " + cards.get(finalI).getPriority());
                     return true;
                 }
             });
@@ -76,7 +86,7 @@ public class CardGUI {
         bar.setSize(480, 30);
         bar.setPosition(0,135);
         stage.addActor(bar);
-        
+
         clear.setSize(80,30);
         clear.setPosition(xpos, 20);
         stage.addActor(clear);
@@ -95,7 +105,10 @@ public class CardGUI {
         submit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("submit");
+                System.out.print("submit: ");
+                for (int i = 0; i < cardSeq.length; i++) {
+                    System.out.print(cardSeq[i].toString() + ", ");
+                }
                 return true;
             }
         });

@@ -23,6 +23,10 @@ public class Card implements Comparable<Card>{
         return type.getSprite();
     }
 
+    public String toString() {
+        return type.toString();
+    }
+
     @Override
     public int compareTo(Card other) {
         return Integer.compare(this.priority, other.priority);
