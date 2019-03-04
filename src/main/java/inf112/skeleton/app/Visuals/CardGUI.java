@@ -97,6 +97,7 @@ public class CardGUI {
         clear.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cardPtr = 0;
                 System.out.println("clear");
                 return true;
             }
@@ -106,7 +107,7 @@ public class CardGUI {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.print("submit: ");
-                for (int i = 0; i < cardSeq.length; i++) {
+                for (int i = 0; i < cardPtr; i++) {
                     System.out.print(cardSeq[i].toString() + ", ");
                 }
                 return true;
