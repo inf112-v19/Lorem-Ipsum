@@ -1,5 +1,6 @@
 package inf112.skeleton.app.GameMechanics.Board;
 
+import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IBoard;
@@ -22,6 +23,41 @@ public class Board implements IBoard {
 		width = builder.getWidth();
 	}
 
+	public Board(String filename, int numberOfPlayers) {
+		this(filename);
+		for (int i = 0; i < numberOfPlayers; i++) {
+			playerPositions.put(new Player(Integer.toString(i), Direction.NORTH), new Position(-1, -1));
+		}
+	}
+
+	/**
+	 * Method used for testing purposes - maybe not needed for finished program
+	 * (ignores all exceptions and relies on correct usage)
+	 *
+	 * @param player
+	 * @param pos
+	 */
+	public void placePlayerOnPos(Player player, Position pos) {
+		playerPositions.put(player, pos);
+	}
+
+	/**
+	 * Method used for testing purposes - maybe not needed for finished program
+	 * (ignores all exceptions and relies on correct usage)
+	 *
+	 * @return
+	 */
+	public Player[] getAllPlayers() {
+		Player[] players = new Player[playerPositions.size()];
+		int i = 0;
+
+		for (Player p : playerPositions.keySet()) {
+			players[i] = p;
+			i++;
+		}
+		return players;
+	}
+
 	@Override
 	public int getHeight() {
 		return height;
@@ -42,14 +78,15 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player) {
+	public boolean movePlayer(Player player) throws PlayerNotFoundException {
 		return movePlayer(player, player.getDirection());
 	}
 
 	@Override
-	public boolean movePlayer(Player player, Direction dir) {
+	public boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException {
 		if(!playerPositions.containsKey(player)) {
 			//TODO - handle player not found exception
+			throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
 		Position curPos = playerPositions.get(player);

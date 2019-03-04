@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -53,7 +54,7 @@ public interface IBoard<T> {
 	 *            player to be moved
 	 * @return true if movement happened or false if player did not move
 	 */
-	boolean movePlayer(Player player);
+	boolean movePlayer(Player player) throws PlayerNotFoundException;
 
     /**
      * Recursively called in movePlayer - moving in a direction regardless of the direction where the player is facing
@@ -64,7 +65,7 @@ public interface IBoard<T> {
 	 *            direction to be moved
      * @return true if movement happened or false if player did not move
      */
-    boolean movePlayer(Player player, Direction dir);
+    boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException;
 
     /**
      * Remove a Game Object from the tile at the given x,y location.
