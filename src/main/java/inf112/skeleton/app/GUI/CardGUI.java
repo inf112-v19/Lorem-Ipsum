@@ -56,10 +56,11 @@ public class CardGUI {
 
         for (int i = 0; i < buttonArr.length; i++) {
             final int finalI = i;
+            final int finalI1 = i;
             buttonArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("card number " + (finalI+1) + " selected");
+                    System.out.println("card priority: " + cards.get(finalI1).getPriority());
                     return true;
                 }
             });

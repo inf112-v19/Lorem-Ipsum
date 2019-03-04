@@ -9,7 +9,7 @@ import inf112.skeleton.app.GUI.states.CardState;
 
 public class RoboRally extends ApplicationAdapter {
 
-    public static final int WIDTH = 576;
+    public static final int WIDTH = 976;
     public static final int HEIGHT = 576;
     public static final String TITLE = "Robo Rally";
 
