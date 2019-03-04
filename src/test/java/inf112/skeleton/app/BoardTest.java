@@ -90,7 +90,9 @@ public class BoardTest {
 
 
 	/**
-	 * Testing that it is possible to move player0 East - should move without any collision or exception
+	 * Testing that it is possible to move player[0] east two times and then south - should move without
+	 * any collision or exception
+	 *
 	 * @throws PlayerNotFoundException
 	 */
 	@Test
@@ -104,8 +106,8 @@ public class BoardTest {
 	}
 
 	/**
-	 * Testing that it is possible to move player0 south - should move and collide with player1 pushing
-	 * it to tile 0,2
+	 * Testing that it is possible to move player[0] south - should move and collide with player[1] pushing
+	 * it to tile (0,2)
 	 *
 	 * @throws PlayerNotFoundException
 	 */
@@ -115,6 +117,20 @@ public class BoardTest {
 		Player shouldBePlayer1 = testBoard.posToPlayer(new Position(0,2));
 
 		assertEquals(shouldBePlayer1, players[1]);
+	}
+
+	/**
+	 * Testing that it is not possible to move a player where there is a wall - player[0] should still be
+	 * in its starting position (0,0)
+	 *
+	 * @throws PlayerNotFoundException
+	 */
+	@Test
+	public void movePlayerWallTest() throws PlayerNotFoundException {
+		testBoard.movePlayer(players[0], Direction.WEST);
+		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,0));
+
+		assertEquals(shouldBePlayer0, players[0]);
 	}
 
 }
