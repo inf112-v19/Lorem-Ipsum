@@ -17,8 +17,6 @@ public class RoboRally extends ApplicationAdapter {
     public static final String TITLE = "Robo Rally";
 
     private GameStateManager gsm;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
     //private BoardGUI boardGUI;
 
     public RoboRally() {
@@ -63,7 +61,6 @@ public class RoboRally extends ApplicationAdapter {
 
     @Override
     public void dispose () {
-        batch.dispose();
     }
 
 
