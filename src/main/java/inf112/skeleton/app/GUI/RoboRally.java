@@ -28,7 +28,6 @@ public class RoboRally extends ApplicationAdapter {
     public void create () {
         batch = new SpriteBatch();
 
-        //em
         gsm = new GameStateManager();
 
         camera = new OrthographicCamera();
@@ -37,8 +36,6 @@ public class RoboRally extends ApplicationAdapter {
 
         boardGUI = new BoardGUI(camera, batch);
 
-        //em
-        //Gdx.gl.glClearColor(1,0,0,1);
         gsm.push(new MenuState(gsm));
     }
 

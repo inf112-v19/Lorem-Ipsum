@@ -23,6 +23,10 @@ public class PlayState extends State{
 
     @Override
     public void render(SpriteBatch sb) {
+
+
+
+
         //sb.setProjectionMatrix(cam.combined); zoomer inn
         //sb.begin();
         //sb.draw(car, 50,50);
