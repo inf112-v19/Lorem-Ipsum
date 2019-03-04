@@ -82,8 +82,7 @@ public class Board implements IBoard {
             }
             //player walks off the board
             else {
-            	//TODO - handle player loosing life when falling off the board
-				playerPositions.put(player, player.getBackup());
+				playerWalkedOffTheBoard(player);
             }
         }
 
@@ -161,5 +160,21 @@ public class Board implements IBoard {
                 return curPos;
         }
     }
+
+	/**
+	 * Handles a player walking off the board
+	 *
+	 * @param player
+	 */
+	private void playerWalkedOffTheBoard(Player player) {
+    	player.decreaseHealth();
+
+    	if (player.getHealth()>0) {
+    		playerPositions.put(player, player.getBackup());
+		}
+    	else {
+    		//TODO - handle dead player
+		}
+	}
 
 }
