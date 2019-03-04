@@ -32,17 +32,25 @@ public class CardGUI {
         this.buttonArr = new ImageButton[cards.size()];
         stage = new Stage(new ScreenViewport());
         spriteSheet  = new SpriteSheet();
+
+        create();
     }
 
     public void render() {
-        drawCards();
+
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+
+
     }
 
-    private void drawCards() {
-
+    private void create() {
+        int xpos = 0;
         for (int i = 0; i < buttonArr.length; i++) {
             buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
-            buttonArr[i].setPosition(100, 100);
+            buttonArr[i].setSize(97, 135);
+            buttonArr[i].setPosition(xpos, 0);
+            xpos += 97;
             stage.addActor(buttonArr[i]);
         }
 
@@ -51,13 +59,11 @@ public class CardGUI {
             buttonArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("card number " + finalI +1 + " selected");
+                    System.out.println("card number " + (finalI+1) + " selected");
                     return true;
                 }
-
             });
         }
-
         Gdx.input.setInputProcessor(stage);
     }
 }
