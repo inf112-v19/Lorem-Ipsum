@@ -3,17 +3,25 @@ package inf112.skeleton.app.GUI.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GUI.RoboRally;
+import inf112.skeleton.app.GUI.SpriteSheet;
+import inf112.skeleton.app.GUI.SpriteType;
 
 public class MenuState extends State {
 
-    Texture background;
-    Texture playButton;
+    private SpriteSheet spriteSheet;
+    private TextureRegion background;
+    private TextureRegion playButton;
+    //private Texture background;
+    //private Texture playButton;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        background = new Texture("tempStart.jpg");
-        playButton = new Texture("tapToStart.gif");
+        spriteSheet = new SpriteSheet();
+        //background = new Texture("tempStart.jpg");
+        background = spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
+        playButton = spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
     }
 
     @Override
@@ -34,14 +42,15 @@ public class MenuState extends State {
         sb.begin();
 
         sb.draw(background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        sb.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getWidth() / 2), (RoboRally.HEIGHT)-((playButton.getHeight())*2));
+        sb.draw(playButton, (RoboRally.WIDTH / 2) - (playButton.getRegionWidth()/2), (playButton.getRegionHeight()));
         sb.end();
     }
 
     @Override
     public void dispose() {
-        background.dispose();
-        playButton.dispose();
+        spriteSheet.dispose();
+        //background.dispose();
+        //playButton.dispose();
     }
 }
 

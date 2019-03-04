@@ -21,7 +21,7 @@ import java.util.logging.FileHandler;
 /**
  * This class handles all the sprites used in the game
  */
-public final class SpriteSheet extends Sprite {
+public final class SpriteSheet {
 
 	private Texture texture;
 
@@ -29,6 +29,10 @@ public final class SpriteSheet extends Sprite {
 	private static TextureRegion tapToStartSprite;
 	private static TextureRegion clickAnywhereSprite;
 	private static TextureRegion playerSprite;
+
+	//Menu
+	private static TextureRegion menuBackground;
+	private static TextureRegion menuPlayButton;
 
 	//Card Sprites
 	private static TextureRegion backUpSprite;
@@ -42,11 +46,9 @@ public final class SpriteSheet extends Sprite {
 	//The spriteSheet
 	private static TextureRegion[][] spriteSheet;
 
-	boolean useSpriteSheet;
 
 
 	public SpriteSheet(){
-		this.useSpriteSheet = true;
 
 		this.texture = new Texture("RoboRallyTiles.png");
 		this.spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
@@ -92,6 +94,14 @@ public final class SpriteSheet extends Sprite {
 		this.playerSprite = new TextureRegion(texture);
 		this.playerSprite.flip(false,true);
 
+		this.texture = new Texture("tempStart.jpg");
+		this.menuBackground = new TextureRegion(texture);
+		this.menuBackground.flip(false, true);
+
+		this.texture = new Texture("tapToStart.gif");
+		this.menuPlayButton = new TextureRegion(texture);
+		this.menuPlayButton.flip(false, true);
+
 
 	}
 
@@ -135,6 +145,10 @@ public final class SpriteSheet extends Sprite {
 				return rightTurnSprite;
 			case PLAYER:
 				return playerSprite;
+			case MENU_BACKGROUND:
+				return menuBackground;
+			case MENU_PLAY_BUTTON:
+				return menuPlayButton;
 			default:
 				System.err.println("No sprite found");
 				return null;
@@ -176,6 +190,10 @@ public final class SpriteSheet extends Sprite {
 	 */
 	public TextureRegion getTexture(GameObject gameObject){
 		return findCorrectTexture(gameObject.getSpriteType());
+	}
+
+	public void dispose(){
+		this.texture.dispose();
 	}
 
 

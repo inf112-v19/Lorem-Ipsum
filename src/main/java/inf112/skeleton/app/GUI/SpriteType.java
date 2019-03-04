@@ -19,14 +19,13 @@ public enum SpriteType{
 	LASER_VERTICAL(6,5),
 	LASER_HORIZONTAL(6,4),
 
-	//wall blocking the given direction
+
 	WALL_NORTH(6,3),
 	WALL_SOUTH(4,3),
 	WALL_EAST(6,2),
 	WALL_WEST(5,3),
 
-	//FLAG(),
-
+	FLAG(),
 	PLAYER(),
 
 	BACKWARD_1(),
@@ -35,7 +34,11 @@ public enum SpriteType{
 	FORWARD_3(),
 	ROTATE_180(),
 	ROTATE_90_L(),
-	ROTATE_90_R();
+	ROTATE_90_R(),
+
+	//menu
+	MENU_BACKGROUND(),
+	MENU_PLAY_BUTTON();
 
 
 	private int x;
