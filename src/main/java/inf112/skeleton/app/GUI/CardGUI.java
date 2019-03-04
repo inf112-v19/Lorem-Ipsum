@@ -3,8 +3,12 @@ package inf112.skeleton.app.GUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
@@ -18,6 +22,7 @@ public class CardGUI {
     private Board board;
     private ImageButton[] buttonArr;
     Stage stage;
+    SpriteSheet spriteSheet;
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, List<Card> cards) {
         this.camera = camera;
@@ -26,6 +31,7 @@ public class CardGUI {
         this.board = board;
         this.buttonArr = new ImageButton[cards.size()];
         stage = new Stage(new ScreenViewport());
+        spriteSheet  = new SpriteSheet();
     }
 
     public void render() {
@@ -34,6 +40,23 @@ public class CardGUI {
 
     private void drawCards() {
 
+        for (int i = 0; i < buttonArr.length; i++) {
+            buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
+            buttonArr[i].setPosition(100, 100);
+            stage.addActor(buttonArr[i]);
+        }
+
+        for (int i = 0; i < buttonArr.length; i++) {
+            final int finalI = i;
+            buttonArr[i].addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    System.out.println("card number " + finalI +1 + " selected");
+                    return true;
+                }
+
+            });
+        }
 
         Gdx.input.setInputProcessor(stage);
     }
