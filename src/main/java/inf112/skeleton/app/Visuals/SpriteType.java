@@ -7,6 +7,7 @@ public enum SpriteType{
 	NORMAL_TILE(4, 0),
 	HOLE_TILE(5,0),
 	REPAIR_TILE(6,0),
+	OPTIONS_TILE(6,1),
 
 	//laser shooting to the given direction
 	LASERSOURCE_NORTH(4,4),
