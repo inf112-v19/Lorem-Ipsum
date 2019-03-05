@@ -7,7 +7,7 @@ import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 
-public class CardState extends State{
+public class CardState extends State {
 
     private BoardGUI boardGUI;
     private SpriteBatch batch;
@@ -23,11 +23,10 @@ public class CardState extends State{
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
+        this.cardDeck.createNewDeck();
 
-
-        ICardDeck deck = new ProgramCardDeck();
-        deck.createNewDeck();
-        this.cardGUI = new CardGUI(camera, batch, board, deck.drawCards(9)); //test
+        this.cardGUI = new CardGUI(camera, batch, board); //only for GUI testing
+        //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
     }
 
     @Override
@@ -39,12 +38,12 @@ public class CardState extends State{
     public void update(float dt) {
         // all players ready then set new ActionState
         int numPlayer = players.length;
-        for(Player player : players){
-            if (!player.isReady()){
+        for (Player player : players) {
+            if (!player.isReady()) {
                 break;
-            }else{
+            } else {
                 numPlayer--;
-                if (numPlayer == 0){
+                if (numPlayer == 0) {
                     gsm.set(new ActionState(gsm));
                     dispose();
                 }
@@ -70,7 +69,7 @@ public class CardState extends State{
         boardGUI.resize();
     }
 
-    public void dealCards(){
+    public void dealCards() {
         players[0].setCardHand(cardDeck.drawCards(9));
     }
 }

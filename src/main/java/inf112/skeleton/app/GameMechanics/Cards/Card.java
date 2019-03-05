@@ -31,4 +31,5 @@ public class Card implements Comparable<Card>{
     public int compareTo(Card other) {
         return Integer.compare(this.priority, other.priority);
     }
+
 }

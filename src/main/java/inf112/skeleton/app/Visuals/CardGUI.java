@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
+import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Interfaces.ICardDeck;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +27,8 @@ public class CardGUI {
     private List<Card> cards;
     private Board board;
     private ImageButton[] buttonArr;
-    Stage stage;
-    SpriteSheet spriteSheet;
+    private Stage stage;
+    private SpriteSheet spriteSheet;
     private Card[] cardSeq;
     private int cardPtr;
     private int selectedCardDrawPos;
@@ -33,20 +36,27 @@ public class CardGUI {
     private Image infoBar;
     private int labelXPos;
 
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, List<Card> cards) {
+    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+
         this.camera = camera;
         this.batch = batch;
-        this.cards = cards;
+        this.cards = deck.drawCards(9);
         this.board = board;
         this.buttonArr = new ImageButton[cards.size()];
         stage = new Stage(new ScreenViewport());
-        spriteSheet  = new SpriteSheet();
+        spriteSheet = new SpriteSheet();
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cardSeq = new Card[5];
         cardPtr = 0;
         selectedCardDrawPos = 0;
 
         create();
+    }
+
+    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
+
     }
 
     public void render() {
@@ -74,12 +84,12 @@ public class CardGUI {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     if (cardPtr < 5) {
-                        cardSeq[cardPtr] = cards.get(finalI);
-
-                        addLabel(cardPtr);
-                        swapCardPlacement(buttonArr[finalI], getCardByX(drawPos(cardPtr)));
-                        cardPtr++;
-
+                        if (!cardSeqContains(cards.get(finalI))) {
+                            cardSeq[cardPtr] = cards.get(finalI);
+                            addLabel(cardPtr);
+                            swapCardPlacement(buttonArr[finalI], getCardByX(getDrawPos(cardPtr)));
+                            cardPtr++;
+                        }
                     }
                     System.out.println("card priority: " + cards.get(finalI).getPriority());
                     return true;
@@ -94,14 +104,14 @@ public class CardGUI {
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
 
         infoBar.setSize(485, 30);
-        infoBar.setPosition(0,135);
+        infoBar.setPosition(0, 135);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
 
-        clear.setSize(80,30);
+        clear.setSize(80, 30);
         clear.setPosition(xpos, 20);
         stage.addActor(clear);
-        submit.setSize(80,30);
+        submit.setSize(80, 30);
         submit.setPosition(xpos, 70);
         stage.addActor(submit);
 
@@ -131,15 +141,27 @@ public class CardGUI {
         Gdx.input.setInputProcessor(stage);
     }
 
+    private boolean cardSeqContains(Card card) {
+        for (int i = 0; i < cardPtr; i++) {
+            if (cardSeq[i] == card) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * adds label over selected card
+     */
     private void addLabel(int cardPtr) {
         if (cardPtr == 0) {
             infoBar.remove();
         }
 
-        String filename = "button" + (cardPtr+1);
+        String filename = "button" + (cardPtr + 1);
         Image label = new Image(new TextureRegionDrawable(new Texture("CardImages/" + filename + ".png")));
         label.setSize(97, 30);
-        label.setPosition(labelXPos,135);
+        label.setPosition(labelXPos, 135);
         stage.addActor(label);
         labelXPos += 97;
     }
@@ -149,13 +171,13 @@ public class CardGUI {
         return b;
     }
 
-    private int drawPos(int cardPtr) {
-        return cardPtr*97;
+    private int getDrawPos(int cardPtr) {
+        return cardPtr * 97;
     }
 
     private void swapCardPlacement(ImageButton a, ImageButton b) {
-        int aXPos = (int)a.getX();
-        int bXPos = (int)b.getX();
+        int aXPos = (int) a.getX();
+        int bXPos = (int) b.getX();
 
         a.setPosition(bXPos, 0);
         b.setPosition(aXPos, 0);
