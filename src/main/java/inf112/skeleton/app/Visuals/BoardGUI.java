@@ -95,11 +95,6 @@ public class BoardGUI {
 				Tile curTile = board.getTile(pos);
 				addTilesToStage(curTile,x, y);
 				addGameObjectsOnTileToStage(curTile, x, y);
-
-				/*
-				drawTile(curTile, x, y);
-				drawGameObjects(curTile, x, y);
-				*/
 				xPos++;
 			}
 			xPos = 0;
@@ -107,12 +102,17 @@ public class BoardGUI {
 		}
 	}
 
+	public void update(){
+    	create();
+	}
+
     /**
      * function that calls drawBoard for the actual drawing of the board
      * the function is called from RoboRally.render()
      */
     public void render() {
-        drawBoard();
+		stage.act();
+		stage.draw();
     }
 
     /**
