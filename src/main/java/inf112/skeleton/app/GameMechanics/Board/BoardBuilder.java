@@ -1,14 +1,12 @@
 package inf112.skeleton.app.GameMechanics.Board;
 
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.GameMechanics.Position;
-import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
-import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
-import inf112.skeleton.app.GameMechanics.Tiles.RepairTile;
-import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import inf112.skeleton.app.GameMechanics.Tiles.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -89,6 +87,7 @@ public class BoardBuilder {
 			case 0: return new NormalTile(gameObjects, tileDirection);
 			case 1: return new HoleTile(gameObjects, tileDirection);
 			case 2: return new RepairTile(gameObjects, tileDirection);
+			case 3: return new OptionsTile(gameObjects, tileDirection);
 			default: return new NormalTile(gameObjects, tileDirection);
 		}
 	}
@@ -109,6 +108,8 @@ public class BoardBuilder {
 				return new Wall(direction);
 			case 1:
 				return new Laser(direction);
+			case 2:
+				return new Flag(direction);
 			default:
 				System.err.println("Error while getting Game Object in BoardBuilder");
 				System.exit(1);

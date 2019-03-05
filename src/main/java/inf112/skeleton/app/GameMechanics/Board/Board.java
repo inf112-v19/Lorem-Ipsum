@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -104,21 +105,19 @@ public class Board implements IBoard {
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
-							//TODO - handle walking on a hole tile
-							playerPositions.put(player, newPos);
+							checkForHole(player, newPos);
                         }
                     }
 
                     //no player in direction trying to move - moves player to newPos
                     else {
-						//TODO - handle walking on a hole tile
-						playerPositions.put(player, newPos);
+						checkForHole(player, newPos);
                     }
                 }
             }
             //player walks off the board
             else {
-				playerWalkedOffTheBoard(player);
+				playerFellOffTheBoard(player);
             }
         }
 
@@ -197,7 +196,7 @@ public class Board implements IBoard {
 	 *
 	 * @param player
 	 */
-	private void playerWalkedOffTheBoard(Player player) {
+	private void playerFellOffTheBoard(Player player) {
     	player.decreaseHealth();
 
     	if (player.getHealth()>0) {
@@ -205,6 +204,23 @@ public class Board implements IBoard {
 		}
     	else {
     		//TODO - handle dead player
+		}
+	}
+
+	/**
+	 * Checks if tile player is moving to is a HoleTile and potentially moves player to it if not,
+	 * else calls playerFellOffTheBoard
+	 *
+	 * @param player
+	 * @param newPos
+	 */
+	private void checkForHole(Player player, Position newPos) {
+		Tile newTile = tileMap.get(newPos);
+
+		if (newTile instanceof HoleTile) {
+			playerFellOffTheBoard(player);
+		}else{
+			playerPositions.put(player, newPos);
 		}
 	}
 
