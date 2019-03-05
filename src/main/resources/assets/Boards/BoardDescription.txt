@@ -1,0 +1,40 @@
+Each board text file consist of a 2D-grid where each cell in the grid is the tile with its GameObjects.
+The format of the file is as follows:
+--------------------------------------
+H
+W
+TRNGD ..... ..... .....
+..... ..... ..... .....
+..... ..... ..... .....
+---------------------------------------
+
+H - first line is the height
+W - second line is the width
+
+TRNGD - every tile:
+T - Tile types
+R - Rotation of the tile
+N - Number of GameObjects on the tile
+G - GameObject type
+D - Direction of the GameObject
+
+GD is rewritten N times
+
+
+Tile types:
+0 - NormalTile
+1 - HoleTile
+2 - RepairTile
+3 - OptionTile
+4 - ConveyorBeltTile
+
+GameObjects:
+0 - Wall
+1 - Laser
+2 - Flag
+
+Directions/Rotation:
+0 - North
+1 - South
+2 - East
+3 - West
