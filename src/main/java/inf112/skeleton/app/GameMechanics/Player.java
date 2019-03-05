@@ -11,7 +11,8 @@ public class Player implements IPlayer {
 
     private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
-//    private ArrayList<Card> playerHand;
+    private List<Card> playerHand;
+    private Card[] playerCardSequence;
     private Board board;
     private int playerHealth = 5;
     private Position backup;
@@ -24,6 +25,7 @@ public class Player implements IPlayer {
 
     /**
      * Create a player object
+     *
      * @param playerID
      * @param direction
      */
@@ -36,55 +38,59 @@ public class Player implements IPlayer {
     /**
      * Turn the player around 'numberOfTurns' to the right.
      * Input negative numbers to turn left.
+     *
      * @param numberOfTurns to the right, negative number turns left.
      */
-    public void turnPlayer(int numberOfTurns){
+    public void turnPlayer(int numberOfTurns) {
 
         directionNumber = (directionNumber + numberOfTurns) % 4;
-        if(directionNumber < 0) directionNumber += 4;
+        if (directionNumber < 0) directionNumber += 4;
 
 
-        switch (directionNumber){
+        switch (directionNumber) {
 
-            case 0:  playerDirection = Direction.NORTH;
+            case 0:
+                playerDirection = Direction.NORTH;
                 break;
 
-            case 1: playerDirection = Direction.EAST;
+            case 1:
+                playerDirection = Direction.EAST;
                 break;
 
-            case 2: playerDirection = Direction.SOUTH;
+            case 2:
+                playerDirection = Direction.SOUTH;
                 break;
 
-            case 3: playerDirection = Direction.WEST;
+            case 3:
+                playerDirection = Direction.WEST;
                 break;
 
-            default: playerDirection = Direction.NORTH;
+            default:
+                playerDirection = Direction.NORTH;
                 break;
         }
     }
 
     /**
      * Sets the players direction
+     *
      * @param direction to set the player
      */
-    public void setPlayerDirection(Direction direction){
+    public void setPlayerDirection(Direction direction) {
 
-        if(direction == Direction.NORTH){
+        if (direction == Direction.NORTH) {
             directionNumber = 0;
             playerDirection = direction;
 
-        }
-        else if(direction == Direction.EAST){
+        } else if (direction == Direction.EAST) {
             directionNumber = 1;
             playerDirection = direction;
 
-        }
-        else if(direction == Direction.SOUTH){
+        } else if (direction == Direction.SOUTH) {
             directionNumber = 2;
             playerDirection = direction;
 
-        }
-        else if(direction == Direction.WEST){
+        } else if (direction == Direction.WEST) {
             directionNumber = 3;
             playerDirection = direction;
 
@@ -94,7 +100,6 @@ public class Player implements IPlayer {
 
 
     /**
-     *
      * @return players Direction
      */
     public Direction getDirection() {
@@ -108,13 +113,17 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setCardSequence() {
-
+    public void setCardSequence(Card[] cardSequence) {
+        this.playerCardSequence = cardSequence;
     }
 
     @Override
     public void setCardHand(List<Card> cards) {
+        playerHand = cards;
+    }
 
+    public List<Card> getCardHand() {
+        return playerHand;
     }
 
     @Override
@@ -122,7 +131,7 @@ public class Player implements IPlayer {
 
     }
 
-   //TODO: should have a way to tell board if the player is dead
+    //TODO: should have a way to tell board if the player is dead
 
     /**
      * Decrease the players health by 1
@@ -141,7 +150,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public int getHealth(){
+    public int getHealth() {
         return playerHealth;
     }
 
@@ -171,5 +180,9 @@ public class Player implements IPlayer {
     @Override
     public void setReady() {
         ready = true;
+    }
+
+    public String getPlayerID() {
+        return playerID;
     }
 }

@@ -1,10 +1,18 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ProgramCardDeckTest {
 
@@ -49,7 +57,28 @@ public class ProgramCardDeckTest {
         assertEquals(74, deck.numbersOfCardsLeft());
     }
 
-    //TODO: deckShouldNotContainSimilarCardsWithSamePriority
+    @Test
+    public void deckShouldNotContainSameCardTypeWithSamePriority() {
+        ICardDeck deck = new ProgramCardDeck();
+        deck.createNewDeck();
+        List<Card> cards = deck.drawCards(84);
 
+        boolean doesNotContainDuplicates = true;
+        HashMap<CardType, HashSet<Integer>> map = new HashMap<>();
 
+        for (Card c: cards) {
+            if (!map.containsKey(c.getCardType())) {
+                map.put(c.getCardType(), new HashSet<Integer>());
+                map.get(c.getCardType()).add(c.getPriority());
+                continue;
+            }
+            if (!map.get(c.getCardType()).contains(c.getPriority())) {
+                map.get(c.getCardType()).add(c.getPriority());
+                continue;
+            }
+            doesNotContainDuplicates = false;
+            break;
+        }
+        assertTrue(doesNotContainDuplicates);
+    }
 }

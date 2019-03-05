@@ -17,9 +17,9 @@ public interface IPlayer {
 
 	Card[] getCardSequence();
 
-	void setCardSequence();
+    void setCardSequence(Card[] cardSequence);
 
-	void setCardHand(List<Card> cards);
+    void setCardHand(List<Card> cards);
 
 	void sortCardSeqence();
 
