@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CardGUI {
@@ -26,6 +27,7 @@ public class CardGUI {
     private Card[] cardSeq;
     private int cardPtr;
     private int selectedCardDrawPos;
+    private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, List<Card> cards) {
         this.camera = camera;
@@ -57,6 +59,9 @@ public class CardGUI {
             buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             buttonArr[i].setSize(97, 135);
             buttonArr[i].setPosition(xpos, 0);
+
+            buttonByXPos.put(xpos, buttonArr[i]);
+
             xpos += 97;
             stage.addActor(buttonArr[i]);
         }
@@ -68,8 +73,11 @@ public class CardGUI {
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     if (cardPtr < 5) {
                         cardSeq[cardPtr] = cards.get(finalI);
-                        //int oldXpos = (int)buttonArr[finalI].getX();
+
+                        //buttonArr[finalI].setPosition(0,50);
+                        swapCardPlacement(buttonArr[finalI], getCardByX(drawPos(cardPtr)));
                         cardPtr++;
+
                     }
                     System.out.println("card priority: " + cards.get(finalI).getPriority());
                     return true;
@@ -83,7 +91,7 @@ public class CardGUI {
         ImageButton submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
         Image bar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
 
-        bar.setSize(480, 30);
+        bar.setSize(485, 30);
         bar.setPosition(0,135);
         stage.addActor(bar);
 
@@ -98,6 +106,8 @@ public class CardGUI {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 cardPtr = 0;
+                stage.clear();
+                create();
                 System.out.println("clear");
                 return true;
             }
@@ -117,4 +127,25 @@ public class CardGUI {
 
         Gdx.input.setInputProcessor(stage);
     }
+
+    private ImageButton getCardByX(int xPos) {
+        ImageButton b = buttonByXPos.get(xPos);
+        return b;
+    }
+
+    private int drawPos(int cardPtr) {
+        return cardPtr*97;
+    }
+
+    private void swapCardPlacement(ImageButton a, ImageButton b) {
+        int aXPos = (int)a.getX();
+        int bXPos = (int)b.getX();
+
+        a.setPosition(bXPos, 0);
+        b.setPosition(aXPos, 0);
+
+        buttonByXPos.put(bXPos, a);
+        buttonByXPos.put(aXPos, b);
+    }
+
 }
