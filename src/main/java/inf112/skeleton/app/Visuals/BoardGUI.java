@@ -2,12 +2,18 @@ package inf112.skeleton.app.Visuals;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
@@ -21,6 +27,7 @@ public class BoardGUI {
 	private SpriteBatch batch;
 	private TextureRegion textureRegion;
 	private Stage stage;
+	private ScreenViewport screenViewport;
 
 	private SpriteSheet spriteSheet;
 
@@ -32,10 +39,12 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
-    public BoardGUI(SpriteBatch batch, Board board) {
+
+    public BoardGUI(SpriteBatch batch, Board board, OrthographicCamera camera) {
         this.batch = batch;
 
-		this.stage = new Stage(new ScreenViewport());
+        this.screenViewport = new ScreenViewport(camera);
+		this.stage = new Stage(screenViewport);
 
         this.spriteSheet = new SpriteSheet();
 
@@ -43,15 +52,60 @@ public class BoardGUI {
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 
-        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight)*2);
+        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.max(boardWidth, boardHeight));
 
         this.boardTileWidth = boardWidth *tilesize;
         this.boardTileHeight = boardHeight * tilesize;
 
         //setting initial position
         reposition();
+        create();
 
     }
+
+    private void addTilesToStage(Tile tile, int x, int y){
+		Image image = new Image(spriteSheet.getTexture(tile));
+		image.setSize(tilesize,tilesize);
+		image.setPosition(x,y);
+		stage.addActor(image);
+	}
+
+	private void addGameObjectsOnTileToStage(Tile tile, int x, int y){
+		Image image;
+    	if (tile.hasAnyGameObjects()){
+			GameObject[] gameObjects = tile.getGameObjects();
+			for(int i = 0; i < tile.getGameObjects().length; i++){
+				GameObject gameObject = gameObjects[i];
+				image = new Image(spriteSheet.getTexture(gameObject));
+				image.setSize(tilesize,tilesize);
+				image.setPosition(x,y);
+				stage.addActor(image);
+			}
+		}
+	}
+
+    private void create(){
+		int xPos = 0;
+		int yPos = 0;
+		Position pos;
+
+		for (int y = yOffset; y < yOffset + boardTileHeight; y+= tilesize){
+			for (int x = xOffset; x < xOffset + boardTileWidth; x+= tilesize){
+				pos = new Position(xPos, yPos);
+				Tile curTile = board.getTile(pos);
+				addTilesToStage(curTile,x, y);
+				addGameObjectsOnTileToStage(curTile, x, y);
+
+				/*
+				drawTile(curTile, x, y);
+				drawGameObjects(curTile, x, y);
+				*/
+				xPos++;
+			}
+			xPos = 0;
+			yPos++;
+		}
+	}
 
     /**
      * function that calls drawBoard for the actual drawing of the board
@@ -59,7 +113,6 @@ public class BoardGUI {
      */
     public void render() {
         drawBoard();
-
     }
 
     /**
@@ -83,7 +136,7 @@ public class BoardGUI {
      * is called from the constructor and resize();
      */
     public void reposition(){
-        yOffset = 40;
+        yOffset = 0;
         //yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
         xOffset = Gdx.graphics.getWidth()/2 - boardTileWidth/2;
     }
@@ -113,7 +166,9 @@ public class BoardGUI {
      *
      */
     public void drawBoard(){
-        batch.begin();
+        stage.act();
+    	stage.draw();
+    	/*batch.begin();
         int xPos = 0;
         int yPos = 0;
         Position pos;
@@ -131,6 +186,7 @@ public class BoardGUI {
         }
 
         batch.end();
+        */
     }
 
 

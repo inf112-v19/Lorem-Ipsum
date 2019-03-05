@@ -12,7 +12,7 @@ public class ActionState extends State {
 	protected ActionState(GameStateManager gsm, Board board) {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
-		this.boardGUI = new BoardGUI(this.batch, board);
+		this.boardGUI = new BoardGUI(this.batch, board, camera);
 	}
 
 	@Override

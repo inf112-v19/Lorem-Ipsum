@@ -19,7 +19,7 @@ public class RoboRally extends ApplicationAdapter {
 
     public RoboRally() {
         super();
-        board = new Board("Boards/ExampleBoard.txt", 1);
+        board = new Board("Boards/BigBoard.txt", 1);
     }
 
     @Override

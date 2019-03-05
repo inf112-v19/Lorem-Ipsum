@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.CardGUI;
@@ -16,11 +17,11 @@ public class CardState extends State {
     private ICardDeck cardDeck;
     private CardGUI cardGUI;
 
-    public CardState(GameStateManager gsm) {
-        super(gsm);
+    public CardState(GameStateManager gsm, Board board) {
+        super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(camera, batch);
+        this.boardGUI = new BoardGUI(batch, board, camera);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
@@ -56,7 +57,7 @@ public class CardState extends State {
             } else {
                 numPlayer--;
                 if (numPlayer == 0) {
-                    gsm.set(new ActionState(gsm));
+                    gsm.set(new ActionState(gsm, board));
                     dispose();
                 }
             }
@@ -77,7 +78,7 @@ public class CardState extends State {
     @Override
     public void resize() {
         super.resize();
-        batch.setProjectionMatrix(camera.combined);
+        //batch.setProjectionMatrix(camera.combined);
         boardGUI.resize();
     }
 
