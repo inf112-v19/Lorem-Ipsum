@@ -50,18 +50,18 @@ public class CardState extends State {
     @Override
     public void update(float dt) {
         // all players ready then set new ActionState
-        int numPlayer = players.length;
+        boolean allReady = true;
         for (Player player : players) {
             if (!player.isReady()) {
+            	allReady = false;
                 break;
-            } else {
-                numPlayer--;
-                if (numPlayer == 0) {
-                    gsm.set(new ActionState(gsm, board));
-                    dispose();
-                }
             }
         }
+		if (allReady) {
+			gsm.set(new ActionState(gsm, board));
+			dispose();
+		}
+
     }
 
     @Override

@@ -51,6 +51,8 @@ public class BoardGUI {
         this.spriteSheet = new SpriteSheet();
 
         this.board = board;
+        //Player[] players = board.getAllPlayers();
+        //board.placePlayerOnPos(players[0],new Position(2,2));
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 
@@ -66,9 +68,11 @@ public class BoardGUI {
     }
 
     private void addPlayersToStage(Position pos){
-    	if (board.posToPlayer(pos) instanceof Player){
-			int x = pos.getX();
-			int y = pos.getY();
+    	if (board.posToPlayer(pos) != null){
+			int x = pos.getX() * tilesize + xOffset;
+			int y = pos.getY() * tilesize + yOffset;
+			System.out.println(pos.getX());
+			System.out.println(pos.getX());
 			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
 			image.setSize(tilesize,tilesize);
 			image.setPosition(x,y);
