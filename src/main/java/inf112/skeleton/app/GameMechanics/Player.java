@@ -109,7 +109,7 @@ public class Player implements IPlayer {
 
     @Override
     public Card[] getCardSequence() {
-        return new Card[0];
+        return playerCardSequence;
     }
 
     @Override
