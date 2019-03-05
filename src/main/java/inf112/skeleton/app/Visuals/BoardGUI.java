@@ -5,39 +5,41 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 
+
 public class BoardGUI {
 
-    private Board board;
+    private static Board board;
 
-    private int xOffset;
-    private int yOffset;
-
-    private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private TextureRegion textureRegion;
+	private Stage stage;
 
 	private SpriteSheet spriteSheet;
 
+	private int xOffset;
+	private int yOffset;
 	private int tilesize;
 	private int boardWidth;
 	private int boardHeight;
 	private int boardTileWidth;
 	private int boardTileHeight;
 
-    public BoardGUI(OrthographicCamera camera, SpriteBatch batch) {
-        this.camera = camera;
+    public BoardGUI(SpriteBatch batch, Board board) {
         this.batch = batch;
 
+		this.stage = new Stage(new ScreenViewport());
 
         this.spriteSheet = new SpriteSheet();
 
-        this.board = new Board("Boards/ExampleBoard.txt");
+        this.board = board;
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 

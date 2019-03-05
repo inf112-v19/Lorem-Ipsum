@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
 
 public class ActionState extends State {
@@ -8,10 +9,10 @@ public class ActionState extends State {
 	private SpriteBatch batch;
 	private BoardGUI boardGUI;
 
-	protected ActionState(GameStateManager gsm) {
-		super(gsm);
+	protected ActionState(GameStateManager gsm, Board board) {
+		super(gsm, board);
 		this.batch = new SpriteBatch();
-		this.boardGUI = new BoardGUI(camera, this.batch);
+		this.boardGUI = new BoardGUI(this.batch, board);
 	}
 
 	@Override

@@ -3,10 +3,13 @@ package inf112.skeleton.app.Visuals;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.MenuState;
 
 public class RoboRally extends ApplicationAdapter {
+
+    private static Board board;
 
     public static final int WIDTH = 976;
     public static final int HEIGHT = 576;
@@ -16,12 +19,13 @@ public class RoboRally extends ApplicationAdapter {
 
     public RoboRally() {
         super();
+        board = new Board("Boards/ExampleBoard.txt", 1);
     }
 
     @Override
     public void create () {
         gsm = new GameStateManager();
-        gsm.push(new MenuState(gsm));
+        gsm.push(new MenuState(gsm, board));
     }
 
     @Override

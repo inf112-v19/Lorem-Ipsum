@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.CardGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
@@ -10,24 +11,23 @@ import inf112.skeleton.app.Interfaces.ICardDeck;
 public class CardState extends State{
 
     private BoardGUI boardGUI;
-    private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
     private CardGUI cardGUI;
 
-    public CardState(GameStateManager gsm) {
-        super(gsm);
+    public CardState(GameStateManager gsm, Board board) {
+        super(gsm, board);
+
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(camera, batch);
 
+        this.boardGUI = new BoardGUI(batch, board);
         this.players = board.getAllPlayers();
+
         this.cardDeck = new ProgramCardDeck();
 
-
-        ICardDeck deck = new ProgramCardDeck();
-        deck.createNewDeck();
-        this.cardGUI = new CardGUI(camera, batch, board, deck.drawCards(9)); //test
+        cardDeck.createNewDeck();
+        this.cardGUI = new CardGUI(camera, batch, board, cardDeck.drawCards(9)); //test
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CardState extends State{
             }else{
                 numPlayer--;
                 if (numPlayer == 0){
-                    gsm.set(new ActionState(gsm));
+                    gsm.set(new ActionState(gsm, board));
                     dispose();
                 }
             }
@@ -60,7 +60,7 @@ public class CardState extends State{
 
     @Override
     public void dispose() {
-        batch.dispose();
+        super.dispose();
     }
 
     @Override

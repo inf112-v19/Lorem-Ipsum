@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -24,8 +25,8 @@ public class MenuState extends State {
 
     private boolean start;
 
-    public MenuState(GameStateManager gsm) {
-        super(gsm);
+    public MenuState(GameStateManager gsm, Board board) {
+        super(gsm, board);
 
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
@@ -58,7 +59,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new CardState(gsm));
+            gsm.set(new CardState(gsm, board));
             dispose();
         }
     }

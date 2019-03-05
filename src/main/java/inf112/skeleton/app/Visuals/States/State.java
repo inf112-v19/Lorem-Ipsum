@@ -2,21 +2,24 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 
 public abstract class State {
     protected OrthographicCamera camera;
+    protected SpriteBatch batch;
     protected Vector3 mouse;
     protected GameStateManager gsm;
-    protected static Board board = new Board("Boards/ExampleBoard.txt", 1);
+    protected static Board board;
 
 
-    protected State (GameStateManager gsm) {
+    protected State (GameStateManager gsm, Board board) {
         this.gsm = gsm;
         this.camera = new OrthographicCamera();
         this.mouse = new Vector3();
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.board = board;
     }
 
     protected abstract void handleInput();
@@ -28,7 +31,9 @@ public abstract class State {
     public abstract void render();
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
-    public abstract void dispose();
+    public void dispose(){
+        batch.dispose();
+    }
 
     public void resize(){
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
