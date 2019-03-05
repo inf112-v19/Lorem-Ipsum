@@ -172,4 +172,8 @@ public class Player implements IPlayer {
     public void setReady() {
         ready = true;
     }
+
+    public String getPlayerID() {
+        return playerID;
+    }
 }
