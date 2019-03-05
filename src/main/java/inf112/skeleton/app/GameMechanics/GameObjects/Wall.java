@@ -27,8 +27,4 @@ public class Wall extends GameObject {
 
 	}
 
-	public SpriteType getSpritetype(){
-		return spriteType;
-	}
-
 }

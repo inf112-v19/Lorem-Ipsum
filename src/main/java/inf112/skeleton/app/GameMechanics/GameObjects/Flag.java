@@ -10,7 +10,4 @@ public class Flag extends GameObject {
         super(dir);
     }
 
-    public SpriteType getSpriteType(){
-        return spriteType;
-    }
 }
