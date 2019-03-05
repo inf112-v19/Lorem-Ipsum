@@ -163,6 +163,8 @@ public class CardGUI {
                     System.out.print(cardSeq[i].toString() + ", ");
                 }
                 cardPtr = 0;
+                stage.clear();
+                playerTurn = "entering ActionState. Please Wait......";
                 setPlayerDone();
                 return true;
             }
