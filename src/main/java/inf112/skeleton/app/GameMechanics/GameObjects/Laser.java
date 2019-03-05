@@ -22,5 +22,9 @@ public class Laser extends GameObject{
 		}
 	}
 
+	public SpriteType getSpriteType(){
+		return spriteType;
+	}
+
 }
 
