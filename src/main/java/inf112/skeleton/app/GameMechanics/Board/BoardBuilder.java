@@ -105,12 +105,9 @@ public class BoardBuilder {
 		Direction direction = getDirection(dir);
 
 		switch (type){
-			case 0:
-				return new Wall(direction);
-			case 1:
-				return new Laser(direction);
-			case 2:
-				return new Flag(direction);
+			case 0: return new Wall(direction);
+			case 1: return new Laser(direction);
+			case 2: return new Flag(direction);
 			default:
 				System.err.println("Error while getting Game Object in BoardBuilder");
 				System.exit(1);
