@@ -27,6 +27,7 @@ Tile types:
 2 - RepairTile
 3 - OptionTile
 4 - ConveyorBeltTile
+5 - SpawnTile
 
 GameObjects:
 0 - Wall

@@ -18,6 +18,7 @@ import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
+import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,24 +40,8 @@ public class CardGUI {
     private BitmapFont font = new BitmapFont(true);
     private String playerTurn;
 
-    /**
-     * Constructor for testing purposes. Creates a dummy carddeck. does not use players
-     */
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
-        ICardDeck deck = new ProgramCardDeck();
-        deck.createNewDeck();
-
-        this.camera = camera;
-        this.batch = batch;
-        this.board = board;
-        stage = new Stage(new ScreenViewport());
-        spriteSheet = new SpriteSheet();
-        this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cardPtr = 0;
-        playerTurn = "Player 1's turn";
-
-        draw(deck.drawCards(9));
-    }
+    private Card[] cardSeq;
+    private int currentPlayer;
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
         this.camera = camera;
@@ -69,22 +54,29 @@ public class CardGUI {
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //temp
 
         cardPtr = 0;
+        currentPlayer = 0;
 
         selectCards();
     }
 
     private void selectCards() {
-        for (int i = 0; i < players.length; i++) {
 
-            playerTurn = players[i].getPlayerID() + "'s turn";
-            List<Card> playerCards = players[i].getCardHand();
-            Card[] playerCardSequence = draw(playerCards);
-            players[i].setCardSequence(playerCardSequence);
+        playerTurn = players[currentPlayer].getPlayerID() + "'s turn";
+        List<Card> playerCards = players[currentPlayer].getCardHand();
+        draw(playerCards);
 
-            players[i].setReady();
-        }
     }
 
+    private void setPlayerDone() {
+
+        players[currentPlayer].setCardSequence(cardSeq);
+        players[currentPlayer].setReady();
+
+        currentPlayer++;
+        if (currentPlayer < players.length) {
+            selectCards();
+        }
+    }
 
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
@@ -97,11 +89,11 @@ public class CardGUI {
     /**
      * returns players card sequence
      */
-    private Card[] draw(List<Card> c) {
+    private void draw(List<Card> c) {
 
         final List<Card> cards = c;
         final ImageButton[] buttonArr = new ImageButton[cards.size()];
-        final Card[] cardSeq = new Card[5];
+        cardSeq = new Card[5];
         int xpos = 0;
 
 
@@ -171,12 +163,12 @@ public class CardGUI {
                     System.out.print(cardSeq[i].toString() + ", ");
                 }
                 cardPtr = 0;
+                setPlayerDone();
                 return true;
             }
         });
 
         Gdx.input.setInputProcessor(stage);
-        return cardSeq;
     }
 
     private boolean cardSeqContains(Card card, Card[] cardSeq) {

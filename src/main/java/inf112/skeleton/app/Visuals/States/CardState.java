@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.CardGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
@@ -25,7 +26,16 @@ public class CardState extends State {
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
 
-        this.cardGUI = new CardGUI(camera, batch, board); //only for GUI testing
+        /**
+         * code for testing CardGUI. Does not use players stored in board
+         */
+        Player[] testarr = new Player[1];
+        testarr[0] = new Player("Player1", Direction.NORTH);
+        ICardDeck testDeck = new ProgramCardDeck();
+        testDeck.createNewDeck();
+        testarr[0].setCardHand(testDeck.drawCards(9));
+        this.cardGUI = new CardGUI(camera, batch, board, testarr);
+
         //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
     }
 
