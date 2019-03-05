@@ -11,7 +11,8 @@ public class Player implements IPlayer {
 
     private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
-    //    private ArrayList<Card> playerHand;
+    private List<Card> playerHand;
+    private Card[] playerCardSequence;
     private Board board;
     private int playerHealth = 5;
     private Position backup;
@@ -112,13 +113,17 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setCardSequence() {
-
+    public void setCardSequence(Card[] cardSequence) {
+        this.playerCardSequence = cardSequence;
     }
 
     @Override
     public void setCardHand(List<Card> cards) {
+        playerHand = cards;
+    }
 
+    public List<Card> getCardHand() {
+        return playerHand;
     }
 
     @Override

@@ -23,14 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CardGUI {
+
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private List<Card> cards;
-    private Board board;
-    private ImageButton[] buttonArr;
-    private Stage stage;
     private SpriteSheet spriteSheet;
-    private Card[] cardSeq;
+    private Board board;
+    private Player[] players;
+
+    //private List<Card> cards;
+    private Stage stage;
+
     private int cardPtr;
     private int selectedCardDrawPos;
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
@@ -56,12 +58,25 @@ public class CardGUI {
         selectedCardDrawPos = 0;
         playerTurn = "Player 1's turn";
 
-        create();
+        draw();
     }
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
 
     }
+
+    private void selectCards() {
+        for (int i = 0; i < players.length; i++) {
+
+            playerTurn = players[i].getPlayerID() + "'s turn";
+            List<Card> playerCards = players[i].getCardHand();
+            Card[] playerCardSequence = draw(playerCards);
+            players[i].setCardSequence(playerCardSequence);
+
+            players[i].setReady();
+        }
+    }
+
 
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
@@ -71,15 +86,22 @@ public class CardGUI {
         batch.end();
     }
 
-    private void create() {
+    /**
+     * returns players card sequence
+     */
+    private Card[] draw(List<Card> c) {
+
+        final List<Card> cards = c;
+        final ImageButton[] buttonArr = new ImageButton[cards.size()];
+        final Card[] cardSeq = new Card[5];
         int xpos = 0;
+
+
         for (int i = 0; i < buttonArr.length; i++) {
             buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             buttonArr[i].setSize(97, 135);
             buttonArr[i].setPosition(xpos, 0);
-
             buttonByXPos.put(xpos, buttonArr[i]);
-
             xpos += 97;
             stage.addActor(buttonArr[i]);
             labelXPos = 0;
@@ -91,7 +113,7 @@ public class CardGUI {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     if (cardPtr < 5) {
-                        if (!cardSeqContains(cards.get(finalI))) {
+                        if (!cardSeqContains(cards.get(finalI), cardSeq)) {
                             cardSeq[cardPtr] = cards.get(finalI);
                             addLabel(cardPtr);
                             swapCardPlacement(buttonArr[finalI], getCardByX(getDrawPos(cardPtr)));
@@ -127,7 +149,7 @@ public class CardGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 cardPtr = 0;
                 stage.clear();
-                create();
+                draw(cards);
                 System.out.println("clear");
                 return true;
             }
@@ -144,11 +166,11 @@ public class CardGUI {
             }
         });
 
-
         Gdx.input.setInputProcessor(stage);
+        return cardSeq;
     }
 
-    private boolean cardSeqContains(Card card) {
+    private boolean cardSeqContains(Card card, Card[] cardSeq) {
         for (int i = 0; i < cardPtr; i++) {
             if (cardSeq[i] == card) {
                 return true;
