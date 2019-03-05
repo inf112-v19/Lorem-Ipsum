@@ -30,39 +30,47 @@ public class CardGUI {
     private Board board;
     private Player[] players;
 
-    //private List<Card> cards;
     private Stage stage;
 
     private int cardPtr;
-    private int selectedCardDrawPos;
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
     private Image infoBar;
     private int labelXPos;
     private BitmapFont font = new BitmapFont(true);
     private String playerTurn;
 
+    /**
+     * Constructor for testing purposes. Creates a dummy carddeck. does not use players
+     */
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         ICardDeck deck = new ProgramCardDeck();
         deck.createNewDeck();
 
         this.camera = camera;
         this.batch = batch;
-        this.cards = deck.drawCards(9);
         this.board = board;
-        this.buttonArr = new ImageButton[cards.size()];
         stage = new Stage(new ScreenViewport());
         spriteSheet = new SpriteSheet();
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cardSeq = new Card[5];
         cardPtr = 0;
-        selectedCardDrawPos = 0;
         playerTurn = "Player 1's turn";
 
-        draw();
+        draw(deck.drawCards(9));
     }
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
+        this.camera = camera;
+        this.batch = batch;
+        this.board = board;
+        this.players = players;
 
+        stage = new Stage(new ScreenViewport());
+        spriteSheet = new SpriteSheet();
+        this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //temp
+
+        cardPtr = 0;
+
+        selectCards();
     }
 
     private void selectCards() {
@@ -162,6 +170,7 @@ public class CardGUI {
                 for (int i = 0; i < cardPtr; i++) {
                     System.out.print(cardSeq[i].toString() + ", ");
                 }
+                cardPtr = 0;
                 return true;
             }
         });
