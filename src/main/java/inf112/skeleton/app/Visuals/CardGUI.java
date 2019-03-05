@@ -3,6 +3,7 @@ package inf112.skeleton.app.Visuals;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -35,6 +36,8 @@ public class CardGUI {
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
     private Image infoBar;
     private int labelXPos;
+    private BitmapFont font = new BitmapFont(true);
+    private String playerTurn;
 
     public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         ICardDeck deck = new ProgramCardDeck();
@@ -51,6 +54,7 @@ public class CardGUI {
         cardSeq = new Card[5];
         cardPtr = 0;
         selectedCardDrawPos = 0;
+        playerTurn = "Player 1's turn";
 
         create();
     }
@@ -62,6 +66,9 @@ public class CardGUI {
     public void render() {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        batch.begin();
+        font.draw(batch, playerTurn, 10, 10);
+        batch.end();
     }
 
     private void create() {
