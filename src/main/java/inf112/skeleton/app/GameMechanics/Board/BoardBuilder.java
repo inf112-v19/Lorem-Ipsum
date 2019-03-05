@@ -89,6 +89,7 @@ public class BoardBuilder {
 			case 2: return new RepairTile(gameObjects, tileDirection);
 			case 3: return new OptionsTile(gameObjects, tileDirection);
 			case 4: return new ConveyorBeltTile(gameObjects, tileDirection);
+			case 5: return new DoubleConveyorBeltTile(gameObjects, tileDirection);
 			default: return new NormalTile(gameObjects, tileDirection);
 		}
 	}
