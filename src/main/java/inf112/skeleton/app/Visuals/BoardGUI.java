@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
@@ -41,7 +43,7 @@ public class BoardGUI {
 
 
     public BoardGUI(SpriteBatch batch, Board board, OrthographicCamera camera) {
-        this.batch = batch;
+        //this.batch = batch;
 
         this.screenViewport = new ScreenViewport(camera);
 		this.stage = new Stage(screenViewport);
@@ -62,6 +64,18 @@ public class BoardGUI {
         create();
 
     }
+
+    private void addPlayersToStage(Position pos){
+    	if (board.posToPlayer(pos) instanceof Player){
+			int x = pos.getX();
+			int y = pos.getY();
+			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
+			image.setSize(tilesize,tilesize);
+			image.setPosition(x,y);
+			stage.addActor(image);
+		}
+	}
+
 
     private void addTilesToStage(Tile tile, int x, int y){
 		Image image = new Image(spriteSheet.getTexture(tile));
@@ -95,6 +109,7 @@ public class BoardGUI {
 				Tile curTile = board.getTile(pos);
 				addTilesToStage(curTile,x, y);
 				addGameObjectsOnTileToStage(curTile, x, y);
+				addPlayersToStage(pos);
 				xPos++;
 			}
 			xPos = 0;
@@ -103,7 +118,9 @@ public class BoardGUI {
 	}
 
 	public void update(){
-    	create();
+    	//TODO - delete all player and adding them to the stage instead of creating new stage
+    	stage = new Stage(screenViewport);
+		create();
 	}
 
     /**
