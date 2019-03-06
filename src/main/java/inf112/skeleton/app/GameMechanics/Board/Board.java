@@ -22,6 +22,12 @@ public class Board implements IBoard {
 		tileMap = builder.buildBoard(filename);
 		height = builder.getHeight();
 		width = builder.getWidth();
+
+		//creates two players and places them on the board - mostly for testing purposes
+		Player player1 = new Player("1", Direction.EAST);
+		Player player2 = new Player("2", Direction.EAST);
+		playerPositions.put(player1, new Position(1, 4));
+		playerPositions.put(player2, new Position(1, 11));
 	}
 
 	public Board(String filename, int numberOfPlayers) {
@@ -86,12 +92,11 @@ public class Board implements IBoard {
 	@Override
 	public boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException {
 		if(!playerPositions.containsKey(player)) {
-			//TODO - handle player not found exception
 			throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
 		Position curPos = playerPositions.get(player);
-		Position newPos = calcNewPos(curPos, dir);
+		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
 
 		//if tile currently standing on has no wall blocking the player - proceed
@@ -102,6 +107,7 @@ public class Board implements IBoard {
                 if (!newTile.hasWallInDir(dir.oppositeDirection())) {
                     Player otherPlayer = posToPlayer(newPos);
 
+                    //player collision occurred
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
@@ -168,28 +174,7 @@ public class Board implements IBoard {
         }
         return null;
     }
-
-    /**
-     * Calculates the position in the given direction for a current position
-     *
-     * @param curPos
-     * @param dir
-     * @return
-     */
-    private Position calcNewPos(Position curPos, Direction dir) {
-        switch (dir) {
-            case NORTH:
-                return new Position(curPos.getX(), curPos.getY()-1);
-            case SOUTH:
-                return  new Position(curPos.getX(), curPos.getY()+1);
-            case EAST:
-                return  new Position(curPos.getX()+1, curPos.getY());
-            case WEST:
-                return new Position(curPos.getX()-1, curPos.getY());
-            default:
-                return curPos;
-        }
-    }
+    
 
 	/**
 	 * Handles a player walking off the board

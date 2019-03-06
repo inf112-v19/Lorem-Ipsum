@@ -38,7 +38,7 @@ public enum SpriteType{
 	ROTATION_LEFT_TILE(4,6),
 
 
-	FLAG(),
+	FLAG(6,6),
 	PLAYER(),
 
 	BACKWARD_1(),
