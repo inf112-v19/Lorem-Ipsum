@@ -37,7 +37,7 @@ public class CardGUI {
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
     private Image infoBar;
     private int labelXPos;
-    private BitmapFont font = new BitmapFont(true);
+    //private BitmapFont font = new BitmapFont(true);
     private String playerTurn;
 
     private Card[] cardSeq;
@@ -79,11 +79,11 @@ public class CardGUI {
     }
 
     public void render() {
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
-        batch.begin();
-        font.draw(batch, playerTurn, 10, 10);
-        batch.end();
+            stage.act(Gdx.graphics.getDeltaTime());
+            stage.draw();
+            batch.begin();
+            //font.draw(batch, playerTurn, 10, 10);
+            batch.end();
     }
 
     /**
@@ -216,6 +216,11 @@ public class CardGUI {
 
         buttonByXPos.put(bXPos, a);
         buttonByXPos.put(aXPos, b);
+    }
+
+    public void dispose() {
+        stage.dispose();
+        //font.dispose();
     }
 
 }

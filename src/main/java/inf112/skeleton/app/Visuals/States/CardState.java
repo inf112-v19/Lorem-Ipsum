@@ -72,6 +72,7 @@ public class CardState extends State {
 
     @Override
     public void dispose() {
+        cardGUI.dispose();
         batch.dispose();
     }
 
