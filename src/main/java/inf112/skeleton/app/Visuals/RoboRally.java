@@ -12,7 +12,7 @@ public class RoboRally extends ApplicationAdapter {
     private static Board board;
 
     public static final int WIDTH = 976;
-    public static final int HEIGHT = 576;
+    public static final int HEIGHT = 600;
     public static final String TITLE = "Robo Rally";
 
     private GameStateManager gsm;

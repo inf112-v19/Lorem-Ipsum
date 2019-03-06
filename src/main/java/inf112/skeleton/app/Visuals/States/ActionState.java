@@ -28,7 +28,7 @@ public class ActionState extends State {
 
 	@Override
 	public void render() {
-
+		System.out.println("inside actionstate");
 	}
 
 	@Override
@@ -40,6 +40,6 @@ public class ActionState extends State {
 	public void resize() {
 		super.resize();
 		batch.setProjectionMatrix(camera.combined);
-		boardGUI.resize();
+		//boardGUI.resize();
 	}
 }

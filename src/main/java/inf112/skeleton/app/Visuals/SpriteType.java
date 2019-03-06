@@ -35,7 +35,7 @@ public enum SpriteType{
 	DOUBLE_CONVEYOR_BELT_TILE_EAST(5,1),
 
 
-	FLAG(),
+	FLAG(6,6),
 	PLAYER(),
 
 	BACKWARD_1(),
