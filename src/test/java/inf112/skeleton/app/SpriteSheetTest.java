@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.Tiles.ConveyorBeltTile;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
@@ -43,6 +44,22 @@ public class SpriteSheetTest {
 		TextureRegion textureRegion = spriteSheet.getTexture(repairTile.getSpriteType());
 		assertTrue(textureRegion != null );
 	}
+
+
+	@Test
+	public void initConveyorBeltTileCorrectTextureTest() {
+		ConveyorBeltTile conveyorBeltTileNorth = new ConveyorBeltTile(null, Direction.NORTH);
+		ConveyorBeltTile conveyorBeltTileEast = new ConveyorBeltTile(null, Direction.EAST);
+		ConveyorBeltTile conveyorBeltTileSouth = new ConveyorBeltTile(null, Direction.SOUTH);
+		ConveyorBeltTile conveyorBeltTileWest = new ConveyorBeltTile(null, Direction.WEST);
+
+		assertEquals(conveyorBeltTileNorth.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_NORTH);
+		assertEquals(conveyorBeltTileEast.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_EAST);
+		assertEquals(conveyorBeltTileSouth.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_SOUTH);
+		assertEquals(conveyorBeltTileWest.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_WEST);
+	}
+
+
 
 	@Test
 	public void initHoleTileTextureTest() {
