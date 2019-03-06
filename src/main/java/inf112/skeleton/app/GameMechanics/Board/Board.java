@@ -22,6 +22,12 @@ public class Board implements IBoard {
 		tileMap = builder.buildBoard(filename);
 		height = builder.getHeight();
 		width = builder.getWidth();
+
+		//creates two players and places them on the board - mostly for testing purposes
+		Player player1 = new Player("1", Direction.EAST);
+		Player player2 = new Player("2", Direction.EAST);
+		playerPositions.put(player1, new Position(1, 4));
+		playerPositions.put(player2, new Position(1, 11));
 	}
 
 	public Board(String filename, int numberOfPlayers) {
