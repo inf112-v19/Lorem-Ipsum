@@ -11,6 +11,10 @@ public class ProgramCardDeck implements ICardDeck {
 
     Stack<Card> deck = new Stack<>();
 
+    public ProgramCardDeck() {
+        createNewDeck();
+    }
+
     /**
      * Creates new program card deck containing 84 cards AND also shuffles deck
      */
