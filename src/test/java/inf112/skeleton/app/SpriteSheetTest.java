@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Tiles.ConveyorBeltTile;
+import inf112.skeleton.app.GameMechanics.Tiles.DoubleConveyorBeltTile;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
@@ -59,6 +60,20 @@ public class SpriteSheetTest {
 		assertEquals(conveyorBeltTileWest.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_WEST);
 	}
 
+	@Test
+	public void initDoubleConveyorBeltTileCorrectTextureTest() {
+		DoubleConveyorBeltTile DoubleconveyorBeltTileNorth = new DoubleConveyorBeltTile(null, Direction.NORTH);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileEast = new DoubleConveyorBeltTile(null, Direction.EAST);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileSouth = new DoubleConveyorBeltTile(null, Direction.SOUTH);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileWest = new DoubleConveyorBeltTile(null, Direction.WEST);
+
+		assertEquals(DoubleconveyorBeltTileNorth.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_NORTH);
+		assertEquals(DoubleconveyorBeltTileEast.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_EAST);
+		assertEquals(DoubleconveyorBeltTileSouth.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_SOUTH);
+		assertEquals(DoubleconveyorBeltTileWest.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_WEST);
+	}
+
+	
 
 
 	@Test
