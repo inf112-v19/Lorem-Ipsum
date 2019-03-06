@@ -1,6 +1,6 @@
 Each board text file consist of a 2D-grid where each cell in the grid is the tile with its GameObjects.
 The format of the file is as follows:
---------------------------------------
+---------------------------------------
 H
 W
 TRNGD ..... ..... .....
@@ -28,7 +28,7 @@ Tile types:
 3 - OptionTile
 4 - ConveyorBeltTile
 5 - DoubleConveyorBeltTile
-6 - SpawnTile
+(6 - SpawnTile) - not yet implemented
 
 GameObjects:
 0 - Wall
