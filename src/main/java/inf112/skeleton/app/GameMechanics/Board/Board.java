@@ -86,7 +86,6 @@ public class Board implements IBoard {
 	@Override
 	public boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException {
 		if(!playerPositions.containsKey(player)) {
-			//TODO - handle player not found exception
 			throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
@@ -102,6 +101,7 @@ public class Board implements IBoard {
                 if (!newTile.hasWallInDir(dir.oppositeDirection())) {
                     Player otherPlayer = posToPlayer(newPos);
 
+                    //player collision occurred
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
