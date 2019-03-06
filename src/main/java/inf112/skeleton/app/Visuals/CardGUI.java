@@ -31,6 +31,11 @@ public class CardGUI {
     private Board board;
     private Player[] players;
 
+
+    private ImageButton clear;
+    private ImageButton submit;
+
+
     private Stage stage;
 
     private int cardPtr;
@@ -56,6 +61,9 @@ public class CardGUI {
         cardPtr = 0;
         currentPlayer = 0;
 
+        clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
+        submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+
         selectCards();
     }
 
@@ -63,7 +71,9 @@ public class CardGUI {
 
         playerTurn = players[currentPlayer].getPlayerID() + "'s turn";
         List<Card> playerCards = players[currentPlayer].getCardHand();
-        draw(playerCards);
+        if (playerCards != null) {
+            draw(playerCards);
+        }
 
     }
 
@@ -127,9 +137,6 @@ public class CardGUI {
         }
 
         xpos += 10;
-
-        ImageButton clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
-        ImageButton submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
 
         infoBar.setSize(485, 30);
@@ -162,6 +169,13 @@ public class CardGUI {
                 for (int i = 0; i < cardPtr; i++) {
                     System.out.print(cardSeq[i].toString() + ", ");
                 }
+
+                for (int i = 0; i < buttonArr.length; i++) {
+                    buttonArr[i].clearListeners();
+                }
+
+                //buttonArr[0].clearListeners();
+
                 cardPtr = 0;
                 stage.clear();
                 playerTurn = "entering ActionState. Please Wait......";
@@ -219,6 +233,10 @@ public class CardGUI {
     }
 
     public void dispose() {
+        submit.clearListeners();
+        clear.clearListeners();
+
+        stage.clear();
         stage.dispose();
         //font.dispose();
     }
