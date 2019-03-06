@@ -54,4 +54,26 @@ public class Position {
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
+
+
+	/**
+	 * Calculates the position in the given direction for the current position
+	 *
+	 * @param dir
+	 * @return
+	 */
+	public Position getNeighbour(Direction dir) {
+		switch (dir) {
+			case NORTH:
+				return new Position(this.x, this.y-1);
+			case SOUTH:
+				return  new Position(this.x, this.y+1);
+			case EAST:
+				return  new Position(this.x+1, this.y);
+			case WEST:
+				return new Position(this.x-1, this.y);
+			default:
+				return this;
+		}
+	}
 }
