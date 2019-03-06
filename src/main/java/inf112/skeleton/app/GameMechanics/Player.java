@@ -153,13 +153,11 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setBackup(Position backupPosition) {
-
-    }
+    public void setBackup(Position backupPosition) { this.backup = backupPosition; }
 
     @Override
     public Position getBackup() {
-        return null;
+        return backup;
     }
 
     /**
