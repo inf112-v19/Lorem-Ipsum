@@ -102,6 +102,11 @@ public class Player implements IPlayer {
     public int getLives(){return playerlives; }
 
     /**
+     * decreses the players total lives
+     */
+    public void decreseLives() { playerlives--; }
+
+    /**
      * @return players Direction
      */
     public Direction getDirection() {
@@ -134,11 +139,23 @@ public class Player implements IPlayer {
     }
 
     /**
+     * destroy the player (lose a total life and set health to max)
+     */
+    public void destroyPlayer(){
+        playerlives--;
+        playerHealth = 10;
+    }
+
+    /**
      * Decrease the players health/damage by 1
      */
     @Override
     public void decreaseHealth() {
         playerHealth--;
+        if(playerHealth>=0){
+            playerHealth = 10;
+            decreseLives();
+        }
     }
 
     /**
