@@ -1,6 +1,9 @@
 package inf112.skeleton.app.Interfaces;
 
+import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -81,6 +84,13 @@ public interface ITile {
 	 * @return true if wall is present or false if not
 	 */
 	boolean hasWallInDir(Direction dir);
+
+	/**
+	 * Tells the player to do the action specified by the tile type
+	 * @param board current game board
+	 * @param player the Player to preform the action
+	 */
+	void checkTile(Board board, Player player) throws PlayerNotFoundException;
 
 
 }
