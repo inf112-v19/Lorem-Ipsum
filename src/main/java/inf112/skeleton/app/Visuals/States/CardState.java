@@ -56,7 +56,7 @@ public class CardState extends State {
                 return;
             }
         }
-        while(!board.initPhase())
+		board.initPhase();
         gsm.set(new ActionState(gsm, board));
         dispose();
 
