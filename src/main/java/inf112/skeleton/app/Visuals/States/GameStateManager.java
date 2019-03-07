@@ -18,6 +18,10 @@ public class GameStateManager {
         return states.pop();
     }
 
+    public State peek() {
+        return states.peek();
+    }
+
     public void set(State state) {
         states.pop();
         states.push(state);
