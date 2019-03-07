@@ -32,6 +32,14 @@ public class StateTest {
 	}
 
 
+    @Test
+    public void peekStateTest() {
+        ActionState actionState = new ActionState(gsm,board);
+        gsm.push(new MenuState(gsm, board));
+        gsm.push(actionState);
+        assertSame(gsm.peek(), actionState);
+    }
+
 
 
 }
