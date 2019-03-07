@@ -17,11 +17,16 @@ public interface IBoard<T> {
     /** @return The width of the grid. */
     int getWidth();
 
+	/**
+	 * Creates an array of all the players where the index is equal to the playerID
+	 * (playerID is set as a counter in the constructor starting from 0)
+	 *
+	 * @return
+	 */
+	Player[] getAllPlayers();
+
     /**
-     * Set the Game Object on the tile in the given x,y location.
-     *
-     * y must be greater than or equal to 0 and less than getHeight(). x must be
-     * greater than or equal to 0 and less than getWidth().
+     * Set the Game Object on the tile in the given Position.
      *
      * @param pos
      *            given position you want to set the object
@@ -33,10 +38,7 @@ public interface IBoard<T> {
     void setGameObject(Position pos, GameObject gameObject);
 
     /**
-     * Get the Game Objects on the tile in the given x,y location.
-     *
-     * y must be greater than or equal to 0 and less than getHeight(). x must be
-     * greater than or equal to 0 and less than getWidth().
+     * Get the Game Objects on the tile in the given Position.
      *
      * @param pos
      *            position to the objects
@@ -44,7 +46,7 @@ public interface IBoard<T> {
      * @throws IndexOutOfBoundsException
      *             if !isValid(x,y)
      */
-    T getGameObject(Position pos);
+	GameObject[] getGameObject(Position pos);
 
 	/**
 	 * Tries to move the player in the direction the player is facing - potentially starts recursive calling
@@ -110,4 +112,12 @@ public interface IBoard<T> {
 	 * @return player on position, or potentially null if no player is present
 	 */
 	Player posToPlayer(Position pos);
+
+	/**
+	 * Returns the position of the given player
+	 *
+	 * @param player
+	 * @return
+	 */
+	Position getPlayerPos(Player player);
 }
