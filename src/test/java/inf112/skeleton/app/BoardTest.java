@@ -41,13 +41,6 @@ public class BoardTest {
 		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
 	}
 
-	/**
-	 * Testing that the MovePlayer method gives correct exception when Player is not found
-	 */
-	@Test(expected = PlayerNotFoundException.class)
-	public void movePlayerPlayerNotFoundTest() throws PlayerNotFoundException {
-		testBoard.movePlayer(new Player("test", Direction.NORTH), Direction.NORTH);
-	}
 
 	/**
 	 * Testing that the posToPlayer returns the correct player - should player[0] since we know that the position
