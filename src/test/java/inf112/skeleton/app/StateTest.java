@@ -19,7 +19,7 @@ public class StateTest {
 	private GameStateManager gsm;
 	private Board board;
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		gsm = new GameStateManager();
 		board = new Board("Boards/ExampleBoard.txt");
 	}
