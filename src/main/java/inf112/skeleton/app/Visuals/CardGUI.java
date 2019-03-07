@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.Exceptions.PlayerEmptyCardHandException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
@@ -31,10 +32,8 @@ public class CardGUI {
     private Board board;
     private Player[] players;
 
-
     private ImageButton clear;
     private ImageButton submit;
-
 
     private Stage stage;
 
@@ -42,7 +41,7 @@ public class CardGUI {
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
     private Image infoBar;
     private int labelXPos;
-    //private BitmapFont font = new BitmapFont(true);
+    private BitmapFont font = new BitmapFont(true);
     private String playerTurn;
 
     private Card[] cardSeq;
@@ -64,17 +63,21 @@ public class CardGUI {
         clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
 
-        selectCards();
+        try {
+            selectCards();
+        } catch (PlayerEmptyCardHandException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void selectCards() {
-
+    private void selectCards() throws PlayerEmptyCardHandException {
         playerTurn = players[currentPlayer].getPlayerID() + "'s turn";
         List<Card> playerCards = players[currentPlayer].getCardHand();
-        if (playerCards != null) {
-            draw(playerCards);
-        }
 
+        if (playerCards == null) {
+            throw new PlayerEmptyCardHandException("Player does not have any cards in hand");
+        }
+        draw(playerCards);
     }
 
     private void setPlayerDone() {
@@ -84,16 +87,20 @@ public class CardGUI {
 
         currentPlayer++;
         if (currentPlayer < players.length) {
-            selectCards();
+            try {
+                selectCards();
+            } catch (PlayerEmptyCardHandException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void render() {
-            stage.act(Gdx.graphics.getDeltaTime());
-            stage.draw();
-            batch.begin();
-            //font.draw(batch, playerTurn, 10, 10);
-            batch.end();
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+        batch.begin();
+        font.draw(batch, playerTurn, 10, 10);
+        batch.end();
     }
 
     /**
@@ -174,11 +181,8 @@ public class CardGUI {
                     buttonArr[i].clearListeners();
                 }
 
-                //buttonArr[0].clearListeners();
-
                 cardPtr = 0;
                 stage.clear();
-                playerTurn = "entering ActionState. Please Wait......";
                 setPlayerDone();
                 return true;
             }
@@ -238,7 +242,6 @@ public class CardGUI {
 
         stage.clear();
         stage.dispose();
-        //font.dispose();
+        font.dispose();
     }
-
 }
