@@ -196,6 +196,10 @@ public class Board implements IBoard {
 	@Override
 	public void initPhase() {
 		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
+		//init phaseQueues
+		for (int i = 0; i < 5; i++) {
+			phaseQueues[i] = new PriorityQueue<>();
+		}
 
 		for (Player player : playerPositions.keySet()) {
 			Card[] playerCards = player.getCardSequence();
