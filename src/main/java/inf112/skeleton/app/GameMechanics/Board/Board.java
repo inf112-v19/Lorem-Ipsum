@@ -293,7 +293,7 @@ public class Board implements IBoard {
 		for (Player player : playerPositions.keySet()) {
 			Position playerPos = playerPositions.get(player);
 			Tile playerTile = tileMap.get(playerPos);
-			//playerTile.checkTile(this, player);
+			playerTile.checkTile(this, player);
 		}
 	}
 
