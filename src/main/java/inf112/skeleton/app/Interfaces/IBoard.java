@@ -154,7 +154,7 @@ public interface IBoard<T> {
 	 * Tries to play the next card of the round. Interprets the actions of the card and
 	 * calls the movePlayer appropriately.
 	 *
-	 * @return
+	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
 	 */
 	boolean playNextCard();
 }
