@@ -1,7 +1,7 @@
 package inf112.skeleton.app.GameMechanics.Board;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
@@ -83,19 +83,33 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player) throws PlayerNotFoundException {
-		return movePlayer(player, player.getDirection());
+	public boolean movePlayer(Player player, int numberOfMoves) {
+		return movePlayer(player, player.getDirection(), numberOfMoves);
+	}
+
+	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
+		Position curPos = playerPositions.get(player);
+		for (int i = 0; i < numberOfMoves; i++) {
+			if (!movePlayer(player, dir)) {
+				return false;
+			}
+		}
+
+		// if this happens it means all previous calls of movePlayer returned true
+		return true;
 	}
 
 	@Override
-	public boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException {
+	public boolean movePlayer(Player player, Direction dir) {
 		if(!playerPositions.containsKey(player)) {
-			throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
+			// TODO - Handle custom PLayerNotFoundException
+			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
 		Position curPos = playerPositions.get(player);
 		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
+		boolean fellOffTheBoard = false;
 
 		//if tile currently standing on has no wall blocking the player - proceed
         if (!curTile.hasWallInDir(dir)){
@@ -109,24 +123,25 @@ public class Board implements IBoard {
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
-							checkForHole(player, newPos);
+							fellOffTheBoard = checkForHole(player, newPos);
                         }
                     }
 
                     //no player in direction trying to move - moves player to newPos
                     else {
-						checkForHole(player, newPos);
+						fellOffTheBoard = checkForHole(player, newPos);
                     }
                 }
             }
             //player walks off the board
             else {
 				playerFellOffTheBoard(player);
+				fellOffTheBoard = true;
             }
         }
 
-        //returns true if the player position has changed
-        return !curPos.equals(playerPositions.get(player));
+        //returns true if the player position has changed and the player did not fell off the board
+        return !curPos.equals(playerPositions.get(player)) && !fellOffTheBoard;
 	}
 
 	@Override
@@ -201,11 +216,37 @@ public class Board implements IBoard {
 		return true;
 	}
 
-	public boolean playNextCard(){
+
+	@Override
+	public boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
 			return false;
 		}
-		//TODO - handle playing the card
+
+		Card curCard = thisRoundsCards.poll();
+		Player curPlayer = cardToPlayer.get(curCard);
+		CardType curCardType = curCard.getCardType();
+		int numRotation = curCardType.getRotation();
+		int movement = curCardType.getMovement();
+		Direction playerDir = curPlayer.getDirection();
+
+		curPlayer.turnPlayer(numRotation);
+
+		switch (movement) {
+			case -1:
+				movePlayer(curPlayer, playerDir.oppositeDirection());
+				break;
+			case 1:
+				movePlayer(curPlayer, playerDir);
+				break;
+			case 2:
+				movePlayer(curPlayer, 2);
+				break;
+			case 3:
+				movePlayer(curPlayer, 3);
+				break;
+		}
+
 		return true;
 	}
     
@@ -232,14 +273,17 @@ public class Board implements IBoard {
 	 *
 	 * @param player
 	 * @param newPos
+	 * @return returns true if the tile is a hole
 	 */
-	private void checkForHole(Player player, Position newPos) {
+	private boolean checkForHole(Player player, Position newPos) {
 		Tile newTile = tileMap.get(newPos);
 
 		if (newTile instanceof HoleTile) {
 			playerFellOffTheBoard(player);
+			return true;
 		}else{
 			playerPositions.put(player, newPos);
+			return false;
 		}
 	}
 
@@ -247,11 +291,11 @@ public class Board implements IBoard {
 	 * Iterates over every player and calls the checkTile method for the tile they are standing on -
 	 * checkTile method will execute the correct action according to the tile-type(movePlayer etc.)
 	 */
-	private void checkAllPlayers() throws PlayerNotFoundException {
+	private void checkAllPlayers() {
 		for (Player player : playerPositions.keySet()) {
 			Position playerPos = playerPositions.get(player);
 			Tile playerTile = tileMap.get(playerPos);
-			playerTile.checkTile(this, player);
+			//playerTile.checkTile(this, player);
 		}
 	}
 

@@ -50,22 +50,42 @@ public interface IBoard<T> {
 
 	/**
 	 * Tries to move the player in the direction the player is facing - potentially starts recursive calling
-	 * if player collision occurs
+	 * if player collision occurs. Tries to move the player numberOfMoves times by calling the
+	 * movePlayer(Player player, Direction Dir, int numberOfMoves).
 	 *
 	 * @param player
 	 *            player to be moved
-	 * @return true if movement happened or false if player did not move
+	 * @param numberOfMoves
+	 *            the number of moves that should happened
+	 * @return true if movement happened and the player did not fell off the board
 	 */
-	boolean movePlayer(Player player) throws PlayerNotFoundException;
+	boolean movePlayer(Player player, int numberOfMoves) throws PlayerNotFoundException;
+
+	/**
+	 * Tries to move the player in the given direction numberOfMoves times by calling the
+	 * movePlayer(Player player, Direction dir). Stops when the underlying call returns false meaning
+	 * the player was not able to move or potentially fell off the board.
+	 *
+	 * @param player
+	 *            player to be moved
+	 * @param dir
+	 *            direction to be moved
+	 * @param numberOfMoves
+	 *            number of times to be tried to move
+	 * @return true if movement happened and the player did not fell off the board
+	 * @throws PlayerNotFoundException
+	 */
+	boolean movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
 
     /**
      * Recursively called in movePlayer - moving in a direction regardless of the direction where the player is facing
-     *
+     * Tries to move the player once.
+	 *
      * @param player
      *            player to be moved
 	 * @param dir
 	 *            direction to be moved
-     * @return true if movement happened or false if player did not move
+     * @return true if movement happened and the player did not fell off the board
      */
     boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException;
 
@@ -124,10 +144,19 @@ public interface IBoard<T> {
 
 	/**
 	 * Initializes the thisRoundsCards containing all the cards in the correct order based upon the priority.
-	 * Works by creating 5 PriorityQueues for each of the cards each player is holding and adding them to the thisRoundsCards
-	 * queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each card to a player.
+	 * Works by creating 5 PriorityQueues for each of the cards each player is holding and adding them to the
+	 * thisRoundsCards queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each
+	 * card to a player.
 	 *
 	 * @return true when finished
 	 */
 	boolean initPhase();
+
+	/**
+	 * Tries to play the next card of the round. Interprets the actions of the card and
+	 * calls the movePlayer appropriately.
+	 *
+	 * @return
+	 */
+	boolean playNextCard();
 }
