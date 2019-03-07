@@ -99,7 +99,7 @@ public class Player implements IPlayer {
     /**
      * @return returns the total number of lives the player has before losing the game
      */
-    public int getLives(){return playerlives }
+    public int getLives(){return playerlives; }
 
     /**
      * @return players Direction
