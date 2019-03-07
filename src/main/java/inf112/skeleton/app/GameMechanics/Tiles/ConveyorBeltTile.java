@@ -41,7 +41,7 @@ public class ConveyorBeltTile extends Tile {
      * @param player the Player to preform the action
      */
     public void checkTile(Board board, Player player) throws PlayerNotFoundException {
-        board.movePlayer(player, direction);
+        board.movePlayer(player, direction, 1);
     }
 
 }
