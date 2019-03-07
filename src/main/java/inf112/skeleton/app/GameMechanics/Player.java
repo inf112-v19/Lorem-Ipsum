@@ -152,7 +152,7 @@ public class Player implements IPlayer {
     @Override
     public void decreaseHealth() {
         playerHealth--;
-        if(playerHealth>=0){
+        if(playerHealth<=0){
             playerHealth = 10;
             decreseLives();
         }
