@@ -13,8 +13,8 @@ public class Player implements IPlayer {
     private String playerID;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
-    private Board board;
-    private int playerHealth = 5;
+    private int playerHealth = 10; //Number of damage the player can take before getting destroyed
+    private int playerlives = 4; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
 
@@ -93,11 +93,13 @@ public class Player implements IPlayer {
         } else if (direction == Direction.WEST) {
             directionNumber = 3;
             playerDirection = direction;
-
         }
-
     }
 
+    /**
+     * @return returns the total number of lives the player has before losing the game
+     */
+    public int getLives(){return playerlives; }
 
     /**
      * @return players Direction
@@ -132,7 +134,7 @@ public class Player implements IPlayer {
     }
 
     /**
-     * Decrease the players health by 1
+     * Decrease the players health/damage by 1
      */
     @Override
     public void decreaseHealth() {
@@ -140,13 +142,16 @@ public class Player implements IPlayer {
     }
 
     /**
-     * Increase the players health by 1
+     * Increase the players health/damage by 1
      */
     @Override
     public void increaseHealth() {
         playerHealth++;
     }
 
+    /**
+     * @return returns the health/damage of the player
+     */
     @Override
     public int getHealth() {
         return playerHealth;

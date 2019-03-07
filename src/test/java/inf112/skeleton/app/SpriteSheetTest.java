@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
@@ -11,9 +12,6 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
-import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
-import inf112.skeleton.app.GameMechanics.Tiles.RepairTile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +41,47 @@ public class SpriteSheetTest {
 		TextureRegion textureRegion = spriteSheet.getTexture(repairTile.getSpriteType());
 		assertTrue(textureRegion != null );
 	}
+
+
+	@Test
+	public void initConveyorBeltTileCorrectTextureTest() {
+		ConveyorBeltTile conveyorBeltTileNorth = new ConveyorBeltTile(null, Direction.NORTH);
+		ConveyorBeltTile conveyorBeltTileEast = new ConveyorBeltTile(null, Direction.EAST);
+		ConveyorBeltTile conveyorBeltTileSouth = new ConveyorBeltTile(null, Direction.SOUTH);
+		ConveyorBeltTile conveyorBeltTileWest = new ConveyorBeltTile(null, Direction.WEST);
+
+		assertEquals(conveyorBeltTileNorth.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_NORTH);
+		assertEquals(conveyorBeltTileEast.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_EAST);
+		assertEquals(conveyorBeltTileSouth.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_SOUTH);
+		assertEquals(conveyorBeltTileWest.getSpriteType(), SpriteType.CONVEYOR_BELT_TILE_WEST);
+	}
+
+	@Test
+	public void initDoubleConveyorBeltTileCorrectTextureTest() {
+		DoubleConveyorBeltTile DoubleconveyorBeltTileNorth = new DoubleConveyorBeltTile(null, Direction.NORTH);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileEast = new DoubleConveyorBeltTile(null, Direction.EAST);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileSouth = new DoubleConveyorBeltTile(null, Direction.SOUTH);
+		DoubleConveyorBeltTile DoubleconveyorBeltTileWest = new DoubleConveyorBeltTile(null, Direction.WEST);
+
+		assertEquals(DoubleconveyorBeltTileNorth.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_NORTH);
+		assertEquals(DoubleconveyorBeltTileEast.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_EAST);
+		assertEquals(DoubleconveyorBeltTileSouth.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_SOUTH);
+		assertEquals(DoubleconveyorBeltTileWest.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_WEST);
+	}
+
+	@Test
+	public void initRotationRightTileTileCorrectTextureTest() {
+		RotationRightTile RotationRightTile = new RotationRightTile(null, Direction.NORTH);
+		assertEquals(RotationRightTile.getSpriteType(), SpriteType.ROTATION_RIGHT_TILE);
+	}
+
+	@Test
+	public void initRotationLeftTileTileCorrectTextureTest() {
+		RotationLeftTile RotationLeftTile = new RotationLeftTile(null, Direction.NORTH);
+		assertEquals(RotationLeftTile.getSpriteType(), SpriteType.ROTATION_LEFT_TILE);
+
+	}
+
 
 	@Test
 	public void initHoleTileTextureTest() {

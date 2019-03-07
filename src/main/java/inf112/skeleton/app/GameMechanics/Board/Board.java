@@ -48,19 +48,13 @@ public class Board implements IBoard {
 		playerPositions.put(player, pos);
 	}
 
-	/**
-	 * Method used for testing purposes - maybe not needed for finished program
-	 * (ignores all exceptions and relies on correct usage)
-	 *
-	 * @return
-	 */
+	@Override
 	public Player[] getAllPlayers() {
 		Player[] players = new Player[playerPositions.size()];
-		int i = 0;
 
 		for (Player p : playerPositions.keySet()) {
-			players[i] = p;
-			i++;
+			int indexOfP = Integer.parseInt(p.getPlayerID());
+			players[indexOfP] = p;
 		}
 		return players;
 	}
@@ -174,6 +168,11 @@ public class Board implements IBoard {
         }
         return null;
     }
+
+    @Override
+	public Position getPlayerPos(Player player) {
+		return playerPositions.get(player);
+	}
     
 
 	/**
@@ -208,5 +207,19 @@ public class Board implements IBoard {
 			playerPositions.put(player, newPos);
 		}
 	}
+
+	/**
+	 * Iterates over every player and calls the checkTile method for the tile they are standing on -
+	 * checkTile method will execute the correct action according to the tile-type(movePlayer etc.)
+	 */
+	private void checkAllPlayers() {
+		for (Player player : playerPositions.keySet()) {
+			Position playerPos = playerPositions.get(player);
+			Tile playerTile = tileMap.get(playerPos);
+			//playerTile.checkTile(this, player);
+		}
+	}
+
+
 
 }
