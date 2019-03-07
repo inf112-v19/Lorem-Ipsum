@@ -40,7 +40,8 @@ public class DoubleConveyorBeltTile extends Tile {
      * @param board current GameBoard
      * @param player the Player to preform the action
      */
-    public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+    @Override
+    public void checkTile(Board board, Player player){
         board.movePlayer(player, direction, 2);
     }
 }

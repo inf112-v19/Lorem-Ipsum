@@ -18,7 +18,7 @@ public class NormalTile extends Tile {
 
 
 	@Override
-	public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+	public void checkTile(Board board, Player player){
 		for(int i=0;i<gameObjects.length;i++){
 			if(gameObjects[i] instanceof Flag){
 				player.increaseHealth();

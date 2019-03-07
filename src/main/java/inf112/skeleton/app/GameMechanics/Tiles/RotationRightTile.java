@@ -17,7 +17,7 @@ public class RotationRightTile extends Tile {
     }
 
     @Override
-    public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+    public void checkTile(Board board, Player player){
         player.turnPlayer(1);
     }
 }

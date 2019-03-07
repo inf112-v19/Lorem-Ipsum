@@ -90,7 +90,7 @@ public interface ITile {
 	 * @param board current game board
 	 * @param player the Player to preform the action
 	 */
-	void checkTile(Board board, Player player) throws PlayerNotFoundException;
+	void checkTile(Board board, Player player);
 
 
 }

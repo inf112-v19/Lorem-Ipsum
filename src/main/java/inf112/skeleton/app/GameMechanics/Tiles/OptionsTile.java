@@ -16,7 +16,7 @@ public class OptionsTile extends Tile{
     }
 
     @Override
-    public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+    public void checkTile(Board board, Player player){
         player.increaseHealth();
         player.setBackup(board.getPlayerPos(player));
     }
