@@ -38,12 +38,12 @@ public class CardGUI {
     private Stage stage;
 
     private int cardPtr;
-    private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
+    private HashMap<Integer, ImageButton> buttonByXPos;
     private Image infoBar;
     private int labelXPos;
     private int cardXPos;
 
-    private BitmapFont font = new BitmapFont(true);
+    private BitmapFont font;
     private String playerTurn;
 
     private Card[] cardSeq;
@@ -61,6 +61,9 @@ public class CardGUI {
 
         cardPtr = 0;
         currentPlayer = 0;
+
+        font = new BitmapFont(true);
+        buttonByXPos = new HashMap<>();
 
         clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));

@@ -99,7 +99,9 @@ public class Player implements IPlayer {
     /**
      * @return returns the total number of lives the player has before losing the game
      */
-    public int getLives(){return playerlives; }
+    public int getLives() {
+        return playerlives;
+    }
 
     /**
      * @return players Direction
@@ -158,7 +160,9 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setBackup(Position backupPosition) { this.backup = backupPosition; }
+    public void setBackup(Position backupPosition) {
+        this.backup = backupPosition;
+    }
 
     @Override
     public Position getBackup() {
