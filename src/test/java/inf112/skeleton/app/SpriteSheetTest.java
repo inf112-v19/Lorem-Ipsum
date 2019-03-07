@@ -3,8 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
-import inf112.skeleton.app.GameMechanics.Tiles.ConveyorBeltTile;
-import inf112.skeleton.app.GameMechanics.Tiles.DoubleConveyorBeltTile;
+import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
@@ -13,9 +12,6 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
-import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
-import inf112.skeleton.app.GameMechanics.Tiles.RepairTile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,7 +69,18 @@ public class SpriteSheetTest {
 		assertEquals(DoubleconveyorBeltTileWest.getSpriteType(), SpriteType.DOUBLE_CONVEYOR_BELT_TILE_WEST);
 	}
 
-	
+	@Test
+	public void initRotationRightTileTileCorrectTextureTest() {
+		RotationRightTile RotationRightTile = new RotationRightTile(null, Direction.NORTH);
+		assertEquals(RotationRightTile.getSpriteType(), SpriteType.ROTATION_RIGHT_TILE);
+	}
+
+	@Test
+	public void initRotationLeftTileTileCorrectTextureTest() {
+		RotationLeftTile RotationLeftTile = new RotationLeftTile(null, Direction.NORTH);
+		assertEquals(RotationLeftTile.getSpriteType(), SpriteType.ROTATION_LEFT_TILE);
+
+	}
 
 
 	@Test
