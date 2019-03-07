@@ -29,23 +29,23 @@ public class ActionState extends State {
 
 	}
 
-	@Override
-	public void update(float dt) {
-		updateCount += dt;
-		if (updateCount > UPDATE_LIMIT){
-			boardGUI.update();
-			updateCount = 0;
-			System.out.println("----------------------------------------------------------------------");
-		}
-	}
+    @Override
+    public void update(float dt) {
+        updateCount += dt;
+        if (updateCount > UPDATE_LIMIT){
+            boardGUI.update();
+            updateCount = 0;
+            System.out.println("----------------------------------------------------------------------");
+        }
+    }
 
-	@Override
-	public void render() {
-		boardGUI.render();
-		System.out.println("inside actionstate");
-	}
+    @Override
+    public void render() {
+        boardGUI.render();
+        System.out.println("inside actionstate");
+    }
 
-	@Override
+    @Override
 	public void dispose() {
 
 	}

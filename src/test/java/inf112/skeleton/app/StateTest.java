@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.math.Interpolation;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.States.ActionState;
+import inf112.skeleton.app.Visuals.States.CardState;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.MenuState;
 import org.junit.Before;
@@ -24,13 +25,21 @@ public class StateTest {
 	}
 
 	@Test
+	public void pushStateTest() {
+		ActionState actionState = new ActionState(gsm,board);
+		gsm.push(actionState);
+		assertSame(gsm.peek(), actionState);
+
+
+	}
+
+	@Test
 	public void popStateTest() {
 		ActionState actionState = new ActionState(gsm,board);
 		gsm.push(new MenuState(gsm, board));
 		gsm.push(actionState);
 		assertSame(gsm.pop(), actionState);
 	}
-
 
     @Test
     public void peekStateTest() {
@@ -41,10 +50,6 @@ public class StateTest {
     }
 
 	@Test
-	public void pushStateTest() {
-	}
-
-	@Test
 	public void setStateTest() {
 		ActionState actionState = new ActionState(gsm,board);
 		gsm.push(new MenuState(gsm, board));
@@ -52,6 +57,13 @@ public class StateTest {
 		assertSame(gsm.peek(), actionState);
 	}
 
+	@Test
+	public void updateStateTest() {
+	}
+
+	@Test
+	public void resizeStateTest() {
+	}
 
 
 
