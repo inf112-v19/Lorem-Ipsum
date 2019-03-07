@@ -68,15 +68,4 @@ public class StateTest {
 		assertEquals(gsm.size(), 1);
 	}
 
-	@Test
-	public void updateStateTest() {
-
-	}
-
-	@Test
-	public void resizeStateTest() {
-	}
-
-
-
 }
