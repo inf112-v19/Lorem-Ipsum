@@ -181,4 +181,12 @@ public class Player implements IPlayer {
     public String getPlayerID() {
         return playerID;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Player)) {
+            return false;
+        }
+        return this.playerID.equals(((Player) obj).playerID);
+    }
 }

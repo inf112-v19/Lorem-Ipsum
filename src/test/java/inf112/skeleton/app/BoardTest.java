@@ -24,7 +24,7 @@ public class BoardTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		testBoard = new Board("Boards/ExampleBoard.txt", 2);
+		testBoard = new Board("Boards/ExampleBoard.txt");
 		players = testBoard.getAllPlayers();
 		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
 		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
@@ -131,6 +131,15 @@ public class BoardTest {
 		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,0));
 
 		assertEquals(shouldBePlayer0, players[0]);
+	}
+
+	/**
+	 * Testing that the getAllPlayers return an array of correct size
+	 */
+	@Test
+	public void getAllPlayers() {
+		Player[] players = testBoard.getAllPlayers();
+		assertEquals(players.length, 2);
 	}
 
 }

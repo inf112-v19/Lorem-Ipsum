@@ -57,7 +57,13 @@ public class PlayerTest {
         assertEquals(player.getHealth(), 6);
     }
 
-
+    /**
+     * Testing that the equals method works as expected for identical Players
+     */
+    @Test
+    public void equalsTest(){
+        assertEquals(new Player("1", Direction.NORTH), new Player("1", Direction.NORTH));
+    }
 
 
 }

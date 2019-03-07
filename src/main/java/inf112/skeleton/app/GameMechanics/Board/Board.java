@@ -24,8 +24,8 @@ public class Board implements IBoard {
 		width = builder.getWidth();
 
 		//creates two players and places them on the board - mostly for testing purposes
-		Player player1 = new Player("1", Direction.EAST);
-		Player player2 = new Player("2", Direction.EAST);
+		Player player1 = new Player("0", Direction.EAST);
+		Player player2 = new Player("1", Direction.EAST);
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
 	}
@@ -169,7 +169,7 @@ public class Board implements IBoard {
 	public Player posToPlayer(Position pos) {
         for (Player player : playerPositions.keySet()) {
             if (playerPositions.get(player).equals(pos)){
-                return player;
+            	return player;
             }
         }
         return null;

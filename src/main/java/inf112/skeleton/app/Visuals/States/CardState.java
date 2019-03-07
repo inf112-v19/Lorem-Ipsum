@@ -30,14 +30,14 @@ public class CardState extends State {
         /**
          * code for testing CardGUI. Does not use players stored in board
          */
-        Player[] testarr = new Player[2];
-        testarr[0] = new Player("Player1", Direction.NORTH);
-        testarr[1] = new Player("Player2", Direction.NORTH);
+
+        Player[] testarr = board.getAllPlayers();
         ICardDeck testDeck = new ProgramCardDeck();
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
         this.cardGUI = new CardGUI(camera, batch, board, testarr);
+
 
         //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
     }
@@ -50,17 +50,14 @@ public class CardState extends State {
     @Override
     public void update(float dt) {
         // all players ready then set new ActionState
-        boolean allReady = true;
+        //this.players = board.getAllPlayers();
         for (Player player : players) {
             if (!player.isReady()) {
-            	allReady = false;
-                break;
+                return;
             }
         }
-		if (allReady) {
-			gsm.set(new ActionState(gsm, board));
-			dispose();
-		}
+        gsm.set(new ActionState(gsm, board));
+        dispose();
 
     }
 
@@ -72,6 +69,7 @@ public class CardState extends State {
 
     @Override
     public void dispose() {
+        cardGUI.dispose();
         batch.dispose();
     }
 
