@@ -14,8 +14,8 @@ public class GameStateManager {
         states.push(state);
     }
 
-    public void pop() {
-        states.pop();
+    public State pop() {
+        return states.pop();
     }
 
     public void set(State state) {

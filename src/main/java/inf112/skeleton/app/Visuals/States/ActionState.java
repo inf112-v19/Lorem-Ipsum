@@ -9,7 +9,7 @@ public class ActionState extends State {
 	private SpriteBatch batch;
 	private BoardGUI boardGUI;
 
-	protected ActionState(GameStateManager gsm, Board board) {
+	public ActionState(GameStateManager gsm, Board board) {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
 		this.boardGUI = new BoardGUI(this.batch, board, camera);
@@ -28,6 +28,7 @@ public class ActionState extends State {
 
 	@Override
 	public void render() {
+
 		System.out.println("inside actionstate");
 	}
 
