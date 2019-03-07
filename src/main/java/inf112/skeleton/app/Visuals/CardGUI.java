@@ -41,6 +41,8 @@ public class CardGUI {
     private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
     private Image infoBar;
     private int labelXPos;
+    private int cardXPos;
+
     private BitmapFont font = new BitmapFont(true);
     private String playerTurn;
 
@@ -102,20 +104,24 @@ public class CardGUI {
         batch.end();
     }
 
+    /**
+     * Draws list of cards on screen and add listeners on each card
+     *
+     * @param c list of cards
+     */
     private void draw(List<Card> c) {
 
         final List<Card> cards = c;
         final ImageButton[] buttonArr = new ImageButton[cards.size()];
         cardSeq = new Card[5];
-        int xpos = 0;
-
+        cardXPos = 0;
 
         for (int i = 0; i < buttonArr.length; i++) {
             buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             buttonArr[i].setSize(97, 135);
-            buttonArr[i].setPosition(xpos, 0);
-            buttonByXPos.put(xpos, buttonArr[i]);
-            xpos += 97;
+            buttonArr[i].setPosition(cardXPos, 0);
+            buttonByXPos.put(cardXPos, buttonArr[i]);
+            cardXPos += 97;
             stage.addActor(buttonArr[i]);
             labelXPos = 0;
         }
@@ -139,7 +145,7 @@ public class CardGUI {
             });
         }
 
-        xpos += 10;
+        cardXPos += 10;
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
 
         infoBar.setSize(485, 30);
@@ -147,46 +153,8 @@ public class CardGUI {
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
 
-        clear.setSize(80, 30);
-        clear.setPosition(xpos, 20);
-        stage.addActor(clear);
-        submit.setSize(80, 30);
-        submit.setPosition(xpos, 70);
-        stage.addActor(submit);
-
-        clear.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                cardPtr = 0;
-                stage.clear();
-                draw(cards);
-                System.out.println("clear");
-                return true;
-            }
-        });
-
-        submit.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (cardPtr < 4) {
-                    System.out.println("not enough cards");
-                } else {
-                    System.out.print("submit: ");
-                    for (int i = 0; i < cardPtr; i++) {
-                        System.out.print(cardSeq[i].toString() + ", ");
-                    }
-
-                    for (int i = 0; i < buttonArr.length; i++) {
-                        buttonArr[i].clearListeners();
-                    }
-
-                    cardPtr = 0;
-                    stage.clear();
-                    setPlayerDone();
-                }
-                return true;
-            }
-        });
+        createClearButton();
+        createSubmitButton();
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -200,9 +168,7 @@ public class CardGUI {
         return false;
     }
 
-    /**
-     * adds label over selected card
-     */
+    /** adds label over selected card to indicate its place in the ready sequence*/
     private void addLabel(int cardPtr) {
         if (cardPtr == 0) {
             infoBar.remove();
@@ -221,6 +187,7 @@ public class CardGUI {
         return b;
     }
 
+    /** returns x coordinate for cards draw position given its new place in the sequence */
     private int getDrawPos(int cardPtr) {
         return cardPtr * 97;
     }
@@ -244,4 +211,47 @@ public class CardGUI {
         stage.dispose();
         font.dispose();
     }
+
+    private void createSubmitButton() {
+        submit.setSize(80, 30);
+        submit.setPosition(cardXPos, 70);
+        stage.addActor(submit);
+
+        submit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (cardPtr < 4) {
+                    System.out.println("not enough cards");
+                } else {
+                    System.out.print("submit: ");
+                    for (int i = 0; i < cardPtr; i++) {
+                        System.out.print(cardSeq[i].toString() + ", ");
+                    }
+
+                    cardPtr = 0;
+                    stage.clear();
+                    setPlayerDone();
+                }
+                return true;
+            }
+        });
+    }
+
+    private void createClearButton() {
+        clear.setSize(80, 30);
+        clear.setPosition(cardXPos, 20);
+        stage.addActor(clear);
+
+        clear.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cardPtr = 0;
+                stage.clear();
+                draw(players[currentPlayer].getCardHand());
+                System.out.println("clear");
+                return true;
+            }
+        });
+    }
+
 }
