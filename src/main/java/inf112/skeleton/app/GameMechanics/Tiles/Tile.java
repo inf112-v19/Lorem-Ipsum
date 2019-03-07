@@ -116,7 +116,7 @@ public abstract class Tile implements ITile {
 	}
 
 	@Override
-	public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+	public void checkTile(Board board, Player player){
 
 	}
 }

@@ -194,7 +194,7 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean initPhase() {
+	public void initPhase() {
 		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
 
 		for (Player player : playerPositions.keySet()) {
@@ -212,8 +212,6 @@ public class Board implements IBoard {
 				thisRoundsCards.add(card);
 			}
 		}
-
-		return true;
 	}
 
 
