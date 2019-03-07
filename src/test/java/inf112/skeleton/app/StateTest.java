@@ -1,6 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.math.Interpolation;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.States.ActionState;
 import inf112.skeleton.app.Visuals.States.CardState;
@@ -9,7 +8,6 @@ import inf112.skeleton.app.Visuals.States.MenuState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.lwjgl.Sys;
 
 import static org.junit.Assert.*;
 
@@ -35,7 +33,6 @@ public class StateTest {
         gsm.push(cardState);
         gsm.push(actionState);
         gsm.push(cardState);
-
         assertSame(gsm.peek(), cardState);
         assertEquals(gsm.size(), 4);
 	}
@@ -47,7 +44,6 @@ public class StateTest {
 		gsm.push(actionState);
 		assertSame(gsm.pop(), actionState);
 		assertEquals(gsm.size(), 1);
-
 	}
 
     @Test
