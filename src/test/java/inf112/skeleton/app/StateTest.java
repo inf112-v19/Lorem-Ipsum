@@ -29,6 +29,7 @@ public class StateTest {
 		ActionState actionState = new ActionState(gsm,board);
 		gsm.push(actionState);
 		assertSame(gsm.peek(), actionState);
+		assertEquals(gsm.size(), 1);
 
         CardState cardState = new CardState(gsm,board);
         gsm.push(cardState);
@@ -45,6 +46,8 @@ public class StateTest {
 		gsm.push(new MenuState(gsm, board));
 		gsm.push(actionState);
 		assertSame(gsm.pop(), actionState);
+		assertEquals(gsm.size(), 1);
+
 	}
 
     @Test
@@ -53,6 +56,7 @@ public class StateTest {
         gsm.push(new MenuState(gsm, board));
         gsm.push(actionState);
         assertSame(gsm.peek(), actionState);
+		assertEquals(gsm.size(), 2);
     }
 
 	@Test
@@ -61,10 +65,12 @@ public class StateTest {
 		gsm.push(new MenuState(gsm, board));
 		gsm.set(actionState);
 		assertSame(gsm.peek(), actionState);
+		assertEquals(gsm.size(), 1);
 	}
 
 	@Test
 	public void updateStateTest() {
+
 	}
 
 	@Test
