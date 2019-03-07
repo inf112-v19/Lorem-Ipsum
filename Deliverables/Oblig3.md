@@ -1,4 +1,4 @@
-# ***Oblogatorisk øvelse 3***
+# ***Obligatorisk øvelse 3***
 ## Deloppgave 1: Prosjekt og prosjektstructur 
 
 **1.** Rollene i teamet funker utmerket, vi trenger ikke å oppdaterer hvem som er teamleader eller kundekontakt, og i tillegg trenger vi midlertidig ingen nye roller heller. Teamleader for oss er en som sørger for å følge opp oppgaver og prosjektboard. Kundekontakt for oss er gruppens hovedekspertise på domenet.
