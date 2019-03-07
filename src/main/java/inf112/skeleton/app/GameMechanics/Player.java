@@ -147,6 +147,8 @@ public class Player implements IPlayer {
     @Override
     public void increaseHealth() {
         playerHealth++;
+        if(playerHealth>10) playerHealth = 10;
+
     }
 
     /**
