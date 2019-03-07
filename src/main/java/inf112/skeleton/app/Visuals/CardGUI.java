@@ -81,7 +81,6 @@ public class CardGUI {
     }
 
     private void setPlayerDone() {
-
         players[currentPlayer].setCardSequence(cardSeq);
         players[currentPlayer].setReady();
 
@@ -103,9 +102,6 @@ public class CardGUI {
         batch.end();
     }
 
-    /**
-     * returns players card sequence
-     */
     private void draw(List<Card> c) {
 
         final List<Card> cards = c;
@@ -172,18 +168,22 @@ public class CardGUI {
         submit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.print("submit: ");
-                for (int i = 0; i < cardPtr; i++) {
-                    System.out.print(cardSeq[i].toString() + ", ");
-                }
+                if (cardPtr < 4) {
+                    System.out.println("not enough cards");
+                } else {
+                    System.out.print("submit: ");
+                    for (int i = 0; i < cardPtr; i++) {
+                        System.out.print(cardSeq[i].toString() + ", ");
+                    }
 
-                for (int i = 0; i < buttonArr.length; i++) {
-                    buttonArr[i].clearListeners();
-                }
+                    for (int i = 0; i < buttonArr.length; i++) {
+                        buttonArr[i].clearListeners();
+                    }
 
-                cardPtr = 0;
-                stage.clear();
-                setPlayerDone();
+                    cardPtr = 0;
+                    stage.clear();
+                    setPlayerDone();
+                }
                 return true;
             }
         });
