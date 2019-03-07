@@ -47,14 +47,14 @@ public class PlayerTest {
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.decreaseHealth();
-        assertEquals(player.getHealth(), 4);
+        assertEquals(player.getHealth(), 9);
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.increaseHealth();
-        assertEquals(player.getHealth(), 6);
+        assertEquals(player.getHealth(), 10); //max health = 10
     }
 
     /**

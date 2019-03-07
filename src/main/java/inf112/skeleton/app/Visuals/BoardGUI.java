@@ -71,8 +71,6 @@ public class BoardGUI {
     	if (board.posToPlayer(pos) != null){
 			int x = pos.getX() * tilesize + xOffset;
 			int y = pos.getY() * tilesize + yOffset;
-			System.out.println(pos.getX());
-			System.out.println(pos.getX());
 			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
 			image.setSize(tilesize,tilesize);
 			image.setPosition(x,y);
