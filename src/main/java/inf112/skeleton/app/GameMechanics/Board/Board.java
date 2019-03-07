@@ -1,6 +1,7 @@
 package inf112.skeleton.app.GameMechanics.Board;
 
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
@@ -9,11 +10,14 @@ import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class Board implements IBoard {
 	private HashMap<Position, Tile> tileMap;
 	private HashMap<Player, Position> playerPositions = new HashMap<>();
+	private HashMap<Card, Player> cardToPlayer = new HashMap<>();
+	private Queue<Card> thisRoundsCards = new LinkedList<>();
+
 	private int height;
 	private int width;
 
@@ -173,6 +177,37 @@ public class Board implements IBoard {
 	public Position getPlayerPos(Player player) {
 		return playerPositions.get(player);
 	}
+
+	@Override
+	public boolean initPhase() {
+		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
+
+		for (Player player : playerPositions.keySet()) {
+			Card[] playerCards = player.getCardSequence();
+
+			for (int i = 0; i < 5; i++) {
+				Card curCard = playerCards[i];
+				cardToPlayer.put(curCard, player);
+				phaseQueues[i].add(curCard);
+			}
+		}
+
+		for (int i = 0; i < 5; i++) {
+			for (Card card : phaseQueues[i]) {
+				thisRoundsCards.add(card);
+			}
+		}
+
+		return true;
+	}
+
+	public boolean playNextCard(){
+		if (thisRoundsCards.isEmpty()) {
+			return false;
+		}
+		//TODO - handle playing the card
+		return true;
+	}
     
 
 	/**
@@ -181,13 +216,13 @@ public class Board implements IBoard {
 	 * @param player
 	 */
 	private void playerFellOffTheBoard(Player player) {
-    	player.decreaseHealth();
+    	player.destroyPlayer();
 
-    	if (player.getHealth()>0) {
+    	if (player.getLives()>0) {
     		playerPositions.put(player, player.getBackup());
 		}
     	else {
-    		//TODO - handle dead player
+			//TODO - handle dead player
 		}
 	}
 
@@ -212,14 +247,12 @@ public class Board implements IBoard {
 	 * Iterates over every player and calls the checkTile method for the tile they are standing on -
 	 * checkTile method will execute the correct action according to the tile-type(movePlayer etc.)
 	 */
-	private void checkAllPlayers() {
+	private void checkAllPlayers() throws PlayerNotFoundException {
 		for (Player player : playerPositions.keySet()) {
 			Position playerPos = playerPositions.get(player);
 			Tile playerTile = tileMap.get(playerPos);
-			//playerTile.checkTile(this, player);
+			playerTile.checkTile(this, player);
 		}
 	}
-
-
 
 }

@@ -65,9 +65,6 @@ public class Player implements IPlayer {
                 playerDirection = Direction.WEST;
                 break;
 
-            default:
-                playerDirection = Direction.NORTH;
-                break;
         }
     }
 
@@ -99,7 +96,14 @@ public class Player implements IPlayer {
     /**
      * @return returns the total number of lives the player has before losing the game
      */
-    public int getLives(){return playerlives; }
+    public int getLives() {
+        return playerlives;
+    }
+
+    /**
+     * decreses the players total lives
+     */
+    public void decreseLives() { playerlives--; }
 
     /**
      * @return players Direction
@@ -134,11 +138,23 @@ public class Player implements IPlayer {
     }
 
     /**
+     * destroy the player (lose a total life and set health to max)
+     */
+    public void destroyPlayer(){
+        playerlives--;
+        playerHealth = 10;
+    }
+
+    /**
      * Decrease the players health/damage by 1
      */
     @Override
     public void decreaseHealth() {
         playerHealth--;
+        if(playerHealth<=0){
+            playerHealth = 10;
+            decreseLives();
+        }
     }
 
     /**
@@ -160,7 +176,9 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setBackup(Position backupPosition) { this.backup = backupPosition; }
+    public void setBackup(Position backupPosition) {
+        this.backup = backupPosition;
+    }
 
     @Override
     public Position getBackup() {

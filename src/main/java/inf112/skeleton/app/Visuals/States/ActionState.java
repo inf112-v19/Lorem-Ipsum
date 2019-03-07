@@ -1,17 +1,13 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
-import com.badlogic.gdx.utils.Timer;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
-import org.omg.CORBA.TIMEOUT;
 
-import java.util.concurrent.TimeUnit;
 
 public class ActionState extends State {
 
+	private boolean boardCanPlayCards;
 	private float updateCount;
 	private final float UPDATE_LIMIT = 1;
 	private SpriteBatch batch;
@@ -22,6 +18,7 @@ public class ActionState extends State {
 		this.batch = new SpriteBatch();
 		this.boardGUI = new BoardGUI(this.batch, board, camera);
 		this.updateCount = 0;
+		this.boardCanPlayCards = true;
 	}
 
 	@Override
@@ -29,31 +26,41 @@ public class ActionState extends State {
 
 	}
 
-    @Override
-    public void update(float dt) {
-        updateCount += dt;
-        if (updateCount > UPDATE_LIMIT){
-            boardGUI.update();
-            updateCount = 0;
-            System.out.println("----------------------------------------------------------------------");
-        }
-    }
+	@Override
+	public void update(float dt) {
+		updateCount += dt;
+		if (updateCount > UPDATE_LIMIT){
+			updateCount = 0;
+			System.out.println("update");
 
-    @Override
-    public void render() {
-        boardGUI.render();
-        System.out.println("inside actionstate");
-    }
+			boardGUI.update();
 
-    @Override
+			if(boardCanPlayCards){
+				boardCanPlayCards = board.playNextCard();
+			}else{
+				gsm.set(new CardState(gsm, board));
+				dispose();
+			}
+
+
+		}
+	}
+
+	@Override
+	public void render() {
+		boardGUI.render();
+	}
+
+	@Override
 	public void dispose() {
+		batch.dispose();
 
 	}
 
 	@Override
 	public void resize() {
 		super.resize();
-		batch.setProjectionMatrix(camera.combined);
-		//boardGUI.resize();
+		//batch.setProjectionMatrix(camera.combined);
+		boardGUI.resize();
 	}
 }
