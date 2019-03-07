@@ -30,7 +30,13 @@ public class StateTest {
 		gsm.push(actionState);
 		assertSame(gsm.peek(), actionState);
 
+        CardState cardState = new CardState(gsm,board);
+        gsm.push(cardState);
+        gsm.push(actionState);
+        gsm.push(cardState);
 
+        assertSame(gsm.peek(), cardState);
+        assertEquals(gsm.size(), 4);
 	}
 
 	@Test
