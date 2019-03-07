@@ -65,9 +65,6 @@ public class Player implements IPlayer {
                 playerDirection = Direction.WEST;
                 break;
 
-            default:
-                playerDirection = Direction.NORTH;
-                break;
         }
     }
 
