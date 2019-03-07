@@ -1,7 +1,10 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class DoubleConveyorBeltTile extends Tile {
@@ -30,5 +33,14 @@ public class DoubleConveyorBeltTile extends Tile {
                 System.err.println("No valid Direction in DoubleConveyorBelt!");
                 break;
         }
+    }
+
+    /**
+     * Tells the player to do the action specified by the tile type
+     * @param board current GameBoard
+     * @param player the Player to preform the action
+     */
+    public void checkTile(Board board, Player player) throws PlayerNotFoundException {
+        board.movePlayer(player, direction, 2);
     }
 }
