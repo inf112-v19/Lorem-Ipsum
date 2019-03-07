@@ -35,8 +35,7 @@ public abstract class State {
         batch.dispose();
     }
 
-    public void resize(){
-        //camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    public void resize() {
     }
 
 }
