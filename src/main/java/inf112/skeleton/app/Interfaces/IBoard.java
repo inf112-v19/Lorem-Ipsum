@@ -120,4 +120,14 @@ public interface IBoard<T> {
 	 * @return
 	 */
 	Position getPlayerPos(Player player);
+
+
+	/**
+	 * Initializes the thisRoundsCards containing all the cards in the correct order based upon the priority.
+	 * Works by creating 5 PriorityQueues for each of the cards each player is holding and adding them to the thisRoundsCards
+	 * queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each card to a player.
+	 *
+	 * @return true when finished
+	 */
+	boolean initPhase();
 }
