@@ -147,10 +147,8 @@ public interface IBoard<T> {
 	 * Works by creating 5 PriorityQueues for each of the cards each player is holding and adding them to the
 	 * thisRoundsCards queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each
 	 * card to a player.
-	 *
-	 * @return true when finished
 	 */
-	boolean initPhase();
+	void initPhase();
 
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
