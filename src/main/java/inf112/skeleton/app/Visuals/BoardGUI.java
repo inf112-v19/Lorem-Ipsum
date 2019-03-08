@@ -66,7 +66,7 @@ public class BoardGUI {
 	private void addPlayersToStage(){
     	Player[] players = board.getAllPlayers();
 		for (Player player : players) {
-			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
+			Image image = new Image(spriteSheet.getTexture(player));
 			image.setSize(tilesize,tilesize);
 			Position pos = board.getPlayerPos(player);
 			image.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);

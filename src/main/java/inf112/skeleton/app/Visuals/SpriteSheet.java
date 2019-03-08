@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 /**
@@ -20,7 +21,12 @@ public final class SpriteSheet {
 
 	//Div Sprites
 	private static TextureRegion tapToStartSprite;
-	private static TextureRegion playerSprite;
+
+	//Player Sprites
+	private static TextureRegion playerSpriteNorth;
+	private static TextureRegion playerSpriteSouth;
+	private static TextureRegion playerSpriteEast;
+	private static TextureRegion playerSpriteWest;
 
 	//Menu
 	private static TextureRegion menuBackground;
@@ -79,8 +85,14 @@ public final class SpriteSheet {
 		//this.tapToStartSprite.flip(false, true);
 
 		this.texture = new Texture("player.png");
-		this.playerSprite = new TextureRegion(texture);
-		this.playerSprite.flip(false,true);
+		this.playerSpriteNorth = new TextureRegion(texture);
+		this.playerSpriteNorth.flip(false,false);
+		this.playerSpriteSouth = new TextureRegion(texture);
+		this.playerSpriteSouth.flip(true,false);
+		this.playerSpriteEast = new TextureRegion(texture);
+		this.playerSpriteEast.flip(false,true);
+		this.playerSpriteWest = new TextureRegion(texture);
+		this.playerSpriteWest.flip(true,true);
 
 		this.texture = new Texture("StateImages/tempBackground.jpg");
 		this.menuBackground = new TextureRegion(texture);
@@ -142,8 +154,6 @@ public final class SpriteSheet {
 				return leftTurnSprite;
 			case ROTATE_90_R:
 				return rightTurnSprite;
-			case PLAYER:
-				return playerSprite;
 			case MENU_BACKGROUND:
 				return menuBackground;
 			case MENU_PLAY_BUTTON:
@@ -160,6 +170,25 @@ public final class SpriteSheet {
 		}
 	}
 
+
+	/**
+	 * method that return correct sprite for a given player and it's direction
+	 * @param player
+	 * @return TextureRegion for a given Player
+	 */
+	public TextureRegion getTexture(Player player){
+		switch (player.getDirection()){
+			case NORTH:
+				return playerSpriteNorth;
+			case SOUTH:
+				return playerSpriteSouth;
+			case EAST:
+				return playerSpriteEast;
+			case WEST:
+				return playerSpriteWest;
+		}
+		return null;
+	}
 
 	/**
 	 * Method that return correct sprite for a given SpriteType.
