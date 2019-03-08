@@ -16,7 +16,7 @@ public class ActionState extends State {
 	public ActionState(GameStateManager gsm, Board board) {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
-		this.boardGUI = new BoardGUI(this.batch, board, camera);
+		this.boardGUI = new BoardGUI(board, camera);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
 	}
@@ -38,6 +38,7 @@ public class ActionState extends State {
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.playNextCard();
 			}else{
+				System.out.println("setting CardState");
 				gsm.set(new CardState(gsm, board));
 				dispose();
 			}
@@ -60,7 +61,6 @@ public class ActionState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		//batch.setProjectionMatrix(camera.combined);
 		boardGUI.resize();
 	}
 }
