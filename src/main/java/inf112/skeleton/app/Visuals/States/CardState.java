@@ -36,7 +36,7 @@ public class CardState extends State {
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardGUI(camera, batch, board, testarr);
+        this.cardGUI = new CardGUI(camera, batch, testarr);
 
 
         //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be

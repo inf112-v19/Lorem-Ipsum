@@ -29,7 +29,6 @@ public class CardGUI {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private SpriteSheet spriteSheet;
-    private Board board;
     private Player[] players;
 
     private ImageButton clear;
@@ -49,10 +48,9 @@ public class CardGUI {
     private Card[] cardSeq;
     private int currentPlayer;
 
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
+    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
         this.camera = camera;
         this.batch = batch;
-        this.board = board;
         this.players = players;
 
         stage = new Stage(new ScreenViewport());
@@ -225,7 +223,6 @@ public class CardGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (cardPtr < 4) {
                     System.out.println("not enough cards");
-                    return false;
                 } else {
                     System.out.print("submit: ");
                     for (int i = 0; i < cardPtr; i++) {
