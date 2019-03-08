@@ -1,5 +1,5 @@
 # ***Obligatorisk øvelse 3***
-## Deloppgave 1: Prosjekt og prosjektstructur 
+## Deloppgave 1: Prosjekt og prosjektstruktur 
 
 **1.** Rollene i teamet funker utmerket, vi trenger ikke å oppdaterer hvem som er teamleader eller kundekontakt, og i tillegg trenger vi midlertidig ingen nye roller heller. Teamleader for oss er en som sørger for å følge opp oppgaver og prosjektboard. Kundekontakt for oss er gruppens hovedekspertise på domenet.
 
@@ -70,7 +70,23 @@ Vi er enige om at vi må bli bedre på:
 
 **4.** Vi verifisere at kravene er oppfylt ved en kombinasjon av manuelle og automatiske tester som bekrefter at koden vår gjør det den skal. I tillegg har vi hatt jevnlige møter for å planlegge og gjennomføre arbeid knyttet opp mot å oppfylle kravene. Akseptansekriteriene for kravene har vi valgt å tolke som “de faktiske oppgavene” som er listet tidligere. Ettersom at disse oppgavene er de opprinnelige kravene brutt ned i kortfattede kriterier mener vi at disse vil være ekvivalent med akseptansekriteriene. 
 
-**5.** Siden forrige iterasjon har vi klart å gjennomføre flesteparten av kravene vi tok utgangspunkt i, men likevel var det enkelte krav vi ikke klare å fullstendig fullføre før innlevering. Vårt valg å gå bort i fra vår opprinnelige implementasjon av brettet fra første iterasjon og heller bygge brettet opp selv fra “bunnen av” medførte at mye av vår tid/arbeid i denne perioden gikk ut på dette. Vi mener dette var et godt valg ettersom at vi nå har en klarere forståelse for hvordan logikken henger sammen med det grafiske som vil gjøre fremtidig arbeid lettere. Dette medførte at vi ikke klarte å fullstendig implementere runde logikken og klarte da ikke å fullføre kravene tilknyttet å spille en fullstendig runde og krav tilknyttet runde logikken. Vi har likevel klart bygge et (etter vår mening) godt rammeverk for videre arbeid med en god plan for hvordan runde logikken skal implementeres fullstendig. 
+**5.** Siden forrige iterasjon har vi klart å gjennomføre flesteparten av kravene vi tok utgangspunkt i, men likevel var det enkelte krav vi ikke klare å fullstendig fullføre før innlevering. Vårt valg å gå bort i fra vår opprinnelige implementasjon av brettet fra første iterasjon og heller bygge brettet opp selv fra “bunnen av” medførte at mye av vår tid/arbeid i denne perioden gikk ut på dette. Vi mener dette var et godt valg ettersom at vi nå har en klarere forståelse for hvordan logikken henger sammen med det grafiske som vil gjøre fremtidig arbeid lettere. Dette medførte at vi ikke klarte å fullstendig implementere runde logikken og klarte da ikke å fullføre kravene tilknyttet å spille en fullstendig runde og krav tilknyttet runde logikken. Vi har likevel klart bygge et (etter vår mening) godt rammeverk for videre arbeid med en god plan for hvordan runde logikken skal implementeres fullstendig. Av "de faktiske oppgavene" har vi klart å fullføre følgende.
+* **De faktiske oppgavene vi klarte å fullføre:**
+    * Bygge brett ut fra en txt fil med en logisk representasjon
+    * Implementere logikk for retning basert bevegelse som tar hensyn til spillmekanikken (movePlayer metode)
+    * tegne brettet basert på den logiske representasjonen
+    * Delt opp spillet i states
+    * Kunne få alle typene bevegelseskort 
+    * Dele ut 9 kort
+    * Velge 5 kort (og i tillegg kunne godkjenne valg)
+    * Klart å lage et rammeverk for å senere eksekvere program ut fra valgte kort - foreløpig bare 1 runde
+    * Hvis en robot går av brettet blir den ødelagt og går tilbake til siste backup
+    * Laget rammeverket for at det skal bli lettere å senere implementere nye kort til ny runde
+    
+* **Oppgavene vi ikke klarte å fullføre fulltendig:**    
+    * Oppdatere backup hvis en robot blir stående på skiftenøkkelrute - laget kode/metoder som utfører test, men er ikke fullstendig implementert i denne iterasjonen
+    * Flytte backup ved besøk på flagg
+    * kunne spille en runde med faser - kun 1 runde, har ikke fullført "spill-loopen" slik at man går tilbake til "programmeringsfasen"
 
 ## Deloppgave 3/4: kode
 * Clone the [source repository](https://github.com/inf112-v19/Lorem-Ipsum)

@@ -27,11 +27,15 @@ public class Board implements IBoard {
 		height = builder.getHeight();
 		width = builder.getWidth();
 
-		//creates two players and places them on the board - mostly for testing purposes
+		//creates two players and places them on the board and sets their backup - mostly for testing purposes
 		Player player1 = new Player("0", Direction.EAST);
 		Player player2 = new Player("1", Direction.EAST);
+		player1.setBackup(new Position(1, 4));
+		player2.setBackup(new Position(1, 11));
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
+
+
 	}
 
 	public Board(String filename, int numberOfPlayers) {
