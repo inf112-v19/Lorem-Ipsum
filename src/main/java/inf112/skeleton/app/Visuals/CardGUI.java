@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.Exceptions.PlayerEmptyCardHandException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
@@ -28,25 +29,28 @@ public class CardGUI {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private SpriteSheet spriteSheet;
-    private Board board;
     private Player[] players;
+
+    private ImageButton clear;
+    private ImageButton submit;
 
     private Stage stage;
 
     private int cardPtr;
-    private HashMap<Integer, ImageButton> buttonByXPos = new HashMap<>();
+    private HashMap<Integer, ImageButton> buttonByXPos;
     private Image infoBar;
     private int labelXPos;
-    private BitmapFont font = new BitmapFont(true);
+    private int cardXPos;
+
+    private BitmapFont font;
     private String playerTurn;
 
     private Card[] cardSeq;
     private int currentPlayer;
 
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
+    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
         this.camera = camera;
         this.batch = batch;
-        this.board = board;
         this.players = players;
 
         stage = new Stage(new ScreenViewport());
@@ -56,25 +60,40 @@ public class CardGUI {
         cardPtr = 0;
         currentPlayer = 0;
 
-        selectCards();
+        font = new BitmapFont(true);
+        buttonByXPos = new HashMap<>();
+
+        clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
+        submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+
+        try {
+            selectCards();
+        } catch (PlayerEmptyCardHandException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void selectCards() {
-
+    private void selectCards() throws PlayerEmptyCardHandException {
         playerTurn = players[currentPlayer].getPlayerID() + "'s turn";
         List<Card> playerCards = players[currentPlayer].getCardHand();
-        draw(playerCards);
 
+        if (playerCards == null) {
+            throw new PlayerEmptyCardHandException("Player does not have any cards in hand");
+        }
+        draw(playerCards);
     }
 
     private void setPlayerDone() {
-
         players[currentPlayer].setCardSequence(cardSeq);
         players[currentPlayer].setReady();
 
         currentPlayer++;
         if (currentPlayer < players.length) {
-            selectCards();
+            try {
+                selectCards();
+            } catch (PlayerEmptyCardHandException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -87,22 +106,23 @@ public class CardGUI {
     }
 
     /**
-     * returns players card sequence
+     * Draws list of cards on screen and add listeners on each card
+     *
+     * @param c list of cards
      */
     private void draw(List<Card> c) {
 
         final List<Card> cards = c;
         final ImageButton[] buttonArr = new ImageButton[cards.size()];
         cardSeq = new Card[5];
-        int xpos = 0;
-
+        cardXPos = 0;
 
         for (int i = 0; i < buttonArr.length; i++) {
             buttonArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             buttonArr[i].setSize(97, 135);
-            buttonArr[i].setPosition(xpos, 0);
-            buttonByXPos.put(xpos, buttonArr[i]);
-            xpos += 97;
+            buttonArr[i].setPosition(cardXPos, 0);
+            buttonByXPos.put(cardXPos, buttonArr[i]);
+            cardXPos += 97;
             stage.addActor(buttonArr[i]);
             labelXPos = 0;
         }
@@ -126,10 +146,7 @@ public class CardGUI {
             });
         }
 
-        xpos += 10;
-
-        ImageButton clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
-        ImageButton submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+        cardXPos += 10;
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
 
         infoBar.setSize(485, 30);
@@ -137,38 +154,8 @@ public class CardGUI {
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
 
-        clear.setSize(80, 30);
-        clear.setPosition(xpos, 20);
-        stage.addActor(clear);
-        submit.setSize(80, 30);
-        submit.setPosition(xpos, 70);
-        stage.addActor(submit);
-
-        clear.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                cardPtr = 0;
-                stage.clear();
-                draw(cards);
-                System.out.println("clear");
-                return true;
-            }
-        });
-
-        submit.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.print("submit: ");
-                for (int i = 0; i < cardPtr; i++) {
-                    System.out.print(cardSeq[i].toString() + ", ");
-                }
-                cardPtr = 0;
-                stage.clear();
-                playerTurn = "entering ActionState. Please Wait......";
-                setPlayerDone();
-                return true;
-            }
-        });
+        createSubmitButton();
+        createClearButton();
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -183,7 +170,7 @@ public class CardGUI {
     }
 
     /**
-     * adds label over selected card
+     * adds label over selected card to indicate its place in the ready sequence
      */
     private void addLabel(int cardPtr) {
         if (cardPtr == 0) {
@@ -203,6 +190,9 @@ public class CardGUI {
         return b;
     }
 
+    /**
+     * returns x coordinate for cards draw position given its new place in the sequence
+     */
     private int getDrawPos(int cardPtr) {
         return cardPtr * 97;
     }
@@ -216,6 +206,63 @@ public class CardGUI {
 
         buttonByXPos.put(bXPos, a);
         buttonByXPos.put(aXPos, b);
+    }
+
+    public void dispose() {
+        submit.clearListeners();
+        clear.clearListeners();
+
+        stage.clear();
+        stage.dispose();
+        font.dispose();
+    }
+
+    private void createSubmitButton() {
+        submit.setSize(80, 30);
+        submit.setPosition(cardXPos, 70);
+        stage.addActor(submit);
+
+        submit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (validSubmit()) {
+                    System.out.print("submit: ");
+                    for (int i = 0; i < cardPtr; i++) {
+                        System.out.print(cardSeq[i].toString() + ", ");
+                    }
+                    cardPtr = 0;
+                    stage.clear();
+                    setPlayerDone();
+                }
+                return true;
+            }
+        });
+    }
+
+    private boolean validSubmit() {
+        if (cardPtr == 5) {
+            return true;
+        } else {
+            System.out.println("select more cards");
+            return false;
+        }
+    }
+
+    private void createClearButton() {
+        clear.setSize(80, 30);
+        clear.setPosition(cardXPos, 20);
+        stage.addActor(clear);
+
+        clear.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cardPtr = 0;
+                stage.clear();
+                draw(players[currentPlayer].getCardHand());
+                System.out.println("clear");
+                return true;
+            }
+        });
     }
 
 }

@@ -47,17 +47,23 @@ public class PlayerTest {
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.decreaseHealth();
-        assertEquals(player.getHealth(), 4);
+        assertEquals(player.getHealth(), 9);
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.increaseHealth();
-        assertEquals(player.getHealth(), 6);
+        assertEquals(player.getHealth(), 10); //max health = 10
     }
 
-
+    /**
+     * Testing that the equals method works as expected for identical Players
+     */
+    @Test
+    public void equalsTest(){
+        assertEquals(new Player("1", Direction.NORTH), new Player("1", Direction.NORTH));
+    }
 
 
 }

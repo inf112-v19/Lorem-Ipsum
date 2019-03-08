@@ -13,8 +13,8 @@ public class Player implements IPlayer {
     private String playerID;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
-    private Board board;
-    private int playerHealth = 5;
+    private int playerHealth = 10; //Number of damage the player can take before getting destroyed
+    private int playerlives = 4; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
 
@@ -65,9 +65,6 @@ public class Player implements IPlayer {
                 playerDirection = Direction.WEST;
                 break;
 
-            default:
-                playerDirection = Direction.NORTH;
-                break;
         }
     }
 
@@ -93,11 +90,20 @@ public class Player implements IPlayer {
         } else if (direction == Direction.WEST) {
             directionNumber = 3;
             playerDirection = direction;
-
         }
-
     }
 
+    /**
+     * @return returns the total number of lives the player has before losing the game
+     */
+    public int getLives() {
+        return playerlives;
+    }
+
+    /**
+     * decreses the players total lives
+     */
+    public void decreseLives() { playerlives--; }
 
     /**
      * @return players Direction
@@ -131,24 +137,39 @@ public class Player implements IPlayer {
 
     }
 
-    //TODO: should have a way to tell board if the player is dead
+    /**
+     * destroy the player (lose a total life and set health to max)
+     */
+    public void destroyPlayer(){
+        playerlives--;
+        playerHealth = 10;
+    }
 
     /**
-     * Decrease the players health by 1
+     * Decrease the players health/damage by 1
      */
     @Override
     public void decreaseHealth() {
         playerHealth--;
+        if(playerHealth<=0){
+            playerHealth = 10;
+            decreseLives();
+        }
     }
 
     /**
-     * Increase the players health by 1
+     * Increase the players health/damage by 1
      */
     @Override
     public void increaseHealth() {
         playerHealth++;
+        if(playerHealth>10) playerHealth = 10;
+
     }
 
+    /**
+     * @return returns the health/damage of the player
+     */
     @Override
     public int getHealth() {
         return playerHealth;
@@ -156,12 +177,12 @@ public class Player implements IPlayer {
 
     @Override
     public void setBackup(Position backupPosition) {
-
+        this.backup = backupPosition;
     }
 
     @Override
     public Position getBackup() {
-        return null;
+        return backup;
     }
 
     /**
@@ -184,5 +205,13 @@ public class Player implements IPlayer {
 
     public String getPlayerID() {
         return playerID;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Player)) {
+            return false;
+        }
+        return this.playerID.equals(((Player) obj).playerID);
     }
 }

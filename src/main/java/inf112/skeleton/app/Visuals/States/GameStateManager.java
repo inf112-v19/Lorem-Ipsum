@@ -14,8 +14,12 @@ public class GameStateManager {
         states.push(state);
     }
 
-    public void pop() {
-        states.pop();
+    public State pop() {
+        return states.pop();
+    }
+
+    public State peek() {
+        return states.peek();
     }
 
     public void set(State state) {
@@ -29,6 +33,10 @@ public class GameStateManager {
 
     public void render() {
         states.peek().render();
+    }
+
+    public int size() {
+        return states.size();
     }
 
     public void resize() {

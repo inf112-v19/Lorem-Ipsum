@@ -5,9 +5,9 @@ import inf112.skeleton.app.Visuals.SpriteType;
 
 public class Flag extends GameObject {
 
-    private SpriteType spriteType;
     public Flag(Direction dir){
         super(dir);
+        spriteType = SpriteType.FLAG;
     }
 
 }
