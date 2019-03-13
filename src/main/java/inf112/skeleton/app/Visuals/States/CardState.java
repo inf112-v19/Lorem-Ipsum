@@ -75,6 +75,7 @@ public class CardState extends State {
     public void resize() {
         super.resize();
         boardGUI.resize();
+        cardGUI.resize();
     }
 
 }
