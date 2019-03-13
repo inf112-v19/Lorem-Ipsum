@@ -21,7 +21,7 @@ public class CardState extends State {
         super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(batch, board, camera);
+        this.boardGUI = new BoardGUI(board, camera);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
@@ -36,7 +36,7 @@ public class CardState extends State {
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardGUI(camera, batch, board, testarr);
+        this.cardGUI = new CardGUI(camera, batch, testarr);
 
 
         //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
@@ -49,8 +49,6 @@ public class CardState extends State {
 
     @Override
     public void update(float dt) {
-        // all players ready then set new ActionState
-        //this.players = board.getAllPlayers();
         for (Player player : players) {
             if (!player.isReady()) {
                 return;
@@ -77,11 +75,7 @@ public class CardState extends State {
     @Override
     public void resize() {
         super.resize();
-        //batch.setProjectionMatrix(camera.combined);
         boardGUI.resize();
     }
 
-    public void dealCards() {
-        players[0].setCardHand(cardDeck.drawCards(9));
-    }
 }

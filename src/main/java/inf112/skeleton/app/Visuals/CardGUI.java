@@ -29,7 +29,6 @@ public class CardGUI {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private SpriteSheet spriteSheet;
-    private Board board;
     private Player[] players;
 
     private ImageButton clear;
@@ -49,10 +48,9 @@ public class CardGUI {
     private Card[] cardSeq;
     private int currentPlayer;
 
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Board board, Player[] players) {
+    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
         this.camera = camera;
         this.batch = batch;
-        this.board = board;
         this.players = players;
 
         stage = new Stage(new ScreenViewport());
@@ -156,8 +154,8 @@ public class CardGUI {
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
 
-        createClearButton();
         createSubmitButton();
+        createClearButton();
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -171,7 +169,9 @@ public class CardGUI {
         return false;
     }
 
-    /** adds label over selected card to indicate its place in the ready sequence*/
+    /**
+     * adds label over selected card to indicate its place in the ready sequence
+     */
     private void addLabel(int cardPtr) {
         if (cardPtr == 0) {
             infoBar.remove();
@@ -190,7 +190,9 @@ public class CardGUI {
         return b;
     }
 
-    /** returns x coordinate for cards draw position given its new place in the sequence */
+    /**
+     * returns x coordinate for cards draw position given its new place in the sequence
+     */
     private int getDrawPos(int cardPtr) {
         return cardPtr * 97;
     }
@@ -223,14 +225,11 @@ public class CardGUI {
         submit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (cardPtr < 4) {
-                    System.out.println("not enough cards");
-                } else {
+                if (validSubmit()) {
                     System.out.print("submit: ");
                     for (int i = 0; i < cardPtr; i++) {
                         System.out.print(cardSeq[i].toString() + ", ");
                     }
-
                     cardPtr = 0;
                     stage.clear();
                     setPlayerDone();
@@ -238,6 +237,15 @@ public class CardGUI {
                 return true;
             }
         });
+    }
+
+    private boolean validSubmit() {
+        if (cardPtr == 5) {
+            return true;
+        } else {
+            System.out.println("select more cards");
+            return false;
+        }
     }
 
     private void createClearButton() {
