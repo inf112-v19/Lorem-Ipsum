@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
@@ -21,15 +22,13 @@ import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
-
-
 public class BoardGUI {
 
     private static Board board;
 	private SpriteSheet spriteSheet;
 
 	private Stage stage;
-	private ScreenViewport screenViewport;
+	private FitViewport fitViewport;
 
 	private int xOffset;
 	private int yOffset;
@@ -41,8 +40,8 @@ public class BoardGUI {
 
 
     public BoardGUI(Board board, OrthographicCamera camera) {
-        this.screenViewport = new ScreenViewport(camera);
-		this.stage = new Stage(screenViewport);
+        this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+		this.stage = new Stage(fitViewport);
 
         this.spriteSheet = new SpriteSheet();
         this.board = board;
@@ -61,7 +60,7 @@ public class BoardGUI {
     }
 
 	/**
-	 * Method that add all players from the board to the stage
+	 * Method that adds all players from the board to the stage
 	 */
 	private void addPlayersToStage(){
     	Player[] players = board.getAllPlayers();
@@ -70,22 +69,6 @@ public class BoardGUI {
 			image.setSize(tilesize,tilesize);
 			Position pos = board.getPlayerPos(player);
 			image.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
-			stage.addActor(image);
-		}
-	}
-
-	/**
-	 * Method that add all players to the stage given a position.
-	 * @param pos
-	 */
-	private void addPlayersToStage(Position pos){
-    	if (board.posToPlayer(pos) != null){
-			int x = pos.getX() * tilesize + xOffset;
-			int y = pos.getY() * tilesize + yOffset;
-
-			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
-			image.setSize(tilesize,tilesize);
-			image.setPosition(x,y);
 			stage.addActor(image);
 		}
 	}
@@ -133,10 +116,6 @@ public class BoardGUI {
 	}
 
 
-	/**
-	 * method that updates the position of the board.
-	 * is called from the constructor and resize();
-	 */
 	private void reposition(){
 		yOffset = 0;
 		//yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
@@ -145,32 +124,25 @@ public class BoardGUI {
 
 	public void update(){
     	//TODO - should redraw players in new positions and not just create new stage
-    	stage = new Stage(screenViewport);
+    	stage = new Stage(fitViewport);
 		create();
 	}
 
     /**
-     * method that calls drawBoard for the actual drawing of the board
+     * Method that calls drawBoard for the actual drawing of the board
      * the function is called from RoboRally.render()
      */
     public void render() {
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act(1);//Gdx.graphics.getDeltaTime());
 		stage.draw();
     }
 
     /**
-     * method that should resize the board
+     * Method that should resize the board
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-        reposition();
-
-        //TODO - implement resize logic (maybe not needed becaus of the batch.setProjectMatrix)
-        if (Gdx.graphics.getHeight() < Gdx.graphics.getWidth()){
-
-        }else{
-
-        }
+		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public void dispose(){
