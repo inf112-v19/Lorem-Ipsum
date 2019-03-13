@@ -50,7 +50,7 @@ public class BoardGUI {
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 
-        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight))-3;
+        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight))-8;
 
         this.boardTileWidth = boardWidth *tilesize;
         this.boardTileHeight = boardHeight * tilesize;
