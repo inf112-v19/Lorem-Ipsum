@@ -226,6 +226,7 @@ public class Board implements IBoard {
 	@Override
 	public boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
+			resetRound();
 			return false;
 		}
 
@@ -254,6 +255,12 @@ public class Board implements IBoard {
 		}
 
 		return true;
+	}
+
+	public void resetRound() {
+		for (Player p : playerPositions.keySet()) {
+			p.setNotReady();
+		}
 	}
     
 
