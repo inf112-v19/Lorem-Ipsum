@@ -14,7 +14,7 @@ public final class SpriteSheet {
 
 	private Texture texture;
 
-	//CardGUI
+	//CardHandGUI
 	private final TextureRegion cardGuiClearButton;
 	private final TextureRegion cardGuiSubmitButton;
 	private final TextureRegion cardBar;

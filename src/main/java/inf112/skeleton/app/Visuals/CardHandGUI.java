@@ -24,7 +24,7 @@ import org.lwjgl.Sys;
 import java.util.HashMap;
 import java.util.List;
 
-public class CardGUI {
+public class CardHandGUI {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -48,7 +48,7 @@ public class CardGUI {
     private Card[] cardSeq;
     private int currentPlayer;
 
-    public CardGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
+    public CardHandGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
         this.camera = camera;
         this.batch = batch;
         this.players = players;

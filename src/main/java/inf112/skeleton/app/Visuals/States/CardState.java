@@ -2,9 +2,8 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.BoardGUI;
-import inf112.skeleton.app.Visuals.CardGUI;
+import inf112.skeleton.app.Visuals.CardHandGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
@@ -15,7 +14,7 @@ public class CardState extends State {
     private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
-    private CardGUI cardGUI;
+    private CardHandGUI cardGUI;
 
     public CardState(GameStateManager gsm, Board board) {
         super(gsm, board);
@@ -28,7 +27,7 @@ public class CardState extends State {
         this.cardDeck.createNewDeck();
 
         /**
-         * code for testing CardGUI. Does not use players stored in board
+         * code for testing CardHandGUI. Does not use players stored in board
          */
 
         Player[] testarr = board.getAllPlayers();
@@ -36,10 +35,10 @@ public class CardState extends State {
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardGUI(camera, batch, testarr);
+        this.cardGUI = new CardHandGUI(camera, batch, testarr);
 
 
-        //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
+        //this.cardGUI = new CardHandGUI(camera, batch, board, players); //this is how it should be
     }
 
     @Override
