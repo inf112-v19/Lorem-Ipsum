@@ -18,6 +18,11 @@ public class Board implements IBoard {
 	private HashMap<Card, Player> cardToPlayer = new HashMap<>();
 	private Queue<Card> thisRoundsCards = new LinkedList<>();
 
+	private Card curCard;
+	private int movementCount = 0;
+	private Player curPlayer;
+	private Direction playerDir;
+
 	private int height;
 	private int width;
 
@@ -34,7 +39,6 @@ public class Board implements IBoard {
 		player2.setBackup(new Position(1, 11));
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
-
 
 	}
 
@@ -91,8 +95,8 @@ public class Board implements IBoard {
 		return movePlayer(player, player.getDirection(), numberOfMoves);
 	}
 
+	@Override
 	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
-		Position curPos = playerPositions.get(player);
 		for (int i = 0; i < numberOfMoves; i++) {
 			if (!movePlayer(player, dir)) {
 				return false;
@@ -108,6 +112,11 @@ public class Board implements IBoard {
 		if(!playerPositions.containsKey(player)) {
 			// TODO - Handle custom PLayerNotFoundException
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
+		}
+
+		//if the player has fallen off the board no movement happens
+		if (!playerIsOnTheBoard(player)) {
+			return false;
 		}
 
 		Position curPos = playerPositions.get(player);
@@ -222,22 +231,48 @@ public class Board implements IBoard {
 		}
 	}
 
-
 	@Override
-	public boolean playNextCard() {
+	public boolean doNextAction() {
+		if (movementCount>0) {
+			movementCount--;
+			movePlayer(curPlayer, playerDir);
+			return true;
+		}
+		else {
+			return playNextCard();
+		}
+	}
+
+	/**
+	 * Tries to play the next card of the round. Interprets the actions of the card and
+	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
+	 *
+	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
+	 */
+	private boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
 			resetRound();
 			return false;
 		}
 
-		Card curCard = thisRoundsCards.poll();
-		Player curPlayer = cardToPlayer.get(curCard);
+		curCard = thisRoundsCards.poll();
+		curPlayer = cardToPlayer.get(curCard);
+
+		//if player has fallen off the board - skip the card
+		if (!playerIsOnTheBoard(curPlayer)){
+			playNextCard();
+		}
+
 		CardType curCardType = curCard.getCardType();
 		int numRotation = curCardType.getRotation();
-		int movement = curCardType.getMovement();
-		Direction playerDir = curPlayer.getDirection();
+		//if card is rotate card do the rotation and return
+		if (numRotation != 0){
+			curPlayer.turnPlayer(numRotation);
+			return true;
+		}
 
-		curPlayer.turnPlayer(numRotation);
+		int movement = curCardType.getMovement();
+		playerDir = curPlayer.getDirection();
 
 		switch (movement) {
 			case -1:
@@ -247,33 +282,52 @@ public class Board implements IBoard {
 				movePlayer(curPlayer, playerDir);
 				break;
 			case 2:
-				movePlayer(curPlayer, 2);
+				movePlayer(curPlayer, playerDir);
+				movementCount = 1;
 				break;
 			case 3:
-				movePlayer(curPlayer, 3);
+				movePlayer(curPlayer, playerDir);
+				movementCount = 2;
 				break;
 		}
 
 		return true;
 	}
 
-	public void resetRound() {
-		for (Player p : playerPositions.keySet()) {
-			p.setNotReady();
+	/**
+	 * Resets the round by setting every players state to not ready, respawn players who has fallen off the board,
+	 * and also calls the checkTile method for the players still on the board - checkTile method will execute the
+	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup, take damage etc.)
+	 */
+	private void resetRound() {
+		for (Player player : playerPositions.keySet()) {
+			player.setNotReady();
+
+			//if player is not on the board - respawn at backup
+			if (!playerIsOnTheBoard(player)){
+				playerPositions.put(player, player.getBackup());
+			}
+			else{
+				Position playerPos = playerPositions.get(player);
+				Tile playerTile = tileMap.get(playerPos);
+				playerTile.checkTile(this, player);
+			}
 		}
 	}
-    
 
 	/**
-	 * Handles a player walking off the board
+	 * Handles a player walking off the board - temporally places player on (-1, -1)
 	 *
 	 * @param player
 	 */
 	private void playerFellOffTheBoard(Player player) {
     	player.destroyPlayer();
 
+    	//skips any remaining moves for the current card
+		movementCount = 0;
+
     	if (player.getLives()>0) {
-    		playerPositions.put(player, player.getBackup());
+    		playerPositions.put(player, new Position(-1,-1));
 		}
     	else {
 			//TODO - handle dead player
@@ -301,15 +355,13 @@ public class Board implements IBoard {
 	}
 
 	/**
-	 * Iterates over every player and calls the checkTile method for the tile they are standing on -
-	 * checkTile method will execute the correct action according to the tile-type(movePlayer etc.)
+	 * Method for checking if the player has fallen off the board - player position equals (-1,-1)
+	 *
+	 * @param player
+	 * @return true if player has not fallen off the board
 	 */
-	private void checkAllPlayers() {
-		for (Player player : playerPositions.keySet()) {
-			Position playerPos = playerPositions.get(player);
-			Tile playerTile = tileMap.get(playerPos);
-			playerTile.checkTile(this, player);
-		}
+	private boolean playerIsOnTheBoard(Player player) {
+		return !playerPositions.get(player).equals(new Position(-1,-1));
 	}
 
 }

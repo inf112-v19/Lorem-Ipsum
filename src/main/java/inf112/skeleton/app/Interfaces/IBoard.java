@@ -151,10 +151,11 @@ public interface IBoard<T> {
 	void initPhase();
 
 	/**
-	 * Tries to play the next card of the round. Interprets the actions of the card and
-	 * calls the movePlayer appropriately.
+	 * Checks if there is any current card being handled(movementCount>0) and proceed calling the movePlayer accordingly
+	 * or tries play the next card.
 	 *
-	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
+	 * @return
 	 */
-	boolean playNextCard();
+	boolean doNextAction();
+
 }
