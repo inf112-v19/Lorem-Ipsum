@@ -33,6 +33,7 @@ public class ActionState extends State {
 			updateCount = 0;
 			System.out.println("update");
 
+
 			boardGUI.update();
 
 			if(boardCanPlayCards){
