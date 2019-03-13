@@ -70,9 +70,15 @@ public class SpriteSheetTest {
 	}
 
 	@Test
-	public void initRotationRightTileTileCorrectTextureTest() {
+	public void initRotationRightTileCorrectTextureTest() {
 		RotationRightTile RotationRightTile = new RotationRightTile(null, Direction.NORTH);
 		assertEquals(RotationRightTile.getSpriteType(), SpriteType.ROTATION_RIGHT_TILE);
+	}
+
+	@Test
+	public void initRepairTileCorrectTextureTest() {
+		RepairTile repairTile = new RepairTile(null, Direction.NORTH);
+		assertEquals(repairTile.getSpriteType(), SpriteType.REPAIR_TILE);
 	}
 
 	@Test
