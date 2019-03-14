@@ -236,6 +236,11 @@ public class Board implements IBoard {
 		}
 	}
 
+	@Override
+	public Card getCurCard(){
+		return curCard;
+	}
+
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
 	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
