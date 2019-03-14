@@ -8,10 +8,8 @@ import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class BoardBuilder {
@@ -147,8 +145,8 @@ public class BoardBuilder {
 		ClassLoader classLoader = BoardBuilder.class.getClassLoader();
 		File file = new File(classLoader.getResource(filename).getFile());
 
-		FileReader fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 		//first two lines are the dimensions
 		height = Integer.parseInt(bufferedReader.readLine());
