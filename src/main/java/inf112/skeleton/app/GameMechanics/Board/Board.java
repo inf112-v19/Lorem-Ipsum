@@ -21,7 +21,7 @@ public class Board implements IBoard {
 	private Card curCard;
 	private int movementCount = 0;
 	private Player curPlayer;
-	private Direction playerDir;
+	private Direction moveDir;
 
 	private int height;
 	private int width;
@@ -91,20 +91,12 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player, int numberOfMoves) {
-		return movePlayer(player, player.getDirection(), numberOfMoves);
-	}
-
-	@Override
 	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
-		for (int i = 0; i < numberOfMoves; i++) {
-			if (!movePlayer(player, dir)) {
-				return false;
-			}
-		}
+		movementCount = numberOfMoves-1;
+		curPlayer = player;
+		moveDir = dir;
 
-		// if this happens it means all previous calls of movePlayer returned true
-		return true;
+		return movePlayer(player, dir);
 	}
 
 	@Override
@@ -114,7 +106,7 @@ public class Board implements IBoard {
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
-		//if the player has fallen off the board no movement happens
+		//if the player has fallen off the board no movement happens(edge case, should not happen)
 		if (!playerIsOnTheBoard(player)) {
 			return false;
 		}
@@ -235,7 +227,7 @@ public class Board implements IBoard {
 	public boolean doNextAction() {
 		if (movementCount>0) {
 			movementCount--;
-			movePlayer(curPlayer, playerDir);
+			movePlayer(curPlayer, moveDir);
 			return true;
 		}
 		else {
@@ -251,8 +243,7 @@ public class Board implements IBoard {
 	 */
 	private boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
-			resetRound();
-			return false;
+			return resetRound();
 		}
 
 		curCard = thisRoundsCards.poll();
@@ -272,22 +263,20 @@ public class Board implements IBoard {
 		}
 
 		int movement = curCardType.getMovement();
-		playerDir = curPlayer.getDirection();
+		moveDir = curPlayer.getDirection();
 
 		switch (movement) {
 			case -1:
-				movePlayer(curPlayer, playerDir.oppositeDirection());
+				movePlayer(curPlayer, moveDir.oppositeDirection());
 				break;
 			case 1:
-				movePlayer(curPlayer, playerDir);
+				movePlayer(curPlayer, moveDir);
 				break;
 			case 2:
-				movePlayer(curPlayer, playerDir);
-				movementCount = 1;
+				movePlayer(curPlayer, moveDir, 2);
 				break;
 			case 3:
-				movePlayer(curPlayer, playerDir);
-				movementCount = 2;
+				movePlayer(curPlayer, moveDir, 3);
 				break;
 		}
 
@@ -298,8 +287,10 @@ public class Board implements IBoard {
 	 * Resets the round by setting every players state to not ready, respawn players who has fallen off the board,
 	 * and also calls the checkTile method for the players still on the board - checkTile method will execute the
 	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup, take damage etc.)
+	 *
+	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
-	private void resetRound() {
+	private boolean resetRound() {
 		for (Player player : playerPositions.keySet()) {
 			player.setNotReady();
 
@@ -312,7 +303,15 @@ public class Board implements IBoard {
 				Tile playerTile = tileMap.get(playerPos);
 				playerTile.checkTile(this, player);
 			}
+
+			//if the current player har movement pending - return
+			if (movementCount>0){
+				return true;
+			}
 		}
+
+		//no moves pending - round is over
+		return false;
 	}
 
 	/**

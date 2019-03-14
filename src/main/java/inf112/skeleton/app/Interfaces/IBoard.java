@@ -49,22 +49,10 @@ public interface IBoard<T> {
 	GameObject[] getGameObject(Position pos);
 
 	/**
-	 * Tries to move the player in the direction the player is facing - potentially starts recursive calling
-	 * if player collision occurs. Tries to move the player numberOfMoves times by calling the
-	 * movePlayer(Player player, Direction Dir, int numberOfMoves).
-	 *
-	 * @param player
-	 *            player to be moved
-	 * @param numberOfMoves
-	 *            the number of moves that should happened
-	 * @return true if movement happened and the player did not fell off the board
-	 */
-	boolean movePlayer(Player player, int numberOfMoves) throws PlayerNotFoundException;
-
-	/**
 	 * Tries to move the player in the given direction numberOfMoves times by calling the
-	 * movePlayer(Player player, Direction dir). Stops when the underlying call returns false meaning
-	 * the player was not able to move or potentially fell off the board.
+	 * movePlayer(Player player, Direction dir) once and then sets the movementCount to numberOfMoves-1,
+	 * the curPlayer to player and the moveDir to dir. This will make the doNextAction method handle the potentially
+	 * remaining player movements. Method is called from the checkTile methods in the conveyorBelt tiles.
 	 *
 	 * @param player
 	 *            player to be moved
@@ -78,8 +66,8 @@ public interface IBoard<T> {
 	boolean movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
 
     /**
-     * Recursively called in movePlayer - moving in a direction regardless of the direction where the player is facing
-     * Tries to move the player once.
+	 * Tries to move the player once in the given direction, may start recursive call if player collision occurs.
+	 * Handles the game logic regarding moving - not able to move through walls etc.
 	 *
      * @param player
      *            player to be moved
