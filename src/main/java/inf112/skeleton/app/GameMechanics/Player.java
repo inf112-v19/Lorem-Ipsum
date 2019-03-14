@@ -218,4 +218,9 @@ public class Player implements IPlayer {
         }
         return this.playerID.equals(((Player) obj).playerID);
     }
+
+	@Override
+	public int hashCode() {
+		return this.getPlayerID().hashCode();
+	}
 }
