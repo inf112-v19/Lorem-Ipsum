@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -146,4 +147,10 @@ public interface IBoard<T> {
 	 */
 	boolean doNextAction();
 
+	/**
+	 * Returns the card that is currently being played
+	 *
+	 * @return
+	 */
+	Card getCurCard();
 }

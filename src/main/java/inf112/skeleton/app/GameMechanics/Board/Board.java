@@ -101,7 +101,7 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir) {
-		System.out.println("Tried to move " + player.getPlayerID() + " " + dir);
+		System.out.println("Tried to move player" + player.getPlayerID() + " " + dir);
 		if(!playerPositions.containsKey(player)) {
 			// TODO - Handle custom PLayerNotFoundException
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
@@ -186,9 +186,9 @@ public class Board implements IBoard {
 
 	@Override
 	public Player posToPlayer(Position pos) {
-        for (Player player : playerPositions.keySet()) {
-            if (playerPositions.get(player).equals(pos)){
-            	return player;
+        for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+            if (playerPositionEntry.getValue().equals(pos)){
+            	return playerPositionEntry.getKey();
             }
         }
         return null;
@@ -236,6 +236,11 @@ public class Board implements IBoard {
 		}
 	}
 
+	@Override
+	public Card getCurCard(){
+		return curCard;
+	}
+
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
 	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
@@ -260,7 +265,7 @@ public class Board implements IBoard {
 		//if card is rotate card do the rotation and return
 		if (numRotation != 0){
 			curPlayer.turnPlayer(numRotation);
-			System.out.println( curPlayer.getPlayerID() + " rotated player " + numRotation + " times");
+			System.out.println("Rotated player" + curPlayer.getPlayerID() + " " + numRotation + " times");
 			return true;
 		}
 
@@ -280,8 +285,11 @@ public class Board implements IBoard {
 			case 3:
 				movePlayer(curPlayer, moveDir, 3);
 				break;
+			default:
+				//should not happen considering earlier checking if card was a rotation card
 		}
 
+		//returns true since we were able to play a card
 		return true;
 	}
 
@@ -293,16 +301,18 @@ public class Board implements IBoard {
 	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
 	private boolean resetRound() {
-		for (Player player : playerPositions.keySet()) {
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
 			player.setNotReady();
 
 			//if player is not on the board - respawn at backup
 			if (!playerIsOnTheBoard(player)){
-				System.out.println(player.getPlayerID() + " respawned");
+				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 			}
 			else{
-				Position playerPos = playerPositions.get(player);
 				Tile playerTile = tileMap.get(playerPos);
 				playerTile.checkTile(this, player);
 			}
@@ -329,11 +339,11 @@ public class Board implements IBoard {
 		movementCount = 0;
 
     	if (player.getLives()>0) {
-			System.out.println(player.getPlayerID() + " fell off the board");
+			System.out.println("Player" + player.getPlayerID() + " fell off the board");
     		playerPositions.put(player, new Position(-1,-1));
 		}
     	else {
-			System.out.println(player + " died");
+			System.out.println("Player" + player.getPlayerID() + " died");
 			//TODO - handle dead player
 		}
 	}
