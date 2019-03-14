@@ -186,9 +186,9 @@ public class Board implements IBoard {
 
 	@Override
 	public Player posToPlayer(Position pos) {
-        for (Player player : playerPositions.keySet()) {
-            if (playerPositions.get(player).equals(pos)){
-            	return player;
+        for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+            if (playerPositionEntry.getValue().equals(pos)){
+            	return playerPositionEntry.getKey();
             }
         }
         return null;
@@ -285,8 +285,11 @@ public class Board implements IBoard {
 			case 3:
 				movePlayer(curPlayer, moveDir, 3);
 				break;
+			default:
+				//should not happen considering earlier checking if card was a rotation card
 		}
 
+		//returns true since we were able to play a card
 		return true;
 	}
 
@@ -298,7 +301,10 @@ public class Board implements IBoard {
 	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
 	private boolean resetRound() {
-		for (Player player : playerPositions.keySet()) {
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
 			player.setNotReady();
 
 			//if player is not on the board - respawn at backup
@@ -307,7 +313,6 @@ public class Board implements IBoard {
 				playerPositions.put(player, player.getBackup());
 			}
 			else{
-				Position playerPos = playerPositions.get(player);
 				Tile playerTile = tileMap.get(playerPos);
 				playerTile.checkTile(this, player);
 			}
