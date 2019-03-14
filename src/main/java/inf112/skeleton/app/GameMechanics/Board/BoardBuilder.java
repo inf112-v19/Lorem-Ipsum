@@ -156,10 +156,18 @@ public class BoardBuilder {
 
 		for (int y=0; y<height; y++){
 			String line = bufferedReader.readLine();
-			String[] numbers = line.split(" ");
+			if (line != null){
+				String[] numbers = line.split(" ");
 
-			for (int x=0; x<width; x++){
-				tileNumbers[y][x] = numbers[x];
+
+				for (int x=0; x<width; x++){
+					tileNumbers[y][x] = numbers[x];
+				}
+			}
+			else {
+				System.err.println("Specified wrong height parameter in board input file");
+				bufferedReader.close();
+				System.exit(1);
 			}
 		}
 		bufferedReader.close();
