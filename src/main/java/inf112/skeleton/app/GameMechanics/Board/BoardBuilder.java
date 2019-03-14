@@ -164,7 +164,7 @@ public class BoardBuilder {
 				tileNumbers[y][x] = numbers[x];
 			}
 		}
-
+		bufferedReader.close();
 		return tileNumbers;
 	}
 
