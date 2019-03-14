@@ -265,7 +265,7 @@ public class Board implements IBoard {
 		//if card is rotate card do the rotation and return
 		if (numRotation != 0){
 			curPlayer.turnPlayer(numRotation);
-			System.out.println("Rotated player " + curPlayer.getPlayerID() + " " + numRotation + " times");
+			System.out.println("Rotated player" + curPlayer.getPlayerID() + " " + numRotation + " times");
 			return true;
 		}
 
