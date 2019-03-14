@@ -101,6 +101,7 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir) {
+		System.out.println("Tried to move " + player.getPlayerID() + " " + dir);
 		if(!playerPositions.containsKey(player)) {
 			// TODO - Handle custom PLayerNotFoundException
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
@@ -251,7 +252,7 @@ public class Board implements IBoard {
 
 		//if player has fallen off the board - skip the card
 		if (!playerIsOnTheBoard(curPlayer)){
-			playNextCard();
+			return playNextCard();
 		}
 
 		CardType curCardType = curCard.getCardType();
@@ -259,6 +260,7 @@ public class Board implements IBoard {
 		//if card is rotate card do the rotation and return
 		if (numRotation != 0){
 			curPlayer.turnPlayer(numRotation);
+			System.out.println( curPlayer.getPlayerID() + " rotated player " + numRotation + " times");
 			return true;
 		}
 
@@ -296,6 +298,7 @@ public class Board implements IBoard {
 
 			//if player is not on the board - respawn at backup
 			if (!playerIsOnTheBoard(player)){
+				System.out.println(player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 			}
 			else{
@@ -326,9 +329,11 @@ public class Board implements IBoard {
 		movementCount = 0;
 
     	if (player.getLives()>0) {
+			System.out.println(player.getPlayerID() + " fell off the board");
     		playerPositions.put(player, new Position(-1,-1));
 		}
     	else {
+			System.out.println(player + " died");
 			//TODO - handle dead player
 		}
 	}
