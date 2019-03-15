@@ -3,6 +3,7 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
+import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 
 public class ActionState extends State {
@@ -12,13 +13,16 @@ public class ActionState extends State {
 	private final float UPDATE_LIMIT = 1;
 	private SpriteBatch batch;
 	private BoardGUI boardGUI;
+	private PlayerInfoGUI infoGUI;
 
 	public ActionState(GameStateManager gsm, Board board) {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
+		this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, camera);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
+		this.infoGUI = new PlayerInfoGUI(board, batch);
 	}
 
 	@Override
@@ -50,6 +54,7 @@ public class ActionState extends State {
 	@Override
 	public void render() {
 		boardGUI.render();
+		infoGUI.render();
 	}
 
 	@Override
