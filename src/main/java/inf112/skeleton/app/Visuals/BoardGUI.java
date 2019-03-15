@@ -21,8 +21,6 @@ import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
-
-
 public class BoardGUI {
 
     private static Board board;
@@ -38,7 +36,6 @@ public class BoardGUI {
 	private int boardHeight;
 	private int boardTileWidth;
 	private int boardTileHeight;
-
 
     public BoardGUI(Board board, OrthographicCamera camera) {
         this.screenViewport = new ScreenViewport(camera);
