@@ -20,12 +20,10 @@ public class PlayerInfoGUI {
     private Stage stage;
     private ScreenViewport screenViewport;
 
-    private Board board;
     private Player[] players;
     private Batch batch;
 
     public PlayerInfoGUI(Board board, Batch batch, OrthographicCamera camera) {
-        this.board = board;
         this.batch = batch;
         this.camera = camera;
         this.screenViewport = new ScreenViewport(camera);
@@ -85,6 +83,15 @@ public class PlayerInfoGUI {
         }
     }
 
+    /**
+     * creates an actor of type Image and adds on stage
+     *
+     * @param filepath
+     * @param height
+     * @param width
+     * @param xpos
+     * @param ypos
+     */
     private void createActor(String filepath, int height, int width, int xpos, int ypos) {
         TextureRegion texture = new TextureRegion(new Texture(filepath));
         texture.flip(false, true);
@@ -96,27 +103,27 @@ public class PlayerInfoGUI {
 
     private int lifeYbyRow(int row) {
         if (row == 0) {
-            return 30;
+            return 20;
         } else {
-            return 30 + (row * 80);
+            return 20 + (row * 75);
         }
     }
 
     private int healthYbyRow(int row) {
         if (row == 0) {
-            return 55;
+            return 45;
         } else {
-            return 55 + (row * 80);
+            return 45 + (row * 75);
         }
     }
 
     private void renderNames() {
         batch.begin();
         int xpos = Gdx.graphics.getWidth() - 180;
-        int ypos = 15;
+        int ypos = 5;
         for (int i = 0; i < playerNames.length; i++) {
             fonts[i].draw(batch, playerNames[i], xpos, ypos);
-            ypos += 80;
+            ypos += 75;
         }
         batch.end();
     }
