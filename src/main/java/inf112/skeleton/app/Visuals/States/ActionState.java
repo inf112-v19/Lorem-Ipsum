@@ -36,6 +36,7 @@ public class ActionState extends State {
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
 			System.out.println("update");
+			infoGUI.update();
 
 			boardGUI.update();
 
@@ -65,5 +66,6 @@ public class ActionState extends State {
 	public void resize() {
 		super.resize();
 		boardGUI.resize();
+		infoGUI.resize();
 	}
 }

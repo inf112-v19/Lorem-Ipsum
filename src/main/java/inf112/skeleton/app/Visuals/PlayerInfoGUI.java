@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -25,11 +23,6 @@ public class PlayerInfoGUI {
     private Board board;
     private Player[] players;
     private Batch batch;
-
-    private int healthCol;
-    private int healthRow;
-    private int lifeCol;
-    private int lifeRow;
 
     public PlayerInfoGUI(Board board, Batch batch, OrthographicCamera camera) {
         this.board = board;
@@ -47,36 +40,56 @@ public class PlayerInfoGUI {
         for (int i = 0; i < players.length; i++) {
             playerNames[i] = players[i].getPlayerID();
         }
+        update();
     }
 
+    public void update() {
+        for (int i = 0; i < players.length; i++) {
+            int lives = players[i].getLives();
+            int health = players[i].getHealth();
+            drawLives(i, lives);
+            drawHealthPoint(i, health);
+        }
+        render();
+    }
 
     public void render() {
         renderNames();
-        for (int i = 0; i < players.length; i++) {
-            int lives = players[i].getLives();
-            drawLives(i, lives);
-        }
-
         stage.draw();
     }
 
-    private void drawHealthPoint(int col, int row) {
+    private void drawHealthPoint(int row, int numberOfPoints) {
+        int yDrawPos = healthYbyRow(row);
+        int deltaX = 180;
 
+        for (int i = 0; i < numberOfPoints; i++) {
+            if (i == 5) {
+                deltaX = 180;
+                yDrawPos += 12;
+            }
+
+            TextureRegion texture = new TextureRegion(new Texture("healthbar.png"));
+            texture.flip(false, true);
+            Image health = new Image(texture);
+            health.setSize(20, 10);
+            health.setPosition(Gdx.graphics.getWidth() - deltaX, yDrawPos);
+            stage.addActor(health);
+            deltaX -= 22;
+        }
     }
 
     private void drawLives(int row, int numberOfLives) {
         int yDrawPos = lifeYbyRow(row);
-        int minus = 180;
+        int deltaX = 180;
 
         for (int i = 0; i < numberOfLives; i++) {
-
             TextureRegion texture = new TextureRegion(new Texture("heart.png"));
             texture.flip(false, true);
             Image life = new Image(texture);
             life.setSize(20, 20);
-            life.setPosition(Gdx.graphics.getWidth() - minus, yDrawPos);
+            life.setPosition(Gdx.graphics.getWidth() - deltaX, yDrawPos);
             stage.addActor(life);
-            minus -= 25;
+            deltaX -= 25;
         }
     }
 
@@ -87,18 +100,23 @@ public class PlayerInfoGUI {
             return 30 + (row * 80);
         }
     }
+    
+    private int healthYbyRow(int row) {
+        if (row == 0) {
+            return 55;
+        } else {
+            return 55 + (row * 80);
+        }
+    }
 
     private void renderNames() {
         batch.begin();
-
         int xpos = Gdx.graphics.getWidth() - 180;
         int ypos = 15;
-
         for (int i = 0; i < playerNames.length; i++) {
             fonts[i].draw(batch, playerNames[i], xpos, ypos);
             ypos += 80;
         }
-
         batch.end();
     }
 
@@ -107,6 +125,10 @@ public class PlayerInfoGUI {
             font.dispose();
         }
         stage.dispose();
+    }
+
+    public void resize(){
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
 }
