@@ -67,13 +67,8 @@ public class PlayerInfoGUI {
                 deltaX = 180;
                 yDrawPos += 12;
             }
-
-            TextureRegion texture = new TextureRegion(new Texture("healthbar.png"));
-            texture.flip(false, true);
-            Image health = new Image(texture);
-            health.setSize(20, 10);
-            health.setPosition(Gdx.graphics.getWidth() - deltaX, yDrawPos);
-            stage.addActor(health);
+            int xDrawPos = Gdx.graphics.getWidth() - deltaX;
+            createActor("healthbar.png", 10, 20, xDrawPos, yDrawPos);
             deltaX -= 22;
         }
     }
@@ -83,14 +78,19 @@ public class PlayerInfoGUI {
         int deltaX = 180;
 
         for (int i = 0; i < numberOfLives; i++) {
-            TextureRegion texture = new TextureRegion(new Texture("heart.png"));
-            texture.flip(false, true);
-            Image life = new Image(texture);
-            life.setSize(20, 20);
-            life.setPosition(Gdx.graphics.getWidth() - deltaX, yDrawPos);
-            stage.addActor(life);
+            int xDrawPos = Gdx.graphics.getWidth() - deltaX;
+            createActor("heart.png", 20, 20, xDrawPos, yDrawPos);
             deltaX -= 25;
         }
+    }
+
+    private void createActor(String filepath, int height, int width, int xpos, int ypos) {
+        TextureRegion texture = new TextureRegion(new Texture(filepath));
+        texture.flip(false, true);
+        Image image = new Image(texture);
+        image.setSize(width, height);
+        image.setPosition(xpos, ypos);
+        stage.addActor(image);
     }
 
     private int lifeYbyRow(int row) {
@@ -100,7 +100,7 @@ public class PlayerInfoGUI {
             return 30 + (row * 80);
         }
     }
-    
+
     private int healthYbyRow(int row) {
         if (row == 0) {
             return 55;
@@ -127,7 +127,7 @@ public class PlayerInfoGUI {
         stage.dispose();
     }
 
-    public void resize(){
+    public void resize() {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
