@@ -27,7 +27,7 @@ public class CardState extends State {
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
-        this.infoGUI = new PlayerInfoGUI(board, batch);
+        this.infoGUI = new PlayerInfoGUI(board, batch, camera);
 
         /**
          * code for testing CardHandGUI. Does not use players stored in board

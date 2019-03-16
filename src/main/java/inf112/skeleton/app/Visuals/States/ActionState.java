@@ -22,7 +22,7 @@ public class ActionState extends State {
 		this.boardGUI = new BoardGUI(board, camera);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch);
+		this.infoGUI = new PlayerInfoGUI(board, batch, camera);
 	}
 
 	@Override
@@ -46,8 +46,6 @@ public class ActionState extends State {
 				gsm.set(new CardState(gsm, board));
 				dispose();
 			}
-
-
 		}
 	}
 
