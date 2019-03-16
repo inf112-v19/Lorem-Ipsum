@@ -37,29 +37,24 @@ public class PlayerInfoGUI {
         for (int i = 0; i < players.length; i++) {
             playerNames[i] = players[i].getPlayerID();
         }
-
-        displayNames();
     }
 
 
     public void render() {
+        renderNames();
         for (int i = 0; i < players.length; i++) {
         }
-        displayNames();
     }
 
     private void drawHealthPoint(int col, int row) {
 
     }
 
-    private void displayNames() {
+    private void renderNames() {
         batch.begin();
 
-        //int xpos = Gdx.graphics.getWidth()-100;
-        //int ypos = 20;
-
-        int xpos = 20;
-        int ypos = 20;
+        int xpos = Gdx.graphics.getWidth()-180;
+        int ypos = 15;
 
         for (int i = 0; i < playerNames.length; i++) {
             fonts[i].draw(batch, playerNames[i], xpos, ypos);
@@ -67,6 +62,12 @@ public class PlayerInfoGUI {
         }
 
         batch.end();
+    }
+
+    public void dispose() {
+        for (BitmapFont font : fonts) {
+            font.dispose();
+        }
     }
 
 }
