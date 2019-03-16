@@ -44,6 +44,7 @@ public class PlayerInfoGUI {
     }
 
     public void update() {
+        stage.clear();
         for (int i = 0; i < players.length; i++) {
             int lives = players[i].getLives();
             int health = players[i].getHealth();

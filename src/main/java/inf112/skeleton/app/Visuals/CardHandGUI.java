@@ -112,7 +112,9 @@ public class CardHandGUI {
      * @param c list of cards
      */
     private void draw(List<Card> c) {
-
+        stage.clear();
+        submit.clearListeners();
+        clear.clearListeners();
         final List<Card> cards = c;
         final ImageButton[] buttonArr = new ImageButton[cards.size()];
         cardSeq = new Card[5];
