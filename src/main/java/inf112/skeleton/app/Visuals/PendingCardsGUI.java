@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,5 +19,15 @@ public class PendingCardsGUI {
         this.camera = camera;
         this.batch = batch;
         this.board = board;
+
+        font = new BitmapFont(true);
+
     }
+
+    public void render() {
+        batch.begin();
+        font.draw(batch, "card being played:", 0, 0);
+        batch.end();
+    }
+
 }
