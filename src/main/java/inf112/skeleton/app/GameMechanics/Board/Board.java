@@ -336,10 +336,6 @@ public class Board implements IBoard {
 		return false;
 	}
 
-	private void shootLasers(){
-
-	}
-
 	/**
 	 * Handles a player walking off the board - temporally places player on (-1, -1)
 	 *
