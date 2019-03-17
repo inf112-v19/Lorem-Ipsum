@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Player;
 
 public class PendingCardsGUI {
 
@@ -26,6 +27,7 @@ public class PendingCardsGUI {
     private String stringFont;
 
     private Card currentCard;
+    private Player currentPlayer;
 
     public PendingCardsGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         this.camera = camera;
@@ -41,6 +43,7 @@ public class PendingCardsGUI {
 
     public void update() {
         currentCard = board.getCurCard();
+        currentPlayer = board.getC
     }
 
     public void render() {

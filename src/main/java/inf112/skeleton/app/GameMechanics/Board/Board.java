@@ -382,4 +382,7 @@ public class Board implements IBoard {
 		return !playerPositions.get(player).equals(new Position(-1,-1));
 	}
 
+	public Player getCurPlayer() {
+		return curPlayer;
+	}
 }
