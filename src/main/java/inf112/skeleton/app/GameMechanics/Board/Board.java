@@ -321,6 +321,9 @@ public class Board implements IBoard {
 			if (movementCount>0){
 				return true;
 			}
+
+			Tile playerTile = tileMap.get(playerPos);
+			playerTile.laserCheck(player);
 		}
 
 		//no moves pending - round is over
