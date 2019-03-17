@@ -317,16 +317,17 @@ public class Board implements IBoard {
 				playerTile.checkTile(this, player);
 			}
 
-			//if the current player har movement pending - return
+			//if the current player has movement pending - return
 			if (movementCount>0){
 				return true;
 			}
 
+			//deals damage to player if current tile contains a laser
 			Tile playerTile = tileMap.get(playerPos);
 			playerTile.laserCheck(player);
 		}
 
-		//no moves pending - round is over
+		//no moves pending after doing all end of round actions - round is over
 		return false;
 	}
 
