@@ -1,5 +1,7 @@
 package inf112.skeleton.app.GameMechanics;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -7,7 +9,7 @@ import inf112.skeleton.app.Interfaces.IPlayer;
 
 import java.util.List;
 
-public class Player implements IPlayer {
+public class Player extends Image implements IPlayer {
 
     private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
@@ -67,6 +69,7 @@ public class Player implements IPlayer {
 
         }
     }
+
 
     /**
      * Sets the players direction
