@@ -159,6 +159,8 @@ public final class SpriteSheet {
 				return cardGuiClearButton;
 			case CARD_BAR:
 				return cardBar;
+			case PLAYER:
+				return redtankSheet[0][0];
 			default:
 				System.err.println("No sprite found");
 				return null;
@@ -172,17 +174,7 @@ public final class SpriteSheet {
 	 * @return TextureRegion for a given Player
 	 */
 	public TextureRegion getTexture(Player player){
-		switch (player.getDirection()){
-			case NORTH:
-				return redtankSheet[0][0];
-			case SOUTH:
-				return redtankSheet[1][0];
-			case EAST:
-				return redtankSheet[3][0];
-			case WEST:
-				return redtankSheet[2][0];
-		}
-		return null;
+		return findCorrectTexture(player.getSpriteType());
 	}
 
 	/**
