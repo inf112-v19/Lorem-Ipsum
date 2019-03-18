@@ -70,6 +70,8 @@ public class PendingCardsGUI {
     private void drawCurrentCard() {
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
         addCardToStage(card, 25);
+        TextureRegion player = new TextureRegion(spriteSheet.getTexture(currentPlayer));
+        addPlayerImageToStage(player, 25);
     }
 
     private void drawNextCard() {
@@ -83,6 +85,14 @@ public class PendingCardsGUI {
         Image image = new Image(cardTexture);
         image.setSize(97, 135);
         image.setPosition(10, yPos);
+        stage.addActor(image);
+    }
+
+    private void addPlayerImageToStage(TextureRegion playerTexture, int yPos) {
+        playerTexture.flip(false, true);
+        Image image = new Image(playerTexture);
+        image.setSize(50, 50);
+        image.setPosition(117, yPos);
         stage.addActor(image);
     }
 
