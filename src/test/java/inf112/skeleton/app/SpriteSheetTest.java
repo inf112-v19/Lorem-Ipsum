@@ -32,7 +32,7 @@ public class SpriteSheetTest {
 	public void initNormalTileTextureTest() {
 		NormalTile normalTile = new NormalTile(null, Direction.NORTH);
 		TextureRegion textureRegion = spriteSheet.getTexture(normalTile.getSpriteType());
-			assertTrue(textureRegion != null );
+		assertTrue(textureRegion != null );
 	}
 
 	@Test
