@@ -7,8 +7,11 @@ import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
+import javax.xml.soap.Text;
+
 /**
  * This class handles all the sprites used in the game
+ *
  */
 public final class SpriteSheet {
 
@@ -20,29 +23,26 @@ public final class SpriteSheet {
 	private final TextureRegion cardBar;
 
 	//Div Sprites
-	private static TextureRegion tapToStartSprite;
+	private final TextureRegion tapToStartSprite;
 
-	//Player Sprites
-	private static TextureRegion playerSpriteNorth;
-	private static TextureRegion playerSpriteSouth;
-	private static TextureRegion playerSpriteEast;
-	private static TextureRegion playerSpriteWest;
+	//Player spritesheet
+	private final TextureRegion[][] redtankSheet;
 
 	//Menu
-	private static TextureRegion menuBackground;
-	private static TextureRegion menuPlayButton;
+	private final TextureRegion menuBackground;
+	private final TextureRegion menuPlayButton;
 
 	//Card Sprites
-	private static TextureRegion backUpSprite;
-	private static TextureRegion leftTurnSprite;
-	private static TextureRegion move1Sprite;
-	private static TextureRegion move2Sprite;
-	private static TextureRegion move3Sprite;
-	private static TextureRegion rightTurnSprite;
-	private static TextureRegion uTurnSprite;
+	private final TextureRegion backUpSprite;
+	private final TextureRegion leftTurnSprite;
+	private final TextureRegion move1Sprite;
+	private final TextureRegion move2Sprite;
+	private final TextureRegion move3Sprite;
+	private final TextureRegion rightTurnSprite;
+	private final TextureRegion uTurnSprite;
 
 	//The spriteSheet
-	private static TextureRegion[][] spriteSheet;
+	private final TextureRegion[][] spriteSheet;
 
 
 
@@ -50,7 +50,11 @@ public final class SpriteSheet {
 
 		this.texture = new Texture("RoboRallyTiles.png");
 		this.spriteSheet = new TextureRegion(texture,336,624).split(336/7, 624/13);
-		flip();
+		flip(this.spriteSheet);
+
+		this.texture = new Texture("Player/redtank.png");
+		this.redtankSheet = new TextureRegion(this.texture, 224,128).split(224/7, 128/4);
+		flip(this.redtankSheet);
 
 		this.texture = new Texture("CardImages/BackUp.png");
 		this.backUpSprite = new TextureRegion(texture);
@@ -84,15 +88,6 @@ public final class SpriteSheet {
 		this.tapToStartSprite = new TextureRegion(texture);
 		//this.tapToStartSprite.flip(false, true);
 
-		this.texture = new Texture("player.png");
-		this.playerSpriteNorth = new TextureRegion(texture);
-		this.playerSpriteNorth.flip(false,false);
-		this.playerSpriteSouth = new TextureRegion(texture);
-		this.playerSpriteSouth.flip(true,false);
-		this.playerSpriteEast = new TextureRegion(texture);
-		this.playerSpriteEast.flip(false,true);
-		this.playerSpriteWest = new TextureRegion(texture);
-		this.playerSpriteWest.flip(true,true);
 
 		this.texture = new Texture("StateImages/tempBackground.jpg");
 		this.menuBackground = new TextureRegion(texture);
@@ -120,12 +115,12 @@ public final class SpriteSheet {
 	/**
 	 * Private method that flips the textures in the spriteSheet.
 	 * This is necessary because 0,0 is top left and therefore the sprites are drawn
-	 * upside down. Flipping the textures is a fix fore this
+	 * upside down. Flipping the textures is a fix for this
 	 */
-	private void flip(){
-		for (int i = 0; i < spriteSheet.length; i++){
-			for(int j = 0; j < spriteSheet[i].length; j++){
-				spriteSheet[i][j].flip(false, true);
+	private void flip(TextureRegion[][] sheet){
+		for (int i = 0; i < sheet.length; i++){
+			for(int j = 0; j < sheet[i].length; j++){
+				sheet[i][j].flip(false, true);
 			}
 		}
 	}
@@ -179,13 +174,13 @@ public final class SpriteSheet {
 	public TextureRegion getTexture(Player player){
 		switch (player.getDirection()){
 			case NORTH:
-				return playerSpriteNorth;
+				return redtankSheet[0][0];
 			case SOUTH:
-				return playerSpriteSouth;
+				return redtankSheet[1][0];
 			case EAST:
-				return playerSpriteEast;
+				return redtankSheet[3][0];
 			case WEST:
-				return playerSpriteWest;
+				return redtankSheet[2][0];
 		}
 		return null;
 	}
