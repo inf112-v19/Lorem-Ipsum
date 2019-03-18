@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -76,7 +77,7 @@ public class PendingCardsGUI {
     private void drawCurrentCard() {
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
         addCardToStage(card, 25);
-        TextureRegion player = playerTextures.get(currentPlayer);
+        TextureRegion player = new TextureRegion(playerTextures.get(currentPlayer));
         addPlayerImageToStage(player, 25);
     }
 
@@ -84,7 +85,7 @@ public class PendingCardsGUI {
         //TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard), 40, 65, 115, 115);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
         addCardToStage(card, 190);
-        TextureRegion player = playerTextures.get(nextPlayer);
+        TextureRegion player = new TextureRegion(playerTextures.get(nextPlayer));
         addPlayerImageToStage(player, 190);
 
     }
@@ -98,7 +99,6 @@ public class PendingCardsGUI {
     }
 
     private void addPlayerImageToStage(TextureRegion playerTexture, int yPos) {
-        playerTexture.flip(false, true);
         Image image = new Image(playerTexture);
         image.setSize(40, 40);
         image.setPosition(107, yPos + 10);
