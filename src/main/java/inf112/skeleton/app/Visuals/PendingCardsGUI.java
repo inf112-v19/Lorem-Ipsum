@@ -11,6 +11,8 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Player;
 
+import java.util.HashMap;
+
 public class PendingCardsGUI {
 
     private OrthographicCamera camera;
@@ -27,6 +29,7 @@ public class PendingCardsGUI {
     private Card nextCard;
     private Player currentPlayer;
     private Player nextPlayer;
+    private HashMap<Player, TextureRegion> playerTextures;
 
     public PendingCardsGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         this.camera = camera;
@@ -39,6 +42,11 @@ public class PendingCardsGUI {
         playingCard = new BitmapFont(true);
         pendingCard = new BitmapFont(true);
 
+        playerTextures = new HashMap<>();
+        Player[] players = board.getAllPlayers();
+        for (int i = 0; i < players.length; i++) {
+            playerTextures.put(players[i], spriteSheet.getTexture(players[i]));
+        }
     }
 
     public void update() {
@@ -68,7 +76,7 @@ public class PendingCardsGUI {
     private void drawCurrentCard() {
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
         addCardToStage(card, 25);
-        TextureRegion player = new TextureRegion(spriteSheet.getTexture(currentPlayer));
+        TextureRegion player = playerTextures.get(currentPlayer);
         addPlayerImageToStage(player, 25);
     }
 
@@ -76,9 +84,9 @@ public class PendingCardsGUI {
         //TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard), 40, 65, 115, 115);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
         addCardToStage(card, 190);
-        TextureRegion player = new TextureRegion(spriteSheet.getTexture(nextPlayer));
+        TextureRegion player = playerTextures.get(nextPlayer);
         addPlayerImageToStage(player, 190);
-        
+
     }
 
     private void addCardToStage(TextureRegion cardTexture, int yPos) {
