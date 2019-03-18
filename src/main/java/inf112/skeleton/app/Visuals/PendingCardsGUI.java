@@ -43,7 +43,7 @@ public class PendingCardsGUI {
 
     public void update() {
         currentCard = board.getCurCard();
-        currentPlayer = board.getC
+        currentPlayer = board.getCurPlayer();
     }
 
     public void render() {
