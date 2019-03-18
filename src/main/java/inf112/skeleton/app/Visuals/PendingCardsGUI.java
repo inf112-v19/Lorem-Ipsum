@@ -26,7 +26,7 @@ public class PendingCardsGUI {
     private Card currentCard;
     private Card nextCard;
     private Player currentPlayer;
-    private SpriteType currentPlayerSprite;
+    private Player nextPlayer;
 
     public PendingCardsGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         this.camera = camera;
@@ -45,9 +45,7 @@ public class PendingCardsGUI {
         currentCard = board.getCurCard();
         currentPlayer = board.getCurPlayer();
         nextCard = board.peekNextCard();
-        if (currentPlayer != null) {
-            currentPlayerSprite = currentPlayer.getSpriteType();
-        }
+        nextPlayer = board.getNextPlayer();
     }
 
     public void render() {
@@ -78,6 +76,9 @@ public class PendingCardsGUI {
         //TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard), 40, 65, 115, 115);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
         addCardToStage(card, 190);
+        TextureRegion player = new TextureRegion(spriteSheet.getTexture(nextPlayer));
+        addPlayerImageToStage(player, 190);
+        
     }
 
     private void addCardToStage(TextureRegion cardTexture, int yPos) {
@@ -92,7 +93,7 @@ public class PendingCardsGUI {
         playerTexture.flip(false, true);
         Image image = new Image(playerTexture);
         image.setSize(40, 40);
-        image.setPosition(107, yPos+10);
+        image.setPosition(107, yPos + 10);
         stage.addActor(image);
     }
 
