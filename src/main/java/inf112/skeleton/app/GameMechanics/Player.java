@@ -50,23 +50,20 @@ public class Player extends Image implements IPlayer {
 
 
         switch (directionNumber) {
-
             case 0:
                 playerDirection = Direction.NORTH;
                 break;
-
             case 1:
                 playerDirection = Direction.EAST;
                 break;
-
             case 2:
                 playerDirection = Direction.SOUTH;
                 break;
-
             case 3:
                 playerDirection = Direction.WEST;
                 break;
-
+            default:
+                System.err.println("invalid directionnumber! direction not changed");
         }
     }
 
