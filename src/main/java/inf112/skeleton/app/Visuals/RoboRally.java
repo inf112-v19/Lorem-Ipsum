@@ -9,7 +9,7 @@ import inf112.skeleton.app.Visuals.States.MenuState;
 
 public class RoboRally extends ApplicationAdapter {
 
-    private static Board board;
+    private Board board;
 
     public static final int WIDTH = 976;
     public static final int HEIGHT = 600;

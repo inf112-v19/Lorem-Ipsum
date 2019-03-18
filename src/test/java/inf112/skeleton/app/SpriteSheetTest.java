@@ -97,7 +97,7 @@ public class SpriteSheetTest {
 	}
 
 	@Test
-	public void NormalTileTextureIsEqualToNormalTileTextureTest() {
+	public void normalTileTextureIsEqualToNormalTileTextureTest() {
 		NormalTile nTile = new NormalTile(null, Direction.NORTH);
 		TextureRegion tile1 = spriteSheet.getTexture(nTile.getSpriteType());
 		TextureRegion tile2 = spriteSheet.getTexture(SpriteType.NORMAL_TILE);
@@ -105,7 +105,7 @@ public class SpriteSheetTest {
 	}
 
 	@Test
-	public void HoleTileIsNotNormalTileTextureTest() {
+	public void holeTileIsNotNormalTileTextureTest() {
 		HoleTile holeTile = new HoleTile(null, Direction.NORTH);
 		NormalTile normalTile = new NormalTile(null, Direction.NORTH);
 		TextureRegion holeTileText = spriteSheet.getTexture(holeTile.getSpriteType());
@@ -136,7 +136,7 @@ public class SpriteSheetTest {
 	}
 
 	@Test
-	public void WallTextureCorrectTest() {
+	public void wallTextureCorrectTest() {
 		Wall wallNorth = new Wall(Direction.NORTH);
 		TextureRegion WallTexNorth = spriteSheet.getTexture(wallNorth.getSpriteType());
 

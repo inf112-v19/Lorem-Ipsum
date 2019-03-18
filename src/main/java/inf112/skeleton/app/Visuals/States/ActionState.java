@@ -11,7 +11,7 @@ public class ActionState extends State {
 
 	private boolean boardCanPlayCards;
 	private float updateCount;
-	private final float UPDATE_LIMIT = 1;
+	private static final float UPDATE_LIMIT = 1;
 	private SpriteBatch batch;
 	private BoardGUI boardGUI;
 	private PlayerInfoGUI infoGUI;
