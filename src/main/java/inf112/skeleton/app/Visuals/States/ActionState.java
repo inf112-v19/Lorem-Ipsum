@@ -63,6 +63,7 @@ public class ActionState extends State {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		pendingCardsGUI.dispose();
 
 	}
 

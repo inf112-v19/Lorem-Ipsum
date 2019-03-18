@@ -24,6 +24,7 @@ public class PendingCardsGUI {
     private BitmapFont pendingCard;
 
     private Card currentCard;
+    private Card nextCard;
     private Player currentPlayer;
     private SpriteType currentPlayerSprite;
 
@@ -43,6 +44,7 @@ public class PendingCardsGUI {
     public void update() {
         currentCard = board.getCurCard();
         currentPlayer = board.getCurPlayer();
+        nextCard = board.peekNextCard();
         if (currentPlayer != null) {
             currentPlayerSprite = currentPlayer.getSpriteType();
         }
@@ -58,17 +60,36 @@ public class PendingCardsGUI {
         if (currentCard != null) {
             drawCurrentCard();
         }
+        if (nextCard != null) {
+            drawNextCard();
+        }
+
+        stage.draw();
     }
 
     private void drawCurrentCard() {
-        //TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard), 40, 0, 100, 140);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
-        card.flip(false, true);
-        Image image = new Image(card);
+        addCardToStage(card, 25);
+    }
+
+    private void drawNextCard() {
+        //TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard), 40, 65, 115, 115);
+        TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
+        addCardToStage(card, 190);
+    }
+
+    private void addCardToStage(TextureRegion cardTexture, int yPos) {
+        cardTexture.flip(false, true);
+        Image image = new Image(cardTexture);
         image.setSize(97, 135);
-        image.setPosition(10, 25);
+        image.setPosition(10, yPos);
         stage.addActor(image);
-        stage.draw();
+    }
+
+    public void dispose() {
+        stage.dispose();
+        playingCard.dispose();
+        pendingCard.dispose();
     }
 
 }
