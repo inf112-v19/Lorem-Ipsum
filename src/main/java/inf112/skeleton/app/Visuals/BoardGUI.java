@@ -41,7 +41,7 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
-	private final float MOVE_DURATION = 1;
+	private static final float MOVE_DURATION = 1;
 
     public BoardGUI(Board board, OrthographicCamera camera) {
         this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
