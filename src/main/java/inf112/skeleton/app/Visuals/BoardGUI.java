@@ -7,9 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -24,7 +27,7 @@ import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 public class BoardGUI {
 
-    private static Board board;
+    private Board board;
 	private SpriteSheet spriteSheet;
 
 	private Stage stage;
@@ -37,6 +40,8 @@ public class BoardGUI {
 	private int boardHeight;
 	private int boardTileWidth;
 	private int boardTileHeight;
+
+	private Image[] players;
 
     public BoardGUI(Board board, OrthographicCamera camera) {
         this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -62,13 +67,21 @@ public class BoardGUI {
 	 * Method that adds all players from the board to the stage
 	 */
 	private void addPlayersToStage(){
-    	Player[] players = board.getAllPlayers();
-		for (Player player : players) {
-			Image image = new Image(spriteSheet.getTexture(player));
-			image.setSize(tilesize,tilesize);
+    	Player[] allPlayers = board.getAllPlayers();
+    	for (Player player : allPlayers) {
+
+    		player.setScaling(fitViewport.getScaling());
+    		player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
+
+			player.setSize(tilesize,tilesize);
+			player.setOrigin(player.getWidth()/2, player.getHeight()/2);
+			player.setRotation(player.getDirection().directionToDegrees());
+
 			Position pos = board.getPlayerPos(player);
-			image.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
-			stage.addActor(image);
+			player.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
+
+			stage.addActor(player);
+
 		}
 	}
 
@@ -105,7 +118,6 @@ public class BoardGUI {
 				Tile curTile = board.getTile(pos);
 				addTilesToStage(curTile,x, y);
 				addGameObjectsOnTileToStage(curTile, x, y);
-				//addPlayersToStage(pos);
 				xPos++;
 			}
 			xPos = 0;
@@ -122,9 +134,14 @@ public class BoardGUI {
 	}
 
 	public void update(){
-    	//TODO - should redraw players in new positions and not just create new stage
-    	stage = new Stage(fitViewport);
-		create();
+		for (Player player : board.getAllPlayers()) {
+			Position pos = board.getPlayerPos(player);
+			Action move = Actions.moveTo(pos.getX()*tilesize + xOffset, pos.getY()*tilesize + yOffset,1);
+			Action rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), 1);
+			System.out.println(player.getDirection());
+			player.addAction(rotate);
+			player.addAction(move);
+		}
 	}
 
     /**
@@ -132,7 +149,7 @@ public class BoardGUI {
      * the function is called from RoboRally.render()
      */
     public void render() {
-		stage.act(1);//Gdx.graphics.getDeltaTime());
+		stage.act();//Gdx.graphics.getDeltaTime());
 		stage.draw();
     }
 
