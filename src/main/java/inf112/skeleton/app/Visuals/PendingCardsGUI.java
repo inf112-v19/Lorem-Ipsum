@@ -1,14 +1,11 @@
 package inf112.skeleton.app.Visuals;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
@@ -23,8 +20,8 @@ public class PendingCardsGUI {
     private Stage stage;
     private ScreenViewport screenViewport;
 
-    private BitmapFont font;
-    private String stringFont;
+    private BitmapFont playingCard;
+    private BitmapFont pendingCard;
 
     private Card currentCard;
     private Player currentPlayer;
@@ -38,7 +35,8 @@ public class PendingCardsGUI {
         this.screenViewport = new ScreenViewport(camera);
         this.stage = new Stage(screenViewport);
 
-        font = new BitmapFont(true);
+        playingCard = new BitmapFont(true);
+        pendingCard = new BitmapFont(true);
 
     }
 
@@ -51,8 +49,10 @@ public class PendingCardsGUI {
     }
 
     public void render() {
+        stage.clear();
         batch.begin();
-        font.draw(batch, "card being played:", 10, 10);
+        playingCard.draw(batch, "card being played:", 10, 10);
+        pendingCard.draw(batch, "next up: ", 10, 165);
         batch.end();
 
         if (currentCard != null) {
@@ -61,11 +61,12 @@ public class PendingCardsGUI {
     }
 
     private void drawCurrentCard() {
+        //TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard), 40, 0, 100, 140);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
         card.flip(false, true);
         Image image = new Image(card);
         image.setSize(97, 135);
-        image.setPosition(10, 20);
+        image.setPosition(10, 25);
         stage.addActor(image);
         stage.draw();
     }

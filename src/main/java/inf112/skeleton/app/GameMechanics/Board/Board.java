@@ -391,4 +391,8 @@ public class Board implements IBoard {
 	public Player getCurPlayer() {
 		return curPlayer;
 	}
+
+	public Card peekNextCard() {
+		return thisRoundsCards.peek();
+	}
 }
