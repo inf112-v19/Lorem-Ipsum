@@ -38,7 +38,6 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
-
     public BoardGUI(Board board, OrthographicCamera camera) {
         this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = new Stage(fitViewport);

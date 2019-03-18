@@ -296,7 +296,8 @@ public class Board implements IBoard {
 	/**
 	 * Resets the round by setting every players state to not ready, respawn players who has fallen off the board,
 	 * and also calls the checkTile method for the players still on the board - checkTile method will execute the
-	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup, take damage etc.)
+	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup).
+	 * Finally every player standing on a tile with lasers at the end of the round take damage.
 	 *
 	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
@@ -305,25 +306,34 @@ public class Board implements IBoard {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
 
-			player.setNotReady();
-
 			//if player is not on the board - respawn at backup
 			if (!playerIsOnTheBoard(player)){
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 			}
-			else{
+			//player is on the board and has not yet been set to notReady
+			else if(player.isReady()){
 				Tile playerTile = tileMap.get(playerPos);
 				playerTile.checkTile(this, player);
 			}
 
-			//if the current player har movement pending - return
+			player.setNotReady();
+
+			//if the current player has movement pending - return
 			if (movementCount>0){
 				return true;
 			}
 		}
 
-		//no moves pending - round is over
+		//after all end of round movement have happened - deal laser damage
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player curPlayer = playerPositionEntry.getKey();
+			Position curPlayerPos = playerPositionEntry.getValue();
+			Tile playerTile = tileMap.get(curPlayerPos);
+			playerTile.laserCheck(curPlayer);
+		}
+
+		//round is reset
 		return false;
 	}
 
@@ -378,4 +388,7 @@ public class Board implements IBoard {
 		return !playerPositions.get(player).equals(new Position(-1,-1));
 	}
 
+	public Player getCurPlayer() {
+		return curPlayer;
+	}
 }
