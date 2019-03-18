@@ -41,6 +41,8 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
+	private final float MOVE_DURATION = 1;
+
     public BoardGUI(Board board, OrthographicCamera camera) {
         this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = new Stage(fitViewport);
@@ -124,9 +126,10 @@ public class BoardGUI {
 		addPlayersToStage();
 	}
 
-	public boolean hideDeadPlayer(Player player){
+	private boolean hideDeadPlayer(Player player){
 		if (board.getPlayerPos(player).equals(new Position(-1,-1))){
-			player.setVisible(false);
+			Action hide = Actions.fadeOut(MOVE_DURATION);
+			player.addAction(hide);
 			return true;
 		}
 		return false;
@@ -135,7 +138,8 @@ public class BoardGUI {
 	public void showRevivedPlayers(){
 		for (Player player : board.getAllPlayers()) {
 			if (!board.getPlayerPos(player).equals(new Position(-1,-1))){
-				player.setVisible(true);
+				Action show = Actions.fadeIn(MOVE_DURATION);
+				player.addAction(show);
 			}
 		}
 	}
@@ -151,10 +155,10 @@ public class BoardGUI {
 		for (Player player : board.getAllPlayers()) {
 			Position pos = board.getPlayerPos(player);
 			if (hideDeadPlayer(player)){
-				return;
+				continue;
 			}
-			Action move = Actions.moveTo(pos.getX()*tilesize + xOffset, pos.getY()*tilesize + yOffset,1);
-			Action rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), 1);
+			Action move = Actions.moveTo(pos.getX()*tilesize + xOffset, pos.getY()*tilesize + yOffset,MOVE_DURATION);
+			Action rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
 			player.addAction(rotate);
 			player.addAction(move);
 		}
