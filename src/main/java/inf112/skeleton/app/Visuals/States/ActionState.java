@@ -64,6 +64,7 @@ public class ActionState extends State {
 	public void dispose() {
 		boardGUI.dispose();
 		batch.dispose();
+		pendingCardsGUI.dispose();
 
 	}
 
