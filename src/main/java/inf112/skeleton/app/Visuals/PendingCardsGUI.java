@@ -45,7 +45,9 @@ public class PendingCardsGUI {
     public void update() {
         currentCard = board.getCurCard();
         currentPlayer = board.getCurPlayer();
-        currentPlayerSprite = currentPlayer.getSpriteType();
+        if (currentPlayer != null) {
+            currentPlayerSprite = currentPlayer.getSpriteType();
+        }
     }
 
     public void render() {
