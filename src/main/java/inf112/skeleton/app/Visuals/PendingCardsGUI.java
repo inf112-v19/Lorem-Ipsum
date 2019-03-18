@@ -91,8 +91,8 @@ public class PendingCardsGUI {
     private void addPlayerImageToStage(TextureRegion playerTexture, int yPos) {
         playerTexture.flip(false, true);
         Image image = new Image(playerTexture);
-        image.setSize(50, 50);
-        image.setPosition(117, yPos);
+        image.setSize(40, 40);
+        image.setPosition(107, yPos+10);
         stage.addActor(image);
     }
 
