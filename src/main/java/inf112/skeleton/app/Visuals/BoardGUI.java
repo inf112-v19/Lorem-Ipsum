@@ -124,6 +124,22 @@ public class BoardGUI {
 		addPlayersToStage();
 	}
 
+	public boolean hideDeadPlayer(Player player){
+		if (board.getPlayerPos(player).equals(new Position(-1,-1))){
+			player.setVisible(false);
+			return true;
+		}
+		return false;
+	}
+
+	public void showRevivedPlayers(){
+		for (Player player : board.getAllPlayers()) {
+			if (!board.getPlayerPos(player).equals(new Position(-1,-1))){
+				player.setVisible(true);
+			}
+		}
+	}
+
 
 	private void reposition(){
 		yOffset = 0;
@@ -134,9 +150,11 @@ public class BoardGUI {
 	public void update(){
 		for (Player player : board.getAllPlayers()) {
 			Position pos = board.getPlayerPos(player);
+			if (hideDeadPlayer(player)){
+				return;
+			}
 			Action move = Actions.moveTo(pos.getX()*tilesize + xOffset, pos.getY()*tilesize + yOffset,1);
 			Action rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), 1);
-			System.out.println(player.getDirection());
 			player.addAction(rotate);
 			player.addAction(move);
 		}

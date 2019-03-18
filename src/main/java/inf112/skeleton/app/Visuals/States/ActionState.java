@@ -47,6 +47,7 @@ public class ActionState extends State {
 				boardGUI.update();
 			}else{
 				System.out.println("setting CardState");
+				boardGUI.showRevivedPlayers();
 				gsm.set(new CardState(gsm, board));
 				dispose();
 			}
