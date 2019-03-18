@@ -311,12 +311,13 @@ public class Board implements IBoard {
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 			}
-			//player is on the board and has not called checkTile yet
+			//player is on the board and has not yet been set to notReady
 			else if(player.isReady()){
 				Tile playerTile = tileMap.get(playerPos);
 				playerTile.checkTile(this, player);
-				player.setNotReady();
 			}
+
+			player.setNotReady();
 
 			//if the current player has movement pending - return
 			if (movementCount>0){
