@@ -28,6 +28,7 @@ public class PendingCardsGUI {
 
     private Card currentCard;
     private Player currentPlayer;
+    private SpriteType currentPlayerSprite;
 
     public PendingCardsGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
         this.camera = camera;
@@ -43,7 +44,8 @@ public class PendingCardsGUI {
 
     public void update() {
         currentCard = board.getCurCard();
-        currentPlayer = board.getC
+        currentPlayer = board.getCurPlayer();
+        currentPlayerSprite = currentPlayer.getSpriteType();
     }
 
     public void render() {
