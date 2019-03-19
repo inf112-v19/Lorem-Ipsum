@@ -42,13 +42,6 @@ public class Board implements IBoard {
 
 	}
 
-	public Board(String filename, int numberOfPlayers) {
-		this(filename);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			playerPositions.put(new Player(Integer.toString(i), Direction.NORTH), new Position(-1, -1));
-		}
-	}
-
 	/**
 	 * Method used for testing purposes - maybe not needed for finished program
 	 * (ignores all exceptions and relies on correct usage)
@@ -337,7 +330,7 @@ public class Board implements IBoard {
 	}
 
 	/**
-	 * Handles a player walking off the board - temporally places player on (-1, -1)
+	 * Handles a player walking off the board - calls players setOnTheBoard(false)
 	 *
 	 * @param player
 	 */
