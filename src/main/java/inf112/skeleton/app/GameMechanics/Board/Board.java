@@ -293,40 +293,69 @@ public class Board implements IBoard {
 	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
 	private boolean resetRound() {
+		if (doTileActions() == false) {
+			return true;
+		}
+
+		turnOnLasers();
+		respawnPlayers();
+
+		//round is reset
+		return false;
+	}
+
+	/**
+	 * Calls the checkTile method on all tiles players are standing on
+	 *
+	 * @return true if it managed to do all tile actions, or false if there are moves pending
+	 */
+	private boolean doTileActions() {
 		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
 
-			//if player is not on the board - respawn at backup
+			if (player.isReady() && player.onBoardCheck()) {
+				Tile playerTile = tileMap.get(playerPos);
+				playerTile.checkTile(this, player);
+			}
+			player.setNotReady();
+
+			//if the current player has movement pending - return false
+			if (movementCount>0){
+				return false;
+			}
+		}
+
+		//no movement pending - return true
+		return true;
+	}
+
+	/**
+	 * Respawn all the players who has fallen off the board and puts them on their backup
+	 */
+	private void respawnPlayers() {
+		for (Player player : playerPositions.keySet()) {
 			if (!player.onBoardCheck()){
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
 			}
-			//player is on the board and has not yet been set to notReady
-			else if(player.isReady()){
-				Tile playerTile = tileMap.get(playerPos);
-				playerTile.checkTile(this, player);
-			}
-
-			player.setNotReady();
-
-			//if the current player has movement pending - return
-			if (movementCount>0){
-				return true;
-			}
 		}
+	}
 
-		//after all end of round movement have happened - deal laser damage
+	/**
+	 * Deals damage to all players standing on tiles containing lasers
+	 */
+	private void turnOnLasers() {
 		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
 			Player curPlayer = playerPositionEntry.getKey();
 			Position curPlayerPos = playerPositionEntry.getValue();
-			Tile playerTile = tileMap.get(curPlayerPos);
-			playerTile.laserCheck(curPlayer);
-		}
 
-		//round is reset
-		return false;
+			if (curPlayer.onBoardCheck()) {
+				Tile playerTile = tileMap.get(curPlayerPos);
+				playerTile.laserCheck(curPlayer);
+			}
+		}
 	}
 
 	/**
