@@ -19,6 +19,7 @@ public class Player extends Image implements IPlayer {
     private int playerlives = 4; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
+    private boolean isOnTheBoard = true;
 
 
     private Direction playerDirection; //Direction the player is facing
@@ -223,4 +224,15 @@ public class Player extends Image implements IPlayer {
 	public int hashCode() {
 		return this.getPlayerID().hashCode();
 	}
+
+	@Override
+	public boolean onBoardCheck() {
+    	return isOnTheBoard;
+	}
+
+	@Override
+	public void setOnTheBoard(Boolean isOnTheBoard){
+    	this.isOnTheBoard = isOnTheBoard;
+	}
+
 }

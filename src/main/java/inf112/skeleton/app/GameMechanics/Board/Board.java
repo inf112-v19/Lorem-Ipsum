@@ -108,14 +108,13 @@ public class Board implements IBoard {
 		}
 
 		//if the player has fallen off the board no movement happens(edge case, should not happen)
-		if (!playerIsOnTheBoard(player)) {
+		if (!player.onBoardCheck()) {
 			return false;
 		}
 
 		Position curPos = playerPositions.get(player);
 		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
-		boolean fellOffTheBoard = false;
 
 		//if tile currently standing on has no wall blocking the player - proceed
         if (!curTile.hasWallInDir(dir)){
@@ -129,25 +128,24 @@ public class Board implements IBoard {
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
-							fellOffTheBoard = checkForHole(player, newPos);
+							checkForHole(player, newPos);
                         }
                     }
 
                     //no player in direction trying to move - moves player to newPos
                     else {
-						fellOffTheBoard = checkForHole(player, newPos);
+						checkForHole(player, newPos);
                     }
                 }
             }
             //player walks off the board
             else {
-				playerFellOffTheBoard(player);
-				fellOffTheBoard = true;
+				playerFellOffTheBoard(player, newPos);
             }
         }
 
         //returns true if the player position has changed and the player did not fell off the board
-        return !curPos.equals(playerPositions.get(player)) && !fellOffTheBoard;
+        return !curPos.equals(playerPositions.get(player)) && !player.onBoardCheck();
 	}
 
 	@Override
@@ -256,7 +254,7 @@ public class Board implements IBoard {
 		curPlayer = cardToPlayer.get(curCard);
 
 		//if player has fallen off the board - skip the card
-		if (!playerIsOnTheBoard(curPlayer)){
+		if (!curPlayer.onBoardCheck()){
 			return playNextCard();
 		}
 
@@ -307,9 +305,10 @@ public class Board implements IBoard {
 			Position playerPos = playerPositionEntry.getValue();
 
 			//if player is not on the board - respawn at backup
-			if (!playerIsOnTheBoard(player)){
+			if (!player.onBoardCheck()){
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
+				player.setOnTheBoard(true);
 			}
 			//player is on the board and has not yet been set to notReady
 			else if(player.isReady()){
@@ -342,7 +341,7 @@ public class Board implements IBoard {
 	 *
 	 * @param player
 	 */
-	private void playerFellOffTheBoard(Player player) {
+	private void playerFellOffTheBoard(Player player, Position newPos) {
     	player.destroyPlayer();
 
     	//skips any remaining moves for the current card
@@ -350,7 +349,8 @@ public class Board implements IBoard {
 
     	if (player.getLives()>0) {
 			System.out.println("Player" + player.getPlayerID() + " fell off the board");
-    		playerPositions.put(player, new Position(-1,-1));
+    		playerPositions.put(player, newPos);
+    		player.setOnTheBoard(false);
 		}
     	else {
 			System.out.println("Player" + player.getPlayerID() + " died");
@@ -366,27 +366,16 @@ public class Board implements IBoard {
 	 * @param newPos
 	 * @return returns true if the tile is a hole
 	 */
-	private boolean checkForHole(Player player, Position newPos) {
+	private void checkForHole(Player player, Position newPos) {
 		Tile newTile = tileMap.get(newPos);
 
 		if (newTile instanceof HoleTile) {
-			playerFellOffTheBoard(player);
-			return true;
+			playerFellOffTheBoard(player, newPos);
 		}else{
 			playerPositions.put(player, newPos);
-			return false;
 		}
 	}
 
-	/**
-	 * Method for checking if the player has fallen off the board - player position equals (-1,-1)
-	 *
-	 * @param player
-	 * @return true if player has not fallen off the board
-	 */
-	private boolean playerIsOnTheBoard(Player player) {
-		return !playerPositions.get(player).equals(new Position(-1,-1));
-	}
 
 	public Player getCurPlayer() {
 		return curPlayer;
