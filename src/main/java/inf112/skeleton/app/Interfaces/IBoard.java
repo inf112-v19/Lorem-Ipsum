@@ -143,7 +143,7 @@ public interface IBoard<T> {
 	 * Checks if there is any current card being handled(movementCount>0) and proceed calling the movePlayer accordingly
 	 * or tries play the next card.
 	 *
-	 * @return
+	 * @return true if it managed to do an action
 	 */
 	boolean doNextAction();
 
