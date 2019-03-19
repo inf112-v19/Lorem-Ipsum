@@ -191,7 +191,7 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public void initPhase() {
+	public void initRound() {
 		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
 		//init phaseQueues
 		for (int i = 0; i < 5; i++) {
@@ -240,7 +240,7 @@ public class Board implements IBoard {
 	 */
 	private boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
-			return resetRound();
+			return endRound();
 		}
 
 		curCard = thisRoundsCards.poll();
@@ -292,7 +292,7 @@ public class Board implements IBoard {
 	 *
 	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
 	 */
-	private boolean resetRound() {
+	private boolean endRound() {
 		if (doTileActions() == false) {
 			return true;
 		}
