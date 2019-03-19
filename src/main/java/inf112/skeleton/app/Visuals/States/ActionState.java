@@ -39,15 +39,17 @@ public class ActionState extends State {
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
 			System.out.println("update");
+
 			infoGUI.update();
 			pendingCardsGUI.update();
+			boardGUI.hideDeadPlayers();
+			boardGUI.showRevivedPlayers();
 
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.doNextAction();
 				boardGUI.update();
 			}else{
 				System.out.println("setting CardState");
-				boardGUI.showRevivedPlayers();
 				gsm.set(new CardState(gsm, board));
 				dispose();
 			}
