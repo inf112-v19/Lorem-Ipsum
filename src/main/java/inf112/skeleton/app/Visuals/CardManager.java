@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 
     public class CardManager {
@@ -18,8 +19,12 @@ import inf112.skeleton.app.Interfaces.ICardDeck;
             this.board = board;
             this.camera = camera;
             this.batch = batch;
+
+            cardDeck = new ProgramCardDeck();
         }
 
+        public void pickCards() {
 
+        }
     }
 
