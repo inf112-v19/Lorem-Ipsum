@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
@@ -85,7 +87,8 @@ public class MenuState extends State {
     @Override
     public void resize() {
         super.resize();
-        this.stage.getBatch().setProjectionMatrix(camera.combined);
+        //this.stage.getBatch().setProjectionMatrix(camera.combined);
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }
 

@@ -11,7 +11,7 @@ public abstract class State {
     protected SpriteBatch batch;
     protected Vector3 mouse;
     protected GameStateManager gsm;
-    protected static Board board;
+    protected Board board;
 
 
     protected State (GameStateManager gsm, Board board) {
@@ -32,7 +32,7 @@ public abstract class State {
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
     public void dispose(){
-        batch.dispose();
+        this.batch.dispose();
     }
 
     public void resize() {

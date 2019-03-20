@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Tiles;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
@@ -26,7 +27,7 @@ public abstract class Tile implements ITile {
 
 	@Override
 	public boolean hasAnyGameObjects() {
-		if (gameObjects.length == 0){
+		if (gameObjects.length == 0) {
 			return false;
 		}
 		return true;
@@ -45,7 +46,7 @@ public abstract class Tile implements ITile {
 		}
 
 		Tile tile = (Tile) obj;
-		if(!Arrays.equals(tile.getGameObjects(), this.gameObjects)){
+		if (!Arrays.equals(tile.getGameObjects(), this.gameObjects)) {
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);
@@ -68,7 +69,7 @@ public abstract class Tile implements ITile {
 
 	@Override
 	public void addGameObject(GameObject gameObject) {
-		GameObject[] newGameObjects = new GameObject[gameObjects.length+1];
+		GameObject[] newGameObjects = new GameObject[gameObjects.length + 1];
 
 		for (int i = 0; i < gameObjects.length; i++) {
 			newGameObjects[i] = gameObjects[i];
@@ -85,12 +86,12 @@ public abstract class Tile implements ITile {
 			return false;
 		}
 
-		GameObject[] newGameObjects = new GameObject[gameObjects.length-1];
+		GameObject[] newGameObjects = new GameObject[gameObjects.length - 1];
 		int j = 0;
 		for (int i = 0; i < gameObjects.length; i++) {
-			if (i == gameObjectIndex){
+			if (i == gameObjectIndex) {
 				continue;
-			}else {
+			} else {
 				newGameObjects[j] = gameObjects[i];
 				j++;
 			}
@@ -100,7 +101,7 @@ public abstract class Tile implements ITile {
 	}
 
 	@Override
-	public int hasGameObject(GameObject gameObject){
+	public int hasGameObject(GameObject gameObject) {
 		for (int i = 0; i < gameObjects.length; i++) {
 			if (gameObjects[i].equals(gameObject)) {
 				return i;
@@ -116,7 +117,16 @@ public abstract class Tile implements ITile {
 	}
 
 	@Override
-	public void checkTile(Board board, Player player){
+	public void checkTile(Board board, Player player) {
+	}
 
+	@Override
+	public void laserCheck(Player player) {
+		for (GameObject gameObject : gameObjects) {
+			if (gameObject instanceof Laser) {
+				player.decreaseHealth();
+			}
+		}
 	}
 }
+

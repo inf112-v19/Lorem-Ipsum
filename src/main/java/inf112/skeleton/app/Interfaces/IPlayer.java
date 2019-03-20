@@ -39,10 +39,9 @@ public interface IPlayer {
 
 	void setReady();
 
+	boolean onBoardCheck();
 
-
-
-
+	void setOnTheBoard(Boolean isOnTheBoard);
 
 
 }

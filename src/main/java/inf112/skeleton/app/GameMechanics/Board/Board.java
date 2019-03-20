@@ -18,6 +18,11 @@ public class Board implements IBoard {
 	private HashMap<Card, Player> cardToPlayer = new HashMap<>();
 	private Queue<Card> thisRoundsCards = new LinkedList<>();
 
+	private Card curCard;
+	private int movementCount = 0;
+	private Player curPlayer;
+	private Direction moveDir;
+
 	private int height;
 	private int width;
 
@@ -35,14 +40,6 @@ public class Board implements IBoard {
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
 
-
-	}
-
-	public Board(String filename, int numberOfPlayers) {
-		this(filename);
-		for (int i = 0; i < numberOfPlayers; i++) {
-			playerPositions.put(new Player(Integer.toString(i), Direction.NORTH), new Position(-1, -1));
-		}
 	}
 
 	/**
@@ -87,33 +84,30 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player, int numberOfMoves) {
-		return movePlayer(player, player.getDirection(), numberOfMoves);
-	}
-
 	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
-		Position curPos = playerPositions.get(player);
-		for (int i = 0; i < numberOfMoves; i++) {
-			if (!movePlayer(player, dir)) {
-				return false;
-			}
-		}
+		movementCount = numberOfMoves-1;
+		curPlayer = player;
+		moveDir = dir;
 
-		// if this happens it means all previous calls of movePlayer returned true
-		return true;
+		return movePlayer(player, dir);
 	}
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir) {
+		System.out.println("Tried to move player" + player.getPlayerID() + " " + dir);
 		if(!playerPositions.containsKey(player)) {
 			// TODO - Handle custom PLayerNotFoundException
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
+		//if the player has fallen off the board no movement happens(edge case, should not happen)
+		if (!player.onBoardCheck()) {
+			return false;
+		}
+
 		Position curPos = playerPositions.get(player);
 		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
-		boolean fellOffTheBoard = false;
 
 		//if tile currently standing on has no wall blocking the player - proceed
         if (!curTile.hasWallInDir(dir)){
@@ -127,25 +121,24 @@ public class Board implements IBoard {
                     if (otherPlayer != null){
                         //proceed moving if the colliding player moved or stand still if no movement happened
                         if (movePlayer(otherPlayer, dir)){
-							fellOffTheBoard = checkForHole(player, newPos);
+							checkForHole(player, newPos);
                         }
                     }
 
                     //no player in direction trying to move - moves player to newPos
                     else {
-						fellOffTheBoard = checkForHole(player, newPos);
+						checkForHole(player, newPos);
                     }
                 }
             }
             //player walks off the board
             else {
-				playerFellOffTheBoard(player);
-				fellOffTheBoard = true;
+				playerFellOffTheBoard(player, newPos);
             }
         }
 
         //returns true if the player position has changed and the player did not fell off the board
-        return !curPos.equals(playerPositions.get(player)) && !fellOffTheBoard;
+        return !curPos.equals(playerPositions.get(player)) && !player.onBoardCheck();
 	}
 
 	@Override
@@ -184,9 +177,9 @@ public class Board implements IBoard {
 
 	@Override
 	public Player posToPlayer(Position pos) {
-        for (Player player : playerPositions.keySet()) {
-            if (playerPositions.get(player).equals(pos)){
-            	return player;
+        for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+            if (playerPositionEntry.getValue().equals(pos)){
+            	return playerPositionEntry.getKey();
             }
         }
         return null;
@@ -198,7 +191,7 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public void initPhase() {
+	public void initRound() {
 		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
 		//init phaseQueues
 		for (int i = 0; i < 5; i++) {
@@ -222,60 +215,167 @@ public class Board implements IBoard {
 		}
 	}
 
+	@Override
+	public boolean doNextAction() {
+		if (movementCount>0) {
+			movementCount--;
+			movePlayer(curPlayer, moveDir);
+			return true;
+		}
+		else {
+			return playNextCard();
+		}
+	}
 
 	@Override
-	public boolean playNextCard() {
+	public Card getCurCard(){
+		return curCard;
+	}
+
+	/**
+	 * Tries to play the next card of the round. Interprets the actions of the card and
+	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
+	 *
+	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
+	 */
+	private boolean playNextCard() {
 		if (thisRoundsCards.isEmpty()) {
-			resetRound();
-			return false;
+			return endRound();
 		}
 
-		Card curCard = thisRoundsCards.poll();
-		Player curPlayer = cardToPlayer.get(curCard);
+		curCard = thisRoundsCards.poll();
+		curPlayer = cardToPlayer.get(curCard);
+
+		//if player has fallen off the board - skip the card
+		if (!curPlayer.onBoardCheck()){
+			return playNextCard();
+		}
+
 		CardType curCardType = curCard.getCardType();
 		int numRotation = curCardType.getRotation();
-		int movement = curCardType.getMovement();
-		Direction playerDir = curPlayer.getDirection();
+		//if card is rotate card do the rotation and return
+		if (numRotation != 0){
+			curPlayer.turnPlayer(numRotation);
+			System.out.println("Rotated player" + curPlayer.getPlayerID() + " " + numRotation + " times");
+			return true;
+		}
 
-		curPlayer.turnPlayer(numRotation);
+		int movement = curCardType.getMovement();
+		moveDir = curPlayer.getDirection();
 
 		switch (movement) {
 			case -1:
-				movePlayer(curPlayer, playerDir.oppositeDirection());
+				movePlayer(curPlayer, moveDir.oppositeDirection());
 				break;
 			case 1:
-				movePlayer(curPlayer, playerDir);
+				movePlayer(curPlayer, moveDir);
 				break;
 			case 2:
-				movePlayer(curPlayer, 2);
+				movePlayer(curPlayer, moveDir, 2);
 				break;
 			case 3:
-				movePlayer(curPlayer, 3);
+				movePlayer(curPlayer, moveDir, 3);
 				break;
+			default:
+				//should not happen considering earlier checking if card was a rotation card
 		}
 
+		//returns true since we were able to play a card
 		return true;
 	}
 
-	public void resetRound() {
-		for (Player p : playerPositions.keySet()) {
-			p.setNotReady();
+	/**
+	 * Resets the round by setting every players state to not ready, respawn players who has fallen off the board,
+	 * and also calls the checkTile method for the players still on the board - checkTile method will execute the
+	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup).
+	 * Finally every player standing on a tile with lasers at the end of the round take damage.
+	 *
+	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
+	 */
+	private boolean endRound() {
+		if (doTileActions() == false) {
+			return true;
 		}
+
+		turnOnLasers();
+		respawnPlayers();
+
+		//round is reset
+		return false;
 	}
-    
 
 	/**
-	 * Handles a player walking off the board
+	 * Calls the checkTile method on all tiles players are standing on
+	 *
+	 * @return true if it managed to do all tile actions, or false if there are moves pending
+	 */
+	private boolean doTileActions() {
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
+			if (player.isReady() && player.onBoardCheck()) {
+				Tile playerTile = tileMap.get(playerPos);
+				playerTile.checkTile(this, player);
+			}
+			player.setNotReady();
+
+			//if the current player has movement pending - return false
+			if (movementCount>0){
+				return false;
+			}
+		}
+
+		//no movement pending - return true
+		return true;
+	}
+
+	/**
+	 * Respawn all the players who has fallen off the board and puts them on their backup
+	 */
+	private void respawnPlayers() {
+		for (Player player : playerPositions.keySet()) {
+			if (!player.onBoardCheck()){
+				System.out.println("Player" + player.getPlayerID() + " respawned");
+				playerPositions.put(player, player.getBackup());
+				player.setOnTheBoard(true);
+			}
+		}
+	}
+
+	/**
+	 * Deals damage to all players standing on tiles containing lasers
+	 */
+	private void turnOnLasers() {
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player curPlayer = playerPositionEntry.getKey();
+			Position curPlayerPos = playerPositionEntry.getValue();
+
+			if (curPlayer.onBoardCheck()) {
+				Tile playerTile = tileMap.get(curPlayerPos);
+				playerTile.laserCheck(curPlayer);
+			}
+		}
+	}
+
+	/**
+	 * Handles a player walking off the board - calls players setOnTheBoard(false)
 	 *
 	 * @param player
 	 */
-	private void playerFellOffTheBoard(Player player) {
+	private void playerFellOffTheBoard(Player player, Position newPos) {
     	player.destroyPlayer();
 
+    	//skips any remaining moves for the current card
+		movementCount = 0;
+
     	if (player.getLives()>0) {
-    		playerPositions.put(player, player.getBackup());
+			System.out.println("Player" + player.getPlayerID() + " fell off the board");
+    		playerPositions.put(player, newPos);
+    		player.setOnTheBoard(false);
 		}
     	else {
+			System.out.println("Player" + player.getPlayerID() + " died");
 			//TODO - handle dead player
 		}
 	}
@@ -288,28 +388,26 @@ public class Board implements IBoard {
 	 * @param newPos
 	 * @return returns true if the tile is a hole
 	 */
-	private boolean checkForHole(Player player, Position newPos) {
+	private void checkForHole(Player player, Position newPos) {
 		Tile newTile = tileMap.get(newPos);
 
 		if (newTile instanceof HoleTile) {
-			playerFellOffTheBoard(player);
-			return true;
+			playerFellOffTheBoard(player, newPos);
 		}else{
 			playerPositions.put(player, newPos);
-			return false;
 		}
 	}
 
-	/**
-	 * Iterates over every player and calls the checkTile method for the tile they are standing on -
-	 * checkTile method will execute the correct action according to the tile-type(movePlayer etc.)
-	 */
-	private void checkAllPlayers() {
-		for (Player player : playerPositions.keySet()) {
-			Position playerPos = playerPositions.get(player);
-			Tile playerTile = tileMap.get(playerPos);
-			playerTile.checkTile(this, player);
-		}
+
+	public Player getCurPlayer() {
+		return curPlayer;
 	}
 
+	public Card peekNextCard() {
+		return thisRoundsCards.peek();
+	}
+
+	public Player getNextPlayer() {
+		return cardToPlayer.get(thisRoundsCards.peek());
+	}
 }
