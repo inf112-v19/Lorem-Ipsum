@@ -93,4 +93,11 @@ public interface ITile {
 	void checkTile(Board board, Player player);
 
 
+	/**
+	 * Checks if the tile contains any lasers and gives damage to the player accordingly
+	 * @param player
+	 */
+	void laserCheck(Player player);
+
+
 }

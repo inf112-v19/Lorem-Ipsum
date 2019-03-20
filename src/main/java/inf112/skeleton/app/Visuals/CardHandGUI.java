@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.Exceptions.PlayerEmptyCardHandException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
@@ -53,7 +54,7 @@ public class CardHandGUI {
         this.batch = batch;
         this.players = players;
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         spriteSheet = new SpriteSheet();
         this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //temp
 
@@ -111,7 +112,9 @@ public class CardHandGUI {
      * @param c list of cards
      */
     private void draw(List<Card> c) {
-
+        stage.clear();
+        submit.clearListeners();
+        clear.clearListeners();
         final List<Card> cards = c;
         final ImageButton[] buttonArr = new ImageButton[cards.size()];
         cardSeq = new Card[5];
@@ -263,6 +266,10 @@ public class CardHandGUI {
                 return true;
             }
         });
+    }
+
+    public void resize(){
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
 }

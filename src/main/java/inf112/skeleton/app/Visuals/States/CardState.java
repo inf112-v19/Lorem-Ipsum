@@ -7,6 +7,7 @@ import inf112.skeleton.app.Visuals.CardHandGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
+import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class CardState extends State {
 
@@ -15,6 +16,7 @@ public class CardState extends State {
     private Player[] players;
     private ICardDeck cardDeck;
     private CardHandGUI cardGUI;
+    private PlayerInfoGUI infoGUI;
 
     public CardState(GameStateManager gsm, Board board) {
         super(gsm, board);
@@ -25,6 +27,7 @@ public class CardState extends State {
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
+        this.infoGUI = new PlayerInfoGUI(board, batch, camera);
 
         /**
          * code for testing CardHandGUI. Does not use players stored in board
@@ -53,7 +56,7 @@ public class CardState extends State {
                 return;
             }
         }
-		board.initPhase();
+		board.initRound();
         gsm.set(new ActionState(gsm, board));
         dispose();
 
@@ -63,11 +66,13 @@ public class CardState extends State {
     public void render() {
         boardGUI.render();
         cardGUI.render();
+        infoGUI.render();
     }
 
     @Override
     public void dispose() {
         cardGUI.dispose();
+        infoGUI.dispose();
         batch.dispose();
     }
 
@@ -75,6 +80,8 @@ public class CardState extends State {
     public void resize() {
         super.resize();
         boardGUI.resize();
+        cardGUI.resize();
+        infoGUI.resize();
     }
 
 }

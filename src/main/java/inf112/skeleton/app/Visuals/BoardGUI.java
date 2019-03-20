@@ -2,34 +2,29 @@ package inf112.skeleton.app.Visuals;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 
-
 public class BoardGUI {
 
-    private static Board board;
+    private Board board;
 	private SpriteSheet spriteSheet;
 
 	private Stage stage;
-	private ScreenViewport screenViewport;
+	private FitViewport fitViewport;
 
 	private int xOffset;
 	private int yOffset;
@@ -39,10 +34,11 @@ public class BoardGUI {
 	private int boardTileWidth;
 	private int boardTileHeight;
 
+	private static final float MOVE_DURATION = 1;
 
     public BoardGUI(Board board, OrthographicCamera camera) {
-        this.screenViewport = new ScreenViewport(camera);
-		this.stage = new Stage(screenViewport);
+        this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+		this.stage = new Stage(fitViewport);
 
         this.spriteSheet = new SpriteSheet();
         this.board = board;
@@ -50,7 +46,7 @@ public class BoardGUI {
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 
-        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight))-3;
+        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight))-8;
 
         this.boardTileWidth = boardWidth *tilesize;
         this.boardTileHeight = boardHeight * tilesize;
@@ -61,32 +57,24 @@ public class BoardGUI {
     }
 
 	/**
-	 * Method that add all players from the board to the stage
+	 * Method that adds all players from the board to the stage
 	 */
 	private void addPlayersToStage(){
-    	Player[] players = board.getAllPlayers();
-		for (Player player : players) {
-			Image image = new Image(spriteSheet.getTexture(player));
-			image.setSize(tilesize,tilesize);
+    	Player[] allPlayers = board.getAllPlayers();
+    	for (Player player : allPlayers) {
+
+    		player.setScaling(fitViewport.getScaling());
+    		player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
+
+			player.setSize(tilesize,tilesize);
+			player.setOrigin(player.getWidth()/2, player.getHeight()/2);
+			player.setRotation(player.getDirection().directionToDegrees());
+
 			Position pos = board.getPlayerPos(player);
-			image.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
-			stage.addActor(image);
-		}
-	}
+			player.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
 
-	/**
-	 * Method that add all players to the stage given a position.
-	 * @param pos
-	 */
-	private void addPlayersToStage(Position pos){
-    	if (board.posToPlayer(pos) != null){
-			int x = pos.getX() * tilesize + xOffset;
-			int y = pos.getY() * tilesize + yOffset;
+			stage.addActor(player);
 
-			Image image = new Image(spriteSheet.getTexture(SpriteType.PLAYER));
-			image.setSize(tilesize,tilesize);
-			image.setPosition(x,y);
-			stage.addActor(image);
 		}
 	}
 
@@ -123,7 +111,6 @@ public class BoardGUI {
 				Tile curTile = board.getTile(pos);
 				addTilesToStage(curTile,x, y);
 				addGameObjectsOnTileToStage(curTile, x, y);
-				//addPlayersToStage(pos);
 				xPos++;
 			}
 			xPos = 0;
@@ -132,11 +119,33 @@ public class BoardGUI {
 		addPlayersToStage();
 	}
 
+	private void hideDeadPlayer(Player player){
+		if (!player.onBoardCheck()){
+			Action hide = Actions.fadeOut(0.1f);
+			player.addAction(hide);
+		}
+	}
 
-	/**
-	 * method that updates the position of the board.
-	 * is called from the constructor and resize();
-	 */
+	public void hideDeadPlayers(){
+		for (Player player : board.getAllPlayers()) {
+			hideDeadPlayer(player);
+		}
+	}
+
+
+	public void showRevivedPlayer(Player player){
+		if (player.onBoardCheck()){
+			Action show = Actions.fadeIn(0.1f);
+			player.addAction(show);
+		}
+	}
+
+	public void showRevivedPlayers(){
+		for (Player player : board.getAllPlayers()) {
+			showRevivedPlayer(player);
+		}
+	}
+
 	private void reposition(){
 		yOffset = 0;
 		//yOffset = Gdx.graphics.getHeight()/2 - boardTileHeight/2;
@@ -144,33 +153,33 @@ public class BoardGUI {
 	}
 
 	public void update(){
-    	//TODO - should redraw players in new positions and not just create new stage
-    	stage = new Stage(screenViewport);
-		create();
+		for (Player player : board.getAllPlayers()) {
+			Position pos = board.getPlayerPos(player);
+
+			Action move = Actions.moveTo(pos.getX()*tilesize + xOffset, pos.getY()*tilesize + yOffset,MOVE_DURATION);
+			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
+			rotate.setUseShortestDirection(true);
+			player.addAction(rotate);
+			player.addAction(move);
+
+		}
 	}
 
     /**
-     * method that calls drawBoard for the actual drawing of the board
+     * Method that calls drawBoard for the actual drawing of the board
      * the function is called from RoboRally.render()
      */
     public void render() {
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act();//Gdx.graphics.getDeltaTime());
 		stage.draw();
     }
 
     /**
-     * method that should resize the board
+     * Method that should resize the board
      * the function is called from RoboRally.resize()
      */
     public void resize(){
-        reposition();
-
-        //TODO - implement resize logic (maybe not needed becaus of the batch.setProjectMatrix)
-        if (Gdx.graphics.getHeight() < Gdx.graphics.getWidth()){
-
-        }else{
-
-        }
+		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public void dispose(){

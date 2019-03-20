@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Interfaces;
 
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -49,22 +50,10 @@ public interface IBoard<T> {
 	GameObject[] getGameObject(Position pos);
 
 	/**
-	 * Tries to move the player in the direction the player is facing - potentially starts recursive calling
-	 * if player collision occurs. Tries to move the player numberOfMoves times by calling the
-	 * movePlayer(Player player, Direction Dir, int numberOfMoves).
-	 *
-	 * @param player
-	 *            player to be moved
-	 * @param numberOfMoves
-	 *            the number of moves that should happened
-	 * @return true if movement happened and the player did not fell off the board
-	 */
-	boolean movePlayer(Player player, int numberOfMoves) throws PlayerNotFoundException;
-
-	/**
 	 * Tries to move the player in the given direction numberOfMoves times by calling the
-	 * movePlayer(Player player, Direction dir). Stops when the underlying call returns false meaning
-	 * the player was not able to move or potentially fell off the board.
+	 * movePlayer(Player player, Direction dir) once and then sets the movementCount to numberOfMoves-1,
+	 * the curPlayer to player and the moveDir to dir. This will make the doNextAction method handle the potentially
+	 * remaining player movements. Method is called from the checkTile methods in the conveyorBelt tiles.
 	 *
 	 * @param player
 	 *            player to be moved
@@ -78,8 +67,8 @@ public interface IBoard<T> {
 	boolean movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
 
     /**
-     * Recursively called in movePlayer - moving in a direction regardless of the direction where the player is facing
-     * Tries to move the player once.
+	 * Tries to move the player once in the given direction, may start recursive call if player collision occurs.
+	 * Handles the game logic regarding moving - not able to move through walls etc.
 	 *
      * @param player
      *            player to be moved
@@ -148,13 +137,20 @@ public interface IBoard<T> {
 	 * thisRoundsCards queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each
 	 * card to a player.
 	 */
-	void initPhase();
+	void initRound();
 
 	/**
-	 * Tries to play the next card of the round. Interprets the actions of the card and
-	 * calls the movePlayer appropriately.
+	 * Checks if there is any current card being handled(movementCount>0) and proceed calling the movePlayer accordingly
+	 * or tries play the next card.
 	 *
-	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
+	 * @return true if it managed to do an action
 	 */
-	boolean playNextCard();
+	boolean doNextAction();
+
+	/**
+	 * Returns the card that is currently being played
+	 *
+	 * @return
+	 */
+	Card getCurCard();
 }

@@ -1,5 +1,7 @@
 package inf112.skeleton.app.GameMechanics;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -7,7 +9,7 @@ import inf112.skeleton.app.Interfaces.IPlayer;
 
 import java.util.List;
 
-public class Player implements IPlayer {
+public class Player extends Image implements IPlayer {
 
     private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
@@ -17,6 +19,7 @@ public class Player implements IPlayer {
     private int playerlives = 4; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
+    private boolean isOnTheBoard = true;
 
 
     private Direction playerDirection; //Direction the player is facing
@@ -48,25 +51,23 @@ public class Player implements IPlayer {
 
 
         switch (directionNumber) {
-
             case 0:
                 playerDirection = Direction.NORTH;
                 break;
-
             case 1:
                 playerDirection = Direction.EAST;
                 break;
-
             case 2:
                 playerDirection = Direction.SOUTH;
                 break;
-
             case 3:
                 playerDirection = Direction.WEST;
                 break;
-
+            default:
+                System.err.println("invalid directionnumber! direction not changed");
         }
     }
+
 
     /**
      * Sets the players direction
@@ -218,4 +219,20 @@ public class Player implements IPlayer {
         }
         return this.playerID.equals(((Player) obj).playerID);
     }
+
+	@Override
+	public int hashCode() {
+		return this.getPlayerID().hashCode();
+	}
+
+	@Override
+	public boolean onBoardCheck() {
+    	return isOnTheBoard;
+	}
+
+	@Override
+	public void setOnTheBoard(Boolean isOnTheBoard){
+    	this.isOnTheBoard = isOnTheBoard;
+	}
+
 }
