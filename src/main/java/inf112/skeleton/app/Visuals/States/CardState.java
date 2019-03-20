@@ -7,6 +7,7 @@ import inf112.skeleton.app.Visuals.CardHandGUI;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
+import inf112.skeleton.app.Visuals.CardManager;
 import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class CardState extends State {
@@ -17,6 +18,8 @@ public class CardState extends State {
     private ICardDeck cardDeck;
     private CardHandGUI cardGUI;
     private PlayerInfoGUI infoGUI;
+
+    //private CardManager cardManager;
 
     public CardState(GameStateManager gsm, Board board) {
         super(gsm, board);
@@ -41,7 +44,7 @@ public class CardState extends State {
         this.cardGUI = new CardHandGUI(camera, batch, testarr);
 
 
-        //this.cardGUI = new CardHandGUI(camera, batch, board, players); //this is how it should be
+        //this.cardGUI = new CardHandGUI(camera, batch, board, cardManager); //this is how it should be
     }
 
     @Override
