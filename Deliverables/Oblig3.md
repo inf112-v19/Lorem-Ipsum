@@ -106,6 +106,7 @@ Vi er enige om at vi må bli bedre på:
 
 ## Klassediagram
 ![](https://github.com/inf112-v19/Lorem-Ipsum/blob/developer/Deliverables/classdiagram.png)
+
 # Møtereferat
 ## Møtereferat 13.02.2019
 **Deltakere**
