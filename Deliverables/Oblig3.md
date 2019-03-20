@@ -105,7 +105,7 @@ Vi er enige om at vi må bli bedre på:
     * tests can be run independently or as a whole in IntelliJ using `Run 'Tests in 'inf112.skeleton.app''`
 
 ## Klassediagram
-![](https://github.com/inf112-v19/Lorem-Ipsum/blob/developer/Deliverables/classediagram.png)
+![](https://github.com/inf112-v19/Lorem-Ipsum/blob/developer/Deliverables/classdiagram.png)
 
 # Møtereferat
 ## Møtereferat 13.02.2019
