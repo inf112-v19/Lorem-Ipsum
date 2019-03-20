@@ -3,6 +3,9 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import org.junit.Test;
+
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
@@ -65,5 +68,18 @@ public class PlayerTest {
         assertEquals(new Player("1", Direction.NORTH), new Player("1", Direction.NORTH));
     }
 
+    @Test
+    public void setReadyTest(){
+       Player player = new Player("Player", Direction.NORTH);
+       player.setReady();
+       assertTrue(player.isReady());
+    }
 
+    @Test
+    public void setNotReadyTest(){
+        Player player = new Player("Player", Direction.NORTH);
+        player.setReady();
+        player.setNotReady();
+        assertFalse(player.isReady());
+    }
 }
