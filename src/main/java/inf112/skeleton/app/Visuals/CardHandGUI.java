@@ -49,14 +49,14 @@ public class CardHandGUI {
     private Card[] cardSeq;
     private int currentPlayer;
 
-    public CardHandGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players) {
+    public CardHandGUI(OrthographicCamera camera, SpriteBatch batch, Player[] players, Stage stage) {
         this.camera = camera;
         this.batch = batch;
         this.players = players;
 
-        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         spriteSheet = new SpriteSheet();
-        this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //temp
+        //this.camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //temp
 
         cardPtr = 0;
         currentPlayer = 0;

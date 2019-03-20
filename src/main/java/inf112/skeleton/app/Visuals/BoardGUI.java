@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -36,9 +35,9 @@ public class BoardGUI {
 
 	private static final float MOVE_DURATION = 1;
 
-    public BoardGUI(Board board, OrthographicCamera camera) {
+    public BoardGUI(Board board, OrthographicCamera camera, Stage stage) {
         this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-		this.stage = new Stage(fitViewport);
+		this.stage = stage;
 
         this.spriteSheet = new SpriteSheet();
         this.board = board;
@@ -46,7 +45,7 @@ public class BoardGUI {
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
 
-        this.tilesize = Math.min(Gdx.graphics.getHeight(), Gdx.graphics.getWidth())/(Math.min(boardWidth, boardHeight))-8;
+        this.tilesize = Math.min(RoboRally.HEIGHT, RoboRally.WIDTH)/(Math.min(boardWidth, boardHeight))-8;
 
         this.boardTileWidth = boardWidth *tilesize;
         this.boardTileHeight = boardHeight * tilesize;
@@ -170,8 +169,8 @@ public class BoardGUI {
      * the function is called from RoboRally.render()
      */
     public void render() {
-		stage.act();//Gdx.graphics.getDeltaTime());
-		stage.draw();
+		//stage.act(Gdx.graphics.getDeltaTime());
+		//stage.draw();
     }
 
     /**
@@ -183,7 +182,7 @@ public class BoardGUI {
     }
 
     public void dispose(){
-    	stage.dispose();
+    	//stage.dispose();
 	}
 
 

@@ -15,14 +15,14 @@ public class CardState extends State {
     private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
-    private CardHandGUI cardGUI;
+    private CardHandGUI cardHandGUI;
     private PlayerInfoGUI infoGUI;
 
     public CardState(GameStateManager gsm, Board board) {
         super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, camera);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
@@ -38,7 +38,7 @@ public class CardState extends State {
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardHandGUI(camera, batch, testarr);
+        this.cardHandGUI = new CardHandGUI(camera, batch, testarr, this.stage);
 
 
         //this.cardGUI = new CardHandGUI(camera, batch, board, players); //this is how it should be
@@ -64,14 +64,15 @@ public class CardState extends State {
 
     @Override
     public void render() {
-        boardGUI.render();
-        cardGUI.render();
+        //boardGUI.render();
+        super.render();
+        cardHandGUI.render();
         infoGUI.render();
     }
 
     @Override
     public void dispose() {
-        cardGUI.dispose();
+        cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
     }
@@ -80,7 +81,7 @@ public class CardState extends State {
     public void resize() {
         super.resize();
         boardGUI.resize();
-        cardGUI.resize();
+        cardHandGUI.resize();
         infoGUI.resize();
     }
 
