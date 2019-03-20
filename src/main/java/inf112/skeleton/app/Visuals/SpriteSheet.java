@@ -106,11 +106,11 @@ public final class SpriteSheet {
 		this.menuPlayButton = new TextureRegion(texture);
 		//this.menuPlayButton.flip(false, true);
 
-		this.texture = new Texture("StateImages/tapToStart.gif");
+		this.texture = new Texture("StateImages/click.png");
 		this.testa = new TextureRegion(texture);
 
-		this.texture = new Texture("StateImages/tempBackground.jpg");
-		this.testb = new TextureRegion(texture);
+		//this.texture = new Texture("StateImages/tempBackground.jpg");
+		//this.testb = new TextureRegion(texture);
 
 		this.texture = new Texture("clear.png");
 		this.cardGuiClearButton = new TextureRegion(texture);
