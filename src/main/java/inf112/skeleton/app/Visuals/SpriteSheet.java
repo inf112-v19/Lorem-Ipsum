@@ -32,6 +32,10 @@ public final class SpriteSheet {
 	private static TextureRegion menuBackground;
 	private static TextureRegion menuPlayButton;
 
+	private static TextureRegion testa;
+	private static TextureRegion testb;
+
+
 	//Card Sprites
 	private static TextureRegion backUpSprite;
 	private static TextureRegion leftTurnSprite;
@@ -102,6 +106,12 @@ public final class SpriteSheet {
 		this.menuPlayButton = new TextureRegion(texture);
 		//this.menuPlayButton.flip(false, true);
 
+		this.texture = new Texture("StateImages/tapToStart.gif");
+		this.testa = new TextureRegion(texture);
+
+		this.texture = new Texture("StateImages/tempBackground.jpg");
+		this.testb = new TextureRegion(texture);
+
 		this.texture = new Texture("clear.png");
 		this.cardGuiClearButton = new TextureRegion(texture);
 		//this.cardGuiClearButton.flip(false, true);
@@ -158,6 +168,10 @@ public final class SpriteSheet {
 				return menuBackground;
 			case MENU_PLAY_BUTTON:
 				return menuPlayButton;
+			case TEST_A:
+				return testa;
+			case TEST_B:
+				return testb;
 			case CARD_SUBMIT:
 				return cardGuiSubmitButton;
 			case CARD_CLEAR:
