@@ -33,7 +33,7 @@ public class CardManager {
         playerPtr = 0;
         sendCardsBackToDeck();
         cardDeck.shuffleDeck();
-
+        System.out.println(players.length);
         for (int i = 0; i < players.length; i++) {
             players[i].setCardHand(cardDeck.drawCards(9));
         }

@@ -47,11 +47,11 @@ public class NewCardHandGUI {
         spriteSheet = new SpriteSheet();
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
+        displayedCardsArr = new ImageButton[9];
 
         cardManager.newRound();
         selectCards();
 
-        displayedCardsArr = new ImageButton[9];
     }
 
     private void selectCards() {
@@ -64,7 +64,7 @@ public class NewCardHandGUI {
     }
 
     private void draw(List<Card> c) {
-        clearOldCards();
+        //clearOldCards();
         tempCardSeq = new Card[5];
         cardXPos = 0;
         final List<Card> cards = c;
