@@ -3,7 +3,7 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
-import inf112.skeleton.app.Visuals.CardManager;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.PendingCardsGUI;
 import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
@@ -26,7 +26,7 @@ public class ActionState extends State {
 		this.boardGUI = new BoardGUI(board, camera, this.stage);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch, camera);
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage);
 		this.pendingCardsGUI = new PendingCardsGUI(camera, batch, board);
 		this.cardManager = cardManager;
 	}

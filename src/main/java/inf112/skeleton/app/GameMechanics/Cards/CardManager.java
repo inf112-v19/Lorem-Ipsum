@@ -1,4 +1,4 @@
-package inf112.skeleton.app.Visuals;
+package inf112.skeleton.app.GameMechanics.Cards;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;

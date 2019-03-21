@@ -1,7 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.CardManager;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.States.ActionState;
 import inf112.skeleton.app.Visuals.States.CardState;
 import inf112.skeleton.app.Visuals.States.GameStateManager;

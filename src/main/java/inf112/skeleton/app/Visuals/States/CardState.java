@@ -2,6 +2,7 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.*;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -29,7 +30,7 @@ public class CardState extends State {
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
-        this.infoGUI = new PlayerInfoGUI(board, batch, camera);
+        this.infoGUI = new PlayerInfoGUI(board, batch, stage);
         this.cardManager = cardManager;
 
         this.cardHandGUI = new CardHandGUI(cardManager, camera, batch, stage);
