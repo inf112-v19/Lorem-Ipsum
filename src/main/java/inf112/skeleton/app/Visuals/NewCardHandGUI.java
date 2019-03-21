@@ -102,8 +102,10 @@ public class NewCardHandGUI {
 
     private void clearOldCards() {
         for (ImageButton button : displayedCardsArr) {
-            button.clearListeners();
-            button.clear();
+            if (button != null) {
+                button.clearListeners();
+                button.clear();
+            }
         }
     }
 

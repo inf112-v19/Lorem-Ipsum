@@ -23,7 +23,7 @@ public class CardState extends State {
 
     private CardManager cardManager;
 
-    public CardState(GameStateManager gsm, Board board) {
+    public CardState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
@@ -33,7 +33,7 @@ public class CardState extends State {
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
         this.infoGUI = new PlayerInfoGUI(board, batch, camera);
-
+        this.cardManager = cardManager;
         /**
          * code for testing CardHandGUI. Does not use players stored in board
          */
@@ -63,7 +63,7 @@ public class CardState extends State {
             }
         }
 		board.initRound();
-        gsm.set(new ActionState(gsm, board));
+        gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
 
     }

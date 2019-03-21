@@ -16,16 +16,18 @@ public class RoboRally extends ApplicationAdapter {
     public static final String TITLE = "Robo Rally";
 
     private GameStateManager gsm;
+    private CardManager cardManager;
 
     public RoboRally() {
         super();
         board = new Board("Boards/BigBoard.txt");
+        cardManager = new CardManager(board);
     }
 
     @Override
     public void create () {
         gsm = new GameStateManager();
-        gsm.push(new MenuState(gsm, board));
+        gsm.push(new MenuState(gsm, board, cardManager));
     }
 
     @Override
