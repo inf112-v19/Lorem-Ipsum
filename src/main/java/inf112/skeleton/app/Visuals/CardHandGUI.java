@@ -166,9 +166,7 @@ public class CardHandGUI {
      * adds label over selected card to indicate its place in the ready sequence
      */
     private void addLabel(int cardPtr) {
-        if (cardPtr == 0) {
-            infoBar.remove();
-        }
+        infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
         TextureRegion numberTexture = new TextureRegion(new Texture("CardImages/" + filename + ".png"));
@@ -198,8 +196,11 @@ public class CardHandGUI {
     }
 
     private void createSubmitButton() {
-        submit.setSize(80, 30);
+        submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
+        TextureRegion pressed = new TextureRegion(new Texture("submit_press.png"));
+        pressed.flip(false, true);
+        submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(submit);
 
         submit.addListener(new InputListener() {
@@ -222,8 +223,11 @@ public class CardHandGUI {
     }
 
     private void createClearButton() {
-        clear.setSize(80, 30);
+        clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight()-60);
+        TextureRegion pressed = new TextureRegion(new Texture("clear_press.png"));
+        pressed.flip(false, true);
+        clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(clear);
 
         clear.addListener(new InputListener() {

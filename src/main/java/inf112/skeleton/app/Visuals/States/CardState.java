@@ -51,7 +51,6 @@ public class CardState extends State {
 		board.initRound();
         gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
-
     }
 
     @Override
@@ -75,5 +74,4 @@ public class CardState extends State {
         boardGUI.resize();
         infoGUI.resize();
     }
-
 }
