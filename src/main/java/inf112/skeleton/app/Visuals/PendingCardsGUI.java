@@ -91,7 +91,6 @@ public class PendingCardsGUI {
     }
 
     private void addCardToStage(TextureRegion cardTexture, int yPos) {
-        cardTexture.flip(false, true);
         Image image = new Image(cardTexture);
         image.setSize(97, 135);
         image.setPosition(10, yPos);

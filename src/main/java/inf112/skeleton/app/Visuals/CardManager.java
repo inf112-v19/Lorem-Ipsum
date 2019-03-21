@@ -1,8 +1,5 @@
 package inf112.skeleton.app.Visuals;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
@@ -14,18 +11,11 @@ import java.util.List;
 public class CardManager {
 
     private ICardDeck cardDeck;
-
-    private Board board;
-    private OrthographicCamera camera;
     private Player[] players;
-
     private int playerPtr;
 
     public CardManager(Board board) {
-        this.board = board;
-
         players = board.getAllPlayers();
-
         cardDeck = new ProgramCardDeck();
     }
 
@@ -33,12 +23,9 @@ public class CardManager {
         playerPtr = 0;
         sendCardsBackToDeck();
         cardDeck.shuffleDeck();
-        System.out.println(players.length);
         for (int i = 0; i < players.length; i++) {
             players[i].setCardHand(cardDeck.drawCards(9));
         }
-
-
     }
 
     public Player getPlayer() {
@@ -46,9 +33,9 @@ public class CardManager {
     }
 
     public boolean hasNotReadyPlayers() {
-        for (Player player: players) {
+        for (Player player : players) {
             if (player.isReady()) {
-                break;
+                continue;
             } else {
                 return true;
             }
@@ -59,16 +46,24 @@ public class CardManager {
     private void sendCardsBackToDeck() {
         for (int i = 0; i < players.length; i++) {
             List<Card> cards = players[i].getCardHand();
-            for (int j = 0; j < cards.size(); j++) {
-                cardDeck.addCard(cards.get(j));
+            if (cards != null) {
+                for (int j = 0; j < cards.size(); j++) {
+                    cardDeck.addCard(cards.get(j));
+                }
             }
         }
     }
 
-    public boolean setCardSeq(Player player, List<Card> cards) {
-        if (cards.size() == 5) {
-            player.setCardSequence((Card[]) cards.toArray());
+    public boolean setCardSeq(Player player, Card[] cards) {
+        if (cards.length == 5) {
+            for (Card card : cards) {
+                if (card == null) {
+                    return false;
+                }
+            }
+            player.setCardSequence(cards);
             player.setReady();
+            playerPtr++;
             return true;
         } else {
             return false;

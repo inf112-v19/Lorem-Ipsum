@@ -58,31 +58,31 @@ public final class SpriteSheet {
 
 		this.texture = new Texture("CardImages/BackUp.png");
 		this.backUpSprite = new TextureRegion(texture);
-		//this.backUpSprite.flip(false, true);
+		this.backUpSprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/LeftTurn.png");
 		this.leftTurnSprite = new TextureRegion(texture);
-		//this.leftTurnSprite.flip(false, true);
+		this.leftTurnSprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/Move1.png");
 		this.move1Sprite = new TextureRegion(texture);
-		//this.move1Sprite.flip(false, true);
+		this.move1Sprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/Move2.png");
 		this.move2Sprite = new TextureRegion(texture);
-		//this.move2Sprite.flip(false, true);
+		this.move2Sprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/Move3.png");
 		this.move3Sprite = new TextureRegion(texture);
-		//this.move3Sprite.flip(false, true);
+		this.move3Sprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/RightTurn.png");
 		this.rightTurnSprite = new TextureRegion(texture);
-		//this.rightTurnSprite.flip(false, true);
+		this.rightTurnSprite.flip(false, true);
 
 		this.texture = new Texture("CardImages/U-Turn.png");
 		this.uTurnSprite = new TextureRegion(texture);
-		//this.uTurnSprite.flip(false, true);
+		this.uTurnSprite.flip(false, true);
 
 		this.texture = new Texture("StateImages/tapToStart.gif");
 		this.tapToStartSprite = new TextureRegion(texture);
@@ -99,14 +99,15 @@ public final class SpriteSheet {
 
 		this.texture = new Texture("clear.png");
 		this.cardGuiClearButton = new TextureRegion(texture);
-		//this.cardGuiClearButton.flip(false, true);
+		this.cardGuiClearButton.flip(false, true);
 
 		this.texture = new Texture("submit.png");
 		this.cardGuiSubmitButton = new TextureRegion(texture);
-		//this.cardGuiSubmitButton.flip(false, true);
+		this.cardGuiSubmitButton.flip(false, true);
 
 		this.texture = new Texture("CardImages/cardBar.png");
 		this.cardBar = new TextureRegion(texture);
+		this.cardBar.flip(false, true);
 
 
 	}
