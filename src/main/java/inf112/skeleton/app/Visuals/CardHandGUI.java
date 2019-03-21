@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
+import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -206,10 +207,11 @@ public class CardHandGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if (cardManager.setCardSeq(currentPlayer, tempCardSeq)) {
-                    System.out.print("submit: ");
+                    System.out.print("Cards submitted: ");
                     for (int i = 0; i < tempCardPtr; i++) {
                         System.out.print(tempCardSeq[i].toString() + ", ");
                     }
+                    System.out.println();
                     selectCards();
                 } else {
                     System.out.println("Select 5 cards!");

@@ -16,12 +16,10 @@ import java.util.HashMap;
 
 public class PendingCardsGUI {
 
-    private OrthographicCamera camera;
     private SpriteBatch batch;
     private Board board;
     private SpriteSheet spriteSheet;
     private Stage stage;
-    private ScreenViewport screenViewport;
 
     private BitmapFont playingCard;
     private BitmapFont pendingCard;
@@ -32,13 +30,11 @@ public class PendingCardsGUI {
     private Player nextPlayer;
     private HashMap<Player, TextureRegion> playerTextures;
 
-    public PendingCardsGUI(OrthographicCamera camera, SpriteBatch batch, Board board) {
-        this.camera = camera;
+    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage) {
         this.batch = batch;
         this.board = board;
         this.spriteSheet = new SpriteSheet();
-        this.screenViewport = new ScreenViewport(camera);
-        this.stage = new Stage(screenViewport);
+        this.stage = stage;
 
         playingCard = new BitmapFont(true);
         pendingCard = new BitmapFont(true);
@@ -58,7 +54,6 @@ public class PendingCardsGUI {
     }
 
     public void render() {
-        stage.clear();
         batch.begin();
         playingCard.draw(batch, "card being played:", 10, 10);
         pendingCard.draw(batch, "next up: ", 10, 165);
@@ -70,8 +65,6 @@ public class PendingCardsGUI {
         if (nextCard != null) {
             drawNextCard();
         }
-
-        stage.draw();
     }
 
     private void drawCurrentCard() {
@@ -82,7 +75,6 @@ public class PendingCardsGUI {
     }
 
     private void drawNextCard() {
-        //TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard), 40, 65, 115, 115);
         TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
         addCardToStage(card, 190);
         TextureRegion player = new TextureRegion(playerTextures.get(nextPlayer));
@@ -105,7 +97,6 @@ public class PendingCardsGUI {
     }
 
     public void dispose() {
-        stage.dispose();
         playingCard.dispose();
         pendingCard.dispose();
     }
