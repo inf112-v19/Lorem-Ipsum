@@ -21,7 +21,7 @@ public class ActionState extends State {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera);
+		this.boardGUI = new BoardGUI(board, camera, this.stage);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
 		this.infoGUI = new PlayerInfoGUI(board, batch, camera);
@@ -39,14 +39,18 @@ public class ActionState extends State {
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
 			System.out.println("update");
+
 			infoGUI.update();
+			pendingCardsGUI.update();
+			boardGUI.hideDeadPlayers();
+			boardGUI.showRevivedPlayers();
+
 
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.doNextAction();
 				boardGUI.update();
 			}else{
 				System.out.println("setting CardState");
-				boardGUI.showRevivedPlayers();
 				gsm.set(new CardState(gsm, board));
 				dispose();
 			}
@@ -56,14 +60,16 @@ public class ActionState extends State {
 
 	@Override
 	public void render() {
-		boardGUI.render();
+		//boardGUI.render();
+		super.render();
 		infoGUI.render();
 		pendingCardsGUI.render();
 	}
 
 	@Override
 	public void dispose() {
-		boardGUI.dispose();
+		//boardGUI.dispose();
+		super.dispose();
 		batch.dispose();
 		pendingCardsGUI.dispose();
 
@@ -72,7 +78,7 @@ public class ActionState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		boardGUI.resize();
+		//boardGUI.resize();
 		infoGUI.resize();
 	}
 }

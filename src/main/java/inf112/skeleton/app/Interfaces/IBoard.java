@@ -137,13 +137,13 @@ public interface IBoard<T> {
 	 * thisRoundsCards queue containing all the cards. Also initializes the cardToPlayer hashmap mapping each
 	 * card to a player.
 	 */
-	void initPhase();
+	void initRound();
 
 	/**
 	 * Checks if there is any current card being handled(movementCount>0) and proceed calling the movePlayer accordingly
 	 * or tries play the next card.
 	 *
-	 * @return
+	 * @return true if it managed to do an action
 	 */
 	boolean doNextAction();
 

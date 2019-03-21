@@ -13,8 +13,12 @@ public class CardState extends State {
     private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
-    private CardHandGUI cardGUI;
+
+    //private CardHandGUI cardGUI;
     private NewCardHandGUI newCardHandGUI;
+
+    private CardHandGUI cardHandGUI;
+
     private PlayerInfoGUI infoGUI;
 
     private CardManager cardManager;
@@ -23,7 +27,7 @@ public class CardState extends State {
         super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, camera);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
@@ -39,9 +43,9 @@ public class CardState extends State {
         testDeck.createNewDeck();
         testarr[0].setCardHand(testDeck.drawCards(9));
         testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardHandGUI(camera, batch, testarr);
+        this.cardHandGUI = new CardHandGUI(camera, batch, testarr, this.stage);
 
-        this.newCardHandGUI = new NewCardHandGUI(cardManager, camera, batch);
+        this.newCardHandGUI = new NewCardHandGUI(cardManager, camera, batch, stage);
 
         //this.cardGUI = new CardHandGUI(camera, batch, board, cardManager); //this is how it should be
     }
@@ -58,7 +62,7 @@ public class CardState extends State {
                 return;
             }
         }
-		board.initPhase();
+		board.initRound();
         gsm.set(new ActionState(gsm, board));
         dispose();
 
@@ -66,14 +70,15 @@ public class CardState extends State {
 
     @Override
     public void render() {
-        boardGUI.render();
-        cardGUI.render();
+        //boardGUI.render();
+        super.render();
+        //cardHandGUI.render();
         infoGUI.render();
     }
 
     @Override
     public void dispose() {
-        cardGUI.dispose();
+        //cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
     }
@@ -82,7 +87,7 @@ public class CardState extends State {
     public void resize() {
         super.resize();
         boardGUI.resize();
-        cardGUI.resize();
+        //cardHandGUI.resize();
         infoGUI.resize();
     }
 
