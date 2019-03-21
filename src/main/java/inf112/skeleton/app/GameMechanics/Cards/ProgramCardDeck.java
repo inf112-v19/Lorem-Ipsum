@@ -98,6 +98,10 @@ public class ProgramCardDeck implements ICardDeck {
         return card.getCardType();
     }
 
+    public void addCard(Card card) {
+        deck.add(card);
+    }
+
     public void clearDeck() {
         deck.removeAllElements();
     }

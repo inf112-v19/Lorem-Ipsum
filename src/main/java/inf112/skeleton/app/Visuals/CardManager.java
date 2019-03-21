@@ -24,7 +24,11 @@ import inf112.skeleton.app.Interfaces.ICardDeck;
             cardDeck = new ProgramCardDeck();
         }
 
-        public void pickCards() {
+        public void newRound() {
+            sendCardsBackToDeck();
+        }
+
+        private void sendCardsBackToDeck() {
 
         }
 
