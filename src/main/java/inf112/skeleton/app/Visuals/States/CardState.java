@@ -2,13 +2,10 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.BoardGUI;
-import inf112.skeleton.app.Visuals.CardHandGUI;
+import inf112.skeleton.app.Visuals.*;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
-import inf112.skeleton.app.Visuals.CardManager;
-import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class CardState extends State {
 
@@ -17,9 +14,10 @@ public class CardState extends State {
     private Player[] players;
     private ICardDeck cardDeck;
     private CardHandGUI cardGUI;
+    private NewCardHandGUI newCardHandGUI;
     private PlayerInfoGUI infoGUI;
 
-    //private CardManager cardManager;
+    private CardManager cardManager;
 
     public CardState(GameStateManager gsm, Board board) {
         super(gsm, board);
@@ -43,6 +41,7 @@ public class CardState extends State {
         testarr[1].setCardHand(testDeck.drawCards(9));
         this.cardGUI = new CardHandGUI(camera, batch, testarr);
 
+        this.newCardHandGUI = new NewCardHandGUI(cardManager, camera, batch);
 
         //this.cardGUI = new CardHandGUI(camera, batch, board, cardManager); //this is how it should be
     }
