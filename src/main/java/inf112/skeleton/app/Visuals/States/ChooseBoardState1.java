@@ -21,6 +21,7 @@ public class ChooseBoardState1 extends State {
     private Stage stage;
 
     private Image boardtype;
+    private String boardName;
 
     private boolean start;
 
@@ -35,11 +36,11 @@ public class ChooseBoardState1 extends State {
 
         this.start = false;
         setBoardTypes();
-        clickable();
+        clickable("Boards/BigBoard.txt");
     }
 
     /**
-     * set "board types"
+     * set "board types" (we have currently only one)
      */
     private void setBoardTypes() {
         this.boardtype = new Image(new TextureRegionDrawable(new Texture("StateImages/board.png")));
@@ -48,16 +49,21 @@ public class ChooseBoardState1 extends State {
         this.stage.addActor(this.boardtype);
     }
 
-    private void clickable() {
+    private void clickable(String boardName) {
         this.boardtype.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("tempBoard chosen!");
+                System.out.println("Board " + getBoardName() + " was chosen!");
                 start = true;
                 return true;
             }
         });
+        this.boardName = boardName;
         Gdx.input.setInputProcessor(this.stage);
+    }
+
+    public String getBoardName() {
+        return this.boardName;
     }
 
     @Override
