@@ -16,13 +16,20 @@ import inf112.skeleton.app.Visuals.SpriteType;
 
 public class ChoosePlayerState extends State {
     private SpriteSheet spriteSheet;
-    private TextureRegion background1;
+    private TextureRegion background;
 
     private Stage stage;
     private Image startButton;
 
-    private int amountPlayers = 3;
-    private int modifiedHeight;
+    private int amountPlayers;
+
+    private int spaceOverButtons;
+    private int halfButtonWidth;
+    private int halfButtonWidth1;
+    private int bigButtonWidth;
+    private int playerName;
+
+
 
     private boolean start;
 
@@ -33,53 +40,106 @@ public class ChoosePlayerState extends State {
         this.stage = new Stage(new ScreenViewport());
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background1 = this.spriteSheet.getTexture(SpriteType.TEST_A);
-
-        //Set start button
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
-        this.startButton.setSize(192, 49);
-        this.startButton.setPosition((RoboRally.WIDTH / 2) - (192/2), RoboRally.HEIGHT-(49*11));
-        this.stage.addActor(this.startButton);
-
-        //set players
-        SetAmountPlayers(amountPlayers);
+        this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
-        clickable();
 
+        this.amountPlayers = 4;
+        this.spaceOverButtons = 49*2;
+        this.halfButtonWidth = 193/2;
+        this.halfButtonWidth1 = 193/2;
+        this.bigButtonWidth = this.halfButtonWidth+193;
+
+        //set players
+        setSixPlayers();
+        //setAmountPlayers(amountPlayers);
 
     }
+    /**
+     * set start button
+     */
+    private void setStartButton() {
+        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
+        this.startButton.setSize(191, 49);
+        this.startButton.setPosition(((RoboRally.WIDTH / 2) - this.halfButtonWidth-6), RoboRally.HEIGHT-(49*11));
+        this.stage.addActor(this.startButton);
 
-    private void clickable() {
-        this.startButton.addListener(new InputListener() {
+        clickable(this.startButton, this.playerName);
+    }
+
+    /**
+     * set up to six players that you can choose
+     */
+    private void setSixPlayers() {
+        int nPlayers = 6;
+        for (int i = 1; i < nPlayers+1; i++) {
+            if (i >= 1 && i <= 3) {
+                String filename = "no" + i;
+                Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+                nplayers.setSize(191, 49);
+                nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT)/2);
+                this.stage.addActor(nplayers);
+
+                this.halfButtonWidth += bigButtonWidth;
+                this.playerName = i;
+                clickable(nplayers, this.playerName);
+            }
+            else {
+                String filename = "no" + i;
+                Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+                nplayers.setSize(191, 49);
+                nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT/3));
+                this.stage.addActor(nplayers);
+
+                this.halfButtonWidth1 += bigButtonWidth;
+                this.playerName = i;
+                clickable(nplayers, this.playerName);
+            }
+        }
+    }
+
+    /**
+     * adds the amount of players that can be chosen (max 4)
+     */
+    private void setAmountPlayers(int amountPlayers) {
+        for (int i = 1; i < amountPlayers+1; i++) {
+            String filename = "no" + i;
+            Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+            nplayers.setSize(191, 49);
+            nplayers.setPosition(((RoboRally.WIDTH / 2) - this.halfButtonWidth-6), RoboRally.HEIGHT - (spaceOverButtons*2));
+            this.stage.addActor(nplayers);
+
+            this.spaceOverButtons += 49;
+            this.playerName = i;
+            clickable(nplayers, this.playerName);
+        }
+    }
+
+    private void clickable(Image button, final int playerName) {
+        button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (amountPlayers == 1) {
-                    System.out.println("Player ready!");
+                if (playerName == 1) {
+                    System.out.println("1 player was chosen!");
                 } else {
-                    System.out.println(amountPlayers + " players ready!");
+                    System.out.println(playerName + " players was chosen!");
+                    savePlayerAmount(playerName);
                 }
                 start = true;
                 return true;
             }
         });
+        //this.playerName = playerName; // denne vil komme før touchDown og ramse opp alle
         Gdx.input.setInputProcessor(this.stage);
     }
 
-    /**
-     * adds the amount of players that can be chosen
-     */
-    private void SetAmountPlayers(int amountPlayers) {
-        this.modifiedHeight = 102+51;
-        for (int i = 0; i < amountPlayers; i++) {
-            String filename = "no" + (i+1);
-            Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
-            nplayers.setSize((390 / 2), (102 / 2));
-            nplayers.setPosition((RoboRally.WIDTH / 2) - ((390/2)/ 2), RoboRally.HEIGHT - modifiedHeight);
-            this.stage.addActor(nplayers);
+    public int savePlayerAmount(int playerName) {
+        this.playerName = playerName;
+        return playerName;
+    }
 
-            this.modifiedHeight += 102;
-        }
+    public int getPlayerAmount() {
+        return playerName;
     }
 
     @Override
@@ -99,7 +159,7 @@ public class ChoosePlayerState extends State {
     public void render() {
         this.stage.act();
         this.stage.getBatch().begin();
-        this.stage.getBatch().draw(this.background1, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
         this.stage.draw();
     }
