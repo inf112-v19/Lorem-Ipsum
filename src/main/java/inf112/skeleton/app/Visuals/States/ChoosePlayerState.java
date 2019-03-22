@@ -34,20 +34,12 @@ public class ChoosePlayerState extends State {
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background1 = this.spriteSheet.getTexture(SpriteType.TEST_A);
-        //this.playButton = this.spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
 
         //Set start button
         this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
-        //bg.setSize(390, 102);
         this.startButton.setSize(192, 49);
         this.startButton.setPosition((RoboRally.WIDTH / 2) - (192/2), RoboRally.HEIGHT-(49*11));
         this.stage.addActor(this.startButton);
-        /*
-        this.startButton = new ImageButton(new TextureRegionDrawable(this.playButton));
-        this.startButton.setSize(192, 49);
-        this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/(2)), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*2));
-        this.stage.addActor(this.startButton);
-        */
 
         //set players
         SetAmountPlayers(amountPlayers);
@@ -80,9 +72,7 @@ public class ChoosePlayerState extends State {
     private void SetAmountPlayers(int amountPlayers) {
         this.modifiedHeight = 102+51;
         for (int i = 0; i < amountPlayers; i++) {
-
             String filename = "no" + (i+1);
-
             Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
             nplayers.setSize((390 / 2), (102 / 2));
             nplayers.setPosition((RoboRally.WIDTH / 2) - ((390/2)/ 2), RoboRally.HEIGHT - modifiedHeight);
