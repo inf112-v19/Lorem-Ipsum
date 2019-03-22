@@ -43,10 +43,21 @@ public class ChooseBoardState extends State {
         this.background1 = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
-        this.halfButtonWidth = 191/2;
-        this.bigButtonWidth = this.halfButtonWidth+191;
+        this.halfButtonWidth = 193/2; //193 og ikke 191 fordi det passer bildet bedre
+        this.bigButtonWidth = this.halfButtonWidth+193;
         //this.boardTypes = 3;
 
+        setBoardTypes();
+
+        /*
+        for (int i = 1; i < boardTypes+1; i++) {
+            setBoardTypes(i, boardName);
+            clickable(i, boardName);
+        } */
+
+    }
+
+    private void setBoardTypes() {
         //first board
         this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
         this.boardtype1.setSize(191, 49);
@@ -67,13 +78,6 @@ public class ChooseBoardState extends State {
         this.boardtype3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype3);
         //clickable(this.boardtype3, "3");
-
-        /*
-        for (int i = 1; i < boardTypes+1; i++) {
-            setBoardTypes(i, boardName);
-            clickable(i, boardName);
-        } */
-
     }
 
     /**
