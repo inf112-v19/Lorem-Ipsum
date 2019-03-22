@@ -32,7 +32,7 @@ public class ChooseBoardState1 extends State {
         this.stage = new Stage(new ScreenViewport());
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background = this.spriteSheet.getTexture(SpriteType.TEST_A);
+        this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
         setBoardTypes();
