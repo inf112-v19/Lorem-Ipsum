@@ -72,29 +72,22 @@ public class ChoosePlayerState extends State {
      */
     private void setSixPlayers() {
         int nPlayers = 6;
+        Image nplayers;
         for (int i = 1; i < nPlayers+1; i++) {
+            String filename = "no" + i;
+            nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+            nplayers.setSize(191, 49);
+            this.stage.addActor(nplayers);
             if (i >= 1 && i <= 3) {
-                String filename = "no" + i;
-                Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
-                nplayers.setSize(191, 49);
                 nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT)/2);
-                this.stage.addActor(nplayers);
-
                 this.halfButtonWidth += bigButtonWidth;
-                this.playerName = i;
-                clickable(nplayers, this.playerName);
             }
             else {
-                String filename = "no" + i;
-                Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
-                nplayers.setSize(191, 49);
                 nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT/3));
-                this.stage.addActor(nplayers);
-
                 this.halfButtonWidth1 += bigButtonWidth;
-                this.playerName = i;
-                clickable(nplayers, this.playerName);
             }
+            this.playerName = i;
+            clickable(nplayers, this.playerName);
         }
     }
 
@@ -129,7 +122,7 @@ public class ChoosePlayerState extends State {
                 return true;
             }
         });
-        //this.playerName = playerName; // denne vil komme før touchDown og ramse opp alle
+        //this.playerName = playerName; // denne vil komme før touchDown, iterere gjennom alle, ende opp med den siste
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -145,6 +138,7 @@ public class ChoosePlayerState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
+            //System.out.println(getPlayerAmount());
             gsm.set(new CardState(gsm, board));
             dispose();
         }
