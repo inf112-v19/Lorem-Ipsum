@@ -50,7 +50,6 @@ public class ChoosePlayerState extends State {
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
 
-        //set players
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
 
