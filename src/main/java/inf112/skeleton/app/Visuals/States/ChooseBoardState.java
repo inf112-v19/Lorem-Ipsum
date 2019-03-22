@@ -20,7 +20,10 @@ public class ChooseBoardState extends State {
 
     private Stage stage;
 
-    //private int modifiedWidth;
+    private int halfButtonWidth;
+    private int bigButtonWidth;
+
+
     //private Image boardType;
     //private int boardTypes;
     private Image boardtype1;
@@ -37,30 +40,31 @@ public class ChooseBoardState extends State {
         this.stage = new Stage(new ScreenViewport());
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background1 = this.spriteSheet.getTexture(SpriteType.TEST_A);
+        this.background1 = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
-        //this.modifiedWidth = 191/2;
+        this.halfButtonWidth = 191/2;
+        this.bigButtonWidth = this.halfButtonWidth+191;
         //this.boardTypes = 3;
 
         //first board
         this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
         this.boardtype1.setSize(191, 49);
-        this.boardtype1.setPosition(191/2, RoboRally.HEIGHT/2);
+        this.boardtype1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype1);
         clickable(this.boardtype1, "Boards/BigBoard.txt");
 
         //second board
         this.boardtype2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
         this.boardtype2.setSize(191, 49);
-        this.boardtype2.setPosition(((191/2)+191 + (191/2)), RoboRally.HEIGHT/2);
+        this.boardtype2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype2);
         //clickable(this.boardtype2, "2");
 
         //third board
         this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
         this.boardtype3.setSize(191, 49);
-        this.boardtype3.setPosition(((191/2)+191 + (191/2)+191 + (191/2)), RoboRally.HEIGHT/2);
+        this.boardtype3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype3);
         //clickable(this.boardtype3, "3");
 
