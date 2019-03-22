@@ -20,9 +20,13 @@ public class ChooseBoardState extends State {
 
     private Stage stage;
 
-    private int modifiedWidth;
-    private Image boardtype;
-    private int boardTypes;
+    //private int modifiedWidth;
+    //private Image boardType;
+    //private int boardTypes;
+    private Image boardtype1;
+    private Image boardtype2;
+    private Image boardtype3;
+    private String boardName;
 
     private boolean start;
 
@@ -36,40 +40,67 @@ public class ChooseBoardState extends State {
         this.background1 = this.spriteSheet.getTexture(SpriteType.TEST_A);
 
         this.start = false;
+        //this.modifiedWidth = 191/2;
+        //this.boardTypes = 3;
 
-        this.modifiedWidth = 191/2;
-        this.boardTypes = 3;
+        //first board
+        this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
+        this.boardtype1.setSize(191, 49);
+        this.boardtype1.setPosition(191/2, RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardtype1);
+        clickable(this.boardtype1, "Boards/BigBoard.txt");
 
+        //second board
+        this.boardtype2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
+        this.boardtype2.setSize(191, 49);
+        this.boardtype2.setPosition(((191/2)+191 + (191/2)), RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardtype2);
+        //clickable(this.boardtype2, "2");
+
+        //third board
+        this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
+        this.boardtype3.setSize(191, 49);
+        this.boardtype3.setPosition(((191/2)+191 + (191/2)+191 + (191/2)), RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardtype3);
+        //clickable(this.boardtype3, "3");
+
+        /*
         for (int i = 1; i < boardTypes+1; i++) {
-            setBoardTypes(i);
-            clickable();
-        }
+            setBoardTypes(i, boardName);
+            clickable(i, boardName);
+        } */
+
     }
 
     /**
      * set "board types"
      */
-    private void setBoardTypes(int nBoard) {
+    /*private void setBoardTypes(int nBoard, String boardName) {
         String filename = "board" + (nBoard);
-        this.boardtype = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
-        this.boardtype.setSize(191, 49);
-        this.boardtype.setPosition(this.modifiedWidth, RoboRally.HEIGHT/2);
-        this.stage.addActor(this.boardtype);
+        this.boardType = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+        this.boardType.setSize(191, 49);
+        this.boardType.setPosition(this.modifiedWidth, RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardType);
 
         this.modifiedWidth += 191 + (191/2);
-    }
+    }*/
 
-    private void clickable() {
-        this.boardtype.addListener(new InputListener() {
+    private void clickable(Image boardType, final String boardName) {
+    //private void clickable(Image boardType, final String boardName) {
+        boardType.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Board chosen!");
+                System.out.println("Board " + boardName + " was chosen!");
                 start = true;
                 return true;
             }
         });
-
+        this.boardName = boardName;
         Gdx.input.setInputProcessor(this.stage);
+    }
+
+    public String getBoardName() {
+        return boardName;
     }
 
     @Override
