@@ -67,7 +67,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new ChooseBoardState1(gsm, board));
+            gsm.set(new ChooseBoardState(gsm, board));
             dispose();
         }
     }
