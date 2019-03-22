@@ -1,15 +1,14 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
@@ -19,10 +18,11 @@ public class MenuState extends State {
 
     private SpriteSheet spriteSheet;
     private TextureRegion background;
-    private TextureRegion playButton;
+    //private TextureRegion playButton;
+    //private ImageButton startButton;
+    private Image startButton;
 
     private Stage stage;
-    private ImageButton startButton;
 
     private boolean start;
 
@@ -34,18 +34,25 @@ public class MenuState extends State {
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.playButton = this.spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
+        //this.playButton = this.spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
+
+        //set start button
+
+        /*this.startButton = new ImageButton(new TextureRegionDrawable(this.playButton));
+        this.startButton.setSize(192, 49);
+        this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/2), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*3));
+        this.stage.addActor(this.startButton);
+        */
+        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
+        this.startButton.setSize(192, 49);
+        this.startButton.setPosition((RoboRally.WIDTH / 2) - (192/2), RoboRally.HEIGHT-(49*3));
+        this.stage.addActor(this.startButton);
 
         this.start = false;
         clickable();
     }
 
     private void clickable() {
-        this.startButton = new ImageButton(new TextureRegionDrawable(this.playButton));
-        this.startButton.setSize(358, 83);;
-        this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/2), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*2));
-
-        this.stage.addActor(this.startButton);
         this.startButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -60,7 +67,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new CardState(gsm, board));
+            gsm.set(new ChooseBoardState1(gsm, board));
             dispose();
         }
     }
