@@ -23,6 +23,8 @@ public class MenuState extends State {
     private Image startButton;
 
     private Stage stage;
+    private final int buttonWidth;
+    private final int buttonHeight;
 
     private boolean start;
 
@@ -36,24 +38,31 @@ public class MenuState extends State {
         this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
         //this.playButton = this.spriteSheet.getTexture(SpriteType.MENU_PLAY_BUTTON);
 
-        //set start button
+        this.start = false;
 
+        //set start button
         /*this.startButton = new ImageButton(new TextureRegionDrawable(this.playButton));
         this.startButton.setSize(192, 49);
         this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/2), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*3));
         this.stage.addActor(this.startButton);
         */
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
-        this.startButton.setSize(192, 49);
-        this.startButton.setPosition((RoboRally.WIDTH / 2) - (192/2), RoboRally.HEIGHT-(49*3));
-        this.stage.addActor(this.startButton);
+        this.buttonWidth = 192+64; //original size + 1/3 of the size
+        this.buttonHeight = 49+16; //original size + 1/3 of the size
 
-        this.start = false;
-        clickable();
+        setStartButton();
     }
 
-    private void clickable() {
-        this.startButton.addListener(new InputListener() {
+    private void setStartButton() {
+        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
+        this.startButton.setSize(buttonWidth, buttonHeight);
+        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), RoboRally.HEIGHT-(this.buttonHeight*2));
+        this.stage.addActor(this.startButton);
+
+        clickable(this.startButton);
+    }
+
+    private void clickable(Image button) {
+        button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Start game!");
