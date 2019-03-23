@@ -13,21 +13,17 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 
 public class PlayerInfoGUI {
-    private final OrthographicCamera camera;
     private BitmapFont[] fonts;
     private String[] playerNames;
 
     private Stage stage;
-    private ScreenViewport screenViewport;
 
     private Player[] players;
     private Batch batch;
 
-    public PlayerInfoGUI(Board board, Batch batch, OrthographicCamera camera) {
+    public PlayerInfoGUI(Board board, Batch batch, Stage stage) {
         this.batch = batch;
-        this.camera = camera;
-        this.screenViewport = new ScreenViewport(camera);
-        this.stage = new Stage(screenViewport);
+        this.stage = stage;
 
         players = board.getAllPlayers();
         playerNames = new String[players.length];
@@ -42,7 +38,6 @@ public class PlayerInfoGUI {
     }
 
     public void update() {
-        stage.clear();
         for (int i = 0; i < players.length; i++) {
             int lives = players[i].getLives();
             int health = players[i].getHealth();
@@ -54,7 +49,6 @@ public class PlayerInfoGUI {
 
     public void render() {
         renderNames();
-        stage.draw();
     }
 
     private void drawHealthPoint(int row, int numberOfPoints) {
@@ -132,7 +126,6 @@ public class PlayerInfoGUI {
         for (BitmapFont font : fonts) {
             font.dispose();
         }
-        stage.dispose();
     }
 
     public void resize() {
