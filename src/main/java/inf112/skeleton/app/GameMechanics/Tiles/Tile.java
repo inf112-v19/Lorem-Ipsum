@@ -19,6 +19,10 @@ public abstract class Tile implements ITile {
 	protected GameObject[] gameObjects;
 	protected Direction direction;
 
+	public Tile(GameObject[] gameObjects, Direction direction){
+		this.gameObjects = gameObjects;
+		this.direction = direction;
+	}
 
 	@Override
 	public Position getPosition() {
@@ -127,6 +131,10 @@ public abstract class Tile implements ITile {
 				player.decreaseHealth();
 			}
 		}
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 }
 

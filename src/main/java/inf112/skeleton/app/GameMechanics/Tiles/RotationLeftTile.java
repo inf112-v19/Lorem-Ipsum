@@ -10,8 +10,7 @@ import inf112.skeleton.app.Visuals.SpriteType;
 public class RotationLeftTile extends Tile{
 
     public RotationLeftTile(GameObject[] gameObjects, Direction direction) {
-        this.gameObjects = gameObjects;
-        this.direction = direction;
+        super(gameObjects,direction);
         super.spriteType = SpriteType.ROTATION_LEFT_TILE;
     }
 
