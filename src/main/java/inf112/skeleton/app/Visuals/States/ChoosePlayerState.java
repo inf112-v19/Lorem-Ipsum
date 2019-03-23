@@ -21,6 +21,8 @@ public class ChoosePlayerState extends State {
     private Stage stage;
     private Image startButton;
 
+    private Image textbar;
+
     private int amountPlayers;
 
     private int spaceOverButtons;
@@ -50,9 +52,18 @@ public class ChoosePlayerState extends State {
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
 
+        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
+
+        setTextbar();
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
 
+    }
+
+    private void setTextbar() {
+        this.textbar.setSize(1273/3, 102/3);
+        this.textbar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
+        this.stage.addActor(this.textbar);
     }
 
     /**
