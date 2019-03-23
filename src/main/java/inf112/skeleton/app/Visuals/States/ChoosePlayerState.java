@@ -22,9 +22,11 @@ public class ChoosePlayerState extends State {
     private Stage stage;
 
     private boolean start;
+    private boolean bar2;
 
     //text bar
-    private Image textbar;
+    private Image textBar;
+    private Image textBar2;
 
     //player
     private int amountPlayers;
@@ -47,9 +49,12 @@ public class ChoosePlayerState extends State {
         this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
+        this.bar2 = false;
 
         //text bar
-        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
+        this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
+        this.textBar2 = new Image(new TextureRegionDrawable(new Texture("StateImages/namePlayers.png")));
+
 
         //player
         this.amountPlayers = 4;
@@ -72,9 +77,18 @@ public class ChoosePlayerState extends State {
      * set the textbar "Choose player amount"
      */
     private void setTextbar() {
-        this.textbar.setSize(1273/3, 102/3);
-        this.textbar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
-        this.stage.addActor(this.textbar);
+        this.textBar.setSize(1273/3, 102/3);
+        this.textBar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
+        this.stage.addActor(this.textBar);
+    }
+
+    /**
+     * set the textbar2 "Name players"
+     */
+    private void setTextbar2() {
+        this.textBar2.setSize(821/3, 121/3);
+        this.textBar2.setPosition((RoboRally.WIDTH/2)-((821/3)/2), 102-(102/3));
+        this.stage.addActor(this.textBar2);
     }
 
     /**
@@ -131,9 +145,11 @@ public class ChoosePlayerState extends State {
                     savePlayerAmount(playerName);
                 }
                 start = true;
+                bar2 = true;
                 return true;
             }
         });
+
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -156,7 +172,7 @@ public class ChoosePlayerState extends State {
                 System.out.print("Enter your players name:\nplayer 1: ");
                 name = sc.next();
                 this.playerNames.add(name);
-                System.out.println("Player name saved, go back to game!");
+                System.out.println("Player name saved!");
             } else if (getPlayerAmount() >= 2 && getPlayerAmount() <= 6) {
                 System.out.println("Enter your players' name:");
                 for (int i = 1; i < getPlayerAmount() + 1; i++) {
@@ -164,9 +180,13 @@ public class ChoosePlayerState extends State {
                     name = sc.next();
                     this.playerNames.add(name);
                 }
-                System.out.println("Player names saved, go back to game!");
+                System.out.println("Player names saved!");
             }
         }
+    }
+
+    public ArrayList<String> getPlayerNames() {
+        return this.playerNames;
     }
 
     @Override
