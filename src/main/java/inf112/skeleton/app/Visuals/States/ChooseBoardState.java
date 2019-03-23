@@ -23,13 +23,13 @@ public class ChooseBoardState extends State {
     private int halfButtonWidth;
     private int bigButtonWidth;
 
-    private Image textbar;
+    private Image textBar;
 
     //private Image boardType;
     //private int boardTypes;
-    private Image boardtype1;
-    private Image boardtype2;
-    private Image boardtype3;
+    private Image boardType1;
+    private Image boardType2;
+    private Image boardType3;
     private String boardName;
 
     private boolean start;
@@ -48,13 +48,13 @@ public class ChooseBoardState extends State {
         this.bigButtonWidth = this.halfButtonWidth+193;
         //this.boardTypes = 3;
 
-        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/chooseBoardType.png")));
+        this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/chooseBoardType.png")));
 
-        this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
-        this.boardtype2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
-        this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
+        this.boardType1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
+        this.boardType2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
+        this.boardType3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
 
-        setTextbar();
+        setTextBar();
         setBoardTypes();
 
         /*
@@ -64,30 +64,30 @@ public class ChooseBoardState extends State {
         } */
     }
 
-    private void setTextbar() {
-        this.textbar.setSize(1070/3, 102/3);
-        this.textbar.setPosition((RoboRally.WIDTH/2)-((1070/3)/2), RoboRally.HEIGHT-(102));
-        this.stage.addActor(this.textbar);
+    private void setTextBar() {
+        this.textBar.setSize(1070/3, 102/3);
+        this.textBar.setPosition((RoboRally.WIDTH/2)-((1070/3)/2), RoboRally.HEIGHT-(102));
+        this.stage.addActor(this.textBar);
     }
 
     private void setBoardTypes() {
         //first board
-        this.boardtype1.setSize(191, 49);
-        this.boardtype1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
-        this.stage.addActor(this.boardtype1);
-        clickable(this.boardtype1, "Boards/BigBoard.txt");
+        this.boardType1.setSize(191, 49);
+        this.boardType1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardType1);
+        clickable(this.boardType1, "Boards/BigBoard.txt");
 
         //second board
-        this.boardtype2.setSize(191, 49);
-        this.boardtype2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
-        this.stage.addActor(this.boardtype2);
-        clickable(this.boardtype2, "2");
+        this.boardType2.setSize(191, 49);
+        this.boardType2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardType2);
+        clickable(this.boardType2, "2");
 
         //third board
-        this.boardtype3.setSize(191, 49);
-        this.boardtype3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
-        this.stage.addActor(this.boardtype3);
-        clickable(this.boardtype3, "3");
+        this.boardType3.setSize(191, 49);
+        this.boardType3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
+        this.stage.addActor(this.boardType3);
+        clickable(this.boardType3, "3");
     }
 
     /**
