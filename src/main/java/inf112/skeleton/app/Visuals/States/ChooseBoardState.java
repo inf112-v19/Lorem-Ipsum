@@ -17,20 +17,20 @@ import inf112.skeleton.app.Visuals.SpriteType;
 public class ChooseBoardState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background1;
-
     private Stage stage;
 
-    private int halfButtonWidth;
-    private int bigButtonWidth;
-
+    //text bar
     private Image textBar;
 
-    //private Image boardType;
-    //private int boardTypes;
+    //board types
+    private int halfButtonWidth;
+    private int bigButtonWidth;
     private Image boardType1;
     private Image boardType2;
     private Image boardType3;
     private String boardName;
+    //private Image boardType;
+    //private int boardTypes;
 
     private boolean start;
 
@@ -64,6 +64,9 @@ public class ChooseBoardState extends State {
         } */
     }
 
+    /**
+     * set the textbar "Choose board type"
+     */
     private void setTextBar() {
         this.textBar.setSize(1070/3, 102/3);
         this.textBar.setPosition((RoboRally.WIDTH/2)-((1070/3)/2), RoboRally.HEIGHT-(102));
@@ -129,7 +132,7 @@ public class ChooseBoardState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            //System.out.println(getBoardName());
+            System.out.println(getBoardName());
             gsm.set(new ChoosePlayerState(gsm, board));
             dispose();
         }
