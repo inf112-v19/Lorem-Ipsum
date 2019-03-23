@@ -69,6 +69,7 @@ public class ChooseBoardState1 extends State {
     @Override
     public void handleInput() {
         if (this.start) {
+            //System.out.println(getBoardName());
             gsm.set(new ChoosePlayerState(gsm, board));
             dispose();
         }
