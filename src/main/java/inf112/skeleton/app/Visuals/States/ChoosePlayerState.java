@@ -13,27 +13,29 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ChoosePlayerState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background;
-
     private Stage stage;
-    private Image startButton;
 
+    private boolean start;
+
+    //text bar
     private Image textbar;
 
+    //player
     private int amountPlayers;
-
     private int spaceOverButtons;
     private int halfButtonWidth;
     private int halfButtonWidth1;
     private int bigButtonWidth;
-    private int playerName;
+    private int playerAmount;
 
-
-
-    private boolean start;
+    //input
+    private ArrayList<String> playerNames;
 
     public ChoosePlayerState(GameStateManager gsm, Board board) {
         super(gsm, board);
@@ -46,20 +48,29 @@ public class ChoosePlayerState extends State {
 
         this.start = false;
 
+        //text bar
+        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
+
+        //player
         this.amountPlayers = 4;
         this.spaceOverButtons = 49*2;
         this.halfButtonWidth = 193/2;
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
 
-        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
-
         setTextbar();
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
 
+        //input
+        playerNames = new ArrayList<String>();
+
+
     }
 
+    /**
+     * set the textbar "Choose player amount"
+     */
     private void setTextbar() {
         this.textbar.setSize(1273/3, 102/3);
         this.textbar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
@@ -85,9 +96,10 @@ public class ChoosePlayerState extends State {
                 nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT/3));
                 this.halfButtonWidth1 += bigButtonWidth;
             }
-            this.playerName = i;
-            clickable(nplayers, this.playerName);
+            this.playerAmount = i;
+            clickable(nplayers, this.playerAmount);
         }
+
     }
 
     /**
@@ -102,8 +114,8 @@ public class ChoosePlayerState extends State {
             this.stage.addActor(nplayers);
 
             this.spaceOverButtons += 49;
-            this.playerName = i;
-            clickable(nplayers, this.playerName);
+            this.playerAmount = i;
+            clickable(nplayers, this.playerAmount);
         }
     }
 
@@ -113,6 +125,7 @@ public class ChoosePlayerState extends State {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (playerName == 1) {
                     System.out.println("1 player was chosen!");
+                    savePlayerAmount(playerName);
                 } else {
                     System.out.println(playerName + " players was chosen!");
                     savePlayerAmount(playerName);
@@ -121,23 +134,47 @@ public class ChoosePlayerState extends State {
                 return true;
             }
         });
-        //this.playerName = playerName; // denne vil komme før touchDown, iterere gjennom alle, ende opp med den siste
         Gdx.input.setInputProcessor(this.stage);
     }
 
-    private int savePlayerAmount(int playerName) {
-        this.playerName = playerName;
-        return playerName;
+    private int savePlayerAmount(int playerAmount) {
+        this.playerAmount = playerAmount;
+        return this.playerAmount;
     }
 
     public int getPlayerAmount() {
-        return this.playerName;
+        return this.playerAmount;
+    }
+
+    /**
+     * input name and it displays in output window
+     */
+    private void inputName() {
+        String name;
+        try (Scanner sc = new Scanner(System.in)){
+            if (getPlayerAmount() == 1) {
+                System.out.print("Enter your players name:\nplayer 1: ");
+                name = sc.next();
+                this.playerNames.add(name);
+                System.out.println("Player name saved, go back to game!");
+            } else if (getPlayerAmount() >= 2 && getPlayerAmount() <= 6) {
+                System.out.println("Enter your players' name:");
+                for (int i = 1; i < getPlayerAmount() + 1; i++) {
+                    System.out.print("player " + i + ": ");
+                    name = sc.next();
+                    this.playerNames.add(name);
+                }
+                System.out.println("Player names saved, go back to game!");
+            }
+        }
     }
 
     @Override
     public void handleInput() {
         if (this.start) {
-            //System.out.println(getPlayerAmount());
+            do {
+                inputName();
+            } while (this.playerNames.size() != this.playerAmount);
             gsm.set(new CardState(gsm, board));
             dispose();
         }
