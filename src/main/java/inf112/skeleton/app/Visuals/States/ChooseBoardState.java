@@ -23,6 +23,7 @@ public class ChooseBoardState extends State {
     private int halfButtonWidth;
     private int bigButtonWidth;
 
+    private Image textbar;
 
     //private Image boardType;
     //private int boardTypes;
@@ -47,7 +48,15 @@ public class ChooseBoardState extends State {
         this.bigButtonWidth = this.halfButtonWidth+193;
         //this.boardTypes = 3;
 
+        this.textbar = new Image(new TextureRegionDrawable(new Texture("StateImages/chooseBoardType.png")));
+
+        this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
+        this.boardtype2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
+        this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
+
+        setTextbar();
         setBoardTypes();
+
         /*
         for (int i = 1; i < boardTypes+1; i++) {
             setBoardTypes(i, boardName);
@@ -55,23 +64,26 @@ public class ChooseBoardState extends State {
         } */
     }
 
+    private void setTextbar() {
+        this.textbar.setSize(1070/3, 102/3);
+        this.textbar.setPosition((RoboRally.WIDTH/2)-((1070/3)/2), RoboRally.HEIGHT-(102));
+        this.stage.addActor(this.textbar);
+    }
+
     private void setBoardTypes() {
         //first board
-        this.boardtype1 = new Image(new TextureRegionDrawable(new Texture("StateImages/board1.png")));
         this.boardtype1.setSize(191, 49);
         this.boardtype1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype1);
         clickable(this.boardtype1, "Boards/BigBoard.txt");
 
         //second board
-        this.boardtype2 = new Image(new TextureRegionDrawable(new Texture("StateImages/board2.png")));
         this.boardtype2.setSize(191, 49);
         this.boardtype2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype2);
         clickable(this.boardtype2, "2");
 
         //third board
-        this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
         this.boardtype3.setSize(191, 49);
         this.boardtype3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype3);
