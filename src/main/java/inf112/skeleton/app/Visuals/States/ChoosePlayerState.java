@@ -54,20 +54,9 @@ public class ChoosePlayerState extends State {
         //setAmountPlayers(amountPlayers);
 
     }
-    /**
-     * set start button
-     */
-    private void setStartButton() {
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
-        this.startButton.setSize(191, 49);
-        this.startButton.setPosition(((RoboRally.WIDTH / 2) - this.halfButtonWidth-6), RoboRally.HEIGHT-(49*11));
-        this.stage.addActor(this.startButton);
-
-        clickable(this.startButton, this.playerName);
-    }
 
     /**
-     * set up to six players that you can choose
+     * set up six players that you can choose
      */
     private void setSixPlayers() {
         int nPlayers = 6;
