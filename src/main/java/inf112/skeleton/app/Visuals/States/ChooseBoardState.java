@@ -70,14 +70,14 @@ public class ChooseBoardState extends State {
         this.boardtype2.setSize(191, 49);
         this.boardtype2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype2);
-        //clickable(this.boardtype2, "2");
+        clickable(this.boardtype2, "2");
 
         //third board
         this.boardtype3 = new Image(new TextureRegionDrawable(new Texture("StateImages/board3.png")));
         this.boardtype3.setSize(191, 49);
         this.boardtype3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardtype3);
-        //clickable(this.boardtype3, "3");
+        clickable(this.boardtype3, "3");
     }
 
     /**
@@ -99,21 +99,27 @@ public class ChooseBoardState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("Board " + boardName + " was chosen!");
+                saveBoardName(boardName);
                 start = true;
                 return true;
             }
         });
-        this.boardName = boardName;
         Gdx.input.setInputProcessor(this.stage);
     }
 
+    private String saveBoardName(String boardName) {
+        this.boardName = boardName;
+        return this.boardName;
+    }
+
     public String getBoardName() {
-        return boardName;
+        return this.boardName;
     }
 
     @Override
     public void handleInput() {
         if (this.start) {
+            //System.out.println(getBoardName());
             gsm.set(new ChoosePlayerState(gsm, board));
             dispose();
         }
