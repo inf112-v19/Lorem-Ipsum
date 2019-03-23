@@ -83,7 +83,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new ChooseBoardState(gsm, board));
+            gsm.set(new ChooseBoardState(gsm, board, cardManager));
             dispose();
         }
     }
@@ -114,4 +114,3 @@ public class MenuState extends State {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }
-//hei

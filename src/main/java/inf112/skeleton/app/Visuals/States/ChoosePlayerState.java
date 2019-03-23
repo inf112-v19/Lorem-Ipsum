@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -20,6 +21,7 @@ public class ChoosePlayerState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background;
     private Stage stage;
+    private CardManager cardManager;
 
     private boolean start;
     private boolean bar2;
@@ -39,7 +41,7 @@ public class ChoosePlayerState extends State {
     //input
     private ArrayList<String> playerNames;
 
-    public ChoosePlayerState(GameStateManager gsm, Board board) {
+    public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
 
         this.spriteSheet = new SpriteSheet();
@@ -47,6 +49,8 @@ public class ChoosePlayerState extends State {
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
+
+        this.cardManager = cardManager;
 
         this.start = false;
         this.bar2 = false;
@@ -195,7 +199,7 @@ public class ChoosePlayerState extends State {
             do {
                 inputName();
             } while (this.playerNames.size() != this.playerAmount);
-            gsm.set(new CardState(gsm, board));
+            gsm.set(new CardState(gsm, board, cardManager));
             dispose();
         }
     }
