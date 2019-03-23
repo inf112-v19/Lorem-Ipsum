@@ -58,7 +58,6 @@ public class ChooseBoardState1 extends State {
                 return true;
             }
         });
-        this.boardName = boardName;
         Gdx.input.setInputProcessor(this.stage);
     }
 
