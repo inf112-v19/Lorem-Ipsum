@@ -48,13 +48,11 @@ public class ChooseBoardState extends State {
         //this.boardTypes = 3;
 
         setBoardTypes();
-
         /*
         for (int i = 1; i < boardTypes+1; i++) {
             setBoardTypes(i, boardName);
             clickable(i, boardName);
         } */
-
     }
 
     private void setBoardTypes() {

@@ -46,6 +46,7 @@ public class MenuState extends State {
         this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.playButton.getRegionWidth()/2), RoboRally.HEIGHT-(this.playButton.getRegionHeight()*3));
         this.stage.addActor(this.startButton);
         */
+
         this.buttonWidth = 192+64; //original size + 1/3 of the size
         this.buttonHeight = 49+16; //original size + 1/3 of the size
 
