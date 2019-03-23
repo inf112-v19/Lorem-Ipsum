@@ -125,13 +125,13 @@ public class ChoosePlayerState extends State {
         Gdx.input.setInputProcessor(this.stage);
     }
 
-    public int savePlayerAmount(int playerName) {
+    private int savePlayerAmount(int playerName) {
         this.playerName = playerName;
         return playerName;
     }
 
     public int getPlayerAmount() {
-        return playerName;
+        return this.playerName;
     }
 
     @Override
