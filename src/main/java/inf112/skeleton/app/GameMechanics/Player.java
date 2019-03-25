@@ -212,7 +212,7 @@ public class Player extends Image implements IPlayer {
     public void setReady() {
         ready = true;
     }
-    
+
     public void setNotReady(){
         ready = false;
     }
