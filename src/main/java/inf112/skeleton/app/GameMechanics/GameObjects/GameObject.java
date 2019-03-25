@@ -5,7 +5,11 @@ import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 
-public abstract class GameObject implements IGameObject {
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+
+public abstract class GameObject extends Image implements IGameObject {
 
 	protected Direction dir;
 	protected SpriteType spriteType;
@@ -48,4 +52,29 @@ public abstract class GameObject implements IGameObject {
 		GameObject gameObject = (GameObject) obj;
     	return gameObject.getDirection().equals(this.dir);
     }
+
+	@Override
+	public int getWidth(ImageObserver imageObserver) {
+		return 0;
+	}
+
+	@Override
+	public int getHeight(ImageObserver imageObserver) {
+		return 0;
+	}
+
+	@Override
+	public ImageProducer getSource() {
+		return null;
+	}
+
+	@Override
+	public Graphics getGraphics() {
+		return null;
+	}
+
+	@Override
+	public Object getProperty(String s, ImageObserver imageObserver) {
+		return null;
+	}
 }
