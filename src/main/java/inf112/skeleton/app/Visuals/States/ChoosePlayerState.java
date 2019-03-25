@@ -182,7 +182,7 @@ public class ChoosePlayerState extends State {
             Player player = new Player(i , getPlayerNames(i), Direction.EAST);
             players.add(player);
         }
-        return null;
+        return players;
     }
 
     /**
