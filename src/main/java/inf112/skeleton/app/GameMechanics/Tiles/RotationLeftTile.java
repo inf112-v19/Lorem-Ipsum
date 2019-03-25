@@ -14,8 +14,6 @@ public class RotationLeftTile extends Tile{
     public RotationLeftTile(GameObject[] gameObjects, Direction direction) {
         super(gameObjects,direction);
         super.spriteType = SpriteType.ROTATION_LEFT_TILE;
-        this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
-
     }
 
     @Override

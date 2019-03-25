@@ -14,8 +14,6 @@ public class RepairTile extends Tile {
 	public RepairTile(GameObject[] gameObjects, Direction direction) {
 		super(gameObjects, direction);
 		super.spriteType = SpriteType.REPAIR_TILE;
-		this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
-
 	}
 
 	@Override

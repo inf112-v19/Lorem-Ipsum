@@ -14,8 +14,6 @@ public class DoubleConveyorBeltTile extends Tile {
     public DoubleConveyorBeltTile(GameObject[] gameObjects, Direction direction) {
         super(gameObjects, direction);
         this.setDirection();
-        this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
-
     }
 
     private void setDirection(){

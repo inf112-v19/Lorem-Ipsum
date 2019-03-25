@@ -14,8 +14,6 @@ public class OptionsTile extends Tile{
     public OptionsTile(GameObject[] gameObjects, Direction direction) {
         super(gameObjects, direction);
         super.spriteType = SpriteType.OPTIONS_TILE;
-        this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
-
     }
 
     @Override

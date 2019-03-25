@@ -15,8 +15,6 @@ public class NormalTile extends Tile {
 	public NormalTile(GameObject[] gameObjects, Direction direction) {
 		super(gameObjects, direction);
 		super.spriteType = SpriteType.NORMAL_TILE;
-		this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
-
 	}
 
 

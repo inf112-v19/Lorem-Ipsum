@@ -14,13 +14,14 @@ import inf112.skeleton.app.GameMechanics.Position;
 
 import java.util.Arrays;
 
-public abstract class Tile extends Image implements ITile {
+public abstract class Tile implements ITile {
 
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
 	protected Direction direction;
 
 	public Tile(GameObject[] gameObjects, Direction direction){
+		super();
 		this.gameObjects = gameObjects;
 		this.direction = direction;
 	}

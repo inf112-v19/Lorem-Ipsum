@@ -11,7 +11,6 @@ public class HoleTile extends Tile {
 	public HoleTile(GameObject[] gameObjects, Direction direction) {
 		super(gameObjects, direction);
 		super.spriteType = SpriteType.HOLE_TILE;
-		this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
 	}
 
 }
