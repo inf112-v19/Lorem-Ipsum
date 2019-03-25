@@ -15,6 +15,7 @@ import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
+
 public class ChooseBoardState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background1;
@@ -36,8 +37,12 @@ public class ChooseBoardState extends State {
 
     private boolean start;
 
+    private RoboRally roborally;
+
     public ChooseBoardState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
+
+        this.roborally = new RoboRally();
 
         this.cardManager = cardManager;
 
@@ -82,19 +87,19 @@ public class ChooseBoardState extends State {
         this.boardType1.setSize(191, 49);
         this.boardType1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType1);
-        clickable(this.boardType1, "Boards/BigBoard.txt");
+        clickable(this.boardType1, roborally.setBoard(1));
 
         //second board
         this.boardType2.setSize(191, 49);
         this.boardType2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType2);
-        clickable(this.boardType2, "2");
+        clickable(this.boardType2, roborally.setBoard(2));
 
         //third board
         this.boardType3.setSize(191, 49);
         this.boardType3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType3);
-        clickable(this.boardType3, "3");
+        clickable(this.boardType3, roborally.setBoard(3));
     }
 
     /**
