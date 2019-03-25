@@ -19,6 +19,10 @@ public class CardManager {
         cardDeck = new ProgramCardDeck();
     }
 
+    /**
+     * Initialize new round. Fills card deck with last round cards.
+     * Draw new cards for each player.
+     */
     public void newRound() {
         playerPtr = 0;
         sendCardsBackToDeck();
@@ -28,10 +32,18 @@ public class CardManager {
         }
     }
 
+    /**
+     * @return current player for assigning play sequence
+     */
     public Player getPlayer() {
         return players[playerPtr];
     }
 
+    /**
+     * Checks if all players has a valid play card sequence
+     *
+     * @return true if there is one or more player without a valid card sequence ready to execute
+     */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
             if (player.isReady()) {
@@ -43,17 +55,13 @@ public class CardManager {
         return false;
     }
 
-    private void sendCardsBackToDeck() {
-        for (int i = 0; i < players.length; i++) {
-            List<Card> cards = players[i].getCardHand();
-            if (cards != null) {
-                for (int j = 0; j < cards.size(); j++) {
-                    cardDeck.addCard(cards.get(j));
-                }
-            }
-        }
-    }
-
+    /**
+     * Sets a five card play sequence for a given player
+     *
+     * @param player
+     * @param cards
+     * @return true if its a valid 5 card sequence
+     */
     public boolean setCardSeq(Player player, Card[] cards) {
         if (cards.length == 5) {
             for (Card card : cards) {
@@ -67,6 +75,17 @@ public class CardManager {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void sendCardsBackToDeck() {
+        for (int i = 0; i < players.length; i++) {
+            List<Card> cards = players[i].getCardHand();
+            if (cards != null) {
+                for (int j = 0; j < cards.size(); j++) {
+                    cardDeck.addCard(cards.get(j));
+                }
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ public class Card implements Comparable<Card>{
         } else {
             return this.priority > other.priority ? 1 : -1;
         }
-        //return Integer.compare(this.priority, other.priority);
     }
 
     @Override
