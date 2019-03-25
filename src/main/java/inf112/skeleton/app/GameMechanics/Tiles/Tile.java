@@ -1,5 +1,6 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -13,7 +14,7 @@ import inf112.skeleton.app.GameMechanics.Position;
 
 import java.util.Arrays;
 
-public abstract class Tile implements ITile {
+public abstract class Tile extends Image implements ITile {
 
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;

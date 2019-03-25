@@ -1,10 +1,12 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class DoubleConveyorBeltTile extends Tile {
@@ -12,6 +14,8 @@ public class DoubleConveyorBeltTile extends Tile {
     public DoubleConveyorBeltTile(GameObject[] gameObjects, Direction direction) {
         super(gameObjects, direction);
         this.setDirection();
+        this.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(this).getTexture()));
+
     }
 
     private void setDirection(){
