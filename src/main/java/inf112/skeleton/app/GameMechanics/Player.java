@@ -1,11 +1,7 @@
 package inf112.skeleton.app.GameMechanics;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
-import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
@@ -23,6 +19,7 @@ public class Player extends Image implements IPlayer {
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
+	private boolean isDead = false;
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -111,9 +108,16 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * decreses the players total lives
+     * decreases the players total lives
      */
-    public void decreseLives() { playerlives--; }
+    public void decreaseLives() {
+    	if (playerlives>0){
+			playerlives--;
+		}
+    	else {
+    		isDead = true;
+		}
+    }
 
     /**
      * @return players Direction
@@ -151,8 +155,13 @@ public class Player extends Image implements IPlayer {
      * destroy the player (lose a total life and set health to max)
      */
     public void destroyPlayer(){
-        playerlives--;
-        playerHealth = 10;
+		if (playerlives>0){
+			playerlives--;
+			playerHealth = 10;
+		}
+		else {
+			isDead = true;
+		}
     }
 
     /**
@@ -163,7 +172,7 @@ public class Player extends Image implements IPlayer {
         playerHealth--;
         if(playerHealth<=0){
             playerHealth = 10;
-            decreseLives();
+            decreaseLives();
         }
     }
 
@@ -246,5 +255,9 @@ public class Player extends Image implements IPlayer {
 
 	public int getIndex() {
 		return index;
+	}
+
+	public boolean isDead() {
+		return isDead;
 	}
 }
