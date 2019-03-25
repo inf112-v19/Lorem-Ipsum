@@ -22,7 +22,6 @@ public class Player extends Image implements IPlayer {
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
-	private boolean isDead = false;
 	private HashSet<Flag> collectedFlags = new HashSet<>();
 
     private Direction playerDirection; //Direction the player is facing
@@ -118,9 +117,6 @@ public class Player extends Image implements IPlayer {
     	if (playerlives>0){
 			playerlives--;
 		}
-    	else {
-    		isDead = true;
-		}
     }
 
     /**
@@ -162,9 +158,6 @@ public class Player extends Image implements IPlayer {
 		if (playerlives>0){
 			playerlives--;
 			playerHealth = 10;
-		}
-		else {
-			isDead = true;
 		}
     }
 
