@@ -37,6 +37,9 @@ public class PlayerInfoGUI {
         update();
     }
 
+    /**
+     * Updates health and lives of each player
+     */
     public void update() {
         for (int i = 0; i < players.length; i++) {
             int lives = players[i].getLives();
@@ -47,8 +50,24 @@ public class PlayerInfoGUI {
         render();
     }
 
+    /**
+     * renders fonts on screen
+     */
     public void render() {
         renderNames();
+    }
+
+    /**
+     * removes font from screen
+     */
+    public void dispose() {
+        for (BitmapFont font : fonts) {
+            font.dispose();
+        }
+    }
+
+    public void resize() {
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     private void drawHealthPoint(int row, int numberOfPoints) {
@@ -121,15 +140,4 @@ public class PlayerInfoGUI {
         }
         batch.end();
     }
-
-    public void dispose() {
-        for (BitmapFont font : fonts) {
-            font.dispose();
-        }
-    }
-
-    public void resize() {
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }
-
 }

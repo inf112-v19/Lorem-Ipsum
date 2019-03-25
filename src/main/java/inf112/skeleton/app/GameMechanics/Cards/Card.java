@@ -2,7 +2,7 @@ package inf112.skeleton.app.GameMechanics.Cards;
 
 import inf112.skeleton.app.Visuals.SpriteType;
 
-public class Card implements Comparable<Card>{
+public class Card implements Comparable<Card> {
     CardType type;
     int priority;
 
