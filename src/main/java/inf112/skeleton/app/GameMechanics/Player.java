@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Player extends Image implements IPlayer {
 
+	private int index;
     private SpriteType spriteType = SpriteType.PLAYER;
     private String playerID;
     private List<Card> playerHand;
@@ -22,7 +23,6 @@ public class Player extends Image implements IPlayer {
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
-
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -38,6 +38,13 @@ public class Player extends Image implements IPlayer {
         this.playerID = playerID;
         setPlayerDirection(direction);
     }
+
+
+	public Player(int index, String playerID, Direction direction) {
+    	this.index = index;
+		this.playerID = playerID;
+		setPlayerDirection(direction);
+	}
 
 
     /**
