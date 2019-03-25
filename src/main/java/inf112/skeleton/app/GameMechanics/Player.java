@@ -244,4 +244,7 @@ public class Player extends Image implements IPlayer {
     	this.isOnTheBoard = isOnTheBoard;
 	}
 
+	public int getIndex() {
+		return index;
+	}
 }
