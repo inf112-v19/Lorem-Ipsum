@@ -29,7 +29,33 @@ public class Card implements Comparable<Card>{
 
     @Override
     public int compareTo(Card other) {
-        return Integer.compare(this.priority, other.priority);
+        if (this.equals(other)) {
+            return 0;
+        } else {
+            return this.priority > other.priority ? 1 : -1;
+        }
+        //return Integer.compare(this.priority, other.priority);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
+
+        Card c = (Card) o;
+
+        return this.priority == c.priority;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 53 * hash + this.priority;
+        return hash;
+    }
 }
