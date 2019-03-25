@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
+import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -39,7 +41,9 @@ public class ChoosePlayerState extends State {
     private int playerAmount;
 
     //input
-    private ArrayList<String> playerNames;
+    public ArrayList<String> playerNames;
+
+    public ArrayList<Player> players;
 
     public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
@@ -73,6 +77,7 @@ public class ChoosePlayerState extends State {
 
         //input
         playerNames = new ArrayList<String>();
+        players = new ArrayList<Player>();
 
 
     }
@@ -162,12 +167,26 @@ public class ChoosePlayerState extends State {
         return this.playerAmount;
     }
 
+    /**
+     * @return how many players is chosen
+     */
     public int getPlayerAmount() {
         return this.playerAmount;
     }
 
     /**
-     * input name and it displays in output window
+     * lager spillere i forhold til hvor mange spillere som er valgt
+     */
+    public ArrayList<Player> createPlayers() {
+        for (int i = 1; i < getPlayerAmount()+1; i++) {
+            Player player = new Player(i , getPlayerNames(i), Direction.EAST);
+            players.add(player);
+        }
+
+    }
+
+    /**
+     * input name in commandline
      */
     private void inputName() {
         String name;
@@ -189,8 +208,13 @@ public class ChoosePlayerState extends State {
         }
     }
 
-    public ArrayList<String> getPlayerNames() {
-        return this.playerNames;
+    public String getPlayerNames(int playerIndex) {
+        for (int i = 1; i < getPlayerAmount()+1; i++) {
+            if (playerIndex == i) {
+                return playerNames.get(i);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -199,7 +223,8 @@ public class ChoosePlayerState extends State {
             do {
                 inputName();
             } while (this.playerNames.size() != this.playerAmount);
-            gsm.set(new CardState(gsm, board, cardManager));
+            //gsm.set(new CardState(gsm, board, cardManager));
+            gsm.set(new (gsm, board, cardManager, createPlayers()));
             dispose();
         }
     }
