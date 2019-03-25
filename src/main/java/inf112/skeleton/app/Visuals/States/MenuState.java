@@ -7,10 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -23,14 +22,16 @@ public class MenuState extends State {
 
     private Stage stage;
     private ImageButton startButton;
+    private CardManager cardManager;
 
     private boolean start;
 
-    public MenuState(GameStateManager gsm, Board board) {
+    public MenuState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
 
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
+        this.cardManager = cardManager;
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
@@ -60,7 +61,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new CardState(gsm, board));
+            gsm.set(new CardState(gsm, board, cardManager));
             dispose();
         }
     }

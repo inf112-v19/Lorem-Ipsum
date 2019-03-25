@@ -33,4 +33,16 @@ public interface ICardDeck {
      */
     CardType getCardType(Card card);
 
+    /**
+     * adds a card back into the deck
+     *
+     * @param card
+     */
+    void addCard(Card card);
+
+    /**
+     * shuffles deck
+     */
+    void shuffleDeck();
+
 }

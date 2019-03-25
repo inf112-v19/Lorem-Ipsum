@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.MenuState;
 
@@ -16,16 +17,18 @@ public class RoboRally extends ApplicationAdapter {
     public static final String TITLE = "Robo Rally";
 
     private GameStateManager gsm;
+    private CardManager cardManager;
 
     public RoboRally() {
         super();
         board = new Board("Boards/BigBoard.txt");
+        cardManager = new CardManager(board);
     }
 
     @Override
     public void create () {
         gsm = new GameStateManager();
-        gsm.push(new MenuState(gsm, board));
+        gsm.push(new MenuState(gsm, board, cardManager));
     }
 
     @Override

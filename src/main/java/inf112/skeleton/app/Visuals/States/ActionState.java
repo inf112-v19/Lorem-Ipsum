@@ -3,6 +3,7 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.PendingCardsGUI;
 import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
@@ -16,16 +17,18 @@ public class ActionState extends State {
 	private BoardGUI boardGUI;
 	private PlayerInfoGUI infoGUI;
 	private PendingCardsGUI pendingCardsGUI;
+	private CardManager cardManager;
 
-	public ActionState(GameStateManager gsm, Board board) {
+	public ActionState(GameStateManager gsm, Board board, CardManager cardManager) {
 		super(gsm, board);
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera);
+		this.boardGUI = new BoardGUI(board, camera, this.stage);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch, camera);
-		this.pendingCardsGUI = new PendingCardsGUI(camera, batch, board);
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage);
+		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage);
+		this.cardManager = cardManager;
 	}
 
 	@Override
@@ -45,27 +48,31 @@ public class ActionState extends State {
 			boardGUI.hideDeadPlayers();
 			boardGUI.showRevivedPlayers();
 
+
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.doNextAction();
 				boardGUI.update();
 			}else{
 				System.out.println("setting CardState");
-				gsm.set(new CardState(gsm, board));
+				gsm.set(new CardState(gsm, board, cardManager));
 				dispose();
 			}
+			pendingCardsGUI.update();
 		}
 	}
 
 	@Override
 	public void render() {
-		boardGUI.render();
+		//boardGUI.render();
+		super.render();
 		infoGUI.render();
 		pendingCardsGUI.render();
 	}
 
 	@Override
 	public void dispose() {
-		boardGUI.dispose();
+		//boardGUI.dispose();
+		super.dispose();
 		batch.dispose();
 		pendingCardsGUI.dispose();
 
@@ -74,7 +81,7 @@ public class ActionState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		boardGUI.resize();
+		//boardGUI.resize();
 		infoGUI.resize();
 	}
 }

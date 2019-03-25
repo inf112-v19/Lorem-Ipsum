@@ -2,12 +2,11 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.BoardGUI;
-import inf112.skeleton.app.Visuals.CardHandGUI;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
+import inf112.skeleton.app.Visuals.*;
 import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
-import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class CardState extends State {
 
@@ -15,33 +14,26 @@ public class CardState extends State {
     private SpriteBatch batch;
     private Player[] players;
     private ICardDeck cardDeck;
-    private CardHandGUI cardGUI;
+
+    private CardHandGUI cardHandGUI;
+
     private PlayerInfoGUI infoGUI;
 
-    public CardState(GameStateManager gsm, Board board) {
+    private CardManager cardManager;
+
+    public CardState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, camera);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();
         this.cardDeck.createNewDeck();
-        this.infoGUI = new PlayerInfoGUI(board, batch, camera);
+        this.infoGUI = new PlayerInfoGUI(board, batch, stage);
+        this.cardManager = cardManager;
 
-        /**
-         * code for testing CardHandGUI. Does not use players stored in board
-         */
-
-        Player[] testarr = board.getAllPlayers();
-        ICardDeck testDeck = new ProgramCardDeck();
-        testDeck.createNewDeck();
-        testarr[0].setCardHand(testDeck.drawCards(9));
-        testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardHandGUI(camera, batch, testarr);
-
-
-        //this.cardGUI = new CardHandGUI(camera, batch, board, players); //this is how it should be
+        this.cardHandGUI = new CardHandGUI(cardManager, camera, batch, stage);
     }
 
     @Override
@@ -57,21 +49,21 @@ public class CardState extends State {
             }
         }
 		board.initRound();
-        gsm.set(new ActionState(gsm, board));
+        gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
-
     }
 
     @Override
     public void render() {
-        boardGUI.render();
-        cardGUI.render();
+        //boardGUI.render();
+        super.render();
+        cardHandGUI.render();
         infoGUI.render();
     }
 
     @Override
     public void dispose() {
-        cardGUI.dispose();
+        cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
     }
@@ -80,8 +72,6 @@ public class CardState extends State {
     public void resize() {
         super.resize();
         boardGUI.resize();
-        cardGUI.resize();
         infoGUI.resize();
     }
-
 }
