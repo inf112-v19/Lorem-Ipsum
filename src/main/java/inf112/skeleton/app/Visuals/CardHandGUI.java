@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
-import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,9 @@ public class CardHandGUI {
     private BitmapFont font;
     private String playerTurn;
 
+    private BitmapFont[] cardPriorities;
+    private int[] tempPriorities;
+
     private ImageButton[] displayedCardsArr;
     private Card[] tempCardSeq;
     private int tempCardPtr;
@@ -39,6 +41,7 @@ public class CardHandGUI {
     private int labelXPos;
     private Player currentPlayer;
     private HashMap<Integer, ImageButton> buttonByXPos;
+    private HashMap<Integer, Card> cardByXPos;
 
     private ImageButton clear;
     private ImageButton submit;
@@ -54,8 +57,15 @@ public class CardHandGUI {
         spriteSheet = new SpriteSheet();
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
+        cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
         numberlabels = new Image[5];
+
+        cardPriorities = new BitmapFont[9];
+        for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i] = new BitmapFont(true);
+        }
+        tempPriorities = new int[9];
 
         clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
@@ -89,6 +99,7 @@ public class CardHandGUI {
             displayedCardsArr[i].setSize(97, 135);
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
+            cardByXPos.put(cardXPos, cards.get(i));
             cardXPos += 97;
             stage.addActor(displayedCardsArr[i]);
             labelXPos = 0;
@@ -103,7 +114,7 @@ public class CardHandGUI {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
-                            swapCardPlacement(displayedCardsArr[finalI], getCardByX(getDrawPos(tempCardPtr)));
+                            swapCardPlacement(displayedCardsArr[finalI], getCardImageByX(getDrawPos(tempCardPtr)));
                             tempCardPtr++;
                         }
                     }
@@ -115,9 +126,10 @@ public class CardHandGUI {
 
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
         infoBar.setSize(485, 30);
-        infoBar.setPosition(0, Gdx.graphics.getHeight()-165);
+        infoBar.setPosition(0, Gdx.graphics.getHeight() - 165);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
+        renderPriorities();
     }
 
     private void clearLabels() {
@@ -144,7 +156,7 @@ public class CardHandGUI {
         return cardPtr * 97;
     }
 
-    private ImageButton getCardByX(int xPos) {
+    private ImageButton getCardImageByX(int xPos) {
         ImageButton b = buttonByXPos.get(xPos);
         return b;
     }
@@ -160,6 +172,12 @@ public class CardHandGUI {
 
         buttonByXPos.put(bXPos, a);
         buttonByXPos.put(aXPos, b);
+
+        Card first = cardByXPos.get(aXPos);
+        Card second = cardByXPos.get(bXPos);
+        cardByXPos.put(aXPos, second);
+        cardByXPos.put(bXPos, first);
+
     }
 
     /**
@@ -193,6 +211,21 @@ public class CardHandGUI {
         batch.begin();
         font.draw(batch, playerTurn, 10, 10);
         batch.end();
+        renderPriorities();
+    }
+
+    public void renderPriorities() {
+        batch.begin();
+        int xpos = 37;
+        for (int i = 0; i < tempPriorities.length; i++) {
+            tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
+        }
+        for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
+            cardPriorities[i].draw(batch, "" + tempPriorities[i], xpos, Gdx.graphics.getHeight() - 120);
+            xpos += 97;
+        }
+        batch.end();
     }
 
     private void createSubmitButton() {
@@ -224,7 +257,7 @@ public class CardHandGUI {
 
     private void createClearButton() {
         clear.setSize(76, 32);
-        clear.setPosition(873, Gdx.graphics.getHeight()-60);
+        clear.setPosition(873, Gdx.graphics.getHeight() - 60);
         TextureRegion pressed = new TextureRegion(new Texture("clear_press.png"));
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
