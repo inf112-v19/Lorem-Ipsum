@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +14,7 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Visuals.MyTextInputListener;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -218,15 +220,26 @@ public class ChoosePlayerState extends State {
         return null;
     }
 
+    private void input() {
+        MyTextInputListener listener = new MyTextInputListener();
+        Gdx.input.getTextInput(listener, "Enter Player(s) name: ", "", "name");
+    }
+
     @Override
     public void handleInput() {
+
         if (this.start) {
-            do {
-                inputName();
-            } while (this.playerNames.size() != this.playerAmount);
-            gsm.set(new CardState(gsm, board, cardManager));
-            //gsm.set(new (gsm, board, cardManager, createPlayers()));
-            dispose();
+            //do {
+            //if (getPlayerAmount() > 0) {
+                for (int i = 0; i < getPlayerAmount(); i++) {
+                    input();
+                }
+            //} else if (getPlayerAmount() == this.playerNames.size()) {
+                //} while (this.playerNames.size() != this.playerAmount);
+                gsm.set(new CardState(gsm, board, cardManager));
+                //gsm.set(new (gsm, board, cardManager, createPlayers()));
+                dispose();
+           // }
         }
     }
 
@@ -254,4 +267,7 @@ public class ChoosePlayerState extends State {
         super.resize();
         this.stage.getBatch().setProjectionMatrix(camera.combined);
     }
+
+
+
 }
