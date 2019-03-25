@@ -223,8 +223,8 @@ public class ChoosePlayerState extends State {
             do {
                 inputName();
             } while (this.playerNames.size() != this.playerAmount);
-            //gsm.set(new CardState(gsm, board, cardManager));
-            gsm.set(new (gsm, board, cardManager, createPlayers()));
+            gsm.set(new CardState(gsm, board, cardManager));
+            //gsm.set(new (gsm, board, cardManager, createPlayers()));
             dispose();
         }
     }
