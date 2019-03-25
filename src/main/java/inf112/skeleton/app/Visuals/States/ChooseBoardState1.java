@@ -15,48 +15,47 @@ import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
-public class MenuState extends State {
+public class ChooseBoardState1 extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background;
-    private Image startButton;
-
     private Stage stage;
-    private final int buttonWidth;
-    private final int buttonHeight;
     private CardManager cardManager;
+
+    private Image boardtype;
+    private String boardName;
 
     private boolean start;
 
-    public MenuState(GameStateManager gsm, Board board, CardManager cardManager) {
+    public ChooseBoardState1(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm, board);
+        this.cardManager = cardManager;
+
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
-        this.cardManager = cardManager;
+
         this.stage.getBatch().setProjectionMatrix(camera.combined);
+        this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
-        this.buttonWidth = 192+64; //original size + 1/3 of the size
-        this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
-
-        this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
-
-        setStartButton();
+        setBoardTypes();
+        clickable("Boards/BigBoard.txt");
     }
 
-    private void setStartButton() {
-        this.startButton.setSize(buttonWidth, buttonHeight);
-        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), RoboRally.HEIGHT-(this.buttonHeight*2));
-        this.stage.addActor(this.startButton);
-
-        clickable(this.startButton);
+    /**
+     * set "board types" (we have currently only one)
+     */
+    private void setBoardTypes() {
+        this.boardtype = new Image(new TextureRegionDrawable(new Texture("StateImages/board.png")));
+        this.boardtype.setSize(1160/6, 928/6);
+        this.boardtype.setPosition((RoboRally.WIDTH/2) - ((1160/6)/2), RoboRally.HEIGHT/2 - ((928/6)/2));
+        this.stage.addActor(this.boardtype);
     }
 
-    private void clickable(Image button) {
-        button.addListener(new InputListener() {
+    private void clickable(String boardName) {
+        this.boardtype.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Start game!");
+                System.out.println("Board " + getBoardName() + " was chosen!");
                 start = true;
                 return true;
             }
@@ -64,10 +63,15 @@ public class MenuState extends State {
         Gdx.input.setInputProcessor(this.stage);
     }
 
+    public String getBoardName() {
+        return this.boardName;
+    }
+
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new ChooseBoardState(gsm, board, cardManager));
+            //System.out.println(getBoardName());
+            gsm.set(new ChoosePlayerState(gsm, board, cardManager));
             dispose();
         }
     }
@@ -94,7 +98,6 @@ public class MenuState extends State {
     @Override
     public void resize() {
         super.resize();
-        //this.stage.getBatch().setProjectionMatrix(camera.combined);
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        this.stage.getBatch().setProjectionMatrix(camera.combined);
     }
 }

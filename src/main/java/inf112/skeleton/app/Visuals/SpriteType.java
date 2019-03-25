@@ -52,6 +52,7 @@ public enum SpriteType{
 	//menu
 	MENU_BACKGROUND(),
 	MENU_PLAY_BUTTON(),
+	CHOOSE_BACKGROUND(),
 
 	//cardGUI
 	CARD_SUBMIT(),
