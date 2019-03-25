@@ -10,9 +10,8 @@ import inf112.skeleton.app.Visuals.SpriteType;
 public class DoubleConveyorBeltTile extends Tile {
 
     public DoubleConveyorBeltTile(GameObject[] gameObjects, Direction direction) {
-        this.gameObjects = gameObjects;
-        this.direction = direction;
-        setDirection();
+        super(gameObjects, direction);
+        this.setDirection();
     }
 
     private void setDirection(){
