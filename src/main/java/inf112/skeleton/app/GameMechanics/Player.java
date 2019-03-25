@@ -258,6 +258,6 @@ public class Player extends Image implements IPlayer {
 	}
 
 	public boolean isDead() {
-		return isDead;
+		return getLives() > 0;
 	}
 }
