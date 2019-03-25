@@ -122,7 +122,6 @@ public class ChoosePlayerState extends State {
             this.playerAmount = i;
             clickable(nplayers, this.playerAmount);
         }
-
     }
 
     /**
@@ -178,7 +177,7 @@ public class ChoosePlayerState extends State {
      * lager spillere i forhold til hvor mange spillere som er valgt
      */
     public ArrayList<Player> createPlayers() {
-        for (int i = 1; i < getPlayerAmount()+1; i++) {
+        for (int i = 0; i < getPlayerAmount(); i++) {
             Player player = new Player(i , getPlayerNames(i), Direction.EAST);
             players.add(player);
         }
@@ -209,7 +208,7 @@ public class ChoosePlayerState extends State {
     }
 
     public String getPlayerNames(int playerIndex) {
-        for (int i = 1; i < getPlayerAmount()+1; i++) {
+        for (int i = 0; i < getPlayerAmount(); i++) {
             if (playerIndex == i) {
                 return playerNames.get(i);
             }
