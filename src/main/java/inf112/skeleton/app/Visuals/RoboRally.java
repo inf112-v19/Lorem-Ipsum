@@ -21,19 +21,6 @@ public class RoboRally extends ApplicationAdapter {
         super();
     }
 
-    public String setBoard(int boardtype) {
-        switch (boardtype) {
-            case 1:
-                return "Boards/BigBoard.txt";
-            case 2:
-                return "Boards/ExampleBoard.txt";
-            case 3:
-                return null;
-            default:
-                System.err.println("No board type found");
-                return null;
-        }
-    }
 
     @Override
     public void create () {

@@ -101,7 +101,7 @@ public class ChooseBoardState extends State {
         this.boardType3.setSize(191, 49);
         this.boardType3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType3);
-        clickable(this.boardType3, roborally.setBoard(3));
+        clickable(this.boardType3, "Boards/BoardBuilderTest2.txt");
     }
 
     /**
