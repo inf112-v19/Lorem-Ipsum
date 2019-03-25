@@ -304,6 +304,7 @@ public class Board implements IBoard {
 			return true;
 		}
 
+
 		turnOnLasers();
 		respawnPlayers();
 
@@ -342,7 +343,7 @@ public class Board implements IBoard {
 	 */
 	private void respawnPlayers() {
 		for (Player player : playerPositions.keySet()) {
-			if (!player.onBoardCheck()){
+			if (!player.onBoardCheck() && !player.isDead()){
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
@@ -375,15 +376,14 @@ public class Board implements IBoard {
 
     	//skips any remaining moves for the current card
 		movementCount = 0;
+		playerPositions.put(player, newPos);
+		player.setOnTheBoard(false);
 
     	if (!player.isDead()) {
 			System.out.println("Player" + player.getPlayerID() + " fell off the board");
-    		playerPositions.put(player, newPos);
-    		player.setOnTheBoard(false);
 		}
     	else {
 			System.out.println("Player" + player.getPlayerID() + " fell off the board and died");
-			//TODO - handle dead player
 		}
 	}
 
