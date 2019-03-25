@@ -2,9 +2,12 @@ package inf112.skeleton.app.GameMechanics;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Player extends Image implements IPlayer {
@@ -15,11 +18,11 @@ public class Player extends Image implements IPlayer {
     private List<Card> playerHand;
     private Card[] playerCardSequence;
     private int playerHealth = 10; //Number of damage the player can take before getting destroyed
-    private int playerlives = 4; //Number for lives the player has before losing the game
+    private int playerlives = 3; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
-	private boolean isDead = false;
+	private HashSet<Flag> collectedFlags = new HashSet<>();
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -108,18 +111,6 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * decreases the players total lives
-     */
-    public void decreaseLives() {
-    	if (playerlives>0){
-			playerlives--;
-		}
-    	else {
-    		isDead = true;
-		}
-    }
-
-    /**
      * @return players Direction
      */
     public Direction getDirection() {
@@ -152,15 +143,18 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * destroy the player (lose a total life and set health to max)
+     * destroy the player (lose a total life and set health to max) or if no more lives set health to 0
+	 * and remove player from the board
      */
     public void destroyPlayer(){
+		playerlives--;
+
 		if (playerlives>0){
-			playerlives--;
 			playerHealth = 10;
 		}
 		else {
-			isDead = true;
+			playerHealth = 0;
+			isOnTheBoard = false;
 		}
     }
 
@@ -172,7 +166,7 @@ public class Player extends Image implements IPlayer {
         playerHealth--;
         if(playerHealth<=0){
             playerHealth = 10;
-            decreaseLives();
+            destroyPlayer();
         }
     }
 
@@ -258,6 +252,12 @@ public class Player extends Image implements IPlayer {
 	}
 
 	public boolean isDead() {
-		return isDead;
+		return !(getLives() > 0);
 	}
+
+	public void collectFlag(Flag flag) {
+    	//TODO - if (collectedFlags.size() == flag.getIndex()) { }
+		collectedFlags.add(flag);
+	}
+
 }

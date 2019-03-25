@@ -33,8 +33,8 @@ public class Board implements IBoard {
 		width = builder.getWidth();
 
 		//creates two players and places them on the board and sets their backup - mostly for testing purposes
-		Player player1 = new Player("0", Direction.EAST);
-		Player player2 = new Player("1", Direction.EAST);
+		Player player1 = new Player(0,"Player 1", Direction.EAST);
+		Player player2 = new Player(1,"Player 2", Direction.EAST);
 		player1.setBackup(new Position(1, 4));
 		player2.setBackup(new Position(1, 11));
 		playerPositions.put(player1, new Position(1, 4));
@@ -43,13 +43,17 @@ public class Board implements IBoard {
 	}
 
 	/**
-	 * Method used for testing purposes - maybe not needed for finished program
-	 * (ignores all exceptions and relies on correct usage)
+	 * Method used to initialize players on the board - places players on the given position.
+	 * Also used for testing purposes (in setup and teardown methods).
 	 *
 	 * @param player
 	 * @param pos
 	 */
 	public void placePlayerOnPos(Player player, Position pos) {
+		if (!isValidPos(pos)) {
+			//TODO - handle invalid position exception
+		}
+
 		playerPositions.put(player, pos);
 	}
 
@@ -58,8 +62,7 @@ public class Board implements IBoard {
 		Player[] players = new Player[playerPositions.size()];
 
 		for (Player p : playerPositions.keySet()) {
-			int indexOfP = Integer.parseInt(p.getPlayerID());
-			players[indexOfP] = p;
+			players[p.getIndex()] = p;
 		}
 		return players;
 	}
@@ -199,6 +202,10 @@ public class Board implements IBoard {
 		}
 
 		for (Player player : playerPositions.keySet()) {
+			if (player.isDead()) {
+				continue;
+			}
+
 			Card[] playerCards = player.getCardSequence();
 
 			for (int i = 0; i < 5; i++) {
@@ -297,6 +304,7 @@ public class Board implements IBoard {
 			return true;
 		}
 
+
 		turnOnLasers();
 		respawnPlayers();
 
@@ -335,7 +343,7 @@ public class Board implements IBoard {
 	 */
 	private void respawnPlayers() {
 		for (Player player : playerPositions.keySet()) {
-			if (!player.onBoardCheck()){
+			if (!player.onBoardCheck() && !player.isDead()){
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
@@ -368,15 +376,14 @@ public class Board implements IBoard {
 
     	//skips any remaining moves for the current card
 		movementCount = 0;
+		playerPositions.put(player, newPos);
+		player.setOnTheBoard(false);
 
-    	if (player.getLives()>0) {
+    	if (!player.isDead()) {
 			System.out.println("Player" + player.getPlayerID() + " fell off the board");
-    		playerPositions.put(player, newPos);
-    		player.setOnTheBoard(false);
 		}
     	else {
-			System.out.println("Player" + player.getPlayerID() + " died");
-			//TODO - handle dead player
+			System.out.println("Player" + player.getPlayerID() + " fell off the board and died");
 		}
 	}
 

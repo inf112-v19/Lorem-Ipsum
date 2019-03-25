@@ -27,8 +27,8 @@ public class MenuState extends State {
 
     private boolean start;
 
-    public MenuState(GameStateManager gsm, Board board, CardManager cardManager) {
-        super(gsm, board);
+    public MenuState(GameStateManager gsm) {
+        super(gsm);
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
         this.cardManager = cardManager;
@@ -67,7 +67,7 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new ChooseBoardState(gsm, board, cardManager));
+            gsm.set(new ChooseBoardState(gsm));
             dispose();
         }
     }

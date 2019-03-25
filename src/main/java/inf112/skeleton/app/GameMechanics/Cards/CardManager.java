@@ -34,7 +34,7 @@ public class CardManager {
 
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
-            if (player.isReady() || player.isDead()) {
+            if (player.isReady()) {
                 continue;
             } else {
                 return true;

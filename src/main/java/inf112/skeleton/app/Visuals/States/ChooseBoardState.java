@@ -25,6 +25,8 @@ public class ChooseBoardState extends State {
     //text bar
     private Image textBar;
 
+    private Board board;
+
     //board types
     private int halfButtonWidth;
     private int bigButtonWidth;
@@ -39,8 +41,8 @@ public class ChooseBoardState extends State {
 
     private RoboRally roborally;
 
-    public ChooseBoardState(GameStateManager gsm, Board board, CardManager cardManager) {
-        super(gsm, board);
+    public ChooseBoardState(GameStateManager gsm) {
+        super(gsm);
 
         this.roborally = new RoboRally();
 
@@ -87,19 +89,19 @@ public class ChooseBoardState extends State {
         this.boardType1.setSize(191, 49);
         this.boardType1.setPosition(this.halfButtonWidth, RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType1);
-        clickable(this.boardType1, roborally.setBoard(1));
+        clickable(this.boardType1, "Boards/BigBoard.txt");
 
         //second board
         this.boardType2.setSize(191, 49);
         this.boardType2.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType2);
-        clickable(this.boardType2, roborally.setBoard(2));
+        clickable(this.boardType2, "Boards/ExampleBoard.txt");
 
         //third board
         this.boardType3.setSize(191, 49);
         this.boardType3.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT/2);
         this.stage.addActor(this.boardType3);
-        clickable(this.boardType3, roborally.setBoard(3));
+        clickable(this.boardType3, "Boards/BoardBuilderTest2.txt");
     }
 
     /**
@@ -141,8 +143,10 @@ public class ChooseBoardState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
+            this.board = new Board(this.boardName);
+            this.cardManager = new CardManager(this.board);
             //System.out.println(getBoardName());
-            gsm.set(new ChoosePlayerState(gsm, board, cardManager));
+            gsm.set(new ChoosePlayerState(this.gsm, this.board, this.cardManager));
             dispose();
         }
     }
