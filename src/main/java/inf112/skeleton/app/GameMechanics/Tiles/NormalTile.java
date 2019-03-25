@@ -22,6 +22,7 @@ public class NormalTile extends Tile {
 			if(gameObjects[i] instanceof Flag){
 				player.increaseHealth();
 				player.setBackup(board.getPlayerPos(player));
+				player.collectFlag((Flag)gameObjects[i]);
 				break;
 			}
 		}
