@@ -22,7 +22,6 @@ import java.util.List;
 
 public class CardHandGUI {
     private CardManager cardManager;
-    private OrthographicCamera camera;
     private SpriteBatch batch;
     private Stage stage;
 
@@ -46,11 +45,10 @@ public class CardHandGUI {
     private ImageButton clear;
     private ImageButton submit;
     private Image infoBar;
-    private Image[] numberlabels;
+    private Image[] numberLabels;
 
-    public CardHandGUI(CardManager cardManager, OrthographicCamera camera, SpriteBatch batch, Stage stage) {
+    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage) {
         this.cardManager = cardManager;
-        this.camera = camera;
         this.batch = batch;
         this.stage = stage;
 
@@ -59,7 +57,7 @@ public class CardHandGUI {
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
-        numberlabels = new Image[5];
+        numberLabels = new Image[5];
 
         cardPriorities = new BitmapFont[9];
         for (int i = 0; i < cardPriorities.length; i++) {
@@ -133,7 +131,7 @@ public class CardHandGUI {
     }
 
     private void clearLabels() {
-        for (Image label : numberlabels) {
+        for (Image label : numberLabels) {
             if (label != null) {
                 label.remove();
             }
@@ -177,7 +175,6 @@ public class CardHandGUI {
         Card second = cardByXPos.get(bXPos);
         cardByXPos.put(aXPos, second);
         cardByXPos.put(bXPos, first);
-
     }
 
     /**
@@ -189,10 +186,10 @@ public class CardHandGUI {
         String filename = "button" + (cardPtr + 1);
         TextureRegion numberTexture = new TextureRegion(new Texture("CardImages/" + filename + ".png"));
         numberTexture.flip(false, true);
-        numberlabels[cardPtr] = new Image(numberTexture);
-        numberlabels[cardPtr].setSize(97, 30);
-        numberlabels[cardPtr].setPosition(labelXPos, Gdx.graphics.getHeight() - 165);
-        stage.addActor(numberlabels[cardPtr]);
+        numberLabels[cardPtr] = new Image(numberTexture);
+        numberLabels[cardPtr].setSize(97, 30);
+        numberLabels[cardPtr].setPosition(labelXPos, Gdx.graphics.getHeight() - 165);
+        stage.addActor(numberLabels[cardPtr]);
         labelXPos += 97;
     }
 
@@ -216,15 +213,15 @@ public class CardHandGUI {
 
     public void renderPriorities() {
         batch.begin();
-        int xpos = 38;
+        int xPos = 38;
         for (int i = 0; i < tempPriorities.length; i++) {
             tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
         }
         for (int i = 0; i < cardPriorities.length; i++) {
             cardPriorities[i].getData().setScale(0.90f);
             cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
-            cardPriorities[i].draw(batch, "" + tempPriorities[i], xpos, Gdx.graphics.getHeight() - 120);
-            xpos += 97;
+            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, Gdx.graphics.getHeight() - 120);
+            xPos += 97;
         }
         batch.end();
     }
