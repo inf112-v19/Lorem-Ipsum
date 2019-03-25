@@ -10,8 +10,6 @@ import inf112.skeleton.app.Visuals.States.MenuState;
 
 public class RoboRally extends ApplicationAdapter {
 
-    private Board board;
-
     public static final int WIDTH = 976;
     public static final int HEIGHT = 600;
     public static final String TITLE = "Robo Rally";
@@ -21,9 +19,6 @@ public class RoboRally extends ApplicationAdapter {
 
     public RoboRally() {
         super();
-        board = new Board("Boards/BigBoard.txt");
-        //board = new Board(setBoard());
-        cardManager = new CardManager(board);
     }
 
     public String setBoard(int boardtype) {
@@ -43,7 +38,7 @@ public class RoboRally extends ApplicationAdapter {
     @Override
     public void create () {
         gsm = new GameStateManager();
-        gsm.push(new MenuState(gsm, board, cardManager));
+        gsm.push(new MenuState(gsm));
     }
 
     @Override
@@ -76,4 +71,5 @@ public class RoboRally extends ApplicationAdapter {
     public void resume() {
         super.resume();
     }
+
 }

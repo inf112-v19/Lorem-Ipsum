@@ -43,7 +43,7 @@ public class StateTest {
 	@Test
 	public void popStateTest() {
 		ActionState actionState = new ActionState(gsm,board,cardManager);
-		gsm.push(new MenuState(gsm,board,cardManager));
+		gsm.push(new MenuState(gsm));
 		gsm.push(actionState);
 		assertSame(gsm.pop(), actionState);
 		assertEquals(gsm.size(), 1);
@@ -52,7 +52,7 @@ public class StateTest {
     @Test
     public void peekStateTest() {
         ActionState actionState = new ActionState(gsm,board,cardManager);
-        gsm.push(new MenuState(gsm,board,cardManager));
+        gsm.push(new MenuState(gsm));
         gsm.push(actionState);
         assertSame(gsm.peek(), actionState);
 		assertEquals(gsm.size(), 2);
@@ -61,7 +61,7 @@ public class StateTest {
 	@Test
 	public void setStateTest() {
 		ActionState actionState = new ActionState(gsm,board,cardManager);
-		gsm.push(new MenuState(gsm,board,cardManager));
+		gsm.push(new MenuState(gsm));
 		gsm.set(actionState);
 		assertSame(gsm.peek(), actionState);
 		assertEquals(gsm.size(), 1);

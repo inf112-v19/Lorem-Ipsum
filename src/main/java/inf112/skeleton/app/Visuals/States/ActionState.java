@@ -20,7 +20,8 @@ public class ActionState extends State {
 	private CardManager cardManager;
 
 	public ActionState(GameStateManager gsm, Board board, CardManager cardManager) {
-		super(gsm, board);
+		super(gsm);
+		this.board = board;
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, camera, this.stage);

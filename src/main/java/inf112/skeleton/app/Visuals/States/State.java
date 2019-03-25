@@ -17,10 +17,9 @@ public abstract class State {
     protected Stage stage  = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
 
 
-    protected State (GameStateManager gsm, Board board) {
+    protected State (GameStateManager gsm) {
         this.camera.setToOrtho(true, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.gsm = gsm;
-        this.board = board;
     }
 
     protected abstract void handleInput();

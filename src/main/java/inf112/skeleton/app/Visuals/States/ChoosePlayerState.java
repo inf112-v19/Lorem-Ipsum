@@ -46,7 +46,9 @@ public class ChoosePlayerState extends State {
     public ArrayList<Player> players;
 
     public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
-        super(gsm, board);
+        super(gsm);
+
+        this.board = board;
 
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
