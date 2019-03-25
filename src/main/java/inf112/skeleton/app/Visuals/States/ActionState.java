@@ -65,8 +65,8 @@ public class ActionState extends State {
 	public void render() {
 		//boardGUI.render();
 		super.render();
-		//infoGUI.render();
-		//pendingCardsGUI.render();
+		infoGUI.render();
+		pendingCardsGUI.render();
 	}
 
 	@Override
