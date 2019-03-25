@@ -216,11 +216,12 @@ public class CardHandGUI {
 
     public void renderPriorities() {
         batch.begin();
-        int xpos = 37;
+        int xpos = 38;
         for (int i = 0; i < tempPriorities.length; i++) {
             tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
         }
         for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i].getData().setScale(0.90f);
             cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
             cardPriorities[i].draw(batch, "" + tempPriorities[i], xpos, Gdx.graphics.getHeight() - 120);
             xpos += 97;
