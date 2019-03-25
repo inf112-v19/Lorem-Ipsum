@@ -15,7 +15,6 @@ public class RoboRally extends ApplicationAdapter {
     public static final String TITLE = "Robo Rally";
 
     private GameStateManager gsm;
-    private CardManager cardManager;
 
     public RoboRally() {
         super();
