@@ -29,11 +29,6 @@ public abstract class GameObject extends Image implements IGameObject {
         //board.setGameObject();  //has to be changed when board is finished
     }
 
-    @Override
-    public void remove() {
-        //board.removeObject();    //has to be changed when board is finished
-    }
-
 	@Override
 	public SpriteType getSpriteType() {
 		return spriteType;
