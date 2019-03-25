@@ -2,9 +2,12 @@ package inf112.skeleton.app.GameMechanics;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Player extends Image implements IPlayer {
@@ -20,6 +23,7 @@ public class Player extends Image implements IPlayer {
     private boolean ready = false;
     private boolean isOnTheBoard = true;
 	private boolean isDead = false;
+	private HashSet<Flag> collectedFlags = new HashSet<>();
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -258,6 +262,12 @@ public class Player extends Image implements IPlayer {
 	}
 
 	public boolean isDead() {
-		return getLives() > 0;
+		return !(getLives() > 0);
 	}
+
+	public void collectFlag(Flag flag) {
+    	//TODO - if (collectedFlags.size() == flag.getIndex()) { }
+		collectedFlags.add(flag);
+	}
+
 }
