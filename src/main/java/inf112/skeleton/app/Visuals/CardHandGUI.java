@@ -100,6 +100,12 @@ public class CardHandGUI {
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
             cardByXPos.put(cardXPos, cards.get(i));
+
+            if (cardManager.isLocked(cards.get(i))) {
+                drawLockImage(cardXPos);
+                tempCardSeq[i] = cards.get(i);
+            }
+
             cardXPos += 97;
             stage.addActor(displayedCardsArr[i]);
             labelXPos = 0;
