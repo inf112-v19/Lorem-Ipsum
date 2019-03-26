@@ -304,12 +304,33 @@ public class Board implements IBoard {
 			return true;
 		}
 
-
 		turnOnLasers();
 		respawnPlayers();
+		checkForGameOver();
 
-		//round is reset
+		//round is over
 		return false;
+	}
+
+	/**
+	 * Method for checking if the game is over after the round has finished - checks if any player has collected all
+	 * the flags, or if there is less than 2 players alive
+	 */
+	private void checkForGameOver() {
+		int alivePlayers = 0;
+
+		for (Player player : playerPositions.keySet()) {
+			if (player.numberOfFlagsCollected() == playerPositions.size()) {
+				//TODO - handle player winning the game
+			}
+			if (!player.isDead()) {
+				alivePlayers++;
+			}
+		}
+
+		if (alivePlayers<2) {
+			//TODO - handle game over
+		}
 	}
 
 	/**

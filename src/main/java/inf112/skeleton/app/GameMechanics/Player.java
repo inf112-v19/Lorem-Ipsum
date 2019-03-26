@@ -268,4 +268,7 @@ public class Player extends Image implements IPlayer {
 		}
 	}
 
+	public int numberOfFlagsCollected() {
+		return collectedFlags.size();
+	}
 }
