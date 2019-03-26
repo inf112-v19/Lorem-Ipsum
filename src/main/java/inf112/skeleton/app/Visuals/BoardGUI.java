@@ -3,8 +3,7 @@ package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -78,10 +77,17 @@ public class BoardGUI {
 	}
 
 
-    private void addTilesToStage(Tile tile, int x, int y){
-		Image image = new Image(spriteSheet.getTexture(tile));
+    private void addTilesToStage(final Tile tile, int x, int y){
+		final Image image = new Image(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
 		image.setSize(tilesize,tilesize);
 		image.setPosition(x,y);
+		image.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println(image.getX() + ", " + image.getY());
+				return true;
+			}
+		});
 		stage.addActor(image);
 	}
 
