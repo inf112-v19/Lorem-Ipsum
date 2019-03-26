@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
 import inf112.skeleton.app.Interfaces.IBoard;
@@ -77,14 +78,6 @@ public class Board implements IBoard {
 		return width;
 	}
 
-	@Override
-	public GameObject[] getGameObject(Position pos) {
-		if (!isValidPos(pos)) {
-			//TODO - handle invalid position exception
-		}
-
-		return tileMap.get(pos).getGameObjects();
-	}
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
@@ -144,25 +137,6 @@ public class Board implements IBoard {
         return !curPos.equals(playerPositions.get(player)) && !player.onBoardCheck();
 	}
 
-	@Override
-	public void setGameObject(Position pos, GameObject gameObject) {
-		if (!isValidPos(pos)) {
-			//TODO - handle invalid position exception
-		}
-
-		tileMap.get(pos).addGameObject(gameObject);
-	}
-
-	@Override
-	public void removeObject(Position pos, GameObject gameObject) {
-		if (!isValidPos(pos)) {
-			//TODO - handle invalid position exception
-		}
-		if (!tileMap.get(pos).removeGameObject(gameObject)) {
-		    //TODO - handle case where given GameObject was not present on tile
-        }
-
-	}
 
 	@Override
 	public boolean isValidPos(Position pos) {
@@ -437,5 +411,13 @@ public class Board implements IBoard {
 
 	public Player getNextPlayer() {
 		return cardToPlayer.get(thisRoundsCards.peek());
+	}
+
+	public boolean placeFlagOnTile(Flag flag, Tile tile) {
+		if (tile.hasGameObject(flag) != -1) {
+			tile.addGameObject(flag);
+			return true;
+		}
+		return false;
 	}
 }
