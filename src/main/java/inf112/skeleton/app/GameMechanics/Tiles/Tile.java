@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.util.Arrays;
+import java.util.Objects;
 
 public abstract class Tile extends Image implements ITile {
 
@@ -58,6 +59,11 @@ public abstract class Tile extends Image implements ITile {
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(direction, spriteType, gameObjects);
 	}
 
 	@Override
