@@ -198,6 +198,15 @@ public class CardHandGUI {
         labelXPos += 97;
     }
 
+    private void drawLockImage(int xPos) {
+        TextureRegion lockTex = new TextureRegion(new Texture("lock.png"));
+        lockTex.flip(false, true);
+        Image lock = new Image(lockTex);
+        lock.setSize(97, 50);
+        lock.setPosition(xPos, Gdx.graphics.getHeight()-152);
+        stage.addActor(lock);
+    }
+
     private boolean cardSeqContains(Card card, Card[] cardSeq) {
         for (int i = 0; i < tempCardPtr; i++) {
             if (cardSeq[i] == card) {
@@ -216,7 +225,7 @@ public class CardHandGUI {
         renderPriorities();
     }
 
-    public void renderPriorities() {
+    private void renderPriorities() {
         batch.begin();
         int xPos = 38;
         for (int i = 0; i < tempPriorities.length; i++) {
