@@ -6,6 +6,8 @@ import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class CardManager {
@@ -13,6 +15,7 @@ public class CardManager {
     private ICardDeck cardDeck;
     private Player[] players;
     private int playerPtr;
+    private HashSet<Card> lockedCards;
 
     public CardManager(Board board) {
         players = board.getAllPlayers();
@@ -28,7 +31,7 @@ public class CardManager {
         sendCardsBackToDeck();
         cardDeck.shuffleDeck();
         for (int i = 0; i < players.length; i++) {
-            players[i].setCardHand(cardDeck.drawCards(9));
+            players[i].setCardHand(cardDeck.drawCards(7));
         }
     }
 
@@ -78,7 +81,16 @@ public class CardManager {
         }
     }
 
+    public boolean isLocked(Card c) {
+        if (lockedCards != null) {
+            return lockedCards.contains(c);
+        } else {
+            return false;
+        }
+    }
+
     private void sendCardsBackToDeck() {
+        //lockCards();
         for (int i = 0; i < players.length; i++) {
             List<Card> cards = players[i].getCardHand();
             if (cards != null) {
@@ -87,6 +99,14 @@ public class CardManager {
                 }
             }
         }
+    }
+
+    private void lockCards() {
+        lockedCards = new HashSet<>();
+        for (int i = 0; i < players.length; i++) {
+
+        }
+
     }
 }
 

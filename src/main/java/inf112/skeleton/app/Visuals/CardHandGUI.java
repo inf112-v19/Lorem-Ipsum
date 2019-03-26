@@ -59,11 +59,6 @@ public class CardHandGUI {
         displayedCardsArr = new ImageButton[9];
         numberLabels = new Image[5];
 
-        cardPriorities = new BitmapFont[9];
-        for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i] = new BitmapFont(true);
-        }
-        tempPriorities = new int[9];
 
         clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
@@ -91,8 +86,14 @@ public class CardHandGUI {
         labelXPos = 0;
         tempCardPtr = 0;
         final List<Card> cards = c;
+        tempPriorities = new int[cards.size()];
+        cardPriorities = new BitmapFont[cards.size()];
 
-        for (int i = 0; i < displayedCardsArr.length; i++) {
+        for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i] = new BitmapFont(true);
+        }
+
+        for (int i = 0; i < cards.size(); i++) {
             displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             displayedCardsArr[i].setSize(97, 135);
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
@@ -103,7 +104,7 @@ public class CardHandGUI {
             labelXPos = 0;
         }
 
-        for (int i = 0; i < displayedCardsArr.length; i++) {
+        for (int i = 0; i < cards.size(); i++) {
             final int finalI = i;
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
