@@ -37,6 +37,8 @@ public abstract class GameObject implements IGameObject {
 
     @Override
     public boolean equals(Object obj) {
+        if(obj == null) return false;
+
     	if (!obj.getClass().isInstance(this)) {
     		return false;
 		}
