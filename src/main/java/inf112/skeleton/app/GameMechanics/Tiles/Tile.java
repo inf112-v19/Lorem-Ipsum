@@ -2,6 +2,7 @@ package inf112.skeleton.app.GameMechanics.Tiles;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -176,6 +177,14 @@ public abstract class Tile extends Image implements ITile {
 		return null;
 	}
 
+	@Override
+	public boolean placeFlagOnTile(Flag flag) {
+		if (hasGameObject(flag) != -1) {
+			addGameObject(flag);
+			return true;
+		}
+		return false;
+	}
 
 }
 

@@ -118,13 +118,4 @@ public interface IBoard<T> {
 	 * @return
 	 */
 	Card getCurCard();
-
-	/**
-	 * Tries to add a flag to the tile if it does noe already contain a flag
-	 *
-	 * @param flag
-	 * @param tile
-	 * @return true if the flag was placed on the tile, or false if not
-	 */
-	boolean placeFlagOnTile(Flag flag, Tile tile);
 }
