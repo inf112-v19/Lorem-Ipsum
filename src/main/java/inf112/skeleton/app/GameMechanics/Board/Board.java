@@ -412,12 +412,4 @@ public class Board implements IBoard {
 	public Player getNextPlayer() {
 		return cardToPlayer.get(thisRoundsCards.peek());
 	}
-
-	public boolean placeFlagOnTile(Flag flag, Tile tile) {
-		if (tile.hasGameObject(flag) != -1) {
-			tile.addGameObject(flag);
-			return true;
-		}
-		return false;
-	}
 }
