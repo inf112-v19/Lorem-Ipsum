@@ -255,9 +255,17 @@ public class Player extends Image implements IPlayer {
 		return !(getLives() > 0);
 	}
 
+	/**
+	 * Method that checks if the flag is the next flag to be collected (index of the flag matches how many flags have
+	 * already been collected) and adds the flag to the collectedFlags HashSet.
+	 *
+	 * @param flag
+	 */
 	public void collectFlag(Flag flag) {
-    	//TODO - if (collectedFlags.size() == flag.getIndex()) { }
-		collectedFlags.add(flag);
+    	if (collectedFlags.size() == flag.getIndex()) {
+			collectedFlags.add(flag);
+			System.out.println(playerID + " collected flag number " + flag.getIndex());
+		}
 	}
 
 }
