@@ -9,6 +9,8 @@ import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
+import java.awt.image.ImageObserver;
+
 public class DoubleConveyorBeltTile extends Tile {
 
     public DoubleConveyorBeltTile(GameObject[] gameObjects, Direction direction) {
@@ -45,4 +47,7 @@ public class DoubleConveyorBeltTile extends Tile {
     public void checkTile(Board board, Player player){
         board.movePlayer(player, direction, 2);
     }
+
 }
+
+
