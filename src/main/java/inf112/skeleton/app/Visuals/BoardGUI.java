@@ -6,14 +6,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import inf112.skeleton.app.Visuals.States.GameStateManager;
 
 
 public class BoardGUI {
@@ -35,7 +37,7 @@ public class BoardGUI {
 	private static final float MOVE_DURATION = 1;
 
     public BoardGUI(Board board, OrthographicCamera camera, Stage stage) {
-        this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+    	this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
 
         this.spriteSheet = new SpriteSheet();
@@ -76,6 +78,13 @@ public class BoardGUI {
 		}
 	}
 
+	private void addGameObjectToStage(GameObject gameObject, float x, float y){
+		gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
+		gameObject.setSize(tilesize,tilesize);
+		gameObject.setPosition(x,y);
+		stage.addActor(gameObject);
+	}
+
 
     private void addTilesToStage(final Tile tile, int x, int y){
 		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
@@ -84,7 +93,8 @@ public class BoardGUI {
 		tile.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println(tile.getX() + ", " + tile.getY());
+				Flag flag = new Flag(Direction.NORTH, 10);
+				addGameObjectToStage(flag, tile.getX(), tile.getY());
 				return true;
 			}
 		});
@@ -92,15 +102,11 @@ public class BoardGUI {
 	}
 
 	private void addGameObjectsOnTileToStage(Tile tile, int x, int y){
-		Image image;
     	if (tile.hasAnyGameObjects()){
 			GameObject[] gameObjects = tile.getGameObjects();
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				GameObject gameObject = gameObjects[i];
-				image = new Image(spriteSheet.getTexture(gameObject));
-				image.setSize(tilesize,tilesize);
-				image.setPosition(x,y);
-				stage.addActor(image);
+				addGameObjectToStage(gameObject, x, y);
 			}
 		}
 	}

@@ -18,6 +18,7 @@ import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ChoosePlayerState extends State {
     private SpriteSheet spriteSheet;
@@ -178,10 +179,11 @@ public class ChoosePlayerState extends State {
     /**
      * lager spillere i forhold til hvor mange spillere som er valgt
      */
-    public ArrayList<Player> createPlayers() {
+    public Stack<Player> createPlayers() {
+        Stack<Player> players = new Stack<>();
         for (int i = 0; i < getPlayerAmount(); i++) {
             Player player = new Player(i , getPlayerNames(i), Direction.EAST);
-            players.add(player);
+            players.push(player);
         }
         return players;
     }
@@ -225,7 +227,7 @@ public class ChoosePlayerState extends State {
                 inputName();
             } while (this.playerNames.size() != this.playerAmount);
             gsm.set(new CardState(gsm, board, cardManager));
-            //gsm.set(new (gsm, board, cardManager, createPlayers()));
+            //gsm.set(new SpawnPointState(gsm, board, cardManager, createPlayers()));
             dispose();
         }
     }

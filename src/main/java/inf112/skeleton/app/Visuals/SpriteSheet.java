@@ -32,7 +32,7 @@ public final class SpriteSheet {
 	private final TextureRegion menuBackground;
 	private final TextureRegion menuPlayButton;
 
-	private static TextureRegion chooseBackground;
+	private final TextureRegion chooseBackground;
 
 	//Card Sprites
 	private final TextureRegion backUpSprite;
