@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
+import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -109,13 +110,16 @@ public class CardHandGUI {
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (tempCardPtr < 5) {
+                    if (tempCardPtr < 5 && !cardManager.isLocked(cards.get(finalI))) {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
                             swapCardPlacement(displayedCardsArr[finalI], getCardImageByX(getDrawPos(tempCardPtr)));
                             tempCardPtr++;
                         }
+                    }
+                    if (cardManager.isLocked(cards.get(finalI))) {
+                        System.out.println("CARD IS LOCKED IN HAND");
                     }
                     System.out.println("Card priority: " + cards.get(finalI).getPriority() + ", card type: " + cards.get(finalI).getCardType());
                     return true;

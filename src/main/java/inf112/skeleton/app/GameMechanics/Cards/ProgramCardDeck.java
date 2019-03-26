@@ -104,6 +104,11 @@ public class ProgramCardDeck implements ICardDeck {
         deck.add(card);
     }
 
+    @Override
+    public Card drawCard() {
+        return deck.pop();
+    }
+
     public void clearDeck() {
         deck.removeAllElements();
     }
