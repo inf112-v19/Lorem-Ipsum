@@ -1,18 +1,18 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
 import inf112.skeleton.app.Interfaces.ITile;
 import inf112.skeleton.app.GameMechanics.Position;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -150,32 +150,6 @@ public abstract class Tile extends Image implements ITile {
 	public Tile() {
 		super();
 	}
-
-	@Override
-	public int getWidth(ImageObserver imageObserver) {
-		return 0;
-	}
-
-	@Override
-	public int getHeight(ImageObserver imageObserver) {
-		return 0;
-	}
-
-	@Override
-	public ImageProducer getSource() {
-		return null;
-	}
-
-	@Override
-	public Graphics getGraphics() {
-		return null;
-	}
-
-	@Override
-	public Object getProperty(String s, ImageObserver imageObserver) {
-		return null;
-	}
-
 
 }
 

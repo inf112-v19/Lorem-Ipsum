@@ -78,17 +78,17 @@ public class BoardGUI {
 
 
     private void addTilesToStage(final Tile tile, int x, int y){
-		final Image image = new Image(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
-		image.setSize(tilesize,tilesize);
-		image.setPosition(x,y);
-		image.addListener(new InputListener() {
+		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
+		tile.setSize(tilesize,tilesize);
+		tile.setPosition(x,y);
+		tile.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println(image.getX() + ", " + image.getY());
+				System.out.println(tile.getX() + ", " + tile.getY());
 				return true;
 			}
 		});
-		stage.addActor(image);
+		stage.addActor(tile);
 	}
 
 	private void addGameObjectsOnTileToStage(Tile tile, int x, int y){
