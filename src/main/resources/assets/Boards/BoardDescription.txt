@@ -30,7 +30,7 @@ Tile types:
 5 - DoubleConveyorBeltTile
 6 - RotationLeftTile
 7 - RotationRightTile
-(6 - SpawnTile) - not yet implemented
+8 - SpawnTile
 
 GameObjects:
 0 - Wall

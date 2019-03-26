@@ -179,7 +179,7 @@ public abstract class Tile extends Image implements ITile {
 
 	@Override
 	public boolean placeFlagOnTile(Flag flag) {
-		if (hasGameObject(flag) != -1) {
+		if (hasGameObject(flag) == -1) {
 			addGameObject(flag);
 			return true;
 		}

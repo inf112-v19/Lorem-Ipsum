@@ -90,6 +90,7 @@ public class BoardBuilder {
 			case 5: return new DoubleConveyorBeltTile(gameObjects, tileDirection);
 			case 6: return new RotationLeftTile(gameObjects, tileDirection);
 			case 7: return new RotationRightTile(gameObjects, tileDirection);
+			case 8: return new SpawnTile(gameObjects, tileDirection);
 			default: return new NormalTile(gameObjects, tileDirection);
 		}
 	}
