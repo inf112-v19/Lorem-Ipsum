@@ -18,7 +18,7 @@ public class Player extends Image implements IPlayer {
     private List<Card> playerHand;
     private Card[] playerCardSequence;
     private int playerHealth = 10; //Number of damage the player can take before getting destroyed
-    private int playerlives = 4; //Number for lives the player has before losing the game
+    private int playerlives = 3; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
@@ -111,15 +111,6 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * decreases the players total lives
-     */
-    public void decreaseLives() {
-    	if (playerlives>0){
-			playerlives--;
-		}
-    }
-
-    /**
      * @return players Direction
      */
     public Direction getDirection() {
@@ -152,12 +143,18 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * destroy the player (lose a total life and set health to max)
+     * destroy the player (lose a total life and set health to max) or if no more lives set health to 0
+	 * and remove player from the board
      */
     public void destroyPlayer(){
+		playerlives--;
+
 		if (playerlives>0){
-			playerlives--;
 			playerHealth = 10;
+		}
+		else {
+			playerHealth = 0;
+			isOnTheBoard = false;
 		}
     }
 
@@ -169,7 +166,7 @@ public class Player extends Image implements IPlayer {
         playerHealth--;
         if(playerHealth<=0){
             playerHealth = 10;
-            decreaseLives();
+            destroyPlayer();
         }
     }
 
@@ -258,9 +255,20 @@ public class Player extends Image implements IPlayer {
 		return !(getLives() > 0);
 	}
 
+	/**
+	 * Method that checks if the flag is the next flag to be collected (index of the flag matches how many flags have
+	 * already been collected) and adds the flag to the collectedFlags HashSet.
+	 *
+	 * @param flag
+	 */
 	public void collectFlag(Flag flag) {
-    	//TODO - if (collectedFlags.size() == flag.getIndex()) { }
-		collectedFlags.add(flag);
+    	if (collectedFlags.size() == flag.getIndex()) {
+			collectedFlags.add(flag);
+			System.out.println(playerID + " collected flag number " + flag.getIndex());
+		}
 	}
 
+	public int numberOfFlagsCollected() {
+		return collectedFlags.size();
+	}
 }

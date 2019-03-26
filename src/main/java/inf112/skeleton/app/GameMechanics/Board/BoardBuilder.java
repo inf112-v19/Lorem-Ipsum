@@ -90,6 +90,7 @@ public class BoardBuilder {
 			case 5: return new DoubleConveyorBeltTile(gameObjects, tileDirection);
 			case 6: return new RotationLeftTile(gameObjects, tileDirection);
 			case 7: return new RotationRightTile(gameObjects, tileDirection);
+			case 8: return new SpawnTile(gameObjects, tileDirection);
 			default: return new NormalTile(gameObjects, tileDirection);
 		}
 	}
@@ -108,7 +109,8 @@ public class BoardBuilder {
 		switch (type){
 			case 0: return new Wall(direction);
 			case 1: return new Laser(direction);
-			case 2: return new Flag(direction);
+			//TODO - remove flags from BoardBuilder, should only be placed by player and not spawn with map
+			case 2: return new Flag(direction, 0);
 			default:
 				System.err.println("Error while getting Game Object in BoardBuilder");
 				System.exit(1);
