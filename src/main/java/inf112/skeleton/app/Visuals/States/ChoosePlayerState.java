@@ -19,15 +19,13 @@ import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ChoosePlayerState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background;
     private Stage stage;
     private CardManager cardManager;
-
-    //textfield
-    private TextField txt;
 
     //booleans
     private boolean start;
@@ -47,7 +45,7 @@ public class ChoosePlayerState extends State {
 
     //input
     public ArrayList<String> playerNames;
-    public ArrayList<Player> players;
+    public Stack<Player> players;
 
     public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm);
@@ -83,7 +81,7 @@ public class ChoosePlayerState extends State {
         //setAmountPlayers(amountPlayers);
 
         //players
-        players = new ArrayList<>();
+        players = new Stack<>();
         playerNames = new ArrayList<>();
         playerNames.add("RANDOM_NAME_1");
         playerNames.add("RANDOM_NAME_2");
@@ -105,7 +103,6 @@ public class ChoosePlayerState extends State {
     /**
      * set the textbar2 "Name players"
      */
-
     private void setTextbar2() {
         this.textBar2.setSize(821/3, 121/3);
         this.textBar2.setPosition((RoboRally.WIDTH/2)-((821/3)/2), 102-(102/3));
@@ -158,7 +155,7 @@ public class ChoosePlayerState extends State {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (playerNumber == 1) {
-                    System.out.println(playerNumber + " " + "(" + getPlayerNameAt(playerNumber) + ")" + " player was chosen!");
+                    System.out.println(playerNumber + " " + "(" + getPlayerNameAt(0) + ")" + " player was chosen!");
                     savePlayerAmount(playerNumber);
                 } else {
                     System.out.print(playerNumber + " (" + getPlayerNameAt(0));
@@ -197,10 +194,10 @@ public class ChoosePlayerState extends State {
      * creates players according to how many players was chosen to play
      * @return
      */
-    public ArrayList<Player> createPlayers() {
+    public Stack<Player> createPlayers() {
         for (int i = 0; i < getPlayerAmount(); i++) {
             Player player = new Player(i , getPlayerNameAt(i), Direction.EAST);
-            players.add(player);
+            players.push(player);
         }
         return players;
     }
