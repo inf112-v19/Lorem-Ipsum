@@ -34,12 +34,14 @@ public class Board implements IBoard {
 		width = builder.getWidth();
 
 		//creates two players and places them on the board and sets their backup - mostly for testing purposes
-		Player player1 = new Player(0,"Player 1", Direction.EAST);
-		Player player2 = new Player(1,"Player 2", Direction.EAST);
+		/*
+		Player player1 = new Player(0,"RANDOM_NAME_1", Direction.EAST);
+		Player player2 = new Player(1,"RANDOM_NAME_2", Direction.EAST);
 		player1.setBackup(new Position(1, 4));
 		player2.setBackup(new Position(1, 11));
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
+		*/
 
 
 	}
@@ -57,6 +59,7 @@ public class Board implements IBoard {
 		}
 
 		playerPositions.put(player, pos);
+		System.out.println(player.getPlayerID() + " " + player.getIndex());
 	}
 
 	@Override

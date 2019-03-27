@@ -21,10 +21,11 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class ChoosePlayerState extends State {
+    private Board board;
+
     private SpriteSheet spriteSheet;
     private TextureRegion background;
     private Stage stage;
-    private CardManager cardManager;
 
     //booleans
     private boolean start;
@@ -46,7 +47,7 @@ public class ChoosePlayerState extends State {
     public ArrayList<String> playerNames;
     public Stack<Player> players;
 
-    public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
+    public ChoosePlayerState(GameStateManager gsm, Board board) {
         super(gsm);
 
         this.board = board;
@@ -56,8 +57,6 @@ public class ChoosePlayerState extends State {
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
-
-        this.cardManager = cardManager;
 
         this.start = false;
         this.bar2 = false;
@@ -236,9 +235,10 @@ public class ChoosePlayerState extends State {
     @Override
     public void handleInput() {
         if (this.start) {
-            gsm.set(new CardState(gsm, board, cardManager));
+            //gsm.set(new CardState(gsm, board, cardManager));
+            gsm.set(new SpawnPointState(gsm, board, createPlayers()));
             dispose();
-            //gsm.set(new (gsm, board, cardManager, createPlayers()));
+
         }
     }
 
@@ -258,6 +258,7 @@ public class ChoosePlayerState extends State {
 
     @Override
     public void dispose() {
+        super.dispose();
         this.spriteSheet.dispose();
     }
 

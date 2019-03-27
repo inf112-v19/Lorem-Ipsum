@@ -8,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public abstract class State {
     protected GameStateManager gsm;
-    protected Board board;
     protected OrthographicCamera camera = new OrthographicCamera();
     protected Stage stage  = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
 
@@ -44,6 +44,14 @@ public abstract class State {
 
     public void addToStage(Actor actor){
         stage.addActor(actor);
+    }
+
+    /**
+     * Method that handles the clicking of tiles on the board.
+     * This method is GameStateManager when the current stage is active
+     */
+    public void tileEventHandle(Tile tile){
+        //should be implemented in states width board
     }
 
 

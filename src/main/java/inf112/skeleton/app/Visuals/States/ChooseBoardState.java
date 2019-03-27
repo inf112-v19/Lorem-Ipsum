@@ -20,7 +20,6 @@ public class ChooseBoardState extends State {
     private SpriteSheet spriteSheet;
     private TextureRegion background1;
     private Stage stage;
-    private CardManager cardManager;
 
     //text bar
     private Image textBar;
@@ -142,9 +141,8 @@ public class ChooseBoardState extends State {
     public void handleInput() {
         if (this.start) {
             this.board = new Board(this.boardName);
-            this.cardManager = new CardManager(this.board);
             //System.out.println(getBoardName());
-            gsm.set(new ChoosePlayerState(this.gsm, this.board, this.cardManager));
+            gsm.set(new ChoosePlayerState(this.gsm, this.board));
             dispose();
         }
     }
@@ -165,8 +163,8 @@ public class ChooseBoardState extends State {
 
     @Override
     public void dispose() {
+        super.dispose();
         this.spriteSheet.dispose();
-        this.stage.getBatch().dispose();
     }
 
     @Override

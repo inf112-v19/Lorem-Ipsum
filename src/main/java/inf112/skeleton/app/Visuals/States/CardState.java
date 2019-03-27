@@ -10,6 +10,7 @@ import inf112.skeleton.app.Interfaces.ICardDeck;
 
 public class CardState extends State {
 
+    private Board board;
     private BoardGUI boardGUI;
     private SpriteBatch batch;
     private Player[] players;
@@ -26,7 +27,7 @@ public class CardState extends State {
         this.board = board;
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, this.camera, this.stage);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm);
 
         this.players = board.getAllPlayers();
         this.cardDeck = new ProgramCardDeck();

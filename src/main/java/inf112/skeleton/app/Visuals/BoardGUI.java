@@ -20,6 +20,8 @@ import inf112.skeleton.app.Visuals.States.GameStateManager;
 
 public class BoardGUI {
 
+	private GameStateManager gsm;
+
     private Board board;
 	private SpriteSheet spriteSheet;
 
@@ -36,7 +38,9 @@ public class BoardGUI {
 
 	private static final float MOVE_DURATION = 1;
 
-    public BoardGUI(Board board, OrthographicCamera camera, Stage stage) {
+    public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm) {
+    	this.gsm = gsm;
+
     	this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
 
@@ -74,7 +78,6 @@ public class BoardGUI {
 			player.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
 
 			stage.addActor(player);
-
 		}
 	}
 
@@ -93,8 +96,7 @@ public class BoardGUI {
 		tile.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Flag flag = new Flag(Direction.NORTH, 10);
-				addGameObjectToStage(flag, tile.getX(), tile.getY());
+				gsm.tileEventHandle(tile);
 				return true;
 			}
 		});
@@ -193,9 +195,27 @@ public class BoardGUI {
 		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+
+    public void removeAllListeners(){
+		for (Actor actor: stage.getActors()) {
+			removeListener(actor);
+		}
+	}
+
+	public void removeListener(Actor actor){
+    	actor.clearListeners();
+	}
+
     public void dispose(){
     	//stage.dispose();
 	}
 
+	public int getxOffset(){
+    	return xOffset;
+	}
+
+	public int getyOffset(){
+    	return yOffset;
+	}
 
 }

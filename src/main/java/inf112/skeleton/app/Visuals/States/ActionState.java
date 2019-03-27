@@ -10,6 +10,7 @@ import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class ActionState extends State {
 
+	private Board board;
 	private boolean boardCanPlayCards;
 	private float updateCount;
 	private static final float UPDATE_LIMIT = 1;
@@ -24,7 +25,7 @@ public class ActionState extends State {
 		this.board = board;
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera, this.stage);
+		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
 		this.infoGUI = new PlayerInfoGUI(board, batch, stage);
