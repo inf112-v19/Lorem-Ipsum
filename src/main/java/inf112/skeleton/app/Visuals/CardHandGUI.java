@@ -76,8 +76,6 @@ public class CardHandGUI {
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
             draw(currentCards);
-        } else {
-            System.out.println("bump");
         }
     }
 
@@ -211,7 +209,7 @@ public class CardHandGUI {
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
-        lock.setPosition(xPos, Gdx.graphics.getHeight()-152);
+        lock.setPosition(xPos, Gdx.graphics.getHeight() - 152);
         stage.addActor(lock);
     }
 
