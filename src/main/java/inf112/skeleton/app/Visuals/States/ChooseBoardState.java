@@ -166,6 +166,7 @@ public class ChooseBoardState extends State {
     @Override
     public void dispose() {
         this.spriteSheet.dispose();
+        this.stage.getBatch().dispose();
     }
 
     @Override

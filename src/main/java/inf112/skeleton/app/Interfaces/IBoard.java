@@ -3,6 +3,7 @@ package inf112.skeleton.app.Interfaces;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -26,28 +27,6 @@ public interface IBoard<T> {
 	 */
 	Player[] getAllPlayers();
 
-    /**
-     * Set the Game Object on the tile in the given Position.
-     *
-     * @param pos
-     *            given position you want to set the object
-     * @param gameObject
-     *            the Game Object being placed
-     * @throws IndexOutOfBoundsException
-     *             if !isValid(x,y)
-     */
-    void setGameObject(Position pos, GameObject gameObject);
-
-    /**
-     * Get the Game Objects on the tile in the given Position.
-     *
-     * @param pos
-     *            position to the objects
-     * @return the object that you are getting
-     * @throws IndexOutOfBoundsException
-     *             if !isValid(x,y)
-     */
-	GameObject[] getGameObject(Position pos);
 
 	/**
 	 * Tries to move the player in the given direction numberOfMoves times by calling the
@@ -78,20 +57,6 @@ public interface IBoard<T> {
      */
     boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException;
 
-    /**
-     * Remove a Game Object from the tile at the given x,y location.
-     *
-     * y must be greater than or equal to 0 and less than getHeight(). x must be
-     * greater than or equal to 0 and less than getWidth().
-     *
-     * @param pos
-     *            remove the object in this position
-     * @param gameObject
-     *            An element to be removed from the tile
-     * @throws IndexOutOfBoundsException
-     *             if !isValid(x,y)
-     */
-    void removeObject(Position pos, GameObject gameObject);
 
     /**
      * Check if coordinates are valid.

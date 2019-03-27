@@ -34,7 +34,7 @@ public class CardState extends State {
         this.infoGUI = new PlayerInfoGUI(board, batch, stage);
         this.cardManager = cardManager;
 
-        this.cardHandGUI = new CardHandGUI(cardManager, camera, batch, stage);
+        this.cardHandGUI = new CardHandGUI(cardManager, batch, stage);
     }
 
     @Override

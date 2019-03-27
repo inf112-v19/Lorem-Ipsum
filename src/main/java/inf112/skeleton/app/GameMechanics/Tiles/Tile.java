@@ -1,8 +1,9 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -12,8 +13,9 @@ import inf112.skeleton.app.Interfaces.ITile;
 import inf112.skeleton.app.GameMechanics.Position;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public abstract class Tile implements ITile {
+public abstract class Tile extends Image implements ITile {
 
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
@@ -45,6 +47,8 @@ public abstract class Tile implements ITile {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) return false;
+
 		if (!obj.getClass().isInstance(this)) {
 			return false;
 		}
@@ -54,6 +58,11 @@ public abstract class Tile implements ITile {
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(direction, spriteType, gameObjects);
 	}
 
 	@Override
@@ -136,5 +145,20 @@ public abstract class Tile implements ITile {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
+
+	public Tile() {
+		super();
+	}
+
+
+	@Override
+	public boolean placeFlagOnTile(Flag flag) {
+		if (hasGameObject(flag) == -1) {
+			addGameObject(flag);
+			return true;
+		}
+		return false;
+	}
+
 }
 

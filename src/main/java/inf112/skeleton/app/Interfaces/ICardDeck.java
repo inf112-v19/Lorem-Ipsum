@@ -21,6 +21,13 @@ public interface ICardDeck {
     List<Card> drawCards(int numberOfCards);
 
     /**
+     * returns one card from deck
+     *
+     * @return card
+     */
+    Card drawCard();
+
+    /**
      *
      * @return number of cards left in deck
      */

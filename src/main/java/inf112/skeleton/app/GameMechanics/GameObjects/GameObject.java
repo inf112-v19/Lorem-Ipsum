@@ -1,11 +1,14 @@
 package inf112.skeleton.app.GameMechanics.GameObjects;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 
-public abstract class GameObject implements IGameObject {
+import java.util.Objects;
+
+public abstract class GameObject extends Image implements IGameObject {
 
 	protected Direction dir;
 	protected SpriteType spriteType;
@@ -25,11 +28,6 @@ public abstract class GameObject implements IGameObject {
         //board.setGameObject();  //has to be changed when board is finished
     }
 
-    @Override
-    public void remove() {
-        //board.removeObject();    //has to be changed when board is finished
-    }
-
 	@Override
 	public SpriteType getSpriteType() {
 		return spriteType;
@@ -40,12 +38,23 @@ public abstract class GameObject implements IGameObject {
 		return this.dir;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(dir, spriteType);
+	}
+
     @Override
     public boolean equals(Object obj) {
+        if(obj == null) return false;
+
+        if(this.hashCode() == obj.hashCode()) return true;
+
     	if (!obj.getClass().isInstance(this)) {
     		return false;
 		}
+
 		GameObject gameObject = (GameObject) obj;
     	return gameObject.getDirection().equals(this.dir);
     }
+
 }

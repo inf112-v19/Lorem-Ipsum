@@ -23,7 +23,6 @@ import java.util.List;
 
 public class CardHandGUI {
     private CardManager cardManager;
-    private OrthographicCamera camera;
     private SpriteBatch batch;
     private Stage stage;
 
@@ -32,6 +31,9 @@ public class CardHandGUI {
     private BitmapFont font;
     private String playerTurn;
 
+    private BitmapFont[] cardPriorities;
+    private int[] tempPriorities;
+
     private ImageButton[] displayedCardsArr;
     private Card[] tempCardSeq;
     private int tempCardPtr;
@@ -39,23 +41,25 @@ public class CardHandGUI {
     private int labelXPos;
     private Player currentPlayer;
     private HashMap<Integer, ImageButton> buttonByXPos;
+    private HashMap<Integer, Card> cardByXPos;
 
     private ImageButton clear;
     private ImageButton submit;
     private Image infoBar;
-    private Image[] numberlabels;
+    private Image[] numberLabels;
 
-    public CardHandGUI(CardManager cardManager, OrthographicCamera camera, SpriteBatch batch, Stage stage) {
+    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage) {
         this.cardManager = cardManager;
-        this.camera = camera;
         this.batch = batch;
         this.stage = stage;
 
         spriteSheet = new SpriteSheet();
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
+        cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
-        numberlabels = new Image[5];
+        numberLabels = new Image[5];
+
 
         clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
@@ -83,29 +87,45 @@ public class CardHandGUI {
         labelXPos = 0;
         tempCardPtr = 0;
         final List<Card> cards = c;
+        tempPriorities = new int[cards.size()];
+        cardPriorities = new BitmapFont[cards.size()];
 
-        for (int i = 0; i < displayedCardsArr.length; i++) {
+        for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i] = new BitmapFont(true);
+        }
+
+        for (int i = 0; i < cards.size(); i++) {
             displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
             displayedCardsArr[i].setSize(97, 135);
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
+            cardByXPos.put(cardXPos, cards.get(i));
+
+            if (cardManager.isLocked(cards.get(i))) {
+                drawLockImage(cardXPos);
+                tempCardSeq[i] = cards.get(i);
+            }
+
             cardXPos += 97;
             stage.addActor(displayedCardsArr[i]);
             labelXPos = 0;
         }
 
-        for (int i = 0; i < displayedCardsArr.length; i++) {
+        for (int i = 0; i < cards.size(); i++) {
             final int finalI = i;
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (tempCardPtr < 5) {
+                    if (tempCardPtr < 5 && !cardManager.isLocked(cards.get(finalI))) {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
-                            swapCardPlacement(displayedCardsArr[finalI], getCardByX(getDrawPos(tempCardPtr)));
+                            swapCardPlacement(displayedCardsArr[finalI], getCardImageByX(getDrawPos(tempCardPtr)));
                             tempCardPtr++;
                         }
+                    }
+                    if (cardManager.isLocked(cards.get(finalI))) {
+                        System.out.println("CARD IS LOCKED IN HAND");
                     }
                     System.out.println("Card priority: " + cards.get(finalI).getPriority() + ", card type: " + cards.get(finalI).getCardType());
                     return true;
@@ -115,13 +135,14 @@ public class CardHandGUI {
 
         infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
         infoBar.setSize(485, 30);
-        infoBar.setPosition(0, Gdx.graphics.getHeight()-165);
+        infoBar.setPosition(0, Gdx.graphics.getHeight() - 165);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
+        renderPriorities();
     }
 
     private void clearLabels() {
-        for (Image label : numberlabels) {
+        for (Image label : numberLabels) {
             if (label != null) {
                 label.remove();
             }
@@ -144,7 +165,7 @@ public class CardHandGUI {
         return cardPtr * 97;
     }
 
-    private ImageButton getCardByX(int xPos) {
+    private ImageButton getCardImageByX(int xPos) {
         ImageButton b = buttonByXPos.get(xPos);
         return b;
     }
@@ -160,6 +181,11 @@ public class CardHandGUI {
 
         buttonByXPos.put(bXPos, a);
         buttonByXPos.put(aXPos, b);
+
+        Card first = cardByXPos.get(aXPos);
+        Card second = cardByXPos.get(bXPos);
+        cardByXPos.put(aXPos, second);
+        cardByXPos.put(bXPos, first);
     }
 
     /**
@@ -171,11 +197,20 @@ public class CardHandGUI {
         String filename = "button" + (cardPtr + 1);
         TextureRegion numberTexture = new TextureRegion(new Texture("CardImages/" + filename + ".png"));
         numberTexture.flip(false, true);
-        numberlabels[cardPtr] = new Image(numberTexture);
-        numberlabels[cardPtr].setSize(97, 30);
-        numberlabels[cardPtr].setPosition(labelXPos, Gdx.graphics.getHeight() - 165);
-        stage.addActor(numberlabels[cardPtr]);
+        numberLabels[cardPtr] = new Image(numberTexture);
+        numberLabels[cardPtr].setSize(97, 30);
+        numberLabels[cardPtr].setPosition(labelXPos, Gdx.graphics.getHeight() - 165);
+        stage.addActor(numberLabels[cardPtr]);
         labelXPos += 97;
+    }
+
+    private void drawLockImage(int xPos) {
+        TextureRegion lockTex = new TextureRegion(new Texture("lock.png"));
+        lockTex.flip(false, true);
+        Image lock = new Image(lockTex);
+        lock.setSize(97, 50);
+        lock.setPosition(xPos, Gdx.graphics.getHeight() - 152);
+        stage.addActor(lock);
     }
 
     private boolean cardSeqContains(Card card, Card[] cardSeq) {
@@ -192,6 +227,22 @@ public class CardHandGUI {
         stage.act(Gdx.graphics.getDeltaTime());
         batch.begin();
         font.draw(batch, playerTurn, 10, 10);
+        batch.end();
+        renderPriorities();
+    }
+
+    private void renderPriorities() {
+        batch.begin();
+        int xPos = 38;
+        for (int i = 0; i < tempPriorities.length; i++) {
+            tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
+        }
+        for (int i = 0; i < cardPriorities.length; i++) {
+            cardPriorities[i].getData().setScale(0.90f);
+            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
+            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, Gdx.graphics.getHeight() - 120);
+            xPos += 97;
+        }
         batch.end();
     }
 
@@ -224,7 +275,7 @@ public class CardHandGUI {
 
     private void createClearButton() {
         clear.setSize(76, 32);
-        clear.setPosition(873, Gdx.graphics.getHeight()-60);
+        clear.setPosition(873, Gdx.graphics.getHeight() - 60);
         TextureRegion pressed = new TextureRegion(new Texture("clear_press.png"));
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
