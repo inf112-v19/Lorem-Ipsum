@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
@@ -27,6 +30,9 @@ public class ChoosePlayerState extends State {
     private Stage stage;
     private CardManager cardManager;
 
+    //textfield
+    private TextField txt;
+
     private boolean start;
     private boolean bar2;
 
@@ -44,8 +50,10 @@ public class ChoosePlayerState extends State {
 
     //input
     public ArrayList<String> playerNames;
-
     public ArrayList<Player> players;
+
+    private Skin skin;
+    private  MyTextInputListener listener;
 
     public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm);
@@ -68,22 +76,29 @@ public class ChoosePlayerState extends State {
         this.textBar2 = new Image(new TextureRegionDrawable(new Texture("StateImages/namePlayers.png")));
 
 
-        //player
+        //player buttons
         this.amountPlayers = 4;
         this.spaceOverButtons = 49*2;
         this.halfButtonWidth = 193/2;
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
 
+        //input
+        //skin = new Skin(Gdx.files.internal("uiskin.json"));
+
         setTextbar();
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
 
-        //input
-        playerNames = new ArrayList<String>();
+        //players
         players = new ArrayList<Player>();
-
-
+        playerNames = new ArrayList<String>();
+        playerNames.add("RANDOM_NAME_1");
+        playerNames.add("RANDOM_NAME_2");
+        playerNames.add("RANDOM_NAME_3");
+        playerNames.add("RANDOM_NAME_4");
+        playerNames.add("RANDOM_NAME_5");
+        playerNames.add("RANDOM_NAME_6");
     }
 
     /**
@@ -129,7 +144,7 @@ public class ChoosePlayerState extends State {
     }
 
     /**
-     * adds the amount of players that can be chosen (max 4)
+     * adds the amount of players that can be chosen (max 4) (this one is not currently being used)
      */
     private void setAmountPlayers(int amountPlayers) {
         for (int i = 1; i < amountPlayers+1; i++) {
@@ -145,26 +160,34 @@ public class ChoosePlayerState extends State {
         }
     }
 
-    private void clickable(Image button, final int playerName) {
+    private void clickable(Image button, final int playerNumber) {
         button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (playerName == 1) {
-                    System.out.println("1 player was chosen!");
-                    savePlayerAmount(playerName);
+                if (playerNumber == 1) {
+                    System.out.println(playerNumber + " " + "(" + getPlayerNameAt(playerNumber) + ")" + " player was chosen!");
+                    savePlayerAmount(playerNumber);
                 } else {
-                    System.out.println(playerName + " players was chosen!");
-                    savePlayerAmount(playerName);
+                    System.out.print(playerNumber + " (" + getPlayerNameAt(0));
+                    for (int i = 1; i < playerNumber; i++) {
+                        System.out.print( ", "+ getPlayerNameAt(i));
+                    }
+                    System.out.println(") players was chosen!");
+                    savePlayerAmount(playerNumber);
                 }
                 start = true;
                 bar2 = true;
                 return true;
             }
         });
-
         Gdx.input.setInputProcessor(this.stage);
     }
 
+    /**
+     * helper-method to save the amount of players that is being chosen
+     * @param playerAmount
+     * @return the amount of players
+     */
     private int savePlayerAmount(int playerAmount) {
         this.playerAmount = playerAmount;
         return this.playerAmount;
@@ -178,11 +201,12 @@ public class ChoosePlayerState extends State {
     }
 
     /**
-     * lager spillere i forhold til hvor mange spillere som er valgt
+     * creates players according to how many players was chosen to play
+     * @return
      */
     public ArrayList<Player> createPlayers() {
         for (int i = 0; i < getPlayerAmount(); i++) {
-            Player player = new Player(i , getPlayerNames(i), Direction.EAST);
+            Player player = new Player(i , getPlayerNameAt(i), Direction.EAST);
             players.add(player);
         }
         return players;
@@ -211,35 +235,26 @@ public class ChoosePlayerState extends State {
         }
     }
 
-    public String getPlayerNames(int playerIndex) {
-        for (int i = 0; i < getPlayerAmount(); i++) {
-            if (playerIndex == i) {
-                return playerNames.get(i);
-            }
-        }
-        return null;
+    public String getPlayerNameAt(int playerIndex) {
+        return playerNames.get(playerIndex);
     }
 
-    private void input() {
-        MyTextInputListener listener = new MyTextInputListener();
+    /*private void input() {
+        listener = new MyTextInputListener();
         Gdx.input.getTextInput(listener, "Enter Player(s) name: ", "", "name");
-    }
+    }*/
 
     @Override
     public void handleInput() {
 
         if (this.start) {
-            //do {
-            //if (getPlayerAmount() > 0) {
-                for (int i = 0; i < getPlayerAmount(); i++) {
-                    input();
-                }
-            //} else if (getPlayerAmount() == this.playerNames.size()) {
-                //} while (this.playerNames.size() != this.playerAmount);
-                gsm.set(new CardState(gsm, board, cardManager));
-                //gsm.set(new (gsm, board, cardManager, createPlayers()));
-                dispose();
-           // }
+            /*for (int i = 0; i < getPlayerAmount(); i++) {
+                input();
+            }*/
+            gsm.set(new CardState(gsm, board, cardManager));
+            dispose();
+            //gsm.set(new (gsm, board, cardManager, createPlayers()));
+
         }
     }
 
