@@ -41,6 +41,7 @@ public class Board implements IBoard {
 		playerPositions.put(player1, new Position(1, 4));
 		playerPositions.put(player2, new Position(1, 11));
 
+
 	}
 
 	/**

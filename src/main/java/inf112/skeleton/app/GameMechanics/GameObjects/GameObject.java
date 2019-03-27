@@ -1,13 +1,11 @@
 package inf112.skeleton.app.GameMechanics.GameObjects;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
 import inf112.skeleton.app.GameMechanics.Position;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Objects;
 
 public abstract class GameObject extends Image implements IGameObject {
@@ -59,28 +57,4 @@ public abstract class GameObject extends Image implements IGameObject {
     	return gameObject.getDirection().equals(this.dir);
     }
 
-	@Override
-	public int getWidth(ImageObserver imageObserver) {
-		return 0;
-	}
-
-	@Override
-	public int getHeight(ImageObserver imageObserver) {
-		return 0;
-	}
-
-	@Override
-	public ImageProducer getSource() {
-		return null;
-	}
-
-	@Override
-	public Graphics getGraphics() {
-		return null;
-	}
-
-	@Override
-	public Object getProperty(String s, ImageObserver imageObserver) {
-		return null;
-	}
 }
