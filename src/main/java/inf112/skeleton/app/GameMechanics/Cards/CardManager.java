@@ -33,18 +33,27 @@ public class CardManager {
         sendCardsBackToDeck();
         cardDeck.shuffleDeck();
         dealCards();
-        /*
-        for (int i = 0; i < players.length; i++) {
-            players[i].setCardHand(cardDeck.drawCards(9));
-        }
-        */
     }
 
     /**
      * @return current player for assigning play sequence
      */
     public Player getPlayer() {
-        return players[playerPtr];
+        Player currentPlayer = null;
+        for (Player player : players) {
+            if (!player.isReady() && !player.isDead()){
+                currentPlayer = player;
+                break;
+            }
+        }
+        if (currentPlayer != null) {
+            return currentPlayer;
+        } else {
+            return null;
+        }
+
+        //return currentPlayer;
+        //return players[playerPtr];
     }
 
     /**
@@ -54,7 +63,7 @@ public class CardManager {
      */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
-            if (player.isReady()) {
+            if (player.isReady() || player.isDead()) {
                 continue;
             } else {
                 return true;
