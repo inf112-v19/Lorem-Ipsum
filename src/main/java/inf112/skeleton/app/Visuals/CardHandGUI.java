@@ -76,6 +76,8 @@ public class CardHandGUI {
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
             draw(currentCards);
+        } else {
+            System.out.println("bump");
         }
     }
 
