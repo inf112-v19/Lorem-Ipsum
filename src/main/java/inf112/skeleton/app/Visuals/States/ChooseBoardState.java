@@ -147,6 +147,7 @@ public class ChooseBoardState extends State {
             this.cardManager = new CardManager(this.board);
             //System.out.println(getBoardName());
             gsm.set(new ChoosePlayerState(this.gsm, this.board, this.cardManager));
+            //gsm.set(new InputTest(this.gsm));
             dispose();
         }
     }
