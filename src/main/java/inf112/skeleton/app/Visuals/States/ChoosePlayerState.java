@@ -1,6 +1,5 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -17,7 +14,6 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.Visuals.MyTextInputListener;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -33,6 +29,7 @@ public class ChoosePlayerState extends State {
     //textfield
     private TextField txt;
 
+    //booleans
     private boolean start;
     private boolean bar2;
 
@@ -51,9 +48,6 @@ public class ChoosePlayerState extends State {
     //input
     public ArrayList<String> playerNames;
     public ArrayList<Player> players;
-
-    private Skin skin;
-    private  MyTextInputListener listener;
 
     public ChoosePlayerState(GameStateManager gsm, Board board, CardManager cardManager) {
         super(gsm);
@@ -83,16 +77,14 @@ public class ChoosePlayerState extends State {
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
 
-        //input
-        //skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         setTextbar();
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
 
         //players
-        players = new ArrayList<Player>();
-        playerNames = new ArrayList<String>();
+        players = new ArrayList<>();
+        playerNames = new ArrayList<>();
         playerNames.add("RANDOM_NAME_1");
         playerNames.add("RANDOM_NAME_2");
         playerNames.add("RANDOM_NAME_3");
@@ -113,6 +105,7 @@ public class ChoosePlayerState extends State {
     /**
      * set the textbar2 "Name players"
      */
+
     private void setTextbar2() {
         this.textBar2.setSize(821/3, 121/3);
         this.textBar2.setPosition((RoboRally.WIDTH/2)-((821/3)/2), 102-(102/3));
@@ -144,7 +137,7 @@ public class ChoosePlayerState extends State {
     }
 
     /**
-     * adds the amount of players that can be chosen (max 4) (this one is not currently being used)
+     * adds the amount of players that can be chosen (max 4) (is not currently being used)
      */
     private void setAmountPlayers(int amountPlayers) {
         for (int i = 1; i < amountPlayers+1; i++) {
@@ -235,26 +228,21 @@ public class ChoosePlayerState extends State {
         }
     }
 
+    /**
+     * gets player name at index
+     * @param playerIndex
+     * @return
+     */
     public String getPlayerNameAt(int playerIndex) {
         return playerNames.get(playerIndex);
     }
 
-    /*private void input() {
-        listener = new MyTextInputListener();
-        Gdx.input.getTextInput(listener, "Enter Player(s) name: ", "", "name");
-    }*/
-
     @Override
     public void handleInput() {
-
         if (this.start) {
-            /*for (int i = 0; i < getPlayerAmount(); i++) {
-                input();
-            }*/
             gsm.set(new CardState(gsm, board, cardManager));
             dispose();
             //gsm.set(new (gsm, board, cardManager, createPlayers()));
-
         }
     }
 

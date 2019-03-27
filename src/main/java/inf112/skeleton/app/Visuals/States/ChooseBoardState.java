@@ -46,8 +46,6 @@ public class ChooseBoardState extends State {
 
         this.roborally = new RoboRally();
 
-        this.cardManager = cardManager;
-
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
 
@@ -147,7 +145,6 @@ public class ChooseBoardState extends State {
             this.cardManager = new CardManager(this.board);
             //System.out.println(getBoardName());
             gsm.set(new ChoosePlayerState(this.gsm, this.board, this.cardManager));
-            //gsm.set(new InputTest(this.gsm));
             dispose();
         }
     }
