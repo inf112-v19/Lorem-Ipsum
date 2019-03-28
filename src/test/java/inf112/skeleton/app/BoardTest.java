@@ -25,9 +25,15 @@ public class BoardTest {
 	@Before
 	public void setUp() throws Exception {
 		testBoard = new Board("Boards/ExampleBoard.txt");
+
+		Player player0 = new Player(0,"Player 0", Direction.EAST);
+		Player player1 = new Player(1,"Player 1", Direction.EAST);
+		player0.setBackup(new Position(1, 4));
+		player1.setBackup(new Position(1, 11));
+		testBoard.placePlayerOnPos(player0, new Position(0, 0));
+		testBoard.placePlayerOnPos(player1, new Position(0, 1));
+
 		players = testBoard.getAllPlayers();
-		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
-		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
 	}
 
 	/**
@@ -62,7 +68,6 @@ public class BoardTest {
 	}
 
 
-
 	/**
 	 * Testing that the isValidPos works returns false when given a position outside the board
 	 */
@@ -93,9 +98,9 @@ public class BoardTest {
 		testBoard.movePlayer(players[0], Direction.EAST);
 		testBoard.movePlayer(players[0], Direction.EAST);
 		testBoard.movePlayer(players[0], Direction.SOUTH);
-		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(2,1));
+		Position newPos = testBoard.getPlayerPos(players[0]);
 
-		assertEquals(shouldBePlayer0, players[0]);
+		assertEquals(new Position(2,1), newPos);
 	}
 
 	/**
@@ -107,9 +112,9 @@ public class BoardTest {
 	@Test
 	public void movePlayerCollisionTest() throws PlayerNotFoundException {
 		testBoard.movePlayer(players[0], Direction.SOUTH);
-		Player shouldBePlayer1 = testBoard.posToPlayer(new Position(0,2));
+		Position newPos = testBoard.getPlayerPos(players[1]);
 
-		assertEquals(shouldBePlayer1, players[1]);
+		assertEquals(new Position(0,2), newPos);
 	}
 
 	/**
@@ -121,9 +126,9 @@ public class BoardTest {
 	@Test
 	public void movePlayerWallTest() throws PlayerNotFoundException {
 		testBoard.movePlayer(players[0], Direction.WEST);
-		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,0));
+		Position newPos = testBoard.getPlayerPos(players[0]);
 
-		assertEquals(shouldBePlayer0, players[0]);
+		assertEquals(new Position(0,0), newPos);
 	}
 
 	/**
@@ -134,5 +139,108 @@ public class BoardTest {
 		Player[] players = testBoard.getAllPlayers();
 		assertEquals(players.length, 2);
 	}
+
+	/**
+	 * Testing player1 walking twice south - checking that the final position is correct
+	 */
+	@Test
+	public void playerWalkingTwice() {
+		testBoard.movePlayer(players[1], Direction.SOUTH, 2);
+
+		while (testBoard.doNextAction()){}
+
+		Position newPos = testBoard.getPlayerPos(players[1]);
+
+		assertEquals(new Position(0,3), newPos);
+
+	}
+
+	/**
+	 * Testing player walking off the board - players onBoardCheck should return false
+	 */
+	@Test
+	public void playerWalkedOffTheBoard() {
+		testBoard.movePlayer(players[0], Direction.NORTH);
+
+		assertFalse(players[0].onBoardCheck());
+	}
+
+	/**
+	 * Testing player falling into a hole - players onBoardCheck should return false
+	 */
+	@Test
+	public void playerFellInHole() {
+		testBoard.movePlayer(players[0], Direction.EAST);
+		testBoard.movePlayer(players[0], Direction.SOUTH);
+
+		assertFalse(players[0].onBoardCheck());
+	}
+
+	/**
+	 * Testing player getting moved by conveyor belt tile - starts recursive call of the doNextAction to move player0
+	 * two times east, making him stand on a conveyor belt and then confirming that the final position is correct after
+	 * being moved by the conveyor belt east once.
+	 */
+	@Test
+	public void playerStandingOnConveyorTile() {
+		testBoard.movePlayer(players[0], Direction.EAST, 2);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		Position newPos = testBoard.getPlayerPos(players[0]);
+
+		assertEquals(new Position(3,0), newPos);
+	}
+
+	/**
+	 * Testing player taking damage from laser - walks player 1 to a tile with a laser and checks that the health decreases
+	 */
+	@Test
+	public void playerTakingLaserDamage() {
+		int originHealth = players[1].getHealth();
+
+		testBoard.movePlayer(players[1], Direction.SOUTH);
+		testBoard.movePlayer(players[1], Direction.EAST);
+		players[1].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(originHealth-1, players[1].getHealth());
+	}
+
+	/**
+	 * Testing player getting moved by double conveyor belt tile - walks player to double conveyor belt tile and checks
+	 * that the final position is correct
+	 */
+	@Test
+	public void playerStandingOnDoubleConveyorTile() {
+		testBoard.placePlayerOnPos(players[0], new Position(1,2));
+		testBoard.movePlayer(players[0], Direction.EAST);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		Position newPos = testBoard.getPlayerPos(players[0]);
+
+		assertEquals(new Position(4,2), newPos);
+	}
+
+	/**
+	 * Testing player collecting flag - player0 should collect the flag and the numberOfFlagsCollected should return 1
+	 */
+	@Test
+	public void collectFlagTest() {
+		testBoard.movePlayer(players[0], Direction.EAST);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(1, players[0].numberOfFlagsCollected());
+	}
+
+
+
+
 
 }
