@@ -12,8 +12,8 @@ import java.util.List;
 
 public class Player extends Image implements IPlayer {
 
-	private int index;
-    private SpriteType spriteType = SpriteType.PLAYER;
+    private int index;
+    private SpriteType spriteType;
     private String playerID;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
@@ -22,7 +22,7 @@ public class Player extends Image implements IPlayer {
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
-	private HashSet<Flag> collectedFlags = new HashSet<>();
+    private HashSet<Flag> collectedFlags = new HashSet<>();
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -37,14 +37,15 @@ public class Player extends Image implements IPlayer {
     public Player(String playerID, Direction direction) {
         this.playerID = playerID;
         setPlayerDirection(direction);
+        spriteType = SpriteType.PLAYER1;
     }
 
-
-	public Player(int index, String playerID, Direction direction) {
-    	this.index = index;
-		this.playerID = playerID;
-		setPlayerDirection(direction);
-	}
+    public Player(int index, String playerID, Direction direction) {
+        this.index = index;
+        this.playerID = playerID;
+        setPlayerDirection(direction);
+        assignSpriteType();
+    }
 
 
     /**
@@ -144,18 +145,17 @@ public class Player extends Image implements IPlayer {
 
     /**
      * destroy the player (lose a total life and set health to max) or if no more lives set health to 0
-	 * and remove player from the board
+     * and remove player from the board
      */
-    public void destroyPlayer(){
-		playerlives--;
+    public void destroyPlayer() {
+        playerlives--;
 
-		if (playerlives>0){
-			playerHealth = 10;
-		}
-		else {
-			playerHealth = 0;
-			isOnTheBoard = false;
-		}
+        if (playerlives > 0) {
+            playerHealth = 10;
+        } else {
+            playerHealth = 0;
+            isOnTheBoard = false;
+        }
     }
 
     /**
@@ -164,7 +164,7 @@ public class Player extends Image implements IPlayer {
     @Override
     public void decreaseHealth() {
         playerHealth--;
-        if(playerHealth<=0){
+        if (playerHealth <= 0) {
             playerHealth = 10;
             destroyPlayer();
         }
@@ -176,7 +176,7 @@ public class Player extends Image implements IPlayer {
     @Override
     public void increaseHealth() {
         playerHealth++;
-        if(playerHealth>10) playerHealth = 10;
+        if (playerHealth > 10) playerHealth = 10;
 
     }
 
@@ -216,7 +216,7 @@ public class Player extends Image implements IPlayer {
         ready = true;
     }
 
-    public void setNotReady(){
+    public void setNotReady() {
         ready = false;
     }
 
@@ -232,43 +232,68 @@ public class Player extends Image implements IPlayer {
         return this.playerID.equals(((Player) obj).playerID);
     }
 
-	@Override
-	public int hashCode() {
-		return this.getPlayerID().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return this.getPlayerID().hashCode();
+    }
 
-	@Override
-	public boolean onBoardCheck() {
-    	return isOnTheBoard;
-	}
+    @Override
+    public boolean onBoardCheck() {
+        return isOnTheBoard;
+    }
 
-	@Override
-	public void setOnTheBoard(Boolean isOnTheBoard){
-    	this.isOnTheBoard = isOnTheBoard;
-	}
+    @Override
+    public void setOnTheBoard(Boolean isOnTheBoard) {
+        this.isOnTheBoard = isOnTheBoard;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public boolean isDead() {
-		return !(getLives() > 0);
-	}
+    public boolean isDead() {
+        return !(getLives() > 0);
+    }
 
-	/**
-	 * Method that checks if the flag is the next flag to be collected (index of the flag matches how many flags have
-	 * already been collected) and adds the flag to the collectedFlags HashSet.
-	 *
-	 * @param flag
-	 */
-	public void collectFlag(Flag flag) {
-    	if (collectedFlags.size() == flag.getIndex()) {
-			collectedFlags.add(flag);
-			System.out.println(playerID + " collected flag number " + flag.getIndex());
-		}
-	}
+    /**
+     * Method that checks if the flag is the next flag to be collected (index of the flag matches how many flags have
+     * already been collected) and adds the flag to the collectedFlags HashSet.
+     *
+     * @param flag
+     */
+    public void collectFlag(Flag flag) {
+        if (collectedFlags.size() == flag.getIndex()) {
+            collectedFlags.add(flag);
+            System.out.println(playerID + " collected flag number " + flag.getIndex());
+        }
+    }
 
-	public int numberOfFlagsCollected() {
-		return collectedFlags.size();
-	}
+    public int numberOfFlagsCollected() {
+        return collectedFlags.size();
+    }
+
+    private void assignSpriteType() {
+        switch (index) {
+            case 0:
+                spriteType = SpriteType.PLAYER1;
+                break;
+            case 1:
+                spriteType = SpriteType.PLAYER2;
+                break;
+            case 2:
+                spriteType = SpriteType.PLAYER3;
+                break;
+            case 3:
+                spriteType = SpriteType.PLAYER4;
+                break;
+            case 4:
+                spriteType = SpriteType.PLAYER5;
+                break;
+            case 5:
+                spriteType = SpriteType.PLAYER6;
+                break;
+            default:
+                spriteType = SpriteType.PLAYER1;
+        }
+    }
 }
