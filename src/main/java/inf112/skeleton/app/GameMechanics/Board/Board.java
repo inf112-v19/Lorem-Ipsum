@@ -60,7 +60,6 @@ public class Board implements IBoard {
 		}
 
 		playerPositions.put(player, pos);
-		System.out.println(player.getPlayerID() + " " + player.getIndex());
 	}
 
 	@Override

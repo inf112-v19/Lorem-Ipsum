@@ -93,21 +93,16 @@ public class BoardGUI {
 		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
-		tile.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				gsm.tileEventHandle(tile);
-				return true;
-			}
-		});
+		tile.addListener(createListener(tile));
 		stage.addActor(tile);
 	}
 
-	private void addGameObjectsOnTileToStage(Tile tile, int x, int y){
+	private void addGameObjectsOnTileToStage(final Tile tile, int x, int y){
     	if (tile.hasAnyGameObjects()){
 			GameObject[] gameObjects = tile.getGameObjects();
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				GameObject gameObject = gameObjects[i];
+				gameObject.addListener(createListener(tile));
 				addGameObjectToStage(gameObject, x, y);
 			}
 		}
@@ -200,6 +195,16 @@ public class BoardGUI {
 		for (Actor actor: stage.getActors()) {
 			removeListener(actor);
 		}
+	}
+
+	public InputListener createListener(final Tile tile){
+		return new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				gsm.tileEventHandle(tile);
+				return true;
+			}
+		};
 	}
 
 	public void removeListener(Actor actor){
