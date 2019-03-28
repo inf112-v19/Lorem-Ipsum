@@ -88,5 +88,9 @@ public class PlayerTest {
         Player player = new Player("player", Direction.NORTH);
         player.destroyPlayer();
         assertEquals(8, player.getHealth());
+        player.destroyPlayer();
+        assertEquals(6, player.getHealth());
+        player.destroyPlayer();
+        assertEquals(4, player.getHealth());
     }
 }
