@@ -63,15 +63,7 @@ public class Board implements IBoard {
 		System.out.println(player.getPlayerID() + " " + player.getIndex());
 	}
 
-
-	/**
-	 * Method for spawning players on the board - checks if the tile is a SpawnTile and that is does not contain any
-	 * players and either places the player on the spawn location or not.
-	 *
-	 * @param spawnPos
-	 * @param player
-	 * @return true if the player was placed on the board, or false if not
-	 */
+	@Override
 	public boolean spawnPlayer(Position spawnPos, Player player) {
 		Tile tile = tileMap.get(spawnPos);
 		boolean posContainsPlayer = (posToPlayer(spawnPos) != null);

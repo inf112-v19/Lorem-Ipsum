@@ -20,13 +20,21 @@ public interface IBoard<T> {
     int getWidth();
 
 	/**
-	 * Creates an array of all the players where the index is equal to the playerID
-	 * (playerID is set as a counter in the constructor starting from 0)
+	 * Creates an array of all the players where the index is equal to the player index
 	 *
 	 * @return
 	 */
 	Player[] getAllPlayers();
 
+	/**
+	 * Method for spawning players on the board - checks if the tile is a SpawnTile and that is does not contain any
+	 * players and either places the player on the spawn location or not.
+	 *
+	 * @param spawnPos
+	 * @param player
+	 * @return true if the player was placed on the board, or false if not
+	 */
+	boolean spawnPlayer(Position spawnPos, Player player);
 
 	/**
 	 * Tries to move the player in the given direction numberOfMoves times by calling the
