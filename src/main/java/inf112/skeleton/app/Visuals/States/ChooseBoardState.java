@@ -38,12 +38,9 @@ public class ChooseBoardState extends State {
 
     private boolean start;
 
-    private RoboRally roborally;
 
     public ChooseBoardState(GameStateManager gsm) {
         super(gsm);
-
-        this.roborally = new RoboRally();
 
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());

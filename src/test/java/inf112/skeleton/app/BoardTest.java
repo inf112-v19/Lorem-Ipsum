@@ -239,7 +239,125 @@ public class BoardTest {
 		assertEquals(1, players[0].numberOfFlagsCollected());
 	}
 
+	/**
+	 * Testing that the player does not collect the same flag twice - numberOfFlagsCollected should still return 1
+	 */
+	@Test
+	public void collectFlagTwiceTest() {
+		testBoard.movePlayer(players[0], Direction.EAST);
+		players[0].setReady();
 
+		while (testBoard.doNextAction()){}
+
+		testBoard.movePlayer(players[0], Direction.EAST);
+		testBoard.movePlayer(players[0], Direction.WEST);
+
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(1, players[0].numberOfFlagsCollected());
+	}
+
+	/**
+	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
+	 * player direction should be NORTH
+	 */
+	@Test
+	public void playerStandingOnLeftRotationTile() {
+		testBoard.placePlayerOnPos(players[0], new Position(3,0));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(Direction.NORTH, players[0].getDirection());
+	}
+
+
+	/**
+	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
+	 * player direction should be SOUTH
+	 */
+	@Test
+	public void playerStandingOnRightRotationTile() {
+		testBoard.placePlayerOnPos(players[0], new Position(4,0));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(Direction.SOUTH, players[0].getDirection());
+	}
+
+
+	/**
+	 * Testing player getting repaired by RepairTile - first decreases health and then places player on RepairTile,
+	 * player health should be 10
+	 */
+	@Test
+	public void playerStandingOnRepairTileWhenDamaged() {
+		players[0].decreaseHealth();
+		players[0].decreaseHealth();
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(10, players[0].getHealth());
+	}
+
+	/**
+	 * Testing player getting repaired by RepairTile when health is full - health should still be 10 (not 11)
+	 */
+	@Test
+	public void playerStandingOnRepairTileWhenNotDamaged() {
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(10, players[0].getHealth());
+	}
+
+	/**
+	 * Testing that player backup change when standing on a tile with a flag - backup should be position (1,0)
+	 */
+	@Test
+	public void playerBackupChangedByFlag() {
+
+		testBoard.placePlayerOnPos(players[0], new Position(1, 0));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(new Position(1,0), players[0].getBackup());
+	}
+
+	/**
+	 * Testing that player backup change when standing on a OptionTile - backup should be position (4,2)
+	 */
+	@Test
+	public void playerBackupChangedByOptionTile() {
+
+		testBoard.placePlayerOnPos(players[0], new Position(4, 2));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(new Position(4,2), players[0].getBackup());
+	}
+
+	/**
+	 * Testing that player health gets increased by option tile - first decreases health and then places player
+	 * on optionTile, player health should be 10
+	 */
+	@Test
+	public void playerHealthIncreasedByOptionTile() {
+		players[0].decreaseHealth();
+		testBoard.placePlayerOnPos(players[0], new Position(4, 2));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(10, players[0].getHealth());
+	}
 
 
 

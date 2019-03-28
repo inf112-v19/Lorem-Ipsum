@@ -6,6 +6,7 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
+import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -24,6 +25,10 @@ public class Board implements IBoard {
 	private Player curPlayer;
 	private Direction moveDir;
 
+	private Player winningPlayer = null;
+	private Player lastPlayerAlive = null;
+	private boolean gameOver = false;
+
 	private int height;
 	private int width;
 
@@ -32,23 +37,11 @@ public class Board implements IBoard {
 		tileMap = builder.buildBoard(filename);
 		height = builder.getHeight();
 		width = builder.getWidth();
-
-		//creates two players and places them on the board and sets their backup - mostly for testing purposes
-		/*
-		Player player1 = new Player(0,"RANDOM_NAME_1", Direction.EAST);
-		Player player2 = new Player(1,"RANDOM_NAME_2", Direction.EAST);
-		player1.setBackup(new Position(1, 4));
-		player2.setBackup(new Position(1, 11));
-		playerPositions.put(player1, new Position(1, 4));
-		playerPositions.put(player2, new Position(1, 11));
-		*/
-
-
 	}
 
 	/**
 	 * Method used to initialize players on the board - places players on the given position.
-	 * Also used for testing purposes (in setup and teardown methods).
+	 * Only used for testing purposes (in setup and teardown methods).
 	 *
 	 * @param player
 	 * @param pos
@@ -59,7 +52,21 @@ public class Board implements IBoard {
 		}
 
 		playerPositions.put(player, pos);
-		System.out.println(player.getPlayerID() + " " + player.getIndex());
+	}
+
+	@Override
+	public boolean spawnPlayer(Position spawnPos, Player player) {
+		Tile tile = tileMap.get(spawnPos);
+		boolean posContainsPlayer = (posToPlayer(spawnPos) != null);
+
+		if ((tile instanceof SpawnTile) && !posContainsPlayer) {
+			playerPositions.put(player, spawnPos);
+			player.setBackup(spawnPos);
+			System.out.println(player.getIndex() + " spawned on " + spawnPos);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -217,6 +224,31 @@ public class Board implements IBoard {
 		return curCard;
 	}
 
+	@Override
+	public Player getCurPlayer() {
+		return curPlayer;
+	}
+
+	@Override
+	public Card peekNextCard() {
+		return thisRoundsCards.peek();
+	}
+
+	@Override
+	public Player getNextPlayer() {
+		return cardToPlayer.get(thisRoundsCards.peek());
+	}
+
+	@Override
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	@Override
+	public Player getWinningPlayer() {
+		return winningPlayer;
+	}
+
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
 	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
@@ -284,7 +316,7 @@ public class Board implements IBoard {
 
 		turnOnLasers();
 		respawnPlayers();
-		checkForGameOver();
+		gameOver = checkForGameOver();
 
 		//round is over
 		return false;
@@ -293,21 +325,37 @@ public class Board implements IBoard {
 	/**
 	 * Method for checking if the game is over after the round has finished - checks if any player has collected all
 	 * the flags, or if there is less than 2 players alive
+	 *
+	 * @return true if game is over or false if not
 	 */
-	private void checkForGameOver() {
+	private boolean checkForGameOver() {
 		int alivePlayers = 0;
 
 		for (Player player : playerPositions.keySet()) {
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
-				//TODO - handle player winning the game
+				winningPlayer = player;
+				return true;
 			}
 			if (!player.isDead()) {
 				alivePlayers++;
+
 			}
 		}
 
-		if (alivePlayers<2) {
-			//TODO - handle game over
+		switch (alivePlayers) {
+			//no players alive - game over with no winner
+			case 0:
+				return true;
+
+			//1 player alive - game over with last surviving player winning
+			case 1:
+				winningPlayer = lastPlayerAlive;
+				return true;
+
+			//game is not over - reset lastAlivePlayer to null
+			default:
+				lastPlayerAlive = null;
+				return false;
 		}
 	}
 
@@ -404,16 +452,4 @@ public class Board implements IBoard {
 		}
 	}
 
-
-	public Player getCurPlayer() {
-		return curPlayer;
-	}
-
-	public Card peekNextCard() {
-		return thisRoundsCards.peek();
-	}
-
-	public Player getNextPlayer() {
-		return cardToPlayer.get(thisRoundsCards.peek());
-	}
 }

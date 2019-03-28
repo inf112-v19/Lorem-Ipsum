@@ -20,13 +20,21 @@ public interface IBoard<T> {
     int getWidth();
 
 	/**
-	 * Creates an array of all the players where the index is equal to the playerID
-	 * (playerID is set as a counter in the constructor starting from 0)
+	 * Creates an array of all the players where the index is equal to the player index
 	 *
 	 * @return
 	 */
 	Player[] getAllPlayers();
 
+	/**
+	 * Method for spawning players on the board - checks if the tile is a SpawnTile and that is does not contain any
+	 * players and either places the player on the spawn location or not.
+	 *
+	 * @param spawnPos
+	 * @param player
+	 * @return true if the player was placed on the board, or false if not
+	 */
+	boolean spawnPlayer(Position spawnPos, Player player);
 
 	/**
 	 * Tries to move the player in the given direction numberOfMoves times by calling the
@@ -118,4 +126,41 @@ public interface IBoard<T> {
 	 * @return
 	 */
 	Card getCurCard();
+
+	/**
+	 * Returns the player currently being handled - the player which has moves pending
+	 *
+	 * @return
+	 */
+	Player getCurPlayer();
+
+	/**
+	 * Peeks what the next card in thisRoundsCards is - used for rendering "next card" in PendingCardsGUI
+	 *
+	 * @return
+	 */
+	Card peekNextCard();
+
+
+	/**
+	 * Returns the player corresponding to the next card - used used for rendering player corresponding to the
+	 * "next card" in PendingCardsGUI
+	 *
+	 * @return
+	 */
+	Player getNextPlayer();
+
+	/**
+	 * Method for checking if the game has reached an end
+	 *
+	 * @return true if game is over, else false
+	 */
+	boolean isGameOver();
+
+	/**
+	 * Method for getting the winning player - used to display who has won the game in GameOverState
+	 *
+	 * @return the player who has won, or null if there are no winners
+	 */
+	Player getWinningPlayer();
 }
