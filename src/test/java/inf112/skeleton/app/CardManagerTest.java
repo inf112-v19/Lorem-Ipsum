@@ -10,8 +10,7 @@ import inf112.skeleton.app.GameMechanics.Position;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 public class CardManagerTest {
     private CardManager cardManager;
@@ -27,7 +26,7 @@ public class CardManagerTest {
         player1.setBackup(new Position(1, 11));
         board.placePlayerOnPos(player0, new Position(0, 0));
         board.placePlayerOnPos(player1, new Position(0, 1));
-        
+
         players = board.getAllPlayers();
         cardManager = new CardManager(board);
     }
@@ -60,5 +59,20 @@ public class CardManagerTest {
         assertTrue(testPlayer.isReady());
     }
 
+    @Test
+    public void getPlayerShouldReturnNullWhenAllPlayersAreDead() {
+        for (int i = 0; i < 3; i++) {
+            players[0].destroyPlayer();
+            players[1].destroyPlayer();
+        }
+        assertEquals(null, cardManager.getPlayer());
+    }
 
+    @Test
+    public void playerSholdGet8CardsWith9HP() {
+        cardManager.newRound();
+        players[0].decreaseHealth();
+        cardManager.newRound();
+        assertEquals(8, players[0].getCardHand().size());
+    }
 }
