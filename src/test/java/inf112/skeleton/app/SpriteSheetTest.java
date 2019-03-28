@@ -88,12 +88,23 @@ public class SpriteSheetTest {
 
 	}
 
+	@Test
+	public void initOptionsTileCorrectTextureTest(){
+		OptionsTile optionsTile = new OptionsTile(null, Direction.NORTH);
+		assertEquals(SpriteType.OPTIONS_TILE, optionsTile.getSpriteType());
+	}
+
+	@Test
+	public void initSpawnTileCorrectTextureTest(){
+		SpawnTile spawnTile = new SpawnTile(null , Direction.NORTH);
+		assertEquals(SpriteType.SPAWN_TILE, spawnTile.getSpriteType());
+	}
 
 	@Test
 	public void initHoleTileTextureTest() {
 		HoleTile holeTile = new HoleTile(null, Direction.NORTH);
 		TextureRegion textureRegion = spriteSheet.getTexture(holeTile.getSpriteType());
-		assertTrue(textureRegion != null );
+		assertNotNull(textureRegion);
 	}
 
 	@Test
@@ -168,6 +179,14 @@ public class SpriteSheetTest {
 		Player player = new Player("Player1", Direction.NORTH);
 		SpriteType playerSprite = SpriteType.PLAYER1;
 		assertEquals(player.getSpriteType(), playerSprite);
+	}
+
+	@Test
+	public void differentPlayersHasDifferentSpritesTest(){
+		Player player1 = new Player(0, "Player1", Direction.NORTH);
+		Player player2 = new Player(1, "Player2", Direction.NORTH);
+
+		assertNotEquals(player1.getSpriteType(), player2.getSpriteType());
 	}
 
 
