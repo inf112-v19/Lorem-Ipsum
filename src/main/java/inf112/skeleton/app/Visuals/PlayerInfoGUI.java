@@ -17,6 +17,7 @@ public class PlayerInfoGUI {
     private String[] playerNames;
 
     private Stage stage;
+    private SpriteSheet spriteSheet;
 
     private Player[] players;
     private Batch batch;
@@ -24,6 +25,8 @@ public class PlayerInfoGUI {
     public PlayerInfoGUI(Board board, Batch batch, Stage stage) {
         this.batch = batch;
         this.stage = stage;
+
+        spriteSheet = new SpriteSheet();
 
         players = board.getAllPlayers();
         playerNames = new String[players.length];
@@ -46,6 +49,7 @@ public class PlayerInfoGUI {
             int health = players[i].getHealth();
             drawLives(i, lives);
             drawHealthPoint(i, health);
+            drawPlayerImage(i, players[i].getSpriteType());
         }
         render();
     }
@@ -70,9 +74,17 @@ public class PlayerInfoGUI {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    private void drawPlayerImage(int row, SpriteType sprite) {
+        TextureRegion texture = spriteSheet.getTexture(sprite);
+        int yDrawPos = playerYbyRow(row);
+        int xDrawPos = Gdx.graphics.getWidth() - 60;
+        createActor(texture, 30, 30, xDrawPos, yDrawPos, false);
+    }
+
     private void drawHealthPoint(int row, int numberOfPoints) {
         int yDrawPos = healthYbyRow(row);
         int deltaX = 180;
+        TextureRegion texture = new TextureRegion(new Texture("healthbar.png"));
 
         for (int i = 0; i < numberOfPoints; i++) {
             if (i == 5) {
@@ -80,7 +92,7 @@ public class PlayerInfoGUI {
                 yDrawPos += 12;
             }
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            createActor("healthbar.png", 10, 20, xDrawPos, yDrawPos);
+            createActor(texture, 10, 20, xDrawPos, yDrawPos, true);
             deltaX -= 22;
         }
     }
@@ -88,10 +100,11 @@ public class PlayerInfoGUI {
     private void drawLives(int row, int numberOfLives) {
         int yDrawPos = lifeYbyRow(row);
         int deltaX = 180;
+        TextureRegion texture = new TextureRegion(new Texture("heart.png"));
 
         for (int i = 0; i < numberOfLives; i++) {
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            createActor("heart.png", 20, 20, xDrawPos, yDrawPos);
+            createActor(texture, 20, 20, xDrawPos, yDrawPos, true);
             deltaX -= 25;
         }
     }
@@ -99,15 +112,17 @@ public class PlayerInfoGUI {
     /**
      * creates an actor of type Image and adds on stage
      *
-     * @param filepath
+     * @param textureRegion
      * @param height
      * @param width
      * @param xpos
      * @param ypos
      */
-    private void createActor(String filepath, int height, int width, int xpos, int ypos) {
-        TextureRegion texture = new TextureRegion(new Texture(filepath));
-        texture.flip(false, true);
+    private void createActor(TextureRegion textureRegion, int height, int width, int xpos, int ypos, boolean flip) {
+        TextureRegion texture = textureRegion;
+        if (flip) {
+            texture.flip(false, true);
+        }
         Image image = new Image(texture);
         image.setSize(width, height);
         image.setPosition(xpos, ypos);
@@ -129,6 +144,15 @@ public class PlayerInfoGUI {
             return 45 + (row * 75);
         }
     }
+
+    private int playerYbyRow(int row) {
+        if (row == 0) {
+            return 38;
+        } else {
+            return 38 + (row * 75);
+        }
+    }
+
 
     private void renderNames() {
         batch.begin();

@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -197,6 +195,10 @@ public class BoardGUI {
 		}
 	}
 
+	public void removeListener(Actor actor){
+		actor.clearListeners();
+	}
+
 	public InputListener createListener(final Tile tile){
 		return new InputListener() {
 			@Override
@@ -205,10 +207,6 @@ public class BoardGUI {
 				return true;
 			}
 		};
-	}
-
-	public void removeListener(Actor actor){
-    	actor.clearListeners();
 	}
 
     public void dispose(){
