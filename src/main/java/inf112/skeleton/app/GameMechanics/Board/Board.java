@@ -333,12 +333,13 @@ public class Board implements IBoard {
 
 		for (Player player : playerPositions.keySet()) {
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
+				System.out.println(player.getPlayerID() + " has won the game");
 				winningPlayer = player;
 				return true;
 			}
 			if (!player.isDead()) {
 				alivePlayers++;
-
+				lastPlayerAlive = player;
 			}
 		}
 
