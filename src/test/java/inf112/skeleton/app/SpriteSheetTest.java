@@ -88,12 +88,23 @@ public class SpriteSheetTest {
 
 	}
 
+	@Test
+	public void initOptionsTileCorrectTextureTest(){
+		OptionsTile optionsTile = new OptionsTile(null, Direction.NORTH);
+		assertEquals(SpriteType.OPTIONS_TILE, optionsTile.getSpriteType());
+	}
+
+	@Test
+	public void initSpawnTileCorrectTextureTest(){
+		SpawnTile spawnTile = new SpawnTile(null , Direction.NORTH);
+		assertEquals(SpriteType.SPAWN_TILE, spawnTile.getSpriteType());
+	}
 
 	@Test
 	public void initHoleTileTextureTest() {
 		HoleTile holeTile = new HoleTile(null, Direction.NORTH);
 		TextureRegion textureRegion = spriteSheet.getTexture(holeTile.getSpriteType());
-		assertTrue(textureRegion != null );
+		assertNotNull(textureRegion);
 	}
 
 	@Test
@@ -170,12 +181,54 @@ public class SpriteSheetTest {
 		assertEquals(player.getSpriteType(), playerSprite);
 	}
 
+	@Test
+	public void differentPlayersHasDifferentSpritesTest(){
+		Player player1 = new Player(0, "Player1", Direction.NORTH);
+		Player player2 = new Player(1, "Player2", Direction.NORTH);
 
-	//TODO - make this test for all the CardTypes
+		assertNotEquals(player1.getSpriteType(), player2.getSpriteType());
+	}
+
 	@Test
 	public void backwardCardTextureTest() {
 		Card card = new Card(CardType.BACKWARD_1, 1);
 		assertEquals(spriteSheet.getTexture(card), spriteSheet.getTexture(SpriteType.BACKWARD_1));
 	}
 
+	@Test
+	public void forward1CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_1, 1);
+		assertEquals(SpriteType.FORWARD_1, card.getSprite());
+	}
+
+	@Test
+	public void forward2CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_2, 1);
+		assertEquals(SpriteType.FORWARD_2, card.getSprite());
+	}
+
+	@Test
+	public void forward3CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_3, 1);
+		assertEquals(SpriteType.FORWARD_3, card.getSprite());
+	}
+
+	@Test
+	public void rotateRightCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_90_R, 1);
+		assertEquals(SpriteType.ROTATE_90_R, card.getSprite());
+	}
+
+	@Test
+	public void rotateLeftCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_90_L, 1);
+		assertEquals(SpriteType.ROTATE_90_L, card.getSprite());
+	}
+
+	@Test
+	public void uTurnCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_180, 1);
+		assertEquals(SpriteType.ROTATE_180, card.getSprite());
+	}
+	
 }
