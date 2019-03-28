@@ -25,6 +25,10 @@ public class Board implements IBoard {
 	private Player curPlayer;
 	private Direction moveDir;
 
+	private Player winningPlayer = null;
+	private Player lastPlayerAlive = null;
+	private boolean gameOver = false;
+
 	private int height;
 	private int width;
 
@@ -232,6 +236,31 @@ public class Board implements IBoard {
 		return curCard;
 	}
 
+	@Override
+	public Player getCurPlayer() {
+		return curPlayer;
+	}
+
+	@Override
+	public Card peekNextCard() {
+		return thisRoundsCards.peek();
+	}
+
+	@Override
+	public Player getNextPlayer() {
+		return cardToPlayer.get(thisRoundsCards.peek());
+	}
+
+	@Override
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	@Override
+	public Player getWinningPlayer() {
+		return winningPlayer;
+	}
+
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
 	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
@@ -299,7 +328,7 @@ public class Board implements IBoard {
 
 		turnOnLasers();
 		respawnPlayers();
-		checkForGameOver();
+		gameOver = checkForGameOver();
 
 		//round is over
 		return false;
@@ -308,21 +337,37 @@ public class Board implements IBoard {
 	/**
 	 * Method for checking if the game is over after the round has finished - checks if any player has collected all
 	 * the flags, or if there is less than 2 players alive
+	 *
+	 * @return true if game is over or false if not
 	 */
-	private void checkForGameOver() {
+	private boolean checkForGameOver() {
 		int alivePlayers = 0;
 
 		for (Player player : playerPositions.keySet()) {
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
-				//TODO - handle player winning the game
+				winningPlayer = player;
+				return true;
 			}
 			if (!player.isDead()) {
 				alivePlayers++;
+
 			}
 		}
 
-		if (alivePlayers<2) {
-			//TODO - handle game over
+		switch (alivePlayers) {
+			//no players alive - game over with no winner
+			case 0:
+				return true;
+
+			//1 player alive - game over with last surviving player winning
+			case 1:
+				winningPlayer = lastPlayerAlive;
+				return true;
+
+			//game is not over - reset lastAlivePlayer to null
+			default:
+				lastPlayerAlive = null;
+				return false;
 		}
 	}
 
@@ -417,19 +462,6 @@ public class Board implements IBoard {
 		}else{
 			playerPositions.put(player, newPos);
 		}
-	}
-
-
-	public Player getCurPlayer() {
-		return curPlayer;
-	}
-
-	public Card peekNextCard() {
-		return thisRoundsCards.peek();
-	}
-
-	public Player getNextPlayer() {
-		return cardToPlayer.get(thisRoundsCards.peek());
 	}
 
 }

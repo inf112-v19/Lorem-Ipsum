@@ -126,4 +126,41 @@ public interface IBoard<T> {
 	 * @return
 	 */
 	Card getCurCard();
+
+	/**
+	 * Returns the player currently being handled - the player which has moves pending
+	 *
+	 * @return
+	 */
+	Player getCurPlayer();
+
+	/**
+	 * Peeks what the next card in thisRoundsCards is - used for rendering "next card" in PendingCardsGUI
+	 *
+	 * @return
+	 */
+	Card peekNextCard();
+
+
+	/**
+	 * Returns the player corresponding to the next card - used used for rendering player corresponding to the
+	 * "next card" in PendingCardsGUI
+	 *
+	 * @return
+	 */
+	Player getNextPlayer();
+
+	/**
+	 * Method for checking if the game has reached an end
+	 *
+	 * @return true if game is over, else false
+	 */
+	boolean isGameOver();
+
+	/**
+	 * Method for getting the winning player - used to display who has won the game in GameOverState
+	 *
+	 * @return the player who has won, or null if there are no winners
+	 */
+	Player getWinningPlayer();
 }
