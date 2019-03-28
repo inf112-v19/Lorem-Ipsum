@@ -3,11 +3,15 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 
 public class GameOverState extends State {
@@ -15,12 +19,14 @@ public class GameOverState extends State {
 
     private Stage stage;
 
+    //image Game Over
+    private Image gameOverImage;
+
     //text
     Table table;
     Label.LabelStyle font;
     Label gameOverLabel;
     Label playAgainLabel;
-
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
@@ -28,31 +34,41 @@ public class GameOverState extends State {
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
+        //image
+        this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOverSmall.png")));
+
+        //label
         this.table = new Table();
         this.font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        this.gameOverLabel = new Label("GAME OVER", font);
-        this.playAgainLabel = new Label("Click To Play Again", font);
+        //this.gameOverLabel = new Label("GAME OVER", this.font);
+        this.playAgainLabel = new Label("Click To Play Again", this.font);
 
-        gameOverText();
+        gameOverImage();
+        playAgainLabel();
     }
 
-    private void gameOverText() {
-        table.center();
-        table.setFillParent(true);
-
-        table.add(gameOverLabel).expandX();
-        table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
-
+    private void gameOverImage() {
+        this.gameOverImage.setSize(529, 102);
+        this.gameOverImage.setPosition((RoboRally.WIDTH / 2)-(520/2), RoboRally.HEIGHT-(102*2)-51);
+        this.stage.addActor(this.gameOverImage);
         System.out.println("Game Over!");
-        this.stage.addActor(table);
+    }
+
+    private void playAgainLabel() {
+        this.table.center();
+        this.table.setFillParent(true);
+        //this.table.add(this.gameOverLabel).expandX();
+        //this.table.row();
+        this.table.add(this.playAgainLabel).expandX().padTop(10f);
+        this.stage.addActor(this.table);
+
     }
 
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()) {
             System.out.println("New game!");
-            gsm.set(new ChooseBoardState(gsm));
+            this.gsm.set(new ChooseBoardState(this.gsm));
             dispose();
         }
     }
@@ -78,6 +94,6 @@ public class GameOverState extends State {
     @Override
     public void resize() {
         super.resize();
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        this.stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }
