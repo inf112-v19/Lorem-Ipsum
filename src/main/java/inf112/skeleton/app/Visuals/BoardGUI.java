@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -93,21 +91,16 @@ public class BoardGUI {
 		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
-		tile.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				gsm.tileEventHandle(tile);
-				return true;
-			}
-		});
+		tile.addListener(createListener(tile));
 		stage.addActor(tile);
 	}
 
-	private void addGameObjectsOnTileToStage(Tile tile, int x, int y){
+	private void addGameObjectsOnTileToStage(final Tile tile, int x, int y){
     	if (tile.hasAnyGameObjects()){
 			GameObject[] gameObjects = tile.getGameObjects();
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				GameObject gameObject = gameObjects[i];
+				gameObject.addListener(createListener(tile));
 				addGameObjectToStage(gameObject, x, y);
 			}
 		}
@@ -203,7 +196,17 @@ public class BoardGUI {
 	}
 
 	public void removeListener(Actor actor){
-    	actor.clearListeners();
+		actor.clearListeners();
+	}
+
+	public InputListener createListener(final Tile tile){
+		return new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				gsm.tileEventHandle(tile);
+				return true;
+			}
+		};
 	}
 
     public void dispose(){

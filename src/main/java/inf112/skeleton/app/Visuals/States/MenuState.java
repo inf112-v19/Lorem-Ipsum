@@ -23,7 +23,6 @@ public class MenuState extends State {
     private Stage stage;
     private final int buttonWidth;
     private final int buttonHeight;
-    private CardManager cardManager;
 
     private boolean start;
 
@@ -31,7 +30,6 @@ public class MenuState extends State {
         super(gsm);
         this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
-        this.cardManager = cardManager;
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.buttonWidth = 192+64; //original size + 1/3 of the size

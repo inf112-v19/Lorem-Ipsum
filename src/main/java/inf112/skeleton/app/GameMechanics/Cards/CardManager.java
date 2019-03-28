@@ -15,7 +15,6 @@ public class CardManager {
 
     private ICardDeck cardDeck;
     private Player[] players;
-    private int playerPtr;
     private HashSet<Card> lockedCards;
 
     public CardManager(Board board) {
@@ -28,7 +27,6 @@ public class CardManager {
      * Draw new cards for each player.
      */
     public void newRound() {
-        playerPtr = 0;
         lockCards();
         sendCardsBackToDeck();
         cardDeck.shuffleDeck();
@@ -51,9 +49,6 @@ public class CardManager {
         } else {
             return null;
         }
-
-        //return currentPlayer;
-        //return players[playerPtr];
     }
 
     /**
@@ -91,7 +86,6 @@ public class CardManager {
             }
             player.setCardSequence(cards);
             player.setReady();
-            playerPtr++;
             return true;
         } else {
             return false;
