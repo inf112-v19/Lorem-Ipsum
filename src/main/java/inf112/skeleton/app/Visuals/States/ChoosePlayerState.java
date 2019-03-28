@@ -10,14 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Stack;
 
 public class ChoosePlayerState extends State {
@@ -29,11 +27,9 @@ public class ChoosePlayerState extends State {
 
     //booleans
     private boolean start;
-    private boolean bar2;
 
     //text bar
     private Image textBar;
-    private Image textBar2;
 
     //player
     private int amountPlayers;
@@ -59,12 +55,9 @@ public class ChoosePlayerState extends State {
         this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
-        this.bar2 = false;
 
         //text bar
         this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
-        this.textBar2 = new Image(new TextureRegionDrawable(new Texture("StateImages/namePlayers.png")));
-
 
         //player buttons
         this.amountPlayers = 4;
@@ -72,7 +65,6 @@ public class ChoosePlayerState extends State {
         this.halfButtonWidth = 193/2;
         this.halfButtonWidth1 = 193/2;
         this.bigButtonWidth = this.halfButtonWidth+193;
-
 
         setTextbar();
         setSixPlayers();
@@ -96,15 +88,6 @@ public class ChoosePlayerState extends State {
         this.textBar.setSize(1273/3, 102/3);
         this.textBar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
         this.stage.addActor(this.textBar);
-    }
-
-    /**
-     * set the textbar2 "Name players"
-     */
-    private void setTextbar2() {
-        this.textBar2.setSize(821/3, 121/3);
-        this.textBar2.setPosition((RoboRally.WIDTH/2)-((821/3)/2), 102-(102/3));
-        this.stage.addActor(this.textBar2);
     }
 
     /**
@@ -132,7 +115,7 @@ public class ChoosePlayerState extends State {
     }
 
     /**
-     * adds the amount of players that can be chosen (max 4) (is not currently being used)
+     * adds the amount of players that can be chosen (max four) (is not currently being used)
      */
     private void setAmountPlayers(int amountPlayers) {
         for (int i = 1; i < amountPlayers+1; i++) {
@@ -164,7 +147,6 @@ public class ChoosePlayerState extends State {
                     savePlayerAmount(playerNumber);
                 }
                 start = true;
-                bar2 = true;
                 return true;
             }
         });
@@ -198,29 +180,6 @@ public class ChoosePlayerState extends State {
             players.push(player);
         }
         return players;
-    }
-
-    /**
-     * input name in commandline
-     */
-    private void inputName() {
-        String name;
-        try (Scanner sc = new Scanner(System.in)){
-            if (getPlayerAmount() == 1) {
-                System.out.print("Enter your players name:\nplayer 1: ");
-                name = sc.next();
-                this.playerNames.add(name);
-                System.out.println("Player name saved!");
-            } else if (getPlayerAmount() >= 2 && getPlayerAmount() <= 6) {
-                System.out.println("Enter your players' name:");
-                for (int i = 1; i < getPlayerAmount() + 1; i++) {
-                    System.out.print("player " + i + ": ");
-                    name = sc.next();
-                    this.playerNames.add(name);
-                }
-                System.out.println("Player names saved!");
-            }
-        }
     }
 
     /**
@@ -267,7 +226,5 @@ public class ChoosePlayerState extends State {
         super.resize();
         this.stage.getBatch().setProjectionMatrix(camera.combined);
     }
-
-
 
 }
