@@ -45,6 +45,8 @@ public final class SpriteSheet {
     //The spriteSheet
     private final TextureRegion[][] spriteSheet;
 
+    private final TextureRegion spawnTile;
+
 
     public SpriteSheet() {
 
@@ -110,6 +112,11 @@ public final class SpriteSheet {
         this.texture = new Texture("CardImages/cardBar.png");
         this.cardBar = new TextureRegion(texture);
         this.cardBar.flip(false, true);
+
+        this.texture = new Texture("SpawnTile.png");
+        this.spawnTile = new TextureRegion(this.texture);
+        this.spawnTile.flip(false,true);
+
 
 
     }
@@ -177,6 +184,8 @@ public final class SpriteSheet {
                 return redtankSheet[0][4];
             case PLAYER6:
                 return redtankSheet[0][5];
+			case SPAWN_TILE:
+				return spawnTile;
             default:
                 System.err.println("No sprite found");
                 return null;

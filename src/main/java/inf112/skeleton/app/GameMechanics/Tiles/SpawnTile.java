@@ -8,7 +8,7 @@ public class SpawnTile extends Tile{
 
     public SpawnTile(GameObject[] gameObjects, Direction direction) {
         super(gameObjects, direction);
-        super.spriteType = SpriteType.NORMAL_TILE; //TODO: endre til riktig spritetype (SpawnTile.png)
+        super.spriteType = SpriteType.SPAWN_TILE;
     }
 
     
