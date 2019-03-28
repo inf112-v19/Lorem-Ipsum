@@ -166,8 +166,18 @@ public final class SpriteSheet {
 				return cardGuiClearButton;
 			case CARD_BAR:
 				return cardBar;
-			case PLAYER:
+			case PLAYER1:
 				return redtankSheet[0][0];
+			case PLAYER2:
+				return redtankSheet[0][1];
+			case PLAYER3:
+				return redtankSheet[0][2];
+			case PLAYER4:
+				return redtankSheet[0][3];
+			case PLAYER5:
+				return redtankSheet[0][4];
+			case PLAYER6:
+				return redtankSheet[0][5];
 			default:
 				System.err.println("No sprite found");
 				return null;

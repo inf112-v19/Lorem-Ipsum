@@ -39,7 +39,12 @@ public enum SpriteType{
 
 
 	FLAG(6,6),
-	PLAYER(),
+	PLAYER1(),
+	PLAYER2(),
+	PLAYER3(),
+	PLAYER4(),
+	PLAYER5(),
+	PLAYER6(),
 
 	BACKWARD_1(),
 	FORWARD_1(),

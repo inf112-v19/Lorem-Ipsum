@@ -166,7 +166,7 @@ public class SpriteSheetTest {
 	@Test
 	public void playerTextureCorrectTest(){
 		Player player = new Player("Player1", Direction.NORTH);
-		SpriteType playerSprite = SpriteType.PLAYER;
+		SpriteType playerSprite = SpriteType.PLAYER1;
 		assertEquals(player.getSpriteType(), playerSprite);
 	}
 
