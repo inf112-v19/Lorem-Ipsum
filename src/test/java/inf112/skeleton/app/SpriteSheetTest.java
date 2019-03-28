@@ -189,12 +189,46 @@ public class SpriteSheetTest {
 		assertNotEquals(player1.getSpriteType(), player2.getSpriteType());
 	}
 
-
-	//TODO - make this test for all the CardTypes
 	@Test
 	public void backwardCardTextureTest() {
 		Card card = new Card(CardType.BACKWARD_1, 1);
 		assertEquals(spriteSheet.getTexture(card), spriteSheet.getTexture(SpriteType.BACKWARD_1));
 	}
 
+	@Test
+	public void forward1CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_1, 1);
+		assertEquals(SpriteType.FORWARD_1, card.getSprite());
+	}
+
+	@Test
+	public void forward2CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_2, 1);
+		assertEquals(SpriteType.FORWARD_2, card.getSprite());
+	}
+
+	@Test
+	public void forward3CardTextureTest(){
+		Card card = new Card(CardType.FORWARD_3, 1);
+		assertEquals(SpriteType.FORWARD_3, card.getSprite());
+	}
+
+	@Test
+	public void rotateRightCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_90_R, 1);
+		assertEquals(SpriteType.ROTATE_90_R, card.getSprite());
+	}
+
+	@Test
+	public void rotateLeftCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_90_L, 1);
+		assertEquals(SpriteType.ROTATE_90_L, card.getSprite());
+	}
+
+	@Test
+	public void uTurnCardTextureTest(){
+		Card card = new Card(CardType.ROTATE_180, 1);
+		assertEquals(SpriteType.ROTATE_180, card.getSprite());
+	}
+	
 }
