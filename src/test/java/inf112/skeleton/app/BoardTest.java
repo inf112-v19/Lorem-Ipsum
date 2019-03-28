@@ -296,6 +296,7 @@ public class BoardTest {
 	@Test
 	public void playerStandingOnRepairTileWhenDamaged() {
 		players[0].decreaseHealth();
+		players[0].decreaseHealth();
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
