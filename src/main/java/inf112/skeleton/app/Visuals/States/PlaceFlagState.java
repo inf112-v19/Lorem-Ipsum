@@ -47,8 +47,7 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public void tileEventHandle(Tile tile) {
-		Player player = players[flagCount];
-		Flag flag = new Flag(Direction.NORTH, player.getIndex());
+		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)){
 			flag.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(flag)));
 			flag.setSize(tile.getWidth(), tile.getHeight());
