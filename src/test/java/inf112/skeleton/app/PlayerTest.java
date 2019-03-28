@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Player;
 import org.junit.Test;
 
@@ -50,14 +51,19 @@ public class PlayerTest {
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.decreaseHealth();
-        assertEquals(player.getHealth(), 9);
+        assertEquals(9, player.getHealth());
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.increaseHealth();
-        assertEquals(player.getHealth(), 10); //max health = 10
+        assertEquals(10, player.getHealth()); //max health = 10
+
+        player.decreaseHealth();
+        player.decreaseHealth();
+        player.increaseHealth();
+        assertEquals(9, player.getHealth());
     }
 
     /**
@@ -151,6 +157,23 @@ public class PlayerTest {
             player.decreaseHealth();
         }
         assertEquals(8, player.getHealth());
+    }
+
+    @Test
+    public void playerCanPickUpFlagsTest(){
+        Player player = new Player("player", Direction.NORTH);
+        Flag flag1 = new Flag(Direction.NORTH, 0);
+        player.collectFlag(flag1);
+        assertEquals(1, player.numberOfFlagsCollected());
+    }
+
+    @Test
+    public void playerCantPickUpFlagsInWrongOrderTest(){
+        Player player = new Player("player", Direction.NORTH);
+        Flag flag1 = new Flag(Direction.NORTH, 0);
+        Flag flag2 = new Flag(Direction.WEST, 1);
+        player.collectFlag(flag2);
+        assertEquals(0, player.numberOfFlagsCollected());
     }
 
 }
