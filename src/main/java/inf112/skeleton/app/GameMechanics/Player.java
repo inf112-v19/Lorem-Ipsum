@@ -144,15 +144,22 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * destroy the player (lose a total life and set health to max) or if no more lives set health to 0
+     * destroy the player (lose a total life and set health to the right amount) or if no more lives set health to 0
      * and remove player from the board
      */
     public void destroyPlayer() {
         playerlives--;
 
-        if (playerlives > 0) {
+        if (playerlives > 2) {
             playerHealth = 10;
-        } else {
+        }
+        else if(playerlives == 1){
+            playerHealth = 8;
+        }
+        else if(playerlives == 0){
+            playerHealth = 6;
+        }
+        else {
             playerHealth = 0;
             isOnTheBoard = false;
         }
