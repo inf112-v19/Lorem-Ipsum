@@ -156,9 +156,6 @@ public class Player extends Image implements IPlayer {
         else if(playerlives == 1){
             playerHealth = 6;
         }
-        else if(playerlives == 0){
-            playerHealth = 4;
-        }
         else {
             playerHealth = 0;
             isOnTheBoard = false;
