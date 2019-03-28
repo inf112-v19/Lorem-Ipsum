@@ -169,7 +169,6 @@ public class Player extends Image implements IPlayer {
     public void decreaseHealth() {
         playerHealth--;
         if (playerHealth <= 0) {
-            playerHealth = 10;
             destroyPlayer();
         }
     }
