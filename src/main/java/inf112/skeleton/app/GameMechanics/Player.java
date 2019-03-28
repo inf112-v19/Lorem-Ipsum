@@ -150,14 +150,14 @@ public class Player extends Image implements IPlayer {
     public void destroyPlayer() {
         playerlives--;
 
-        if (playerlives > 2) {
-            playerHealth = 10;
-        }
-        else if(playerlives == 1){
+        if(playerlives >= 2){
             playerHealth = 8;
         }
-        else if(playerlives == 0){
+        else if(playerlives == 1){
             playerHealth = 6;
+        }
+        else if(playerlives == 0){
+            playerHealth = 4;
         }
         else {
             playerHealth = 0;

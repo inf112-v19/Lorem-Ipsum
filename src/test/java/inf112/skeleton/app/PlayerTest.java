@@ -82,4 +82,11 @@ public class PlayerTest {
         player.setNotReady();
         assertFalse(player.isReady());
     }
+
+    @Test
+    public void playerGetsRightHealthAmountAfterRespawn(){
+        Player player = new Player("player", Direction.NORTH);
+        player.destroyPlayer();
+        assertEquals(8, player.getHealth());
+    }
 }
