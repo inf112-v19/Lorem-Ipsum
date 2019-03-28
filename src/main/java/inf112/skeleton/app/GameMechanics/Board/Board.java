@@ -6,6 +6,7 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
+import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
@@ -60,6 +61,29 @@ public class Board implements IBoard {
 
 		playerPositions.put(player, pos);
 		System.out.println(player.getPlayerID() + " " + player.getIndex());
+	}
+
+
+	/**
+	 * Method for spawning players on the board - checks if the tile is a SpawnTile and that is does not contain any
+	 * players and either places the player on the spawn location or not.
+	 *
+	 * @param spawnPos
+	 * @param player
+	 * @return true if the player was placed on the board, or false if not
+	 */
+	public boolean spawnPlayer(Position spawnPos, Player player) {
+		Tile tile = tileMap.get(spawnPos);
+		boolean posContainsPlayer = (posToPlayer(spawnPos) != null);
+
+		if ((tile instanceof SpawnTile) && !posContainsPlayer) {
+			playerPositions.put(player, spawnPos);
+			player.setBackup(spawnPos);
+			System.out.println(player.getIndex() + " spawned on " + spawnPos);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -416,4 +440,5 @@ public class Board implements IBoard {
 	public Player getNextPlayer() {
 		return cardToPlayer.get(thisRoundsCards.peek());
 	}
+
 }
