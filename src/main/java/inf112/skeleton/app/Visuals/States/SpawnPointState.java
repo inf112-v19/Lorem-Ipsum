@@ -55,17 +55,15 @@ public class SpawnPointState extends State {
 			System.out.println(x + "," + y);
 
 
-			Player player = players.pop();
-
-			player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
-			player.setSize(tile.getWidth(), tile.getHeight());
-			player.setPosition(tile.getX(), tile.getY());
-
-			player.setBackup(playerPos);
-			board.placePlayerOnPos(player, playerPos);
-			stage.addActor(player);
-
-			System.out.println("placing player");
+			Player player = players.peek();
+			if (board.spawnPlayer(playerPos, player)){
+				players.pop();
+				player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
+				player.setSize(tile.getWidth(), tile.getHeight());
+				player.setPosition(tile.getX(), tile.getY());
+				stage.addActor(player);
+				System.out.println("placing player");
+			}
 		}
 	}
 }

@@ -259,8 +259,34 @@ public class BoardTest {
 		assertEquals(1, players[0].numberOfFlagsCollected());
 	}
 
+	/**
+	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
+	 * player direction should be NORTH
+	 */
+	@Test
+	public void playerStandingOnLeftRotationTile() {
+		testBoard.placePlayerOnPos(players[0], new Position(3,0));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(Direction.NORTH, players[0].getDirection());
+	}
 
 
+	/**
+	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
+	 * player direction should be SOUTH
+	 */
+	@Test
+	public void playerStandingOnRightRotationTile() {
+		testBoard.placePlayerOnPos(players[0], new Position(4,0));
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(Direction.SOUTH, players[0].getDirection());
+	}
 
 
 }
