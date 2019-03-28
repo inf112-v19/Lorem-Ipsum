@@ -239,6 +239,26 @@ public class BoardTest {
 		assertEquals(1, players[0].numberOfFlagsCollected());
 	}
 
+	/**
+	 * Testing that the player does not collect the same flag twice - numberOfFlagsCollected should still return 1
+	 */
+	@Test
+	public void collectFlagTwiceTest() {
+		testBoard.movePlayer(players[0], Direction.EAST);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		testBoard.movePlayer(players[0], Direction.EAST);
+		testBoard.movePlayer(players[0], Direction.WEST);
+
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(1, players[0].numberOfFlagsCollected());
+	}
+
 
 
 
