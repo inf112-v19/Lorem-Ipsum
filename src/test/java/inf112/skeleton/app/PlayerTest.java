@@ -84,7 +84,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void playerGetsRightHealthAmountAfterRespawnTest(){
+    public void playerGetsRightHealthAmountAfterDestructionTest(){
         Player player = new Player("player", Direction.NORTH);
         player.destroyPlayer();
         assertEquals(8, player.getHealth());
@@ -142,6 +142,15 @@ public class PlayerTest {
         player.destroyPlayer();
         player.destroyPlayer();
         assertFalse(player.onBoardCheck());
+    }
+
+    @Test
+    public void playerGetsRightHealthAmountAfterDestructionFromDamageTest(){
+        Player player = new Player("Player", Direction.NORTH);
+        for(int i=0;i<10;i++){
+            player.decreaseHealth();
+        }
+        assertEquals(8, player.getHealth());
     }
 
 }
