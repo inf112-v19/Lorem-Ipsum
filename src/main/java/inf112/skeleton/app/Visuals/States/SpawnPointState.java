@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -13,16 +14,15 @@ import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.SpriteSheet;
 
-import java.util.Stack;
 
 public class SpawnPointState extends State {
 	private Board board;
-	private Stack<Player> players;
+	private Queue<Player> players;
 	private SpriteSheet spriteSheet;
 	private BoardGUI boardGUI;
 
 
-	public SpawnPointState(GameStateManager gsm, Board board, Stack<Player> players){
+	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players){
 		super(gsm);
 		this.players = players;
 		this.board = board;
@@ -38,7 +38,7 @@ public class SpawnPointState extends State {
 	@Override
 	public void update(float dt) {
 		Gdx.input.setInputProcessor(stage);
-		if (players.empty()){
+		if (players.isEmpty()){
 			System.out.println("setting PlaceFlagState");
 			CardManager cardManager = new CardManager(board);
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
@@ -48,14 +48,14 @@ public class SpawnPointState extends State {
 
 	@Override
 	public void tileEventHandle(Tile tile) {
-		if (!players.empty()) {
+		if (!players.isEmpty()) {
 			float x = (tile.getX() - boardGUI.getxOffset())/(tile.getWidth());
 			float y = (tile.getY() - boardGUI.getyOffset())/(tile.getHeight());
 			Position playerPos = new Position((int)x, (int)y);
 
-			Player player = players.peek();
+			Player player = players.first();
 			if (board.spawnPlayer(playerPos, player)){
-				players.pop();
+				players.removeFirst();
 				player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
 				player.setSize(tile.getWidth(), tile.getHeight());
 				player.setPosition(tile.getX(), tile.getY());

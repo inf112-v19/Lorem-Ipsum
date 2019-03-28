@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -192,10 +193,11 @@ public class ChoosePlayerState extends State {
      * creates players according to how many players was chosen to play
      * @return
      */
-    public Stack<Player> createPlayers() {
-        for (int i = 0; i < getPlayerAmount(); i++) {
+    public Queue<Player> createPlayers() {
+        Queue<Player> players = new Queue<>();
+        for (int i = 0; i < this.playerAmount; i++) {
             Player player = new Player(i , getPlayerNameAt(i), Direction.EAST);
-            players.push(player);
+            players.addLast(player);
         }
         return players;
     }
