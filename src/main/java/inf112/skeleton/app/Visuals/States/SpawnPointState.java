@@ -52,8 +52,6 @@ public class SpawnPointState extends State {
 			float x = (tile.getX() - boardGUI.getxOffset())/(tile.getWidth());
 			float y = (tile.getY() - boardGUI.getyOffset())/(tile.getHeight());
 			Position playerPos = new Position((int)x, (int)y);
-			System.out.println(x + "," + y);
-
 
 			Player player = players.peek();
 			if (board.spawnPlayer(playerPos, player)){
@@ -62,7 +60,7 @@ public class SpawnPointState extends State {
 				player.setSize(tile.getWidth(), tile.getHeight());
 				player.setPosition(tile.getX(), tile.getY());
 				stage.addActor(player);
-				System.out.println("placing player");
+				System.out.println("placing " + player.getPlayerID());
 			}
 		}
 	}
