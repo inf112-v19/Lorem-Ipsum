@@ -82,4 +82,75 @@ public class PlayerTest {
         player.setNotReady();
         assertFalse(player.isReady());
     }
+
+    @Test
+    public void playerGetsRightHealthAmountAfterDestructionTest(){
+        Player player = new Player("player", Direction.NORTH);
+        player.destroyPlayer();
+        assertEquals(8, player.getHealth());
+        player.destroyPlayer();
+        assertEquals(6, player.getHealth());
+        player.destroyPlayer();
+        assertEquals(0, player.getHealth());
+    }
+
+    @Test
+    public void playerTurnsCorrectAfterSetDirectionTest(){
+        //turn to the right
+        Player player = new Player("Player", Direction.NORTH);
+        player.setPlayerDirection(Direction.NORTH);
+        player.turnPlayer(1);
+        assertEquals(Direction.EAST, player.getDirection());
+        player.setPlayerDirection(Direction.EAST);
+        player.turnPlayer(1);
+        assertEquals(Direction.SOUTH, player.getDirection());
+        player.setPlayerDirection(Direction.SOUTH);
+        player.turnPlayer(1);
+        assertEquals(Direction.WEST, player.getDirection());
+        player.setPlayerDirection(Direction.WEST);
+        player.turnPlayer(1);
+        assertEquals(Direction.NORTH, player.getDirection());
+
+        //turn to the left
+        player.setPlayerDirection(Direction.NORTH);
+        player.turnPlayer(-1);
+        assertEquals(Direction.WEST, player.getDirection());
+        player.setPlayerDirection(Direction.WEST);
+        player.turnPlayer(-1);
+        assertEquals(Direction.SOUTH, player.getDirection());
+        player.setPlayerDirection(Direction.SOUTH);
+        player.turnPlayer(-1);
+        assertEquals(Direction.EAST, player.getDirection());
+        player.setPlayerDirection(Direction.EAST);
+        player.turnPlayer(-1);
+        assertEquals(Direction.NORTH, player.getDirection());
+    }
+
+    @Test
+    public void playerIsDeadWhenOutOfLivesTest(){
+        Player player = new Player("Player", Direction.NORTH);
+        player.destroyPlayer();
+        player.destroyPlayer();
+        player.destroyPlayer();
+        assertTrue(player.isDead());
+    }
+
+    @Test
+    public void playerIsNotOnBoardWhenDeadTest(){
+        Player player = new Player("Player", Direction.NORTH);
+        player.destroyPlayer();
+        player.destroyPlayer();
+        player.destroyPlayer();
+        assertFalse(player.onBoardCheck());
+    }
+
+    @Test
+    public void playerGetsRightHealthAmountAfterDestructionFromDamageTest(){
+        Player player = new Player("Player", Direction.NORTH);
+        for(int i=0;i<10;i++){
+            player.decreaseHealth();
+        }
+        assertEquals(8, player.getHealth());
+    }
+
 }
