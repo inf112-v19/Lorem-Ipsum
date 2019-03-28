@@ -32,7 +32,7 @@ public class Card implements Comparable<Card> {
         if (this.equals(other)) {
             return 0;
         } else {
-            return this.priority > other.priority ? 1 : -1;
+            return this.priority > other.priority ? -1 : 1;
         }
     }
 
