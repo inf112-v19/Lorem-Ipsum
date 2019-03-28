@@ -22,7 +22,7 @@ public class Player extends Image implements IPlayer {
     private Position backup;
     private boolean ready = false;
     private boolean isOnTheBoard = true;
-    private HashSet<Flag> collectedFlags = new HashSet<>();
+    private ArrayList<Flag> collectedFlags = new ArrayList<>();
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -268,6 +268,7 @@ public class Player extends Image implements IPlayer {
         if (collectedFlags.size() == flag.getIndex()) {
             collectedFlags.add(flag);
             System.out.println(playerID + " collected flag number " + flag.getIndex());
+			System.out.println(collectedFlags.size());
         }
     }
 
