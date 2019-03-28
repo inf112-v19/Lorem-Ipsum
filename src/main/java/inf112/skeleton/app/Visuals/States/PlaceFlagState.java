@@ -56,6 +56,5 @@ public class PlaceFlagState extends State {
 			stage.addActor(flag);
 			flagCount++;
 		}
-		System.out.println(tile.spriteType);
 	}
 }
