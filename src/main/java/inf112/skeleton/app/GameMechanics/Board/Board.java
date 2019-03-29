@@ -103,7 +103,7 @@ public class Board implements IBoard {
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
-		//if the player has fallen off the board no movement happens(edge case, should not happen)
+		//if the player has fallen off the board no movement happens
 		if (!player.onBoardCheck()) {
 			return false;
 		}
