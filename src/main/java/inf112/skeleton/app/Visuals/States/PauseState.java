@@ -58,10 +58,9 @@ public class PauseState extends State{
         setExit();
     }
 
-
     private void setResume() {
         this.resumeButton.setSize(191, 49);
-        this.resumeButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT/2);
+        this.resumeButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*3));
         this.stage.addActor(this.resumeButton);
         clickable(resumeButton, "resume");
         this.resume = true;
@@ -69,20 +68,19 @@ public class PauseState extends State{
 
     private void setMainMenu() {
         this.mainMenuButton.setSize(191, 49);
-        this.mainMenuButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT/3);
+        this.mainMenuButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*5));
         this.stage.addActor(this.mainMenuButton);
         clickable(mainMenuButton, "mainMenu");
     }
 
     private void setExit() {
         this.exitButton.setSize(191, 49);
-        this.exitButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT/4);
+        this.exitButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*7));
         this.stage.addActor(this.exitButton);
         clickable(exitButton, "exit");
     }
 
     private void clickable(Image boardType, final String boardName) {
-        //private void clickable(Image boardType, final String boardName) {
         boardType.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
