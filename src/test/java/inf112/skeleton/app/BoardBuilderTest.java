@@ -8,6 +8,7 @@ import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,6 +16,8 @@ import java.util.HashMap;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+
+@RunWith(GdxTestInit.class)
 public class BoardBuilderTest {
 
 	/**

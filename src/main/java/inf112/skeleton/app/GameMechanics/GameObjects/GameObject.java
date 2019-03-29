@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.GameObjects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -28,6 +29,7 @@ public abstract class GameObject extends Image implements IGameObject {
         //return position;
         return null;
     }
+
 
     @Override
     public void place(Position position) {

@@ -20,8 +20,8 @@ import java.util.Objects;
 
 public abstract class Tile extends Image implements ITile {
 
-	private static final Texture texture = new Texture("RoboRallyTiles.png");
-	private static final TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
+	private final static Texture texture = new Texture("RoboRallyTiles.png");
+	private final static TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
 
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
