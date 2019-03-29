@@ -87,12 +87,17 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
+	public void movePlayer(Player player, Direction dir, int numberOfMoves) {
 		movementCount = numberOfMoves-1;
 		curPlayer = player;
 		moveDir = dir;
 
-		return movePlayer(player, dir);
+		movePlayer(player, dir);
+
+		//if the player fell off the board - skip remaining moves on the card
+		if (!player.onBoardCheck()) {
+			movementCount = 0;
+		}
 	}
 
 	@Override
@@ -103,7 +108,7 @@ public class Board implements IBoard {
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
-		//if the player has fallen off the board no movement happens
+		//if the player has fallen off the board no movement happens - should not happen
 		if (!player.onBoardCheck()) {
 			return false;
 		}

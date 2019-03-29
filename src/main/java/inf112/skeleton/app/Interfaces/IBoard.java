@@ -48,10 +48,9 @@ public interface IBoard<T> {
 	 *            direction to be moved
 	 * @param numberOfMoves
 	 *            number of times to be tried to move
-	 * @return true if movement happened and the player did not fell off the board
 	 * @throws PlayerNotFoundException
 	 */
-	boolean movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
+	void movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
 
     /**
 	 * Tries to move the player once in the given direction, may start recursive call if player collision occurs.
