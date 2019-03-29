@@ -84,7 +84,6 @@ public class PlayerInfoGUI {
     private void drawHealthPoint(int row, int numberOfPoints) {
         int yDrawPos = healthYbyRow(row);
         int deltaX = 180;
-        TextureRegion texture = new TextureRegion(new Texture("healthbar.png"));
 
         for (int i = 0; i < numberOfPoints; i++) {
             if (i == 5) {
@@ -92,6 +91,7 @@ public class PlayerInfoGUI {
                 yDrawPos += 12;
             }
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
+            TextureRegion texture = new TextureRegion(new Texture("healthbar.png"));
             createActor(texture, 10, 20, xDrawPos, yDrawPos, true);
             deltaX -= 22;
         }
@@ -100,10 +100,10 @@ public class PlayerInfoGUI {
     private void drawLives(int row, int numberOfLives) {
         int yDrawPos = lifeYbyRow(row);
         int deltaX = 180;
-        TextureRegion texture = new TextureRegion(new Texture("heart.png"));
 
         for (int i = 0; i < numberOfLives; i++) {
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
+            TextureRegion texture = new TextureRegion(new Texture("heart.png"));
             createActor(texture, 20, 20, xDrawPos, yDrawPos, true);
             deltaX -= 25;
         }
