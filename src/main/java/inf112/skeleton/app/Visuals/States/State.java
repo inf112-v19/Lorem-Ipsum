@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -28,9 +29,14 @@ public abstract class State {
     public abstract void update(float dt); //TODO - handle the dt here so that other states dont need to handle it
 
     // spritebatch is contaonter for everyhting we need to render to the screen texture and all that, renders everything to the screen in a big blob
-    public void render(){
+    public void render() {
         this.stage.act();
         this.stage.draw();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            gsm.push(new PauseState(this.gsm));
+        }
     }
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
