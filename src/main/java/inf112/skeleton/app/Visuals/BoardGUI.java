@@ -80,7 +80,8 @@ public class BoardGUI {
 	}
 
 	private void addGameObjectToStage(GameObject gameObject, float x, float y){
-		gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
+		//gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
+		gameObject.setDrawable();
 		gameObject.setSize(tilesize,tilesize);
 		gameObject.setPosition(x,y);
 		stage.addActor(gameObject);
@@ -88,7 +89,7 @@ public class BoardGUI {
 
 
     private void addTilesToStage(final Tile tile, int x, int y){
-		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
+		tile.setDrawable();
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
 		tile.addListener(createListener(tile));

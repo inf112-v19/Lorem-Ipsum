@@ -1,6 +1,9 @@
 package inf112.skeleton.app.GameMechanics.GameObjects;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IGameObject;
@@ -9,6 +12,9 @@ import inf112.skeleton.app.GameMechanics.Position;
 import java.util.Objects;
 
 public abstract class GameObject extends Image implements IGameObject {
+
+	private static final Texture texture = new Texture("RoboRallyTiles.png");
+	private static final TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
 
 	protected Direction dir;
 	protected SpriteType spriteType;
@@ -56,5 +62,12 @@ public abstract class GameObject extends Image implements IGameObject {
 		GameObject gameObject = (GameObject) obj;
     	return gameObject.getDirection().equals(this.dir);
     }
+
+	public void setDrawable(){
+    	TextureRegion textureRegion = new TextureRegion(this.spriteSheet[spriteType.getY()][spriteType.getX()]);
+    	textureRegion.flip(false,true);
+		TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
+		setDrawable(drawable);
+	}
 
 }

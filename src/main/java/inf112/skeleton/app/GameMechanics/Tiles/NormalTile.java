@@ -1,5 +1,6 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
@@ -16,7 +17,6 @@ public class NormalTile extends Tile {
 		super(gameObjects, direction);
 		super.spriteType = SpriteType.NORMAL_TILE;
 	}
-
 
 	@Override
 	public void checkTile(Board board, Player player){
