@@ -237,7 +237,7 @@ public class Player extends Image implements IPlayer {
 
     @Override
     public int hashCode() {
-        return this.getPlayerID().hashCode();
+        return this.index;
     }
 
     @Override
