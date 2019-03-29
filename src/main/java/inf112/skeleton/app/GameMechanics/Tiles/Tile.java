@@ -1,6 +1,9 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
@@ -17,9 +20,13 @@ import java.util.Objects;
 
 public abstract class Tile extends Image implements ITile {
 
+	private final static Texture texture = new Texture("RoboRallyTiles.png");
+	private final static TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
+
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
 	protected Direction direction;
+
 
 	public Tile(GameObject[] gameObjects, Direction direction){
 		this.gameObjects = gameObjects;
@@ -146,10 +153,6 @@ public abstract class Tile extends Image implements ITile {
 		this.direction = direction;
 	}
 
-	public Tile() {
-		super();
-	}
-
 
 	@Override
 	public boolean placeFlagOnTile(Flag flag) {
@@ -158,6 +161,13 @@ public abstract class Tile extends Image implements ITile {
 			return true;
 		}
 		return false;
+	}
+
+	public void setDrawable(){
+		TextureRegion textureRegion = new TextureRegion(this.spriteSheet[spriteType.getY()][spriteType.getX()]);
+		textureRegion.flip(false,true);
+		TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
+		setDrawable(drawable);
 	}
 
 }

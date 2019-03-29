@@ -8,12 +8,14 @@ import inf112.skeleton.app.GameMechanics.Tiles.NormalTile;
 import inf112.skeleton.app.GameMechanics.Tiles.RepairTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(GdxTestInit.class)
 public class TileTest {
 
 	/**

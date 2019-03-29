@@ -3,8 +3,6 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
-import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
 import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.Interfaces.IBoard;
@@ -26,7 +24,6 @@ public class Board implements IBoard {
 	private Direction moveDir;
 
 	private Player winningPlayer = null;
-	private Player lastPlayerAlive = null;
 	private boolean gameOver = false;
 
 	private int height;
@@ -89,14 +86,18 @@ public class Board implements IBoard {
 		return width;
 	}
 
-
 	@Override
-	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
+	public void movePlayer(Player player, Direction dir, int numberOfMoves) {
 		movementCount = numberOfMoves-1;
 		curPlayer = player;
 		moveDir = dir;
 
-		return movePlayer(player, dir);
+		movePlayer(player, dir);
+
+		//if the player fell off the board - skip remaining moves on the card
+		if (!player.onBoardCheck()) {
+			movementCount = 0;
+		}
 	}
 
 	@Override
@@ -107,7 +108,7 @@ public class Board implements IBoard {
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
 		}
 
-		//if the player has fallen off the board no movement happens(edge case, should not happen)
+		//if the player has fallen off the board no movement happens - should not happen
 		if (!player.onBoardCheck()) {
 			return false;
 		}
@@ -144,8 +145,8 @@ public class Board implements IBoard {
             }
         }
 
-        //returns true if the player position has changed and the player did not fell off the board
-        return !curPos.equals(playerPositions.get(player)) && !player.onBoardCheck();
+        //returns true if the player position has changed
+        return !curPos.equals(playerPositions.get(player));
 	}
 
 
@@ -210,8 +211,7 @@ public class Board implements IBoard {
 	@Override
 	public boolean doNextAction() {
 		if (movementCount>0) {
-			movementCount--;
-			movePlayer(curPlayer, moveDir);
+			movePlayer(curPlayer, moveDir, movementCount);
 			return true;
 		}
 		else {
@@ -332,6 +332,8 @@ public class Board implements IBoard {
 		int alivePlayers = 0;
 
 		for (Player player : playerPositions.keySet()) {
+
+			//player has collected all the flags - game over, player has won
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
 				System.out.println(player.getPlayerID() + " has won the game");
 				winningPlayer = player;
@@ -339,25 +341,16 @@ public class Board implements IBoard {
 			}
 			if (!player.isDead()) {
 				alivePlayers++;
-				lastPlayerAlive = player;
 			}
 		}
 
-		switch (alivePlayers) {
-			//no players alive - game over with no winner
-			case 0:
-				return true;
-
-			//1 player alive - game over with last surviving player winning
-			case 1:
-				winningPlayer = lastPlayerAlive;
-				return true;
-
-			//game is not over - reset lastAlivePlayer to null
-			default:
-				lastPlayerAlive = null;
-				return false;
+		//no players alive - game over, no player won
+		if (alivePlayers == 0) {
+			return true;
 		}
+
+		//game is still in progress
+		return false;
 	}
 
 	/**
@@ -422,8 +415,6 @@ public class Board implements IBoard {
 	private void playerFellOffTheBoard(Player player, Position newPos) {
     	player.destroyPlayer();
 
-    	//skips any remaining moves for the current card
-		movementCount = 0;
 		playerPositions.put(player, newPos);
 		player.setOnTheBoard(false);
 

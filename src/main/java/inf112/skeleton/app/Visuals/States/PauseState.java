@@ -106,11 +106,11 @@ public class PauseState extends State{
     @Override
     protected void handleInput() {
         if (this.start) {
-            if (this.mainMenu) {
+            /*if (this.mainMenu) {
                 System.out.println("New Game!");
                 //gsm.set(new MenuState(gsm));
                 //dispose();
-            }
+            }*/
         /*if (Gdx.input.isKeyPressed(Input.Keys.P) || this.resume) {
             System.out.println("Resume Game");
             //tilbake til spillet

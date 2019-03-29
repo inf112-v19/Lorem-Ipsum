@@ -80,7 +80,8 @@ public class BoardGUI {
 	}
 
 	private void addGameObjectToStage(GameObject gameObject, float x, float y){
-		gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
+		//gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
+		gameObject.setDrawable();
 		gameObject.setSize(tilesize,tilesize);
 		gameObject.setPosition(x,y);
 		stage.addActor(gameObject);
@@ -88,10 +89,10 @@ public class BoardGUI {
 
 
     private void addTilesToStage(final Tile tile, int x, int y){
-		tile.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(tile)));
+		tile.setDrawable();
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
-		tile.addListener(createListener(tile));
+		//tile.addListener(createListener(tile));
 		stage.addActor(tile);
 	}
 
@@ -100,7 +101,7 @@ public class BoardGUI {
 			GameObject[] gameObjects = tile.getGameObjects();
 			for(int i = 0; i < tile.getGameObjects().length; i++){
 				GameObject gameObject = gameObjects[i];
-				gameObject.addListener(createListener(tile));
+				//gameObject.addListener(createListener(tile));
 				addGameObjectToStage(gameObject, x, y);
 			}
 		}
@@ -208,6 +209,20 @@ public class BoardGUI {
 			}
 		};
 	}
+
+	public void addListenersToStage(){
+		for (Actor actor : stage.getActors()) {
+			if (actor instanceof Tile){
+				Tile tile = (Tile)actor;
+				tile.addListener(createListener(tile));
+				for(GameObject gameObject : tile.getGameObjects()){
+					gameObject.addListener(createListener(tile));
+				}
+
+			}
+		}
+	}
+
 
     public void dispose(){
     	//stage.dispose();

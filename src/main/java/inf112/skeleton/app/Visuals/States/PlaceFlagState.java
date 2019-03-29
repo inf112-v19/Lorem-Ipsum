@@ -24,6 +24,7 @@ public class PlaceFlagState extends State {
 		this.board = board;
 		this.cardManager = cardManager;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm);
+		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
 	}
 

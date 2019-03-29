@@ -28,6 +28,7 @@ public class SpawnPointState extends State {
 		this.board = board;
 		this.spriteSheet = new SpriteSheet();
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm);
+		this.boardGUI.addListenersToStage();
 	}
 
 	@Override
@@ -41,6 +42,7 @@ public class SpawnPointState extends State {
 		if (players.isEmpty()){
 			System.out.println("setting PlaceFlagState");
 			CardManager cardManager = new CardManager(board);
+			boardGUI.removeAllListeners();
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
 		}
 	}
