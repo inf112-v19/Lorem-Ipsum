@@ -3,8 +3,6 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
-import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
 import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.Interfaces.IBoard;
@@ -26,7 +24,6 @@ public class Board implements IBoard {
 	private Direction moveDir;
 
 	private Player winningPlayer = null;
-	private Player lastPlayerAlive = null;
 	private boolean gameOver = false;
 
 	private int height;
@@ -88,7 +85,6 @@ public class Board implements IBoard {
 	public int getWidth() {
 		return width;
 	}
-
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir, int numberOfMoves) {
@@ -332,6 +328,8 @@ public class Board implements IBoard {
 		int alivePlayers = 0;
 
 		for (Player player : playerPositions.keySet()) {
+
+			//player has collected all the flags - game over, player has won
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
 				System.out.println(player.getPlayerID() + " has won the game");
 				winningPlayer = player;
@@ -339,25 +337,16 @@ public class Board implements IBoard {
 			}
 			if (!player.isDead()) {
 				alivePlayers++;
-				lastPlayerAlive = player;
 			}
 		}
 
-		switch (alivePlayers) {
-			//no players alive - game over with no winner
-			case 0:
-				return true;
-
-			//1 player alive - game over with last surviving player winning
-			case 1:
-				winningPlayer = lastPlayerAlive;
-				return true;
-
-			//game is not over - reset lastAlivePlayer to null
-			default:
-				lastPlayerAlive = null;
-				return false;
+		//no players alive - game over, no player won
+		if (alivePlayers == 0) {
+			return true;
 		}
+
+		//game is still in progress
+		return false;
 	}
 
 	/**
