@@ -140,8 +140,8 @@ public class Board implements IBoard {
             }
         }
 
-        //returns true if the player position has changed and the player did not fell off the board
-        return !curPos.equals(playerPositions.get(player)) && !player.onBoardCheck();
+        //returns true if the player position has changed
+        return !curPos.equals(playerPositions.get(player));
 	}
 
 
@@ -206,8 +206,7 @@ public class Board implements IBoard {
 	@Override
 	public boolean doNextAction() {
 		if (movementCount>0) {
-			movementCount--;
-			movePlayer(curPlayer, moveDir);
+			movePlayer(curPlayer, moveDir, movementCount);
 			return true;
 		}
 		else {
@@ -411,8 +410,6 @@ public class Board implements IBoard {
 	private void playerFellOffTheBoard(Player player, Position newPos) {
     	player.destroyPlayer();
 
-    	//skips any remaining moves for the current card
-		movementCount = 0;
 		playerPositions.put(player, newPos);
 		player.setOnTheBoard(false);
 
