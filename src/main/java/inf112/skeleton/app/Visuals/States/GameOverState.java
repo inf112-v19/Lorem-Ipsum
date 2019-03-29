@@ -5,14 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.SpriteType;
 
 public class GameOverState extends State {
     private SpriteSheet spriteSheet;
@@ -25,7 +28,6 @@ public class GameOverState extends State {
     //text
     Table table;
     Label.LabelStyle font;
-    Label gameOverLabel;
     Label playAgainLabel;
 
     public GameOverState(GameStateManager gsm) {
@@ -40,7 +42,6 @@ public class GameOverState extends State {
         //label
         this.table = new Table();
         this.font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        //this.gameOverLabel = new Label("GAME OVER", this.font);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
         gameOverImage();
@@ -57,8 +58,6 @@ public class GameOverState extends State {
     private void playAgainLabel() {
         this.table.center();
         this.table.setFillParent(true);
-        //this.table.add(this.gameOverLabel).expandX();
-        //this.table.row();
         this.table.add(this.playAgainLabel).expandX().padTop(10f);
         this.stage.addActor(this.table);
 
@@ -68,7 +67,7 @@ public class GameOverState extends State {
     public void handleInput() {
         if(Gdx.input.justTouched()) {
             System.out.println("New game!");
-            this.gsm.set(new ChooseBoardState(this.gsm));
+            this.gsm.set(new MenuState(this.gsm));
             dispose();
         }
     }
@@ -80,6 +79,13 @@ public class GameOverState extends State {
 
     @Override
     public void render() {
+        /*TextureRegion textBar = new TextureRegion(new Texture("StateImages/.png"));
+        //TextureRegion background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
+        this.stage.act();
+        this.stage.getBatch().begin();
+        this.stage.getBatch().draw(textBar, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        this.stage.getBatch().end();
+*/
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.stage.draw();
@@ -88,7 +94,7 @@ public class GameOverState extends State {
     @Override
     public void dispose() {
         this.spriteSheet.dispose();
-        this.stage.dispose();
+        //this.stage.dispose();
     }
 
     @Override
