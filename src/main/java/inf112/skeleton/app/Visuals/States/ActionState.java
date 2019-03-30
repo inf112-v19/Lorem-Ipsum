@@ -51,6 +51,7 @@ public class ActionState extends State {
 			boardGUI.showRevivedPlayers();
 
 			if (board.isGameOver()){
+				System.out.println("Setting GameOverState");
 				gsm.set(new GameOverState(gsm));
 				dispose();
 				return;

@@ -10,6 +10,7 @@ import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.Text;
 
 public class PlaceFlagState extends State {
 
@@ -18,6 +19,7 @@ public class PlaceFlagState extends State {
 	private BoardGUI boardGUI;
 	private int flagCount;
 	private Player[] players;
+	private Text text;
 
 	public PlaceFlagState(GameStateManager gsm, Board board, CardManager cardManager) {
 		super(gsm);
@@ -26,6 +28,9 @@ public class PlaceFlagState extends State {
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm);
 		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
+		this.text = new Text("'s trun to place flag", stage);
+		this.text.prependDynamicsText(players[0].getPlayerID());
+
 	}
 
 
@@ -40,14 +45,14 @@ public class PlaceFlagState extends State {
 		if (flagCount >= players.length){
 			boardGUI.removeAllListeners();
 			gsm.set(new CardState(gsm,board,cardManager));
-
+			text.dispose();
 		}
-
 	}
 
 
 	@Override
 	public void tileEventHandle(Tile tile) {
+		this.text.prependDynamicsText(players[flagCount].getPlayerID());
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)){
 			flag.setDrawable(new TextureRegionDrawable(new SpriteSheet().getTexture(flag)));

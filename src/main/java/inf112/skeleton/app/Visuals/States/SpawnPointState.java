@@ -13,6 +13,7 @@ import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.Text;
 
 
 public class SpawnPointState extends State {
@@ -20,6 +21,7 @@ public class SpawnPointState extends State {
 	private Queue<Player> players;
 	private SpriteSheet spriteSheet;
 	private BoardGUI boardGUI;
+	private Text text;
 
 
 	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players){
@@ -29,6 +31,8 @@ public class SpawnPointState extends State {
 		this.spriteSheet = new SpriteSheet();
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm);
 		this.boardGUI.addListenersToStage();
+		this.text = new Text("'s turn to to choose spawn", stage);
+		this.text.prependDynamicsText(players.first().getPlayerID());
 	}
 
 	@Override
@@ -44,9 +48,9 @@ public class SpawnPointState extends State {
 			CardManager cardManager = new CardManager(board);
 			boardGUI.removeAllListeners();
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
+			text.dispose();
 		}
 	}
-
 
 	@Override
 	public void tileEventHandle(Tile tile) {
@@ -63,6 +67,11 @@ public class SpawnPointState extends State {
 				player.setPosition(tile.getX(), tile.getY());
 				stage.addActor(player);
 				System.out.println("placing " + player.getPlayerID());
+
+				if(!players.isEmpty()){
+					this.text.prependDynamicsText(players.first().getPlayerID());
+				}
+
 			}
 		}
 	}
