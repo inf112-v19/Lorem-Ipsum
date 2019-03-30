@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -38,6 +39,15 @@ public class SpawnPointState extends State {
 	@Override
 	protected void handleInput() {
 
+	}
+
+	@Override
+	public void render() {
+		super.render();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm));
+		}
 	}
 
 	@Override

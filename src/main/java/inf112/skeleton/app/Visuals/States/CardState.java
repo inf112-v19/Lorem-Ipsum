@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -61,6 +63,10 @@ public class CardState extends State {
         super.render();
         cardHandGUI.render();
         infoGUI.render();
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            this.gsm.push(new PauseState(this.gsm));
+        }
     }
 
     @Override

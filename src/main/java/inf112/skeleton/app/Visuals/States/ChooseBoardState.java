@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -151,6 +152,10 @@ public class ChooseBoardState extends State {
 
     @Override
     public void render() {
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            this.gsm.push(new PauseState(this.gsm));
+        }
         this.stage.act();
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(this.background1, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
