@@ -33,10 +33,7 @@ public abstract class State {
         this.stage.act();
         this.stage.draw();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            System.out.println("PAUSE!");
-            gsm.push(new PauseState(this.gsm));
-        }
+
     }
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
