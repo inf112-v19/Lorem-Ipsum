@@ -99,6 +99,7 @@ public class PendingCardsGUI {
     public void dispose() {
         playingCard.dispose();
         pendingCard.dispose();
+        spriteSheet.dispose();
     }
 
 }
