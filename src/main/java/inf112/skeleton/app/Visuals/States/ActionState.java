@@ -50,6 +50,11 @@ public class ActionState extends State {
 			boardGUI.hideDeadPlayers();
 			boardGUI.showRevivedPlayers();
 
+			if (board.isGameOver()){
+				gsm.set(new GameOverState(gsm));
+				dispose();
+				return;
+			}
 
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.doNextAction();
