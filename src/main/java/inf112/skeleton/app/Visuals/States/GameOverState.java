@@ -90,7 +90,7 @@ public class GameOverState extends State {
 
     @Override
     public void dispose() {
-        this.stage.dispose();
+        //this.stage.dispose();
     }
 
     @Override
