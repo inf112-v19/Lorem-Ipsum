@@ -34,7 +34,7 @@ public class GameOverState extends State {
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
-        this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOverSmall.png")));
+        this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOver.png")));
 
         //label
         this.table = new Table();
@@ -76,13 +76,6 @@ public class GameOverState extends State {
 
     @Override
     public void render() {
-        /*TextureRegion textBar = new TextureRegion(new Texture("StateImages/.png"));
-        //TextureRegion background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.stage.act();
-        this.stage.getBatch().begin();
-        this.stage.getBatch().draw(textBar, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        this.stage.getBatch().end();
-*/
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.stage.draw();
