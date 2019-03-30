@@ -52,70 +52,88 @@ public final class SpriteSheet {
 
         this.texture = new Texture("RoboRallyTiles.png");
         this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
+        spriteSheet
         flip(this.spriteSheet);
+        dispose();
 
         this.texture = new Texture("Player/redtank.png");
         this.redtankSheet = new TextureRegion(this.texture, 224, 128).split(224 / 7, 128 / 4);
         flip(this.redtankSheet);
+        dispose();
 
         this.texture = new Texture("CardImages/BackUp.png");
         this.backUpSprite = new TextureRegion(texture);
         this.backUpSprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/LeftTurn.png");
         this.leftTurnSprite = new TextureRegion(texture);
         this.leftTurnSprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/Move1.png");
         this.move1Sprite = new TextureRegion(texture);
         this.move1Sprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/Move2.png");
         this.move2Sprite = new TextureRegion(texture);
         this.move2Sprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/Move3.png");
         this.move3Sprite = new TextureRegion(texture);
         this.move3Sprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/RightTurn.png");
         this.rightTurnSprite = new TextureRegion(texture);
         this.rightTurnSprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/U-Turn.png");
         this.uTurnSprite = new TextureRegion(texture);
         this.uTurnSprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("StateImages/tapToStart.gif");
         this.tapToStartSprite = new TextureRegion(texture);
         //this.tapToStartSprite.flip(false, true);
+        dispose();
 
         this.texture = new Texture("StateImages/tempBackground.jpg");
         this.menuBackground = new TextureRegion(texture);
         //this.menuBackground.flip(false, true);
+        dispose();
 
         this.texture = new Texture("StateImages/start.png");
         this.menuPlayButton = new TextureRegion(texture);
         //this.menuPlayButton.flip(false, true);
+        dispose();
 
         this.texture = new Texture("StateImages/secondBackground.png");
         this.chooseBackground = new TextureRegion(texture);
+        dispose();
 
         this.texture = new Texture("clear.png");
         this.cardGuiClearButton = new TextureRegion(texture);
         this.cardGuiClearButton.flip(false, true);
+        dispose();
 
         this.texture = new Texture("submit.png");
         this.cardGuiSubmitButton = new TextureRegion(texture);
         this.cardGuiSubmitButton.flip(false, true);
+        dispose();
 
         this.texture = new Texture("CardImages/cardBar.png");
         this.cardBar = new TextureRegion(texture);
         this.cardBar.flip(false, true);
+        dispose();
 
         this.texture = new Texture("SpawnTile.png");
         this.spawnTile = new TextureRegion(this.texture);
         this.spawnTile.flip(false,true);
+        dispose();
 
 
 

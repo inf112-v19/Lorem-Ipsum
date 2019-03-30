@@ -140,6 +140,7 @@ public class CardHandGUI {
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
         renderPriorities();
+        render();
     }
 
     private void clearLabels() {
