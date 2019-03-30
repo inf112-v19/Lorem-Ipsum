@@ -18,8 +18,6 @@ import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class GameOverState extends State {
-    private SpriteSheet spriteSheet;
-
     private Stage stage;
 
     //image Game Over
@@ -32,7 +30,6 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -93,8 +90,7 @@ public class GameOverState extends State {
 
     @Override
     public void dispose() {
-        this.spriteSheet.dispose();
-        //this.stage.dispose();
+        this.stage.dispose();
     }
 
     @Override
