@@ -225,6 +225,7 @@ public class BoardGUI {
 
 
     public void dispose(){
+    	spriteSheet.dispose();
     	//stage.dispose();
 	}
 

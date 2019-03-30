@@ -303,6 +303,9 @@ public class CardHandGUI {
         clearOldCards();
         texture.dispose();
         spriteSheet.dispose();
+        font.dispose();
+        for (BitmapFont fonts : cardPriorities) {
+            fonts.dispose();
+        }
     }
-
 }
