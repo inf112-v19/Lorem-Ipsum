@@ -69,6 +69,18 @@ public final class SpriteSheet {
         manager.load("submit.png", Texture.class);
         manager.load("CardImages/cardBar.png", Texture.class);
         manager.load("SpawnTile.png", Texture.class);
+        manager.load("clear_press.png", Texture.class);
+        manager.load("submit_press.png", Texture.class);
+        manager.load("lock.png", Texture.class);
+        manager.load("CardImages/button1.png", Texture.class);
+        manager.load("CardImages/button2.png", Texture.class);
+        manager.load("CardImages/button3.png", Texture.class);
+        manager.load("CardImages/button4.png", Texture.class);
+        manager.load("CardImages/button5.png", Texture.class);
+        manager.load("healthbar.png", Texture.class);
+        manager.load("heart.png", Texture.class);
+        //manager.load("", Texture.class);
+
 
         manager.update();
         manager.finishLoading();
@@ -265,6 +277,12 @@ public final class SpriteSheet {
      */
     public TextureRegion getTexture(GameObject gameObject) {
         return findCorrectTexture(gameObject.getSpriteType());
+    }
+
+
+    ///NB!!!!!! will crash program if file is not loaded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public Texture getTexture(String filename) {
+        return manager.get(filename, Texture.class);
     }
 
     public void dispose() {

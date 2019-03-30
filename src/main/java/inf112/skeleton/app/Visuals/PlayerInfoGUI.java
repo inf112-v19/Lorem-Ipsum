@@ -95,7 +95,7 @@ public class PlayerInfoGUI {
                 yDrawPos += 12;
             }
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            texture = new Texture("healthbar.png");
+            texture = spriteSheet.getTexture("healthbar.png");
             TextureRegion textureRegion = new TextureRegion(texture);
             createActor(textureRegion, 10, 20, xDrawPos, yDrawPos, true);
             deltaX -= 22;
@@ -108,7 +108,7 @@ public class PlayerInfoGUI {
 
         for (int i = 0; i < numberOfLives; i++) {
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            texture = new Texture("heart.png");
+            texture = spriteSheet.getTexture("heart.png");
             TextureRegion textureRegion = new TextureRegion(texture);
             createActor(textureRegion, 20, 20, xDrawPos, yDrawPos, true);
             deltaX -= 25;

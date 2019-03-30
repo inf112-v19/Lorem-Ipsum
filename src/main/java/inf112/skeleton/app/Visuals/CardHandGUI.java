@@ -197,7 +197,7 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        texture = new Texture("CardImages/" + filename + ".png");
+        texture = spriteSheet.getTexture("CardImages/" + filename + ".png");
         TextureRegion numberTexture = new TextureRegion(texture);
         numberTexture.flip(false, true);
         numberLabels[cardPtr] = new Image(numberTexture);
@@ -208,7 +208,7 @@ public class CardHandGUI {
     }
 
     private void drawLockImage(int xPos) {
-        texture = new Texture("lock.png");
+        texture = spriteSheet.getTexture("lock.png");
         TextureRegion lockTex = new TextureRegion(texture);
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
@@ -253,7 +253,7 @@ public class CardHandGUI {
     private void createSubmitButton() {
         submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
-        texture = new Texture("submit_press.png");
+        texture = spriteSheet.getTexture("submit_press.png");
         TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
@@ -281,7 +281,7 @@ public class CardHandGUI {
     private void createClearButton() {
         clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight() - 60);
-        texture = new Texture("clear_press.png");
+        texture = spriteSheet.getTexture("clear_press.png");
         TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
