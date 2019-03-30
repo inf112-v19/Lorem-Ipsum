@@ -27,6 +27,7 @@ public class CardHandGUI {
     private Stage stage;
 
     private SpriteSheet spriteSheet;
+    private Texture texture;
 
     private BitmapFont font;
     private String playerTurn;
@@ -195,7 +196,8 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        TextureRegion numberTexture = new TextureRegion(new Texture("CardImages/" + filename + ".png"));
+        texture = new Texture("CardImages/" + filename + ".png");
+        TextureRegion numberTexture = new TextureRegion(texture);
         numberTexture.flip(false, true);
         numberLabels[cardPtr] = new Image(numberTexture);
         numberLabels[cardPtr].setSize(97, 30);
@@ -205,7 +207,8 @@ public class CardHandGUI {
     }
 
     private void drawLockImage(int xPos) {
-        TextureRegion lockTex = new TextureRegion(new Texture("lock.png"));
+        texture = new Texture("lock.png");
+        TextureRegion lockTex = new TextureRegion(texture);
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
@@ -249,7 +252,8 @@ public class CardHandGUI {
     private void createSubmitButton() {
         submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
-        TextureRegion pressed = new TextureRegion(new Texture("submit_press.png"));
+        texture = new Texture("submit_press.png");
+        TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(submit);
@@ -276,7 +280,8 @@ public class CardHandGUI {
     private void createClearButton() {
         clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight() - 60);
-        TextureRegion pressed = new TextureRegion(new Texture("clear_press.png"));
+        texture = new Texture("clear_press.png");
+        TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(clear);
@@ -296,6 +301,8 @@ public class CardHandGUI {
         submit.clearListeners();
         clear.clearListeners();
         clearOldCards();
+        texture.dispose();
+        spriteSheet.dispose();
     }
 
 }
