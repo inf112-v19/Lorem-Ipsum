@@ -1,14 +1,10 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
@@ -34,8 +30,6 @@ public abstract class State {
     public void render() {
         this.stage.act();
         this.stage.draw();
-
-
     }
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory leaks

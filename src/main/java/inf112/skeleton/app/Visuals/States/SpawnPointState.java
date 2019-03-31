@@ -12,7 +12,6 @@ import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.Text;
 
-
 public class SpawnPointState extends State {
 	private Board board;
 	private Queue<Player> players;

@@ -32,7 +32,7 @@ public class MenuState extends State {
         this.start = false;
 
         this.background = this.assetHandler.getTexture(SpriteType.MENU_BACKGROUND);
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
+        this.startButton = new Image(new TextureRegionDrawable(assetHandler.getTexture("StateImages/start.png")));
 
         setStartButton();
     }

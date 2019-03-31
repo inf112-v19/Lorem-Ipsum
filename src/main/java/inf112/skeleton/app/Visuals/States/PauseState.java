@@ -8,15 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 
 public class PauseState extends State{
-    GameStateManager gsm;
-    //Stage stage;
-
+    AssetHandler assetHandler;
     //boolean
-
     private boolean mainMenu;
     private boolean resume;
     private boolean exit;
@@ -27,12 +25,10 @@ public class PauseState extends State{
     private Image mainMenuButton;
     private Image exitButton;
 
-    private String buttonName;
-
 
     public PauseState(GameStateManager gsm) {
         super(gsm);
-        //this.assetHandler = new AssetHandler();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 

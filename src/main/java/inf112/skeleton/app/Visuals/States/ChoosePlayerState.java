@@ -212,10 +212,7 @@ public class ChoosePlayerState extends State {
         this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
         this.stage.draw();
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            System.out.println("PAUSE!");
-            this.gsm.push(new PauseState(this.gsm));
-        }
+
     }
 
     @Override

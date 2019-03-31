@@ -50,36 +50,39 @@ public final class AssetHandler {
 
 	private AssetManager manager;
 
-	public AssetHandler() {
-		manager = new AssetManager();
-		manager.load("RoboRallyTiles.png", Texture.class);
-		manager.load("Player/redtank.png", Texture.class);
-		manager.load("CardImages/BackUp.png", Texture.class);
-		manager.load("CardImages/LeftTurn.png", Texture.class);
-		manager.load("CardImages/Move1.png", Texture.class);
-		manager.load("CardImages/Move2.png", Texture.class);
-		manager.load("CardImages/Move3.png", Texture.class);
-		manager.load("CardImages/RightTurn.png", Texture.class);
-		manager.load("CardImages/U-Turn.png", Texture.class);
-		manager.load("StateImages/tapToStart.gif", Texture.class);
-		manager.load("StateImages/tempBackground.jpg", Texture.class);
-		manager.load("StateImages/start.png", Texture.class);
-		manager.load("StateImages/secondBackground.png", Texture.class);
-		manager.load("clear.png", Texture.class);
-		manager.load("submit.png", Texture.class);
-		manager.load("CardImages/cardBar.png", Texture.class);
-		manager.load("SpawnTile.png", Texture.class);
-		manager.load("clear_press.png", Texture.class);
-		manager.load("submit_press.png", Texture.class);
-		manager.load("lock.png", Texture.class);
-		manager.load("CardImages/button1.png", Texture.class);
-		manager.load("CardImages/button2.png", Texture.class);
-		manager.load("CardImages/button3.png", Texture.class);
-		manager.load("CardImages/button4.png", Texture.class);
-		manager.load("CardImages/button5.png", Texture.class);
-		manager.load("healthbar.png", Texture.class);
-		manager.load("heart.png", Texture.class);
-		//manager.load("", Texture.class);
+    public AssetHandler() {
+        manager = new AssetManager();
+        manager.load("RoboRallyTiles.png", Texture.class);
+        manager.load("Player/redtank.png", Texture.class);
+        manager.load("CardImages/BackUp.png", Texture.class);
+        manager.load("CardImages/LeftTurn.png", Texture.class);
+        manager.load("CardImages/Move1.png", Texture.class);
+        manager.load("CardImages/Move2.png", Texture.class);
+        manager.load("CardImages/Move3.png", Texture.class);
+        manager.load("CardImages/RightTurn.png", Texture.class);
+        manager.load("CardImages/U-Turn.png", Texture.class);
+        manager.load("StateImages/tapToStart.gif", Texture.class);
+        manager.load("StateImages/tempBackground.jpg", Texture.class);
+        manager.load("StateImages/start.png", Texture.class);
+        manager.load("StateImages/secondBackground.png", Texture.class);
+        manager.load("clear.png", Texture.class);
+        manager.load("submit.png", Texture.class);
+        manager.load("CardImages/cardBar.png", Texture.class);
+        manager.load("SpawnTile.png", Texture.class);
+        manager.load("clear_press.png", Texture.class);
+        manager.load("submit_press.png", Texture.class);
+        manager.load("lock.png", Texture.class);
+        manager.load("CardImages/button1.png", Texture.class);
+        manager.load("CardImages/button2.png", Texture.class);
+        manager.load("CardImages/button3.png", Texture.class);
+        manager.load("CardImages/button4.png", Texture.class);
+        manager.load("CardImages/button5.png", Texture.class);
+        manager.load("healthbar.png", Texture.class);
+        manager.load("heart.png", Texture.class);
+
+        manager.load("StateImages/start.png", Texture.class);
+
+        //manager.load("", Texture.class);
 
 		manager.update();
 		manager.finishLoading();
