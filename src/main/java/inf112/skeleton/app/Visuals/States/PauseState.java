@@ -13,12 +13,8 @@ import inf112.skeleton.app.Visuals.RoboRally;
 
 
 public class PauseState extends State{
-    GameStateManager gsm;
     AssetHandler assetHandler;
-    //Stage stage;
-
     //boolean
-
     private boolean mainMenu;
     private boolean resume;
     private boolean exit;
@@ -29,12 +25,10 @@ public class PauseState extends State{
     private Image mainMenuButton;
     private Image exitButton;
 
-    private String buttonName;
-
 
     public PauseState(GameStateManager gsm) {
         super(gsm);
-        //this.assetHandler = new AssetHandler();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -97,6 +91,7 @@ public class PauseState extends State{
             if (this.resume) {
                 System.out.println("Resume Game");
                 this.gsm.pop();
+                dispose();
             } else if (this.mainMenu) {
                 System.out.println("New Game!");
                 this.gsm.pop();

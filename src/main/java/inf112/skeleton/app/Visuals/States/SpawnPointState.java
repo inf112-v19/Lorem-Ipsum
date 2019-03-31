@@ -6,14 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
-import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.Text;
-
 
 public class SpawnPointState extends State {
 	private Board board;
