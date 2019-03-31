@@ -38,9 +38,14 @@ public enum SpriteType{
 	ROTATION_LEFT_TILE(4,6),
 
 	SPAWN_TILE(0,11),
+	
+	FLAG1(0,12),
+	FLAG2(1,12),
+	FLAG3(2,12),
+	FLAG4(3,12),
+	FLAG5(4,12),
+	FLAG6(3,11),
 
-
-	FLAG(6,6),
 	PLAYER1(),
 	PLAYER2(),
 	PLAYER3(),
