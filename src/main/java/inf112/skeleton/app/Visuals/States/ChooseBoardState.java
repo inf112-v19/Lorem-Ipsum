@@ -11,12 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 
 public class ChooseBoardState extends State {
-    private AssetHandler assetHandler;
     private TextureRegion background1;
     private Stage stage;
 
@@ -36,7 +34,6 @@ public class ChooseBoardState extends State {
     public ChooseBoardState(GameStateManager gsm) {
         super(gsm);
 
-        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
         this.background1 = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
@@ -140,7 +137,6 @@ public class ChooseBoardState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        this.assetHandler.dispose();
     }
 
     @Override

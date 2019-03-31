@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
 import inf112.skeleton.app.Visuals.SpriteType;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import java.util.Stack;
 public class ChoosePlayerState extends State {
     private Board board;
 
-    private AssetHandler assetHandler;
     private TextureRegion background;
     private Stage stage;
 
@@ -34,7 +32,6 @@ public class ChoosePlayerState extends State {
     private Image textBar;
 
     //player
-    private int amountPlayers;
     private int spaceOverButtons;
     private int halfButtonWidth;
     private int halfButtonWidth1;
@@ -49,12 +46,10 @@ public class ChoosePlayerState extends State {
         super(gsm);
         this.board = board;
 
-        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
-        this.background = new TextureRegion(new Texture("StateImages/secondBackground.png"));
-        this.background = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
+        this.background = super.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
 
@@ -62,7 +57,6 @@ public class ChoosePlayerState extends State {
         this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
 
         //player buttons
-        this.amountPlayers = 4;
         this.spaceOverButtons = 49*2;
         this.halfButtonWidth = 193/2;
         this.halfButtonWidth1 = 193/2;

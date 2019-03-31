@@ -27,11 +27,11 @@ public class ActionState extends State {
 		this.board = board;
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm);
+		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, super.assetHandler);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch, stage);
-		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage);
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
 		this.cardManager = cardManager;
 	}
 
@@ -86,7 +86,6 @@ public class ActionState extends State {
 	@Override
 	public void dispose() {
 		System.out.println("BUMP ACTION");
-		boardGUI.dispose();
 		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();

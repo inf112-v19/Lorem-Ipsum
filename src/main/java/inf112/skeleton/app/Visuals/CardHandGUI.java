@@ -47,12 +47,12 @@ public class CardHandGUI {
     private Image infoBar;
     private Image[] numberLabels;
 
-    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage) {
+    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
         this.batch = batch;
         this.stage = stage;
 
-        assetHandler = new AssetHandler();
+        this.assetHandler = assetHandler;
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
@@ -301,7 +301,6 @@ public class CardHandGUI {
         clear.clearListeners();
         clearOldCards();
         texture.dispose();
-        assetHandler.dispose();
         font.dispose();
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();

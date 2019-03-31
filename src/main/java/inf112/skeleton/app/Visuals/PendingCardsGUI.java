@@ -27,10 +27,10 @@ public class PendingCardsGUI {
     private Player nextPlayer;
     private HashMap<Player, TextureRegion> playerTextures;
 
-    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage) {
+    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage, AssetHandler assetHandler) {
         this.batch = batch;
         this.board = board;
-        this.assetHandler = new AssetHandler();
+        this.assetHandler = assetHandler;
         this.stage = stage;
 
         playingCard = new BitmapFont(true);
@@ -96,7 +96,6 @@ public class PendingCardsGUI {
     public void dispose() {
         playingCard.dispose();
         pendingCard.dispose();
-        assetHandler.dispose();
     }
 
 }

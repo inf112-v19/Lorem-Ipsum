@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public abstract class State {
+	protected final AssetHandler assetHandler = new AssetHandler();
     protected GameStateManager gsm;
     protected OrthographicCamera camera = new OrthographicCamera();
     protected Stage stage  = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
