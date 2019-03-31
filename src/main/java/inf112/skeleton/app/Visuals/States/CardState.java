@@ -28,14 +28,14 @@ public class CardState extends State {
         this.board = board;
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
 
         this.players = board.getAllPlayers();
 
-        this.infoGUI = new PlayerInfoGUI(board, batch, stage);
+        this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
         this.cardManager = cardManager;
 
-        this.cardHandGUI = new CardHandGUI(cardManager, batch, stage);
+        this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CardState extends State {
                 return;
             }
         }
-		board.initRound();
+        board.initRound();
         gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
     }
@@ -70,11 +70,9 @@ public class CardState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        System.out.println("BUMP CARD");
         cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
-        boardGUI.dispose();
     }
 
     @Override

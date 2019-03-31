@@ -3,6 +3,7 @@ package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
@@ -36,13 +37,13 @@ public class BoardGUI {
 
 	private static final float MOVE_DURATION = 1;
 
-    public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm) {
+    public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm, AssetHandler assetHandler) {
     	this.gsm = gsm;
 
     	this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
 
-        this.assetHandler = new AssetHandler();
+        this.assetHandler = assetHandler;
         this.board = board;
 
         this.boardWidth = board.getWidth();
@@ -80,8 +81,7 @@ public class BoardGUI {
 	}
 
 	private void addGameObjectToStage(GameObject gameObject, float x, float y){
-		//gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
-		gameObject.setDrawable();
+		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
 		gameObject.setSize(tilesize,tilesize);
 		gameObject.setPosition(x,y);
 		stage.addActor(gameObject);
@@ -89,7 +89,7 @@ public class BoardGUI {
 
 
     private void addTilesToStage(final Tile tile, int x, int y){
-		tile.setDrawable();
+		tile.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(tile)));
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
 		//tile.addListener(createListener(tile));
@@ -221,12 +221,6 @@ public class BoardGUI {
 
 			}
 		}
-	}
-
-
-    public void dispose(){
-    	assetHandler.dispose();
-    	//stage.dispose();
 	}
 
 	public int getxOffset(){

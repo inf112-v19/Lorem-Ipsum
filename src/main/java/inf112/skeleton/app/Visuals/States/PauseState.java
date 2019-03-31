@@ -91,7 +91,6 @@ public class PauseState extends State{
             if (this.resume) {
                 System.out.println("Resume Game");
                 this.gsm.pop();
-                dispose();
             } else if (this.mainMenu) {
                 System.out.println("New Game!");
                 this.gsm.pop();

@@ -29,7 +29,6 @@ public class PlayerNameState extends State{
 	private Stage tempStage;
 	private TextureRegionDrawable background;
 	private Table table;
-	private final int textAreaWidth = 150;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers) {
 		super(gsm);
@@ -41,7 +40,7 @@ public class PlayerNameState extends State{
 		this.textAreas = new TextArea[numPlayers];
 		this.background = new TextureRegionDrawable(new Texture("StateImages/secondBackground.png"));
 		this.table = new Table(uiSkin);
-		this.table.setSize(stage.getWidth(), stage.getHeight());
+		this.table.setFillParent(true);
 		this.table.setBackground(background);
 		this.table.defaults().space(0,40,40,40);
 
@@ -53,16 +52,12 @@ public class PlayerNameState extends State{
 	}
 
 	private void creatTextFields(){
-		int offset = 20;
-		System.out.println(offset);
-
-		//table.columnDefaults(numPlayers).width(100);
-
 		for(int i = 0; i < numPlayers; i++){
 			textAreas[i] = new TextArea("",uiSkin);
-			textAreas[i].setWidth(textAreaWidth);
 
-			table.add(new Label("Player " +(i+1), uiSkin)).width(100);
+			Label label = new Label("Player " +(i+1), uiSkin);
+			label.setFontScale(1.5f);
+			table.add(label).width(100);
 			table.add(textAreas[i]).width(150);
 			table.row();
 		}
@@ -74,7 +69,6 @@ public class PlayerNameState extends State{
 		submit.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("hello");
 				for (int i = 0; i < textAreas.length; i++){
 					System.out.println(textAreas[i].getText());
 					Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
