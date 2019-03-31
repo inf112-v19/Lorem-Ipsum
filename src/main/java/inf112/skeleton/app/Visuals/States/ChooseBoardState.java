@@ -15,7 +15,6 @@ import inf112.skeleton.app.Visuals.SpriteType;
 
 
 public class ChooseBoardState extends State {
-    private TextureRegion background1;
     private Stage stage;
 
     private boolean start;
@@ -36,13 +35,12 @@ public class ChooseBoardState extends State {
 
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background1 = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
         this.halfButtonWidth = 193/2; //193 og ikke 191 fordi det passer bildet bedre
         this.bigButtonWidth = this.halfButtonWidth+193;
 
-        this.background = new TextureRegion(new Texture("StateImages/secondBackground.png"));
+        this.background = super.assetHandler.getTextureRegion("StateImages/secondBackground.png");
         this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/chooseBoardType.png")));
 
         setTextBar();

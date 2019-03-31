@@ -49,7 +49,7 @@ public class ChoosePlayerState extends State {
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
-        this.background = super.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
+        this.background = super.assetHandler.getTextureRegion("StateImages/secondBackground.png");
 
         this.start = false;
 

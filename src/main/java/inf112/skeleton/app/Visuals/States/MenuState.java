@@ -18,8 +18,8 @@ public class MenuState extends State {
     private Image startButton;
 
     //private Stage stage;
-    private final int buttonWidth;
-    private final int buttonHeight;
+    private int buttonWidth;
+    private int buttonHeight;
 
     private boolean start;
 
@@ -32,7 +32,7 @@ public class MenuState extends State {
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
-        this.background = this.assetHandler.getTexture(SpriteType.MENU_BACKGROUND);
+        this.background = super.assetHandler.getTextureRegion("StateImages/tempBackground.jpg");
         this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
 
         setStartButton();
