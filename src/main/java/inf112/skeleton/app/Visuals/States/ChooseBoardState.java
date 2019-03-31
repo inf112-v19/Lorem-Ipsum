@@ -152,6 +152,7 @@ public class ChooseBoardState extends State {
 
     @Override
     public void render() {
+        super.render();
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             System.out.println("PAUSE!");
             this.gsm.push(new PauseState(this.gsm));
