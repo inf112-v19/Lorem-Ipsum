@@ -5,20 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
-import inf112.skeleton.app.Visuals.SpriteType;
 
 public class GameOverState extends State {
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
 
     private Stage stage;
 
@@ -32,7 +29,7 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -80,7 +77,7 @@ public class GameOverState extends State {
     @Override
     public void render() {
         /*TextureRegion textBar = new TextureRegion(new Texture("StateImages/.png"));
-        //TextureRegion background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
+        //TextureRegion background = this.assetHandler.getTexture(SpriteType.MENU_BACKGROUND);
         this.stage.act();
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(textBar, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
@@ -93,7 +90,7 @@ public class GameOverState extends State {
 
     @Override
     public void dispose() {
-        this.spriteSheet.dispose();
+        this.assetHandler.dispose();
         //this.stage.dispose();
     }
 

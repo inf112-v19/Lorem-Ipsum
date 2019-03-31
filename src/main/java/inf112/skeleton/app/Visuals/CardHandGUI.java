@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
-import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,7 @@ public class CardHandGUI {
     private SpriteBatch batch;
     private Stage stage;
 
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
     private Texture texture;
 
     private BitmapFont font;
@@ -54,7 +52,7 @@ public class CardHandGUI {
         this.batch = batch;
         this.stage = stage;
 
-        spriteSheet = new SpriteSheet();
+        assetHandler = new AssetHandler();
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
@@ -62,8 +60,8 @@ public class CardHandGUI {
         numberLabels = new Image[5];
 
 
-        clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
-        submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+        clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
+        submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
         createSubmitButton();
         createClearButton();
         cardManager.newRound();
@@ -96,7 +94,7 @@ public class CardHandGUI {
         }
 
         for (int i = 0; i < cards.size(); i++) {
-            displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
+            displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(cards.get(i))));
             displayedCardsArr[i].setSize(97, 135);
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
@@ -134,7 +132,7 @@ public class CardHandGUI {
             });
         }
 
-        infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
+        infoBar = new Image(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_BAR)));
         infoBar.setSize(485, 30);
         infoBar.setPosition(0, Gdx.graphics.getHeight() - 165);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
@@ -197,7 +195,7 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        texture = spriteSheet.getTexture("CardImages/" + filename + ".png");
+        texture = assetHandler.getTexture("CardImages/" + filename + ".png");
         TextureRegion numberTexture = new TextureRegion(texture);
         numberTexture.flip(false, true);
         numberLabels[cardPtr] = new Image(numberTexture);
@@ -208,7 +206,7 @@ public class CardHandGUI {
     }
 
     private void drawLockImage(int xPos) {
-        texture = spriteSheet.getTexture("lock.png");
+        texture = assetHandler.getTexture("lock.png");
         TextureRegion lockTex = new TextureRegion(texture);
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
@@ -253,7 +251,7 @@ public class CardHandGUI {
     private void createSubmitButton() {
         submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
-        texture = spriteSheet.getTexture("submit_press.png");
+        texture = assetHandler.getTexture("submit_press.png");
         TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
@@ -281,7 +279,7 @@ public class CardHandGUI {
     private void createClearButton() {
         clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight() - 60);
-        texture = spriteSheet.getTexture("clear_press.png");
+        texture = assetHandler.getTexture("clear_press.png");
         TextureRegion pressed = new TextureRegion(texture);
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
@@ -303,7 +301,7 @@ public class CardHandGUI {
         clear.clearListeners();
         clearOldCards();
         texture.dispose();
-        spriteSheet.dispose();
+        assetHandler.dispose();
         font.dispose();
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();

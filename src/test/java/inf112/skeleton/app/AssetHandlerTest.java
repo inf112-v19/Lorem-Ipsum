@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
-import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 
@@ -19,26 +19,26 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 @RunWith(GdxTestInit.class)
-public class SpriteSheetTest {
+public class AssetHandlerTest {
 
-	private SpriteSheet spriteSheet;
+	private AssetHandler assetHandler;
 
 	@Before
 	public void setUp() {
-		spriteSheet = new SpriteSheet();
+		assetHandler = new AssetHandler();
 	}
 
 	@Test
 	public void initNormalTileTextureTest() {
 		NormalTile normalTile = new NormalTile(null, Direction.NORTH);
-		TextureRegion textureRegion = spriteSheet.getTexture(normalTile.getSpriteType());
+		TextureRegion textureRegion = assetHandler.getTexture(normalTile.getSpriteType());
 		assertTrue(textureRegion != null );
 	}
 
 	@Test
 	public void initRepairTileTextureTest() {
 		RepairTile repairTile = new RepairTile(null, Direction.NORTH);
-		TextureRegion textureRegion = spriteSheet.getTexture(repairTile.getSpriteType());
+		TextureRegion textureRegion = assetHandler.getTexture(repairTile.getSpriteType());
 		assertTrue(textureRegion != null );
 	}
 
@@ -103,15 +103,15 @@ public class SpriteSheetTest {
 	@Test
 	public void initHoleTileTextureTest() {
 		HoleTile holeTile = new HoleTile(null, Direction.NORTH);
-		TextureRegion textureRegion = spriteSheet.getTexture(holeTile.getSpriteType());
+		TextureRegion textureRegion = assetHandler.getTexture(holeTile.getSpriteType());
 		assertNotNull(textureRegion);
 	}
 
 	@Test
 	public void normalTileTextureIsEqualToNormalTileTextureTest() {
 		NormalTile nTile = new NormalTile(null, Direction.NORTH);
-		TextureRegion tile1 = spriteSheet.getTexture(nTile.getSpriteType());
-		TextureRegion tile2 = spriteSheet.getTexture(SpriteType.NORMAL_TILE);
+		TextureRegion tile1 = assetHandler.getTexture(nTile.getSpriteType());
+		TextureRegion tile2 = assetHandler.getTexture(SpriteType.NORMAL_TILE);
 		assertEquals(tile1,tile2);
 	}
 
@@ -119,29 +119,29 @@ public class SpriteSheetTest {
 	public void holeTileIsNotNormalTileTextureTest() {
 		HoleTile holeTile = new HoleTile(null, Direction.NORTH);
 		NormalTile normalTile = new NormalTile(null, Direction.NORTH);
-		TextureRegion holeTileText = spriteSheet.getTexture(holeTile.getSpriteType());
-		TextureRegion normalTileText = spriteSheet.getTexture(normalTile.getSpriteType());
+		TextureRegion holeTileText = assetHandler.getTexture(holeTile.getSpriteType());
+		TextureRegion normalTileText = assetHandler.getTexture(normalTile.getSpriteType());
 		assertNotEquals(holeTileText, normalTileText);
 	}
 
 	@Test
 	public void laserTextureCorrectTest() {
 		Laser laserNorth = new Laser(Direction.NORTH);
-		TextureRegion laserTexNorth = spriteSheet.getTexture(laserNorth.getSpriteType());
+		TextureRegion laserTexNorth = assetHandler.getTexture(laserNorth.getSpriteType());
 
 		Laser laserSouth = new Laser(Direction.SOUTH);
-		TextureRegion laserTexSouth = spriteSheet.getTexture(laserSouth.getSpriteType());
+		TextureRegion laserTexSouth = assetHandler.getTexture(laserSouth.getSpriteType());
 
 		Laser laserEast = new Laser(Direction.EAST);
-		TextureRegion laserTexEast = spriteSheet.getTexture(laserEast.getSpriteType());
+		TextureRegion laserTexEast = assetHandler.getTexture(laserEast.getSpriteType());
 
 		Laser laserWest = new Laser(Direction.WEST);
-		TextureRegion laserTexWest = spriteSheet.getTexture(laserWest.getSpriteType());
+		TextureRegion laserTexWest = assetHandler.getTexture(laserWest.getSpriteType());
 
-		boolean laserNorthIsVertical = laserTexNorth.equals(spriteSheet.getTexture(SpriteType.LASER_VERTICAL));
-		boolean laserSouthIsVertical = laserTexSouth.equals(spriteSheet.getTexture(SpriteType.LASER_VERTICAL));
-		boolean laserEastIsHorizontal = laserTexEast.equals(spriteSheet.getTexture(SpriteType.LASER_HORIZONTAL));
-		boolean laserWestIsHorizontal = laserTexWest.equals(spriteSheet.getTexture(SpriteType.LASER_HORIZONTAL));
+		boolean laserNorthIsVertical = laserTexNorth.equals(assetHandler.getTexture(SpriteType.LASER_VERTICAL));
+		boolean laserSouthIsVertical = laserTexSouth.equals(assetHandler.getTexture(SpriteType.LASER_VERTICAL));
+		boolean laserEastIsHorizontal = laserTexEast.equals(assetHandler.getTexture(SpriteType.LASER_HORIZONTAL));
+		boolean laserWestIsHorizontal = laserTexWest.equals(assetHandler.getTexture(SpriteType.LASER_HORIZONTAL));
 
 		assertTrue(laserNorthIsVertical && laserSouthIsVertical && laserEastIsHorizontal && laserWestIsHorizontal);
 	}
@@ -149,21 +149,21 @@ public class SpriteSheetTest {
 	@Test
 	public void wallTextureCorrectTest() {
 		Wall wallNorth = new Wall(Direction.NORTH);
-		TextureRegion WallTexNorth = spriteSheet.getTexture(wallNorth.getSpriteType());
+		TextureRegion WallTexNorth = assetHandler.getTexture(wallNorth.getSpriteType());
 
 		Wall wallSouth = new Wall(Direction.SOUTH);
-		TextureRegion WallTexSouth = spriteSheet.getTexture(wallSouth.getSpriteType());
+		TextureRegion WallTexSouth = assetHandler.getTexture(wallSouth.getSpriteType());
 
 		Wall wallEast = new Wall(Direction.EAST);
-		TextureRegion WallTexEast = spriteSheet.getTexture(wallEast.getSpriteType());
+		TextureRegion WallTexEast = assetHandler.getTexture(wallEast.getSpriteType());
 
 		Wall wallWest = new Wall(Direction.WEST);
-		TextureRegion WallTexWest = spriteSheet.getTexture(wallWest.getSpriteType());
+		TextureRegion WallTexWest = assetHandler.getTexture(wallWest.getSpriteType());
 
-		boolean WallNorthIsVertical = WallTexNorth.equals(spriteSheet.getTexture(SpriteType.WALL_NORTH));
-		boolean WallSouthIsVertical = WallTexSouth.equals(spriteSheet.getTexture(SpriteType.WALL_SOUTH));
-		boolean WallEastIsHorizontal = WallTexEast.equals(spriteSheet.getTexture(SpriteType.WALL_EAST));
-		boolean WallWestIsHorizontal = WallTexWest.equals(spriteSheet.getTexture(SpriteType.WALL_WEST));
+		boolean WallNorthIsVertical = WallTexNorth.equals(assetHandler.getTexture(SpriteType.WALL_NORTH));
+		boolean WallSouthIsVertical = WallTexSouth.equals(assetHandler.getTexture(SpriteType.WALL_SOUTH));
+		boolean WallEastIsHorizontal = WallTexEast.equals(assetHandler.getTexture(SpriteType.WALL_EAST));
+		boolean WallWestIsHorizontal = WallTexWest.equals(assetHandler.getTexture(SpriteType.WALL_WEST));
 
 		assertTrue(WallNorthIsVertical && WallSouthIsVertical && WallEastIsHorizontal && WallWestIsHorizontal);
 	}
@@ -192,7 +192,7 @@ public class SpriteSheetTest {
 	@Test
 	public void backwardCardTextureTest() {
 		Card card = new Card(CardType.BACKWARD_1, 1);
-		assertEquals(spriteSheet.getTexture(card), spriteSheet.getTexture(SpriteType.BACKWARD_1));
+		assertEquals(assetHandler.getTexture(card), assetHandler.getTexture(SpriteType.BACKWARD_1));
 	}
 
 	@Test

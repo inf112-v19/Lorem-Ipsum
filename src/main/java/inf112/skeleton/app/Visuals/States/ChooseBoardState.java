@@ -10,14 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 
 public class ChooseBoardState extends State {
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
     private TextureRegion background1;
     private Stage stage;
 
@@ -42,11 +41,11 @@ public class ChooseBoardState extends State {
     public ChooseBoardState(GameStateManager gsm) {
         super(gsm);
 
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background1 = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
+        this.background1 = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
         this.halfButtonWidth = 193/2; //193 og ikke 191 fordi det passer bildet bedre
@@ -161,7 +160,7 @@ public class ChooseBoardState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        this.spriteSheet.dispose();
+        this.assetHandler.dispose();
     }
 
     @Override

@@ -1,14 +1,12 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 
@@ -19,7 +17,7 @@ public class PlayerInfoGUI {
     private Texture texture;
 
     private Stage stage;
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
 
     private Player[] players;
     private Batch batch;
@@ -28,7 +26,7 @@ public class PlayerInfoGUI {
         this.batch = batch;
         this.stage = stage;
 
-        spriteSheet = new SpriteSheet();
+        assetHandler = new AssetHandler();
 
         players = board.getAllPlayers();
         playerNames = new String[players.length];
@@ -70,7 +68,7 @@ public class PlayerInfoGUI {
         for (BitmapFont font : fonts) {
             font.dispose();
         }
-        spriteSheet.dispose();
+        assetHandler.dispose();
         texture.dispose();
     }
 
@@ -79,7 +77,7 @@ public class PlayerInfoGUI {
     }
 
     private void drawPlayerImage(int row, SpriteType sprite) {
-        TextureRegion texture = spriteSheet.getTexture(sprite);
+        TextureRegion texture = assetHandler.getTexture(sprite);
         int yDrawPos = playerYbyRow(row);
         int xDrawPos = Gdx.graphics.getWidth() - 60;
         createActor(texture, 30, 30, xDrawPos, yDrawPos, false);
@@ -95,7 +93,7 @@ public class PlayerInfoGUI {
                 yDrawPos += 12;
             }
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            texture = spriteSheet.getTexture("healthbar.png");
+            texture = assetHandler.getTexture("healthbar.png");
             TextureRegion textureRegion = new TextureRegion(texture);
             createActor(textureRegion, 10, 20, xDrawPos, yDrawPos, true);
             deltaX -= 22;
@@ -108,7 +106,7 @@ public class PlayerInfoGUI {
 
         for (int i = 0; i < numberOfLives; i++) {
             int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-            texture = spriteSheet.getTexture("heart.png");
+            texture = assetHandler.getTexture("heart.png");
             TextureRegion textureRegion = new TextureRegion(texture);
             createActor(textureRegion, 20, 20, xDrawPos, yDrawPos, true);
             deltaX -= 25;

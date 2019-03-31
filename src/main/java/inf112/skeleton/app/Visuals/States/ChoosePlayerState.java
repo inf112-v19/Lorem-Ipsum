@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
 import inf112.skeleton.app.Visuals.SpriteType;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -22,7 +22,7 @@ import java.util.Stack;
 public class ChoosePlayerState extends State {
     private Board board;
 
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
     private TextureRegion background;
     private Stage stage;
 
@@ -49,11 +49,11 @@ public class ChoosePlayerState extends State {
 
         this.board = board;
 
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
 
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
+        this.background = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
 
@@ -221,7 +221,7 @@ public class ChoosePlayerState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        this.spriteSheet.dispose();
+        this.assetHandler.dispose();
     }
 
     @Override

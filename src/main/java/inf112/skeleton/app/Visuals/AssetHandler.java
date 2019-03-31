@@ -13,7 +13,7 @@ import javax.xml.soap.Text;
 /**
  * This class handles all the sprites used in the game
  */
-public final class SpriteSheet {
+public final class AssetHandler {
 
     private Texture texture;
 
@@ -50,7 +50,7 @@ public final class SpriteSheet {
 
     private AssetManager manager;
 
-    public SpriteSheet() {
+    public AssetHandler() {
         manager = new AssetManager();
         manager.load("RoboRallyTiles.png", Texture.class);
         manager.load("Player/redtank.png", Texture.class);
