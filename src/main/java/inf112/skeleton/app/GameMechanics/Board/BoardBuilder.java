@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class BoardBuilder {
-	private static int height;
-	private static int width;
+	private int height;
+	private int width;
 
 	/**
 	 * Creates a hashmap of the board based on an input text file
@@ -34,7 +34,7 @@ public class BoardBuilder {
 	 * @param fileName
 	 * @return Hashmap containing all possible positions with corresponding tiles
 	 */
-	public static HashMap<Position, Tile> buildBoard(String fileName)  {
+	public HashMap<Position, Tile> buildBoard(String fileName)  {
 		String[][] tileNumbers;
 		try {
 			tileNumbers = readFromFile(fileName);
@@ -64,7 +64,7 @@ public class BoardBuilder {
 	 * @param tileNumber
 	 * @return
 	 */
-	public static Tile getTile(String tileNumber) {
+	public Tile getTile(String tileNumber) {
 		int tileType = Integer.parseInt(tileNumber.substring(0,1));
 		int tileRotation = Integer.parseInt(tileNumber.substring(1,2));
 		int numberOfGO = Integer.parseInt(tileNumber.substring(2,3));
@@ -103,7 +103,7 @@ public class BoardBuilder {
 	 * @param dir
 	 * @return
 	 */
-	private static GameObject getGameObject(int type, int dir){
+	private GameObject getGameObject(int type, int dir){
 		Direction direction = getDirection(dir);
 
 		switch (type){
@@ -125,7 +125,7 @@ public class BoardBuilder {
 	 * @param dir
 	 * @return
 	 */
-	private static Direction getDirection(int dir){
+	private Direction getDirection(int dir){
 		switch (dir){
 			case 0: return Direction.NORTH;
 			case 1: return Direction.SOUTH;
@@ -143,11 +143,16 @@ public class BoardBuilder {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String[][] readFromFile(String filename) throws IOException {
-		ClassLoader classLoader = BoardBuilder.class.getClassLoader();
-		File file = new File(classLoader.getResource(filename).getFile());
+	public String[][] readFromFile(String filename) throws IOException {
+		//Previous method for loading resource - This gave error for Anna in Oblig3
+		//ClassLoader classLoader = BoardBuilder.class.getClassLoader();
+		//File file = new File(classLoader.getResource(filename).getFile());
 
-		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+		//New method for loading resource - impossible for me to test if this solution works for Anna since both
+		//solutions work for all members of Lorem Ipsum
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream is = classloader.getResourceAsStream(filename);
+		InputStreamReader inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 		//first two lines are the dimensions
