@@ -25,14 +25,13 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        //this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
         this.gameOverImage = new Image(assetHandler.getTextureRegion("StateImages/gameOver.png"));
 
         //label
         this.table = new Table();
-        this.font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
         gameOverImage();
@@ -40,9 +39,8 @@ public class GameOverState extends State {
     }
 
     private void gameOverImage() {
-        this.gameOverImage.setSize(529, 102);
-        this.gameOverImage.setPosition((RoboRally.WIDTH / 2)-(520/2), RoboRally.HEIGHT-(102*2)-51);
-        this.stage.addActor(this.gameOverImage);
+        this.table.add(gameOverImage);
+        this.table.row();
         System.out.println("Game Over!");
     }
 
@@ -50,7 +48,7 @@ public class GameOverState extends State {
         this.table.center();
         this.table.setFillParent(true);
         this.table.add(this.playAgainLabel).expandX().padTop(10f);
-        this.stage.addActor(this.table);
+        super.stage.addActor(this.table);
 
     }
 
@@ -71,8 +69,8 @@ public class GameOverState extends State {
     @Override
     public void render() {
         super.render();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClearColor(0, 0, 0, 1);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //this.stage.draw();
     }
 
