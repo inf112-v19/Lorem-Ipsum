@@ -42,13 +42,11 @@ public class ActionState extends State {
 
 	@Override
 	public void update(float dt) {
-		//super.update(dt);
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
 			System.out.println("update");
 
-			infoGUI.update();
 			pendingCardsGUI.update();
 			boardGUI.hideDeadPlayers();
 			boardGUI.showRevivedPlayers();
@@ -74,7 +72,6 @@ public class ActionState extends State {
 
 	@Override
 	public void render() {
-		//boardGUI.render();
 		super.render();
 		infoGUI.render();
 		pendingCardsGUI.render();
@@ -90,13 +87,11 @@ public class ActionState extends State {
 		batch.dispose();
 		infoGUI.dispose();
 		pendingCardsGUI.dispose();
-
 	}
 
 	@Override
 	public void resize() {
 		super.resize();
-		//boardGUI.resize();
 		infoGUI.resize();
 	}
 }

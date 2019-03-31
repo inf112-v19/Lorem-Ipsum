@@ -1,14 +1,10 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.*;
-import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.Interfaces.ICardDeck;
 
 public class CardState extends State {
 
@@ -40,12 +36,10 @@ public class CardState extends State {
 
     @Override
     protected void handleInput() {
-
     }
 
     @Override
     public void update(float dt) {
-        //super.update(dt);
         for (Player player : players) {
             if (!player.isReady()) {
                 return;
@@ -58,9 +52,8 @@ public class CardState extends State {
 
     @Override
     public void render() {
-        //boardGUI.render();
         super.render();
-        //cardHandGUI.render();
+        cardHandGUI.render();
         infoGUI.render();
     }
 
@@ -77,5 +70,6 @@ public class CardState extends State {
         super.resize();
         boardGUI.resize();
         infoGUI.resize();
+        cardHandGUI.resize();
     }
 }

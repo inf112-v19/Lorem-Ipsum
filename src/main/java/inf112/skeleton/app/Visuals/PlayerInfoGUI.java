@@ -156,7 +156,6 @@ public class PlayerInfoGUI {
         }
     }
 
-
     private void renderNames() {
         batch.begin();
         int xpos = Gdx.graphics.getWidth() - 180;
