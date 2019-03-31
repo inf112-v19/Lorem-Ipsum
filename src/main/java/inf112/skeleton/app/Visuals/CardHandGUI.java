@@ -59,14 +59,12 @@ public class CardHandGUI {
         displayedCardsArr = new ImageButton[9];
         numberLabels = new Image[5];
 
-
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
         createSubmitButton();
         createClearButton();
         cardManager.newRound();
         selectCards();
-
     }
 
     private void selectCards() {
@@ -154,6 +152,7 @@ public class CardHandGUI {
             if (button != null) {
                 button.clearListeners();
                 button.remove();
+                button.clear();
             }
         }
     }
@@ -251,8 +250,7 @@ public class CardHandGUI {
     private void createSubmitButton() {
         submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
-        texture = assetHandler.getTexture("submit_press.png");
-        TextureRegion pressed = new TextureRegion(texture);
+        TextureRegion pressed = new TextureRegion(assetHandler.getTexture("submit_press.png"));
         pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(submit);
@@ -279,8 +277,7 @@ public class CardHandGUI {
     private void createClearButton() {
         clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight() - 60);
-        texture = assetHandler.getTexture("clear_press.png");
-        TextureRegion pressed = new TextureRegion(texture);
+        TextureRegion pressed = new TextureRegion(assetHandler.getTexture("clear_press.png"));
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(clear);
