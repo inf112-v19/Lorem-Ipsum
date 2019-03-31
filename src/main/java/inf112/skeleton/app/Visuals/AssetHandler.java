@@ -79,6 +79,9 @@ public final class AssetHandler {
         manager.load("CardImages/button5.png", Texture.class);
         manager.load("healthbar.png", Texture.class);
         manager.load("heart.png", Texture.class);
+
+        manager.load("StateImages/start.png", Texture.class);
+
         //manager.load("", Texture.class);
 
         manager.update();
