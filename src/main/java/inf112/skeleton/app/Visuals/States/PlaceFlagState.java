@@ -47,6 +47,7 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public void update(float dt) {
+		//super.update(dt);
 		Gdx.input.setInputProcessor(stage);
 		if (flagCount >= players.length){
 			boardGUI.removeAllListeners();

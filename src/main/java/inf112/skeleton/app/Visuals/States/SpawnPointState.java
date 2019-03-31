@@ -45,6 +45,7 @@ public class SpawnPointState extends State {
 
 	@Override
 	public void update(float dt) {
+		//super.update(dt);
 		Gdx.input.setInputProcessor(stage);
 		if (players.isEmpty()){
 			System.out.println("setting PlaceFlagState");

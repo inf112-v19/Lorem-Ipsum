@@ -45,6 +45,7 @@ public class CardState extends State {
 
     @Override
     public void update(float dt) {
+        //super.update(dt);
         for (Player player : players) {
             if (!player.isReady()) {
                 return;

@@ -42,6 +42,7 @@ public class ActionState extends State {
 
 	@Override
 	public void update(float dt) {
+		//super.update(dt);
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
