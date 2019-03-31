@@ -7,7 +7,6 @@ import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Player extends Image implements IPlayer {
