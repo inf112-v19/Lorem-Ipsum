@@ -62,10 +62,10 @@ public class CardState extends State {
         super.render();
         //cardHandGUI.render();
         infoGUI.render();
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+        /*if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             System.out.println("PAUSE!");
             this.gsm.push(new PauseState(this.gsm));
-        }
+        }*/
     }
 
     @Override

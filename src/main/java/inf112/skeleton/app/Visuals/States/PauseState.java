@@ -86,8 +86,9 @@ public class PauseState extends State{
     protected void handleInput() {
         if (this.start) {
             if (this.resume) {
-                System.out.println("Resume Game");
+                System.out.println("Resume Game!");
                 this.gsm.pop();
+
             } else if (this.mainMenu) {
                 System.out.println("New Game!");
                 this.gsm.pop();
