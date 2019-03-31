@@ -197,7 +197,8 @@ public class ChoosePlayerState extends State {
     public void handleInput() {
         if (this.start) {
             //gsm.set(new CardState(gsm, board, cardManager));
-            gsm.set(new SpawnPointState(gsm, board, createPlayers()));
+            //gsm.set(new SpawnPointState(gsm, board, createPlayers()));
+            gsm.set(new PlayerNameState(gsm, board, playerAmount));
             dispose();
 
         }
