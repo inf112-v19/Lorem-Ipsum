@@ -98,17 +98,15 @@ public final class AssetHandler {
 		manager.load("StateImages/start.png", Texture.class);
 		manager.load("StateImages/tempBackground.jpg", Texture.class);
 
-
-
         //manager.load("", Texture.class);
 
 		manager.update();
 		manager.finishLoading();
-
+/*
         this.texture = manager.get("StateImages/start.png", Texture.class);
         this.test_start = new TextureRegion(texture);
         this.test_start.flip(false, true);
-
+*/
 		this.texture = manager.get("RoboRallyTiles.png", Texture.class);
 		this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
 		flip(this.spriteSheet);
