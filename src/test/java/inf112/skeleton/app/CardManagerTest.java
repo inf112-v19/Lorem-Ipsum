@@ -75,4 +75,13 @@ public class CardManagerTest {
         cardManager.newRound();
         assertEquals(8, players[0].getCardHand().size());
     }
+
+    @Test
+    public void cardDeckShouldNeverHaveMoreThan84Cards() {
+        //simulates 3 rounds with no locked cards
+        cardManager.newRound();
+        cardManager.newRound();
+        cardManager.newRound();
+        assertTrue(cardManager.getCardDeckSize() <= 84);
+    }
 }
