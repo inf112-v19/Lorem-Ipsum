@@ -67,7 +67,7 @@ public class PlayerNameState extends State{
 	}
 
 	private void creatSubmitButton(){
-		Image submit = new Image(new TextureRegionDrawable(new Texture("submit.png")));
+		Image submit = new Image(assetHandler.getTextureRegion("submit.png"));
 		submit.setPosition((Gdx.graphics.getWidth()/(float)2) - (submit.getWidth()/(float)2), 50);
 		submit.addListener(new InputListener() {
 			@Override
