@@ -2,6 +2,7 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -16,7 +17,7 @@ public class MenuState extends State {
     private TextureRegion background;
     private Image startButton;
 
-    private Stage stage;
+    //private Stage stage;
     private final int buttonWidth;
     private final int buttonHeight;
 
@@ -24,15 +25,15 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        this.stage = new Stage(new ScreenViewport());
-        this.stage.getBatch().setProjectionMatrix(camera.combined);
+        //this.stage = new Stage(new ScreenViewport());
+        //stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.buttonWidth = 192+64; //original size + 1/3 of the size
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
         this.background = this.assetHandler.getTexture(SpriteType.MENU_BACKGROUND);
-        this.startButton = new Image(new TextureRegionDrawable(assetHandler.getTexture("StateImages/start.png")));
+        this.startButton = new Image(new TextureRegion(assetHandler.getTexture(SpriteType.TEST_START)));
 
         setStartButton();
     }

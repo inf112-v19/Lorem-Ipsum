@@ -14,6 +14,7 @@ import inf112.skeleton.app.GameMechanics.Tiles.Tile;
  * This class handles all the sprites used in the game
  */
 public final class AssetHandler {
+    private TextureRegion test_start;
 
 	private Texture texture;
 
@@ -97,10 +98,16 @@ public final class AssetHandler {
 		manager.load("StateImages/start.png", Texture.class);
 		manager.load("StateImages/tempBackground.jpg", Texture.class);
 
+
+
         //manager.load("", Texture.class);
 
 		manager.update();
 		manager.finishLoading();
+
+        this.texture = manager.get("StateImages/start.png", Texture.class);
+        this.test_start = new TextureRegion(texture);
+        this.test_start.flip(false, true);
 
 		this.texture = manager.get("RoboRallyTiles.png", Texture.class);
 		this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
@@ -140,7 +147,7 @@ public final class AssetHandler {
 
 		this.texture = manager.get("StateImages/tempBackground.jpg", Texture.class);
 		this.menuBackground = new TextureRegion(texture);
-		//this.menuBackground.flip(false, true);
+		this.menuBackground.flip(false, true);
 
 		this.texture = manager.get("StateImages/start.png", Texture.class);
 		this.menuPlayButton = new TextureRegion(texture);
@@ -164,7 +171,6 @@ public final class AssetHandler {
 		this.texture = manager.get("SpawnTile.png", Texture.class);
 		this.spawnTile = new TextureRegion(this.texture);
 		this.spawnTile.flip(false, true);
-
 
 	}
 
@@ -193,6 +199,8 @@ public final class AssetHandler {
 			return spriteSheet[spriteType.getY()][spriteType.getX()];
 		}
 		switch (spriteType) {
+            case TEST_START:
+                return test_start;
 			case BACKWARD_1:
 				return backUpSprite;
 			case FORWARD_1:
