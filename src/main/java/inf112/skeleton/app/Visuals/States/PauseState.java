@@ -14,8 +14,6 @@ import inf112.skeleton.app.Visuals.RoboRally;
 
 
 public class PauseState extends State{
-    AssetHandler assetHandler;
-
     //boolean
     private boolean mainMenu;
     private boolean resume;
@@ -30,7 +28,6 @@ public class PauseState extends State{
 
     public PauseState(GameStateManager gsm) {
         super(gsm);
-        this.assetHandler = new AssetHandler();
 
         //boolean
         this.mainMenu = false;
@@ -38,9 +35,9 @@ public class PauseState extends State{
         this.exit = false;
         this.start = false;
 
-        this.resumeButton = new Image(new TextureRegionDrawable(new Texture("StateImages/resume.png")));
-        this.mainMenuButton = new Image(new TextureRegionDrawable(new Texture("StateImages/mainMenu.png")));
-        this.exitButton = new Image(new TextureRegionDrawable(new Texture("StateImages/exit.png")));
+        this.resumeButton = new Image(assetHandler.getTextureRegion("StateImages/resume.png"));
+        this.mainMenuButton = new Image(assetHandler.getTextureRegion("StateImages/mainMenu.png"));
+        this.exitButton = new Image(assetHandler.getTextureRegion("StateImages/exit.png"));
         setResume();
         setMainMenu();
         setExit();
@@ -48,21 +45,21 @@ public class PauseState extends State{
 
     private void setResume() {
         this.resumeButton.setSize(191, 49);
-        this.resumeButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*3));
+        this.resumeButton.setPosition((RoboRally.WIDTH/2)-(191/2), 49*3);
         this.stage.addActor(this.resumeButton);
         clickable(this.resumeButton, "resume");
     }
 
     private void setMainMenu() {
         this.mainMenuButton.setSize(191, 49);
-        this.mainMenuButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*5));
+        this.mainMenuButton.setPosition((RoboRally.WIDTH/2)-(191/2), 49*5);
         this.stage.addActor(this.mainMenuButton);
         clickable(this.mainMenuButton, "mainMenu");
     }
 
     private void setExit() {
         this.exitButton.setSize(191, 49);
-        this.exitButton.setPosition((RoboRally.WIDTH/2)-(191/2), RoboRally.HEIGHT-(49*7));
+        this.exitButton.setPosition((RoboRally.WIDTH/2)-(191/2), 49*7);
         this.stage.addActor(this.exitButton);
         clickable(this.exitButton, "exit");
     }
@@ -82,7 +79,7 @@ public class PauseState extends State{
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(this.stage);
+        Gdx.input.setInputProcessor(super.stage);
     }
 
     @Override
