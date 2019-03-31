@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,7 +26,11 @@ public abstract class State {
     protected abstract void handleInput();
 
     //take in a delta time, difference between one frame window and the next frame window
-    public abstract void update(float dt); //TODO - handle the dt here so that other states dont need to handle it
+    public abstract void update(float dt); /*{
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            this.gsm.push(new PauseState(this.gsm));
+        }*/ //TODO - handle the dt here so that other states dont need to handle it
 
     // spritebatch is contaonter for everyhting we need to render to the screen texture and all that, renders everything to the screen in a big blob
     public void render() {
