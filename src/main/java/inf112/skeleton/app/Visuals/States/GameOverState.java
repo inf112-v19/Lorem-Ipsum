@@ -11,11 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public class GameOverState extends State {
-    private AssetHandler assetHandler;
 
     private Stage stage;
 
@@ -29,7 +27,6 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -84,7 +81,7 @@ public class GameOverState extends State {
 
     @Override
     public void dispose() {
-        this.assetHandler.dispose();
+        super.assetHandler.dispose();
         //this.stage.dispose();
     }
 

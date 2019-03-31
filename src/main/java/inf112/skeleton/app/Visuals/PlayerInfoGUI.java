@@ -22,11 +22,11 @@ public class PlayerInfoGUI {
     private Player[] players;
     private Batch batch;
 
-    public PlayerInfoGUI(Board board, Batch batch, Stage stage) {
+    public PlayerInfoGUI(Board board, Batch batch, Stage stage, AssetHandler assetHandler) {
         this.batch = batch;
         this.stage = stage;
 
-        assetHandler = new AssetHandler();
+        this.assetHandler = assetHandler;
 
         players = board.getAllPlayers();
         playerNames = new String[players.length];
@@ -68,7 +68,6 @@ public class PlayerInfoGUI {
         for (BitmapFont font : fonts) {
             font.dispose();
         }
-        assetHandler.dispose();
         texture.dispose();
     }
 

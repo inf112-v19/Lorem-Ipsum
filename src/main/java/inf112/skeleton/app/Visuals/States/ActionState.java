@@ -12,91 +12,91 @@ import inf112.skeleton.app.Visuals.PlayerInfoGUI;
 
 public class ActionState extends State {
 
-    private Board board;
-    private boolean boardCanPlayCards;
-    private float updateCount;
-    private static final float UPDATE_LIMIT = 1;
-    private SpriteBatch batch;
-    private BoardGUI boardGUI;
-    private PlayerInfoGUI infoGUI;
-    private PendingCardsGUI pendingCardsGUI;
-    private CardManager cardManager;
+	private Board board;
+	private boolean boardCanPlayCards;
+	private float updateCount;
+	private static final float UPDATE_LIMIT = 1;
+	private SpriteBatch batch;
+	private BoardGUI boardGUI;
+	private PlayerInfoGUI infoGUI;
+	private PendingCardsGUI pendingCardsGUI;
+	private CardManager cardManager;
 
-    public ActionState(GameStateManager gsm, Board board, CardManager cardManager) {
-        super(gsm);
-        this.board = board;
-        this.batch = new SpriteBatch();
-        this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm);
-        this.updateCount = 0;
-        this.boardCanPlayCards = true;
-        this.infoGUI = new PlayerInfoGUI(board, batch, stage);
-        this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage);
-        this.cardManager = cardManager;
-    }
+	public ActionState(GameStateManager gsm, Board board, CardManager cardManager) {
+		super(gsm);
+		this.board = board;
+		this.batch = new SpriteBatch();
+		this.batch.setProjectionMatrix(camera.combined);
+		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, super.assetHandler);
+		this.updateCount = 0;
+		this.boardCanPlayCards = true;
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
+		this.cardManager = cardManager;
+	}
 
-    @Override
-    protected void handleInput() {
+	@Override
+	protected void handleInput() {
 
-    }
+	}
 
-    @Override
-    public void update(float dt) {
-        updateCount += dt;
-        if (updateCount > UPDATE_LIMIT) {
-            updateCount = 0;
-            System.out.println("update");
+	@Override
+	public void update(float dt) {
+		updateCount += dt;
+		if (updateCount > UPDATE_LIMIT){
+			updateCount = 0;
+			System.out.println("update");
 
-            infoGUI.update();
-            pendingCardsGUI.update();
-            boardGUI.hideDeadPlayers();
-            boardGUI.showRevivedPlayers();
+			infoGUI.update();
+			pendingCardsGUI.update();
+			boardGUI.hideDeadPlayers();
+			boardGUI.showRevivedPlayers();
 
-            if (board.isGameOver()) {
-                System.out.println("Setting GameOverState");
-                gsm.set(new GameOverState(gsm));
-                dispose();
-                return;
-            }
+			if (board.isGameOver()){
+				System.out.println("Setting GameOverState");
+				gsm.set(new GameOverState(gsm));
+				dispose();
+				return;
+			}
 
-            if (boardCanPlayCards) {
-                boardCanPlayCards = board.doNextAction();
-                boardGUI.update();
-            } else {
-                System.out.println("setting CardState");
-                gsm.set(new CardState(gsm, board, cardManager));
-                dispose();
-            }
-            pendingCardsGUI.update();
-        }
-    }
+			if(boardCanPlayCards){
+				boardCanPlayCards = board.doNextAction();
+				boardGUI.update();
+			}else{
+				System.out.println("setting CardState");
+				gsm.set(new CardState(gsm, board, cardManager));
+				dispose();
+			}
+			pendingCardsGUI.update();
+		}
+	}
 
-    @Override
-    public void render() {
-        //boardGUI.render();
-        super.render();
-        infoGUI.render();
-        pendingCardsGUI.render();
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            System.out.println("PAUSE!");
-            this.gsm.push(new PauseState(this.gsm));
-        }
-    }
+	@Override
+	public void render() {
+		//boardGUI.render();
+		super.render();
+		infoGUI.render();
+		pendingCardsGUI.render();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm));
+		}
+	}
 
-    @Override
-    public void dispose() {
-        boardGUI.dispose();
-        super.dispose();
-        batch.dispose();
-        infoGUI.dispose();
-        pendingCardsGUI.dispose();
+	@Override
+	public void dispose() {
+		System.out.println("BUMP ACTION");
+		super.dispose();
+		batch.dispose();
+		infoGUI.dispose();
+		pendingCardsGUI.dispose();
 
-    }
+	}
 
-    @Override
-    public void resize() {
-        super.resize();
-        //boardGUI.resize();
-        infoGUI.resize();
-    }
+	@Override
+	public void resize() {
+		super.resize();
+		//boardGUI.resize();
+		infoGUI.resize();
+	}
 }

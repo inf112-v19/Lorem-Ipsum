@@ -10,11 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class MenuState extends State {
-    private AssetHandler assetHandler;
     private TextureRegion background;
     private Image startButton;
 
@@ -26,7 +24,6 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -84,7 +81,6 @@ public class MenuState extends State {
 
     @Override
     public void dispose() {
-        this.assetHandler.dispose();
     }
 
     @Override
