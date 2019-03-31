@@ -297,7 +297,9 @@ public class CardHandGUI {
         submit.clearListeners();
         clear.clearListeners();
         clearOldCards();
-        texture.dispose();
+        if (texture != null){
+            texture.dispose();
+        }
         font.dispose();
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();

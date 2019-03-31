@@ -26,13 +26,11 @@ public class PlayerNameState extends State{
 	private Board board;
 	private Queue<Player> players;
 	private TextArea[] textAreas;
-	private Stage tempStage;
 	private TextureRegionDrawable background;
 	private Table table;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers) {
 		super(gsm);
-		this.tempStage = new Stage();
 		this.uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
 		this.numPlayers = numPlayers;
 		this.board = board;
@@ -44,11 +42,11 @@ public class PlayerNameState extends State{
 		this.table.setBackground(background);
 		this.table.defaults().space(0,40,40,40);
 
-		Gdx.input.setInputProcessor(tempStage);
+		Gdx.input.setInputProcessor(stage);
 		creatTextFields();
 		creatSubmitButton();
 
-		tempStage.addActor(table);
+		stage.addActor(table);
 	}
 
 	private void creatTextFields(){
@@ -57,7 +55,10 @@ public class PlayerNameState extends State{
 
 			Label label = new Label("Player " +(i+1), uiSkin);
 			label.setFontScale(1.5f);
-			table.add(label).width(100);
+
+			Text text = new Text("Player " +(i+1), stage);
+
+			table.add(text).width(100);
 			table.add(textAreas[i]).width(150);
 			table.row();
 		}
@@ -84,8 +85,7 @@ public class PlayerNameState extends State{
 
 	@Override
 	public void render(){
-		tempStage.act();
-		tempStage.draw();
+		super.render();
 	}
 
 

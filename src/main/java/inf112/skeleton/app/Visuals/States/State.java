@@ -19,6 +19,7 @@ public abstract class State {
     protected State (GameStateManager gsm) {
         this.camera.setToOrtho(true, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.gsm = gsm;
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     protected abstract void handleInput();
@@ -34,6 +35,7 @@ public abstract class State {
 
     //dispose of our texture and other media when we are done using them, to prevent any kinds of memory leaks
     public void dispose(){
+        this.assetHandler.dispose();
         this.stage.dispose();
     }
 

@@ -39,6 +39,7 @@ public class RoboRally extends ApplicationAdapter {
 
     @Override
     public void dispose () {
+        gsm.dispose();
     }
 
 

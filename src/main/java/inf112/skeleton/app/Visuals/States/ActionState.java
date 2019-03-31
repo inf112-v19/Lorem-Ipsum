@@ -86,7 +86,6 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
-		System.out.println("BUMP ACTION");
 		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();

@@ -113,11 +113,11 @@ public class ChooseBoardState extends State {
     @Override
     public void render() {
         super.render();
-        stage.act();
-        stage.getBatch().begin();
-        stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        stage.getBatch().end();
-        stage.draw();
+        this.stage.act();
+        this.stage.getBatch().begin();
+        this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        this.stage.getBatch().end();
+        this.stage.draw();
 
     }
 
@@ -129,6 +129,6 @@ public class ChooseBoardState extends State {
     @Override
     public void resize() {
         super.resize();
-        stage.getBatch().setProjectionMatrix(camera.combined);
+        this.stage.getBatch().setProjectionMatrix(camera.combined);
     }
 }
