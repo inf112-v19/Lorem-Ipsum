@@ -22,9 +22,6 @@ public final class AssetHandler {
 	private final TextureRegion cardGuiSubmitButton;
 	private final TextureRegion cardBar;
 
-	//Div Sprites
-	private final TextureRegion tapToStartSprite;
-
 	//Player spritesheet
 	private final TextureRegion[][] redtankSheet;
 
@@ -61,7 +58,6 @@ public final class AssetHandler {
         manager.load("CardImages/Move3.png", Texture.class);
         manager.load("CardImages/RightTurn.png", Texture.class);
         manager.load("CardImages/U-Turn.png", Texture.class);
-        manager.load("StateImages/tapToStart.gif", Texture.class);
         manager.load("StateImages/tempBackground.jpg", Texture.class);
         manager.load("StateImages/start.png", Texture.class);
         manager.load("StateImages/secondBackground.png", Texture.class);
@@ -80,7 +76,26 @@ public final class AssetHandler {
         manager.load("healthbar.png", Texture.class);
         manager.load("heart.png", Texture.class);
 
-        manager.load("StateImages/start.png", Texture.class);
+		//stateimages
+        manager.load("StateImages/board.png", Texture.class);
+		manager.load("StateImages/board1.png", Texture.class);
+		manager.load("StateImages/board2.png", Texture.class);
+		manager.load("StateImages/board3.png", Texture.class);
+		manager.load("StateImages/chooseBoardType.png", Texture.class);
+		manager.load("StateImages/choosePlayerAmount.png", Texture.class);
+		manager.load("StateImages/exit.png", Texture.class);
+		manager.load("StateImages/gameOver.png", Texture.class);
+		manager.load("StateImages/mainMenu.png", Texture.class);
+		manager.load("StateImages/no1.png", Texture.class);
+		manager.load("StateImages/no2.png", Texture.class);
+		manager.load("StateImages/no3.png", Texture.class);
+		manager.load("StateImages/no4.png", Texture.class);
+		manager.load("StateImages/no5.png", Texture.class);
+		manager.load("StateImages/no6.png", Texture.class);
+		manager.load("StateImages/resume.png", Texture.class);
+		manager.load("StateImages/secondBackground.png", Texture.class);
+		manager.load("StateImages/start.png", Texture.class);
+		manager.load("StateImages/tempBackground.jpg", Texture.class);
 
         //manager.load("", Texture.class);
 
@@ -122,10 +137,6 @@ public final class AssetHandler {
 		this.texture = manager.get("CardImages/U-Turn.png", Texture.class);
 		this.uTurnSprite = new TextureRegion(texture);
 		this.uTurnSprite.flip(false, true);
-
-		this.texture = manager.get("StateImages/tapToStart.gif", Texture.class);
-		this.tapToStartSprite = new TextureRegion(texture);
-		//this.tapToStartSprite.flip(false, true);
 
 		this.texture = manager.get("StateImages/tempBackground.jpg", Texture.class);
 		this.menuBackground = new TextureRegion(texture);
