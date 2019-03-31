@@ -28,7 +28,7 @@ public class GameOverState extends State {
         //this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
-        this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOver.png")));
+        this.gameOverImage = new Image(assetHandler.getTextureRegion("StateImages/gameOver.png"));
 
         //label
         this.table = new Table();
