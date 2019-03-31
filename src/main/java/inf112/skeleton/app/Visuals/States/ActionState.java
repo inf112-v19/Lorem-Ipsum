@@ -85,9 +85,11 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
-		//boardGUI.dispose();
+		System.out.println("BUMP ACTION");
+		boardGUI.dispose();
 		super.dispose();
 		batch.dispose();
+		infoGUI.dispose();
 		pendingCardsGUI.dispose();
 
 	}

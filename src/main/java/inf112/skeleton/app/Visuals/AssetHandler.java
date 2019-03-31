@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
@@ -12,7 +13,7 @@ import javax.xml.soap.Text;
 /**
  * This class handles all the sprites used in the game
  */
-public final class SpriteSheet {
+public final class AssetHandler {
 
     private Texture texture;
 
@@ -47,73 +48,108 @@ public final class SpriteSheet {
 
     private final TextureRegion spawnTile;
 
+    private AssetManager manager;
 
-    public SpriteSheet() {
+    public AssetHandler() {
+        manager = new AssetManager();
+        manager.load("RoboRallyTiles.png", Texture.class);
+        manager.load("Player/redtank.png", Texture.class);
+        manager.load("CardImages/BackUp.png", Texture.class);
+        manager.load("CardImages/LeftTurn.png", Texture.class);
+        manager.load("CardImages/Move1.png", Texture.class);
+        manager.load("CardImages/Move2.png", Texture.class);
+        manager.load("CardImages/Move3.png", Texture.class);
+        manager.load("CardImages/RightTurn.png", Texture.class);
+        manager.load("CardImages/U-Turn.png", Texture.class);
+        manager.load("StateImages/tapToStart.gif", Texture.class);
+        manager.load("StateImages/tempBackground.jpg", Texture.class);
+        manager.load("StateImages/start.png", Texture.class);
+        manager.load("StateImages/secondBackground.png", Texture.class);
+        manager.load("clear.png", Texture.class);
+        manager.load("submit.png", Texture.class);
+        manager.load("CardImages/cardBar.png", Texture.class);
+        manager.load("SpawnTile.png", Texture.class);
+        manager.load("clear_press.png", Texture.class);
+        manager.load("submit_press.png", Texture.class);
+        manager.load("lock.png", Texture.class);
+        manager.load("CardImages/button1.png", Texture.class);
+        manager.load("CardImages/button2.png", Texture.class);
+        manager.load("CardImages/button3.png", Texture.class);
+        manager.load("CardImages/button4.png", Texture.class);
+        manager.load("CardImages/button5.png", Texture.class);
+        manager.load("healthbar.png", Texture.class);
+        manager.load("heart.png", Texture.class);
+        //manager.load("", Texture.class);
 
-        this.texture = new Texture("RoboRallyTiles.png");
+
+        manager.update();
+        manager.finishLoading();
+
+
+        this.texture = manager.get("RoboRallyTiles.png", Texture.class);
         this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
         flip(this.spriteSheet);
 
-        this.texture = new Texture("Player/redtank.png");
+        this.texture = manager.get("Player/redtank.png", Texture.class);
         this.redtankSheet = new TextureRegion(this.texture, 224, 128).split(224 / 7, 128 / 4);
         flip(this.redtankSheet);
 
-        this.texture = new Texture("CardImages/BackUp.png");
+        this.texture = manager.get("CardImages/BackUp.png", Texture.class);
         this.backUpSprite = new TextureRegion(texture);
         this.backUpSprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/LeftTurn.png");
+        this.texture = manager.get("CardImages/LeftTurn.png", Texture.class);
         this.leftTurnSprite = new TextureRegion(texture);
         this.leftTurnSprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/Move1.png");
+        this.texture = manager.get("CardImages/Move1.png", Texture.class);
         this.move1Sprite = new TextureRegion(texture);
         this.move1Sprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/Move2.png");
+        this.texture = manager.get("CardImages/Move2.png", Texture.class);
         this.move2Sprite = new TextureRegion(texture);
         this.move2Sprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/Move3.png");
+        this.texture = manager.get("CardImages/Move3.png", Texture.class);
         this.move3Sprite = new TextureRegion(texture);
         this.move3Sprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/RightTurn.png");
+        this.texture = manager.get("CardImages/RightTurn.png", Texture.class);
         this.rightTurnSprite = new TextureRegion(texture);
         this.rightTurnSprite.flip(false, true);
 
-        this.texture = new Texture("CardImages/U-Turn.png");
+        this.texture = manager.get("CardImages/U-Turn.png", Texture.class);
         this.uTurnSprite = new TextureRegion(texture);
         this.uTurnSprite.flip(false, true);
 
-        this.texture = new Texture("StateImages/tapToStart.gif");
+        this.texture = manager.get("StateImages/tapToStart.gif", Texture.class);
         this.tapToStartSprite = new TextureRegion(texture);
         //this.tapToStartSprite.flip(false, true);
 
-        this.texture = new Texture("StateImages/tempBackground.jpg");
+        this.texture = manager.get("StateImages/tempBackground.jpg", Texture.class);
         this.menuBackground = new TextureRegion(texture);
         //this.menuBackground.flip(false, true);
 
-        this.texture = new Texture("StateImages/start.png");
+        this.texture = manager.get("StateImages/start.png", Texture.class);
         this.menuPlayButton = new TextureRegion(texture);
         //this.menuPlayButton.flip(false, true);
 
-        this.texture = new Texture("StateImages/secondBackground.png");
+        this.texture = manager.get("StateImages/secondBackground.png", Texture.class);
         this.chooseBackground = new TextureRegion(texture);
 
-        this.texture = new Texture("clear.png");
+        this.texture = manager.get("clear.png", Texture.class);
         this.cardGuiClearButton = new TextureRegion(texture);
         this.cardGuiClearButton.flip(false, true);
 
-        this.texture = new Texture("submit.png");
+        this.texture = manager.get("submit.png", Texture.class);
         this.cardGuiSubmitButton = new TextureRegion(texture);
         this.cardGuiSubmitButton.flip(false, true);
 
-        this.texture = new Texture("CardImages/cardBar.png");
+        this.texture = manager.get("CardImages/cardBar.png", Texture.class);
         this.cardBar = new TextureRegion(texture);
         this.cardBar.flip(false, true);
 
-        this.texture = new Texture("SpawnTile.png");
+        this.texture = manager.get("SpawnTile.png", Texture.class);
         this.spawnTile = new TextureRegion(this.texture);
         this.spawnTile.flip(false,true);
 
@@ -243,7 +279,14 @@ public final class SpriteSheet {
         return findCorrectTexture(gameObject.getSpriteType());
     }
 
+
+    ///NB!!!!!! will crash program if file is not loaded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public Texture getTexture(String filename) {
+        return manager.get(filename, Texture.class);
+    }
+
     public void dispose() {
         this.texture.dispose();
+        manager.dispose();
     }
 }

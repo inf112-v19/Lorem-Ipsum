@@ -36,7 +36,7 @@ public abstract class State {
 
     }
 
-    //dispose of our texture and other media when we are done using them, to prevent any kinds of memory links
+    //dispose of our texture and other media when we are done using them, to prevent any kinds of memory leaks
     public void dispose(){
         this.stage.dispose();
     }

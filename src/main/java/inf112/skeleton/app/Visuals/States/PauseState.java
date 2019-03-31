@@ -1,27 +1,21 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.BoardGUI;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
 
 
 public class PauseState extends State{
+    GameStateManager gsm;
+    AssetHandler assetHandler;
+    //Stage stage;
 
     //boolean
 
@@ -40,7 +34,7 @@ public class PauseState extends State{
 
     public PauseState(GameStateManager gsm) {
         super(gsm);
-        //this.spriteSheet = new SpriteSheet();
+        //this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 

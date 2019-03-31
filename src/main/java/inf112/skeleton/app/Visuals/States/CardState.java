@@ -16,7 +16,6 @@ public class CardState extends State {
     private BoardGUI boardGUI;
     private SpriteBatch batch;
     private Player[] players;
-    private ICardDeck cardDeck;
 
     private CardHandGUI cardHandGUI;
 
@@ -32,8 +31,7 @@ public class CardState extends State {
         this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm);
 
         this.players = board.getAllPlayers();
-        this.cardDeck = new ProgramCardDeck();
-        this.cardDeck.createNewDeck();
+
         this.infoGUI = new PlayerInfoGUI(board, batch, stage);
         this.cardManager = cardManager;
 
@@ -61,7 +59,7 @@ public class CardState extends State {
     public void render() {
         //boardGUI.render();
         super.render();
-        cardHandGUI.render();
+        //cardHandGUI.render();
         infoGUI.render();
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             System.out.println("PAUSE!");
@@ -71,9 +69,12 @@ public class CardState extends State {
 
     @Override
     public void dispose() {
+        super.dispose();
+        System.out.println("BUMP CARD");
         cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
+        boardGUI.dispose();
     }
 
     @Override

@@ -9,14 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
+import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class MenuState extends State {
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
     private TextureRegion background;
     private Image startButton;
 
@@ -28,7 +26,7 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
@@ -36,7 +34,7 @@ public class MenuState extends State {
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
-        this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
+        this.background = this.assetHandler.getTexture(SpriteType.MENU_BACKGROUND);
         this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
 
         setStartButton();
@@ -86,7 +84,7 @@ public class MenuState extends State {
 
     @Override
     public void dispose() {
-        this.spriteSheet.dispose();
+        this.assetHandler.dispose();
     }
 
     @Override
