@@ -1,13 +1,10 @@
 package inf112.skeleton.app.Visuals;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -18,7 +15,7 @@ public class PendingCardsGUI {
 
     private SpriteBatch batch;
     private Board board;
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
     private Stage stage;
 
     private BitmapFont playingCard;
@@ -30,10 +27,10 @@ public class PendingCardsGUI {
     private Player nextPlayer;
     private HashMap<Player, TextureRegion> playerTextures;
 
-    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage) {
+    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage, AssetHandler assetHandler) {
         this.batch = batch;
         this.board = board;
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = assetHandler;
         this.stage = stage;
 
         playingCard = new BitmapFont(true);
@@ -42,7 +39,7 @@ public class PendingCardsGUI {
         playerTextures = new HashMap<>();
         Player[] players = board.getAllPlayers();
         for (int i = 0; i < players.length; i++) {
-            playerTextures.put(players[i], spriteSheet.getTexture(players[i]));
+            playerTextures.put(players[i], assetHandler.getTexture(players[i]));
         }
     }
 
@@ -68,14 +65,14 @@ public class PendingCardsGUI {
     }
 
     private void drawCurrentCard() {
-        TextureRegion card = new TextureRegion(spriteSheet.getTexture(currentCard));
+        TextureRegion card = new TextureRegion(assetHandler.getTexture(currentCard));
         addCardToStage(card, 25);
         TextureRegion player = new TextureRegion(playerTextures.get(currentPlayer));
         addPlayerImageToStage(player, 25);
     }
 
     private void drawNextCard() {
-        TextureRegion card = new TextureRegion(spriteSheet.getTexture(nextCard));
+        TextureRegion card = new TextureRegion(assetHandler.getTexture(nextCard));
         addCardToStage(card, 190);
         TextureRegion player = new TextureRegion(playerTextures.get(nextPlayer));
         addPlayerImageToStage(player, 190);

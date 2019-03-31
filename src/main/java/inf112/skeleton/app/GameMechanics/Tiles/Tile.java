@@ -20,9 +20,6 @@ import java.util.Objects;
 
 public abstract class Tile extends Image implements ITile {
 
-	private final static Texture texture = new Texture("RoboRallyTiles.png");
-	private final static TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
-
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
 	protected Direction direction;
@@ -161,13 +158,6 @@ public abstract class Tile extends Image implements ITile {
 			return true;
 		}
 		return false;
-	}
-
-	public void setDrawable(){
-		TextureRegion textureRegion = new TextureRegion(this.spriteSheet[spriteType.getY()][spriteType.getX()]);
-		textureRegion.flip(false,true);
-		TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
-		setDrawable(drawable);
 	}
 
 }

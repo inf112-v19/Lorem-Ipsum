@@ -29,6 +29,10 @@ public class GameStateManager {
         states.push(state);
     }
 
+    public void dispose(){
+        states.peek().dispose();
+    }
+
     public void update(float dt) {
         states.peek().update(dt);
     }

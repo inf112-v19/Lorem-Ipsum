@@ -13,26 +13,23 @@ import java.util.Objects;
 
 public abstract class GameObject extends Image implements IGameObject {
 
-	private static final Texture texture = new Texture("RoboRallyTiles.png");
-	private static final TextureRegion[][] spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
-
 	protected Direction dir;
 	protected SpriteType spriteType;
 
-    public GameObject(Direction dir){
-        this.dir = dir;
-    }
+	public GameObject(Direction dir) {
+		this.dir = dir;
+	}
 
-    @Override
-    public Position getPosition() {
-        //return position;
-        return null;
-    }
-
-
+	@Override
+	public Position getPosition() {
+		//return position;
+		return null;
+	}
+	
     @Override
     public void place(Position position) {
     }
+
 
 	@Override
 	public SpriteType getSpriteType() {
@@ -49,25 +46,19 @@ public abstract class GameObject extends Image implements IGameObject {
 		return Objects.hash(dir, spriteType);
 	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null) return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
 
-        if(this.hashCode() == obj.hashCode()) return true;
+		if (this.hashCode() == obj.hashCode()) return true;
 
-    	if (!obj.getClass().isInstance(this)) {
-    		return false;
+		if (!obj.getClass().isInstance(this)) {
+			return false;
 		}
 
 		GameObject gameObject = (GameObject) obj;
-    	return gameObject.getDirection().equals(this.dir);
-    }
-
-	public void setDrawable(){
-    	TextureRegion textureRegion = new TextureRegion(this.spriteSheet[spriteType.getY()][spriteType.getX()]);
-    	textureRegion.flip(false,true);
-		TextureRegionDrawable drawable = new TextureRegionDrawable(textureRegion);
-		setDrawable(drawable);
+		return gameObject.getDirection().equals(this.dir);
 	}
+
 
 }

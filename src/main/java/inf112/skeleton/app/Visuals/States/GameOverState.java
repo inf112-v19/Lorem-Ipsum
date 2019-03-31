@@ -5,22 +5,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
-import inf112.skeleton.app.Visuals.SpriteType;
 
 public class GameOverState extends State {
-    private SpriteSheet spriteSheet;
-
-    private Stage stage;
 
     //image Game Over
     private Image gameOverImage;
@@ -32,26 +25,24 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        this.spriteSheet = new SpriteSheet();
-        this.stage = new Stage(new ScreenViewport());
-        this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
-        this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOverSmall.png")));
+        this.gameOverImage = new Image(assetHandler.getTextureRegion("StateImages/gameOver.png"));
 
         //label
         this.table = new Table();
-        this.font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
-        gameOverImage();
         playAgainLabel();
+        gameOverImage();
+
+        super.stage.addActor(this.table);
+
     }
 
     private void gameOverImage() {
-        this.gameOverImage.setSize(529, 102);
-        this.gameOverImage.setPosition((RoboRally.WIDTH / 2)-(520/2), RoboRally.HEIGHT-(102*2)-51);
-        this.stage.addActor(this.gameOverImage);
+        this.table.add(gameOverImage);
         System.out.println("Game Over!");
     }
 
@@ -59,8 +50,7 @@ public class GameOverState extends State {
         this.table.center();
         this.table.setFillParent(true);
         this.table.add(this.playAgainLabel).expandX().padTop(10f);
-        this.stage.addActor(this.table);
-
+        this.table.row();
     }
 
     @Override
@@ -79,27 +69,19 @@ public class GameOverState extends State {
 
     @Override
     public void render() {
-        /*TextureRegion textBar = new TextureRegion(new Texture("StateImages/.png"));
-        //TextureRegion background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.stage.act();
-        this.stage.getBatch().begin();
-        this.stage.getBatch().draw(textBar, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        this.stage.getBatch().end();
-*/
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.stage.draw();
+        super.render();
+        //Gdx.gl.glClearColor(0, 0, 0, 1);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //this.stage.draw();
     }
 
     @Override
     public void dispose() {
-        this.spriteSheet.dispose();
-        //this.stage.dispose();
+        super.dispose();
     }
 
     @Override
     public void resize() {
         super.resize();
-        this.stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }

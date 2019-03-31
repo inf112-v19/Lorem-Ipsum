@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.BoardGUI;
@@ -25,11 +27,11 @@ public class ActionState extends State {
 		this.board = board;
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm);
+		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, super.assetHandler);
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch, stage);
-		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage);
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
 		this.cardManager = cardManager;
 	}
 
@@ -40,6 +42,7 @@ public class ActionState extends State {
 
 	@Override
 	public void update(float dt) {
+		//super.update(dt);
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT){
 			updateCount = 0;
@@ -50,6 +53,12 @@ public class ActionState extends State {
 			boardGUI.hideDeadPlayers();
 			boardGUI.showRevivedPlayers();
 
+			if (board.isGameOver()){
+				System.out.println("Setting GameOverState");
+				gsm.set(new GameOverState(gsm));
+				dispose();
+				return;
+			}
 
 			if(boardCanPlayCards){
 				boardCanPlayCards = board.doNextAction();
@@ -69,13 +78,17 @@ public class ActionState extends State {
 		super.render();
 		infoGUI.render();
 		pendingCardsGUI.render();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm));
+		}
 	}
 
 	@Override
 	public void dispose() {
-		//boardGUI.dispose();
 		super.dispose();
 		batch.dispose();
+		infoGUI.dispose();
 		pendingCardsGUI.dispose();
 
 	}

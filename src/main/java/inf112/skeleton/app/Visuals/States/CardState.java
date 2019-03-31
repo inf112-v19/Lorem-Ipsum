@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -14,7 +16,6 @@ public class CardState extends State {
     private BoardGUI boardGUI;
     private SpriteBatch batch;
     private Player[] players;
-    private ICardDeck cardDeck;
 
     private CardHandGUI cardHandGUI;
 
@@ -27,15 +28,14 @@ public class CardState extends State {
         this.board = board;
         this.batch = new SpriteBatch();
         this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
 
         this.players = board.getAllPlayers();
-        this.cardDeck = new ProgramCardDeck();
-        this.cardDeck.createNewDeck();
-        this.infoGUI = new PlayerInfoGUI(board, batch, stage);
+
+        this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
         this.cardManager = cardManager;
 
-        this.cardHandGUI = new CardHandGUI(cardManager, batch, stage);
+        this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
     }
 
     @Override
@@ -45,12 +45,13 @@ public class CardState extends State {
 
     @Override
     public void update(float dt) {
+        //super.update(dt);
         for (Player player : players) {
             if (!player.isReady()) {
                 return;
             }
         }
-		board.initRound();
+        board.initRound();
         gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
     }
@@ -59,12 +60,17 @@ public class CardState extends State {
     public void render() {
         //boardGUI.render();
         super.render();
-        cardHandGUI.render();
+        //cardHandGUI.render();
         infoGUI.render();
+        /*if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            this.gsm.push(new PauseState(this.gsm));
+        }*/
     }
 
     @Override
     public void dispose() {
+        super.dispose();
         cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();

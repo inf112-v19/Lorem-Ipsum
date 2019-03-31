@@ -21,7 +21,7 @@ public class BoardGUI {
 	private GameStateManager gsm;
 
     private Board board;
-	private SpriteSheet spriteSheet;
+	private AssetHandler assetHandler;
 
 	private Stage stage;
 	private FitViewport fitViewport;
@@ -36,13 +36,13 @@ public class BoardGUI {
 
 	private static final float MOVE_DURATION = 1;
 
-    public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm) {
+    public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm, AssetHandler assetHandler) {
     	this.gsm = gsm;
 
     	this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
 
-        this.spriteSheet = new SpriteSheet();
+        this.assetHandler = assetHandler;
         this.board = board;
 
         this.boardWidth = board.getWidth();
@@ -66,7 +66,7 @@ public class BoardGUI {
     	for (Player player : allPlayers) {
 
     		player.setScaling(fitViewport.getScaling());
-    		player.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(player)));
+    		player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
 
 			player.setSize(tilesize,tilesize);
 			player.setOrigin(player.getWidth()/2, player.getHeight()/2);
@@ -80,8 +80,7 @@ public class BoardGUI {
 	}
 
 	private void addGameObjectToStage(GameObject gameObject, float x, float y){
-		//gameObject.setDrawable(new TextureRegionDrawable(spriteSheet.getTexture(gameObject)));
-		gameObject.setDrawable();
+		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
 		gameObject.setSize(tilesize,tilesize);
 		gameObject.setPosition(x,y);
 		stage.addActor(gameObject);
@@ -89,7 +88,7 @@ public class BoardGUI {
 
 
     private void addTilesToStage(final Tile tile, int x, int y){
-		tile.setDrawable();
+		tile.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(tile)));
 		tile.setSize(tilesize,tilesize);
 		tile.setPosition(x,y);
 		//tile.addListener(createListener(tile));
@@ -221,11 +220,6 @@ public class BoardGUI {
 
 			}
 		}
-	}
-
-
-    public void dispose(){
-    	//stage.dispose();
 	}
 
 	public int getxOffset(){

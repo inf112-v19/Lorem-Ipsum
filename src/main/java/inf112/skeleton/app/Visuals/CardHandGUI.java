@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
-import org.lwjgl.Sys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,8 @@ public class CardHandGUI {
     private SpriteBatch batch;
     private Stage stage;
 
-    private SpriteSheet spriteSheet;
+    private AssetHandler assetHandler;
+    private Texture texture;
 
     private BitmapFont font;
     private String playerTurn;
@@ -48,26 +47,24 @@ public class CardHandGUI {
     private Image infoBar;
     private Image[] numberLabels;
 
-    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage) {
+    public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
         this.batch = batch;
         this.stage = stage;
 
-        spriteSheet = new SpriteSheet();
+        this.assetHandler = assetHandler;
         font = new BitmapFont(true);
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
         numberLabels = new Image[5];
 
-
-        clear = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_CLEAR)));
-        submit = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_SUBMIT)));
+        clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
+        submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
         createSubmitButton();
         createClearButton();
         cardManager.newRound();
         selectCards();
-
     }
 
     private void selectCards() {
@@ -95,7 +92,7 @@ public class CardHandGUI {
         }
 
         for (int i = 0; i < cards.size(); i++) {
-            displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(spriteSheet.getTexture(cards.get(i))));
+            displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(cards.get(i))));
             displayedCardsArr[i].setSize(97, 135);
             displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
@@ -133,12 +130,13 @@ public class CardHandGUI {
             });
         }
 
-        infoBar = new Image(new TextureRegionDrawable(spriteSheet.getTexture(SpriteType.CARD_BAR)));
+        infoBar = new Image(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_BAR)));
         infoBar.setSize(485, 30);
         infoBar.setPosition(0, Gdx.graphics.getHeight() - 165);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
         renderPriorities();
+        render();
     }
 
     private void clearLabels() {
@@ -154,6 +152,7 @@ public class CardHandGUI {
             if (button != null) {
                 button.clearListeners();
                 button.remove();
+                button.clear();
             }
         }
     }
@@ -195,7 +194,8 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        TextureRegion numberTexture = new TextureRegion(new Texture("CardImages/" + filename + ".png"));
+        texture = assetHandler.getTexture("CardImages/" + filename + ".png");
+        TextureRegion numberTexture = new TextureRegion(texture);
         numberTexture.flip(false, true);
         numberLabels[cardPtr] = new Image(numberTexture);
         numberLabels[cardPtr].setSize(97, 30);
@@ -205,7 +205,8 @@ public class CardHandGUI {
     }
 
     private void drawLockImage(int xPos) {
-        TextureRegion lockTex = new TextureRegion(new Texture("lock.png"));
+        texture = assetHandler.getTexture("lock.png");
+        TextureRegion lockTex = new TextureRegion(texture);
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
@@ -223,8 +224,6 @@ public class CardHandGUI {
     }
 
     public void render() {
-        Gdx.input.setInputProcessor(stage);
-        stage.act(Gdx.graphics.getDeltaTime());
         batch.begin();
         font.draw(batch, playerTurn, 10, 10);
         batch.end();
@@ -249,7 +248,7 @@ public class CardHandGUI {
     private void createSubmitButton() {
         submit.setSize(95, 32);
         submit.setPosition(873, Gdx.graphics.getHeight() - 100);
-        TextureRegion pressed = new TextureRegion(new Texture("submit_press.png"));
+        TextureRegion pressed = new TextureRegion(assetHandler.getTexture("submit_press.png"));
         pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(submit);
@@ -276,7 +275,7 @@ public class CardHandGUI {
     private void createClearButton() {
         clear.setSize(76, 32);
         clear.setPosition(873, Gdx.graphics.getHeight() - 60);
-        TextureRegion pressed = new TextureRegion(new Texture("clear_press.png"));
+        TextureRegion pressed = new TextureRegion(assetHandler.getTexture("clear_press.png"));
         pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(clear);
@@ -296,6 +295,12 @@ public class CardHandGUI {
         submit.clearListeners();
         clear.clearListeners();
         clearOldCards();
+        if (texture != null){
+            texture.dispose();
+        }
+        font.dispose();
+        for (BitmapFont fonts : cardPriorities) {
+            fonts.dispose();
+        }
     }
-
 }

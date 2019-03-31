@@ -1,51 +1,37 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteSheet;
-import inf112.skeleton.app.Visuals.SpriteType;
 
 public class MenuState extends State {
-    private SpriteSheet spriteSheet;
     private TextureRegion background;
     private Image startButton;
 
-    private Stage stage;
-    private final int buttonWidth;
-    private final int buttonHeight;
+    private int buttonWidth;
+    private int buttonHeight;
 
     private boolean start;
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        this.spriteSheet = new SpriteSheet();
-        this.stage = new Stage(new ScreenViewport());
-        this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.buttonWidth = 192+64; //original size + 1/3 of the size
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
-        this.background = this.spriteSheet.getTexture(SpriteType.MENU_BACKGROUND);
-        this.startButton = new Image(new TextureRegionDrawable(new Texture("StateImages/start.png")));
+        this.background = super.assetHandler.getTextureRegion("StateImages/tempBackground.jpg");
+        this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
 
         setStartButton();
     }
 
     private void setStartButton() {
         this.startButton.setSize(buttonWidth, buttonHeight);
-        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), RoboRally.HEIGHT-(this.buttonHeight*2));
-        this.stage.addActor(this.startButton);
+        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), this.buttonHeight*2);
+        stage.addActor(this.startButton);
 
         clickable(this.startButton);
     }
@@ -59,7 +45,6 @@ public class MenuState extends State {
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
@@ -77,22 +62,18 @@ public class MenuState extends State {
 
     @Override
     public void render() {
-        this.stage.act();
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
-        this.stage.draw();
+		super.render();
     }
 
     @Override
     public void dispose() {
-        this.spriteSheet.dispose();
     }
 
     @Override
     public void resize() {
         super.resize();
-        //this.stage.getBatch().setProjectionMatrix(camera.combined);
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }

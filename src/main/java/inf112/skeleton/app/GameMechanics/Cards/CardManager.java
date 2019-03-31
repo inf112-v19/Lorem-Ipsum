@@ -166,5 +166,9 @@ public class CardManager {
         }
     }
 
+    public int getCardDeckSize() {
+        return cardDeck.numbersOfCardsLeft();
+    }
+
 }
 
