@@ -58,11 +58,11 @@ public class ChooseBoardState extends State {
             board = new Image(assetHandler.getTextureRegion("StateImages/" + filename + ".png"));
             board.setSize(191, 49);
             if(i == 1) {
-                board.setPosition(this.halfButtonWidth, RoboRally.HEIGHT / 2);
+                board.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT / 2)-(49/2));
             } else if (i == 2) {
-                board.setPosition((this.halfButtonWidth + this.bigButtonWidth), RoboRally.HEIGHT / 2);
+                board.setPosition((this.halfButtonWidth + this.bigButtonWidth), (RoboRally.HEIGHT / 2)-(49/2));
             } else if (i == 3) {
-                board.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), RoboRally.HEIGHT / 2);
+                board.setPosition((this.halfButtonWidth + ((this.bigButtonWidth)*2)), (RoboRally.HEIGHT / 2)-(49/2));
             }
             stage.addActor(board);
             clickable(board, "Boards/BigBoard.txt");

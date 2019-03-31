@@ -82,12 +82,12 @@ public class ChoosePlayerState extends State {
             nplayers.setSize(191, 49);
             this.stage.addActor(nplayers);
             if (i >= 1 && i <= 3) {
-                nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT/3));
+                nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT / 2)-(49));
                 this.halfButtonWidth1 += bigButtonWidth;
             }
             else {
 
-                nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT)/2);
+                nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT / 2)+(49));
                 this.halfButtonWidth += bigButtonWidth;
             }
             this.playerAmount = i;
