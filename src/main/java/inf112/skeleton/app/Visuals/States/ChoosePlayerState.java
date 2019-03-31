@@ -23,7 +23,6 @@ public class ChoosePlayerState extends State {
     private Board board;
 
     private TextureRegion background;
-    private Stage stage;
 
     //booleans
     private boolean start;
@@ -45,7 +44,6 @@ public class ChoosePlayerState extends State {
         super(gsm);
         this.board = board;
 
-        this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.background = super.assetHandler.getTextureRegion("StateImages/secondBackground.png");

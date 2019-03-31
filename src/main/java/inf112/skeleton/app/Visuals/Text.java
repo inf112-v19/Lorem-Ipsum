@@ -1,8 +1,10 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 
 public class Text extends Widget {
@@ -14,7 +16,7 @@ public class Text extends Widget {
 	private Stage stage;
 
 	public Text(String text, int x, int y, Stage stage){
-		this.font = new BitmapFont();
+		this.font = new BitmapFont(Gdx.files.internal("default.fnt"));
 		this.stage = stage;
 		this.batch = new SpriteBatch();
 		this.text = text;

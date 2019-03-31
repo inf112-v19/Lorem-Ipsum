@@ -15,7 +15,6 @@ import inf112.skeleton.app.Visuals.SpriteType;
 
 
 public class ChooseBoardState extends State {
-    private Stage stage;
 
     private boolean start;
 
@@ -33,7 +32,6 @@ public class ChooseBoardState extends State {
     public ChooseBoardState(GameStateManager gsm) {
         super(gsm);
 
-        this.stage = new Stage(new ScreenViewport());
         this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.start = false;

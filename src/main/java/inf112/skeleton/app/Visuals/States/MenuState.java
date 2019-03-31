@@ -1,23 +1,15 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.SpriteType;
 
 public class MenuState extends State {
     private TextureRegion background;
     private Image startButton;
 
-    //private Stage stage;
     private int buttonWidth;
     private int buttonHeight;
 
@@ -25,8 +17,6 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        //this.stage = new Stage(new ScreenViewport());
-        //stage.getBatch().setProjectionMatrix(camera.combined);
 
         this.buttonWidth = 192+64; //original size + 1/3 of the size
         this.buttonHeight = 49+16; //original size + 1/3 of the size
@@ -55,7 +45,6 @@ public class MenuState extends State {
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
@@ -73,11 +62,10 @@ public class MenuState extends State {
 
     @Override
     public void render() {
-        this.stage.act();
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
-        this.stage.draw();
+		super.render();
     }
 
     @Override
@@ -87,7 +75,5 @@ public class MenuState extends State {
     @Override
     public void resize() {
         super.resize();
-        //this.stage.getBatch().setProjectionMatrix(camera.combined);
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }

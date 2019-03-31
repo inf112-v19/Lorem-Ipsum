@@ -15,8 +15,6 @@ import inf112.skeleton.app.Visuals.RoboRally;
 
 public class GameOverState extends State {
 
-    private Stage stage;
-
     //image Game Over
     private Image gameOverImage;
 
@@ -27,8 +25,7 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        this.stage = new Stage(new ScreenViewport());
-        this.stage.getBatch().setProjectionMatrix(camera.combined);
+        //this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
         this.gameOverImage = new Image(new TextureRegionDrawable(new Texture("StateImages/gameOver.png")));
@@ -76,18 +73,16 @@ public class GameOverState extends State {
         super.render();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.stage.draw();
+        //this.stage.draw();
     }
 
     @Override
     public void dispose() {
-        super.assetHandler.dispose();
-        //this.stage.dispose();
+        super.dispose();
     }
 
     @Override
     public void resize() {
         super.resize();
-        this.stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 }
