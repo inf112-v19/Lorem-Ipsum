@@ -111,7 +111,7 @@ public class ChoosePlayerState extends State {
             Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
             nplayers.setSize(191, 49);
             nplayers.setPosition(((RoboRally.WIDTH / 2) - this.halfButtonWidth-6), RoboRally.HEIGHT - (spaceOverButtons*2));
-            this.stage.addActor(nplayers);
+            stage.addActor(nplayers);
 
             this.spaceOverButtons += 49;
             this.playerAmount = i;
@@ -135,7 +135,7 @@ public class ChoosePlayerState extends State {
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(this.stage);
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
@@ -167,11 +167,11 @@ public class ChoosePlayerState extends State {
     @Override
     public void render() {
         super.render();
-        this.stage.act();
-        this.stage.getBatch().begin();
-        this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-        this.stage.getBatch().end();
-        this.stage.draw();
+        stage.act();
+        stage.getBatch().begin();
+        stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        stage.getBatch().end();
+        stage.draw();
 
     }
 
