@@ -32,7 +32,6 @@ public abstract class GameObject extends Image implements IGameObject {
 
     @Override
     public void place(Position position) {
-        //board.setGameObject();  //has to be changed when board is finished
     }
 
 	@Override
