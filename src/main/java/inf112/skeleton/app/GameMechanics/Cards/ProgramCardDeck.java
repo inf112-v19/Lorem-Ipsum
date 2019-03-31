@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class ProgramCardDeck implements ICardDeck {
 
-    Stack<Card> deck = new Stack<>();
+    private Stack<Card> deck = new Stack<>();
 
     public ProgramCardDeck() {
         createNewDeck();
