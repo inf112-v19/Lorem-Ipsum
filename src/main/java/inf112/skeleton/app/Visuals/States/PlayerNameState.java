@@ -2,8 +2,10 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -32,6 +34,8 @@ public class PlayerNameState extends State{
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers) {
 		super(gsm);
+		super.camera.setToOrtho(false);
+
 		this.uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
 		this.numPlayers = numPlayers;
 		this.board = board;
@@ -39,6 +43,7 @@ public class PlayerNameState extends State{
 		this.textAreas = new TextArea[numPlayers];
 		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
 		this.background = new TextureRegionDrawable(texture);
+
 		this.table = new Table(uiSkin);
 		this.table.setFillParent(true);
 		this.table.setBackground(background);
@@ -53,21 +58,22 @@ public class PlayerNameState extends State{
 
 	private void creatTextFields(){
 		for(int i = 0; i < numPlayers; i++){
-			textAreas[i] = new TextArea("",uiSkin);
+
+			textAreas[i] = new TextArea("", uiSkin);
 
 			Label label = new Label("Player " +(i+1), uiSkin);
 			label.setFontScale(1.5f);
 
-			Text text = new Text("Player " +(i+1), stage);
-
-			table.add(text).width(100);
+			table.add(label).width(100);
 			table.add(textAreas[i]).width(150);
 			table.row();
 		}
 	}
 
 	private void creatSubmitButton(){
-		Image submit = new Image(assetHandler.getTextureRegion("submit.png"));
+		TextureRegion textureRegion = assetHandler.getTextureRegion("submit.png");
+		textureRegion.flip(false,true);
+		Image submit = new Image(textureRegion );
 		submit.setPosition((Gdx.graphics.getWidth()/(float)2) - (submit.getWidth()/(float)2), 50);
 		submit.addListener(new InputListener() {
 			@Override
@@ -78,7 +84,7 @@ public class PlayerNameState extends State{
 					players.addLast(player);
 				}
 				gsm.set(new SpawnPointState(gsm, board, players));
-				stage.dispose();
+				dispose();
 				return true;
 			}
 		});
