@@ -26,6 +26,7 @@ public class PlayerNameState extends State{
 	private Board board;
 	private Queue<Player> players;
 	private TextArea[] textAreas;
+	private Texture texture;
 	private TextureRegionDrawable background;
 	private Table table;
 
@@ -36,7 +37,8 @@ public class PlayerNameState extends State{
 		this.board = board;
 		this.players = new Queue<>();
 		this.textAreas = new TextArea[numPlayers];
-		this.background = new TextureRegionDrawable(new Texture("StateImages/secondBackground.png"));
+		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
+		this.background = new TextureRegionDrawable(texture);
 		this.table = new Table(uiSkin);
 		this.table.setFillParent(true);
 		this.table.setBackground(background);
