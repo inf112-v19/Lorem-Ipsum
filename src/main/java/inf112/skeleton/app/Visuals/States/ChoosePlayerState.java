@@ -72,7 +72,7 @@ public class ChoosePlayerState extends State {
      */
     private void setTextbar() {
         this.textBar.setSize(1273/3, 102/3);
-        this.textBar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), RoboRally.HEIGHT-(102));
+        this.textBar.setPosition((RoboRally.WIDTH/2)-((1273/3)/2), 102);
         this.stage.addActor(this.textBar);
     }
 
@@ -84,16 +84,17 @@ public class ChoosePlayerState extends State {
         Image nplayers;
         for (int i = 1; i < nPlayers+1; i++) {
             String filename = "no" + i;
-            nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+            nplayers = new Image(assetHandler.getTextureRegion("StateImages/" + filename + ".png"));
             nplayers.setSize(191, 49);
             this.stage.addActor(nplayers);
             if (i >= 1 && i <= 3) {
-                nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT)/2);
-                this.halfButtonWidth += bigButtonWidth;
-            }
-            else {
                 nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT/3));
                 this.halfButtonWidth1 += bigButtonWidth;
+            }
+            else {
+
+                nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT)/2);
+                this.halfButtonWidth += bigButtonWidth;
             }
             this.playerAmount = i;
             clickable(nplayers, this.playerAmount);
@@ -106,7 +107,7 @@ public class ChoosePlayerState extends State {
     private void setAmountPlayers(int amountPlayers) {
         for (int i = 1; i < amountPlayers+1; i++) {
             String filename = "no" + i;
-            Image nplayers = new Image(new TextureRegionDrawable(new Texture("StateImages/" + filename + ".png")));
+            Image nplayers = new Image(assetHandler.getTextureRegion("StateImages/" + filename + ".png"));
             nplayers.setSize(191, 49);
             nplayers.setPosition(((RoboRally.WIDTH / 2) - this.halfButtonWidth-6), RoboRally.HEIGHT - (spaceOverButtons*2));
             stage.addActor(nplayers);
