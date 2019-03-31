@@ -39,7 +39,6 @@ public class ChoosePlayerState extends State {
     private int playerAmount;
 
     //input
-    public ArrayList<String> playerNames;
     public Stack<Player> players;
 
     public ChoosePlayerState(GameStateManager gsm, Board board) {
@@ -54,7 +53,7 @@ public class ChoosePlayerState extends State {
         this.start = false;
 
         //text bar
-        this.textBar = new Image(new TextureRegionDrawable(new Texture("StateImages/choosePlayerAmount.png")));
+        this.textBar = new Image(assetHandler.getTextureRegion("StateImages/choosePlayerAmount.png"));
 
         //player buttons
         this.spaceOverButtons = 49*2;
@@ -68,13 +67,6 @@ public class ChoosePlayerState extends State {
 
         //players
         players = new Stack<>();
-        playerNames = new ArrayList<>();
-        playerNames.add("RANDOM_NAME_1");
-        playerNames.add("RANDOM_NAME_2");
-        playerNames.add("RANDOM_NAME_3");
-        playerNames.add("RANDOM_NAME_4");
-        playerNames.add("RANDOM_NAME_5");
-        playerNames.add("RANDOM_NAME_6");
     }
 
     /**
@@ -131,15 +123,12 @@ public class ChoosePlayerState extends State {
         button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.print(playerNumber);
                 if (playerNumber == 1) {
-                    System.out.println(playerNumber + " " + "(" + getPlayerNameAt(0) + ")" + " player was chosen!");
+                    System.out.println(" player was chosen!");
                     savePlayerAmount(playerNumber);
                 } else {
-                    System.out.print(playerNumber + " (" + getPlayerNameAt(0));
-                    for (int i = 1; i < playerNumber; i++) {
-                        System.out.print( ", "+ getPlayerNameAt(i));
-                    }
-                    System.out.println(") players was chosen!");
+                    System.out.println(" players was chosen!");
                     savePlayerAmount(playerNumber);
                 }
                 start = true;
@@ -157,35 +146,6 @@ public class ChoosePlayerState extends State {
     private int savePlayerAmount(int playerAmount) {
         this.playerAmount = playerAmount;
         return this.playerAmount;
-    }
-
-    /**
-     * @return how many players is chosen
-     */
-    public int getPlayerAmount() {
-        return this.playerAmount;
-    }
-
-    /**
-     * creates players according to how many players was chosen to play
-     * @return
-     */
-    public Queue<Player> createPlayers() {
-        Queue<Player> players = new Queue<>();
-        for (int i = 0; i < this.playerAmount; i++) {
-            Player player = new Player(i , getPlayerNameAt(i), Direction.EAST);
-            players.addLast(player);
-        }
-        return players;
-    }
-
-    /**
-     * gets player name at index
-     * @param playerIndex
-     * @return
-     */
-    public String getPlayerNameAt(int playerIndex) {
-        return playerNames.get(playerIndex);
     }
 
     @Override
