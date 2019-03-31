@@ -150,13 +150,11 @@ public class Player extends Image implements IPlayer {
     public void destroyPlayer() {
         playerlives--;
 
-        if(playerlives >= 2){
+        if (playerlives >= 2) {
             playerHealth = 8;
-        }
-        else if(playerlives == 1){
+        } else if (playerlives == 1) {
             playerHealth = 6;
-        }
-        else {
+        } else {
             playerHealth = 0;
             isOnTheBoard = false;
         }
@@ -268,7 +266,7 @@ public class Player extends Image implements IPlayer {
         if (collectedFlags.size() == flag.getIndex()) {
             collectedFlags.add(flag);
             System.out.println(playerID + " collected flag number " + flag.getIndex());
-			System.out.println(collectedFlags.size());
+            System.out.println(collectedFlags.size());
         }
     }
 

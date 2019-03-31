@@ -50,7 +50,7 @@ public class CardState extends State {
                 return;
             }
         }
-		board.initRound();
+        board.initRound();
         gsm.set(new ActionState(gsm, board, cardManager));
         dispose();
     }
@@ -70,7 +70,6 @@ public class CardState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        System.out.println("BUMP CARD");
         cardHandGUI.dispose();
         infoGUI.dispose();
         batch.dispose();
