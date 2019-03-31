@@ -81,10 +81,8 @@ public final class AssetHandler {
         manager.load("heart.png", Texture.class);
         //manager.load("", Texture.class);
 
-
         manager.update();
         manager.finishLoading();
-
 
         this.texture = manager.get("RoboRallyTiles.png", Texture.class);
         this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
@@ -151,8 +149,7 @@ public final class AssetHandler {
 
         this.texture = manager.get("SpawnTile.png", Texture.class);
         this.spawnTile = new TextureRegion(this.texture);
-        this.spawnTile.flip(false,true);
-
+        this.spawnTile.flip(false, true);
 
 
     }
@@ -220,8 +217,8 @@ public final class AssetHandler {
                 return redtankSheet[0][4];
             case PLAYER6:
                 return redtankSheet[0][5];
-			case SPAWN_TILE:
-				return spawnTile;
+            case SPAWN_TILE:
+                return spawnTile;
             default:
                 System.err.println("No sprite found");
                 return null;
