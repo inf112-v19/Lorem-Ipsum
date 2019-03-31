@@ -25,7 +25,7 @@ public abstract class GameObject extends Image implements IGameObject {
 		//return position;
 		return null;
 	}
-	
+
     @Override
     public void place(Position position) {
     }
