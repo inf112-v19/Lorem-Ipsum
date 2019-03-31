@@ -37,9 +37,6 @@ public class ChoosePlayerState extends State {
     private int bigButtonWidth;
     private int playerAmount;
 
-    //input
-    public Stack<Player> players;
-
     public ChoosePlayerState(GameStateManager gsm, Board board) {
         super(gsm);
         this.board = board;
@@ -62,9 +59,6 @@ public class ChoosePlayerState extends State {
         setTextbar();
         setSixPlayers();
         //setAmountPlayers(amountPlayers);
-
-        //players
-        players = new Stack<>();
     }
 
     /**
