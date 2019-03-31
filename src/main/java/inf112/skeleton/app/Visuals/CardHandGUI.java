@@ -303,4 +303,8 @@ public class CardHandGUI {
             fonts.dispose();
         }
     }
+
+    public void resize(){
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
 }

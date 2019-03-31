@@ -69,7 +69,7 @@ public class CardManagerTest {
     }
 
     @Test
-    public void playerSholdGet8CardsWith9HP() {
+    public void playerShouldGet8CardsWith9HP() {
         cardManager.newRound();
         players[0].decreaseHealth();
         cardManager.newRound();

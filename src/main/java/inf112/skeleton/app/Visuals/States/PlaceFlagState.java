@@ -28,7 +28,7 @@ public class PlaceFlagState extends State {
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
 		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
-		this.text = new Text("'s trun to place flag", stage);
+		this.text = new Text("'s turn to place flag", stage);
 		this.text.prependDynamicsText(players[0].getPlayerID());
 	}
 
