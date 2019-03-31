@@ -224,8 +224,6 @@ public class CardHandGUI {
     }
 
     public void render() {
-        Gdx.input.setInputProcessor(stage);
-        stage.act(Gdx.graphics.getDeltaTime());
         batch.begin();
         font.draw(batch, playerTurn, 10, 10);
         batch.end();

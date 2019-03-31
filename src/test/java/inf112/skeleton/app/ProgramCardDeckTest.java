@@ -50,7 +50,7 @@ public class ProgramCardDeckTest {
     }
 
     @Test
-    public void deckShouldContain74cardsAfterOneIsDrawnTest() {
+    public void deckShouldContain74cardsAfterTenIsDrawnTest() {
         ICardDeck deck = new ProgramCardDeck();
         deck.createNewDeck();
         deck.drawCards(10);
