@@ -1,13 +1,10 @@
 package inf112.skeleton.app.GameMechanics.Cards;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Cards.Card;
-import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
