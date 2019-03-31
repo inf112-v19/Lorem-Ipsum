@@ -34,13 +34,15 @@ public class GameOverState extends State {
         this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
-        gameOverImage();
         playAgainLabel();
+        gameOverImage();
+
+        super.stage.addActor(this.table);
+
     }
 
     private void gameOverImage() {
         this.table.add(gameOverImage);
-        this.table.row();
         System.out.println("Game Over!");
     }
 
@@ -48,8 +50,7 @@ public class GameOverState extends State {
         this.table.center();
         this.table.setFillParent(true);
         this.table.add(this.playAgainLabel).expandX().padTop(10f);
-        super.stage.addActor(this.table);
-
+        this.table.row();
     }
 
     @Override
