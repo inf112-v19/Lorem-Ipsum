@@ -25,14 +25,13 @@ public class GameOverState extends State {
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        //this.stage.getBatch().setProjectionMatrix(camera.combined);
 
         //image
         this.gameOverImage = new Image(assetHandler.getTextureRegion("StateImages/gameOver.png"));
 
         //label
         this.table = new Table();
-        this.font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
         gameOverImage();
