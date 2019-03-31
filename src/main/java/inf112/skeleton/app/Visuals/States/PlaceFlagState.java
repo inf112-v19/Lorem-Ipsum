@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -30,13 +31,19 @@ public class PlaceFlagState extends State {
 		this.players = board.getAllPlayers();
 		this.text = new Text("'s trun to place flag", stage);
 		this.text.prependDynamicsText(players[0].getPlayerID());
-
 	}
-
 
 	@Override
 	protected void handleInput() {
+	}
 
+	@Override
+	public void render() {
+		super.render();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm));
+		}
 	}
 
 	@Override

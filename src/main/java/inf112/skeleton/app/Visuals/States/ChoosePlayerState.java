@@ -1,6 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -46,13 +47,13 @@ public class ChoosePlayerState extends State {
 
     public ChoosePlayerState(GameStateManager gsm, Board board) {
         super(gsm);
-
         this.board = board;
 
         this.assetHandler = new AssetHandler();
         this.stage = new Stage(new ScreenViewport());
-
         this.stage.getBatch().setProjectionMatrix(camera.combined);
+
+        this.background = new TextureRegion(new Texture("StateImages/secondBackground.png"));
         this.background = this.assetHandler.getTexture(SpriteType.CHOOSE_BACKGROUND);
 
         this.start = false;
@@ -211,11 +212,16 @@ public class ChoosePlayerState extends State {
 
     @Override
     public void render() {
+        super.render();
         this.stage.act();
         this.stage.getBatch().begin();
         this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
         this.stage.draw();
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            System.out.println("PAUSE!");
+            this.gsm.push(new PauseState(this.gsm));
+        }
     }
 
     @Override
