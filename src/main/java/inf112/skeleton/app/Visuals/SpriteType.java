@@ -4,8 +4,6 @@ package inf112.skeleton.app.Visuals;
  * RoboRallyTiles.png is a 7x13 spritesheet
  */
 public enum SpriteType {
-    TEST_START(),
-
     NORMAL_TILE(4, 0),
     HOLE_TILE(5, 0),
     REPAIR_TILE(6, 0),
@@ -62,11 +60,6 @@ public enum SpriteType {
     ROTATE_180(),
     ROTATE_90_L(),
     ROTATE_90_R(),
-
-    //menu
-    MENU_BACKGROUND(),
-    MENU_PLAY_BUTTON(),
-    CHOOSE_BACKGROUND(),
 
     //cardGUI
     CARD_SUBMIT(),

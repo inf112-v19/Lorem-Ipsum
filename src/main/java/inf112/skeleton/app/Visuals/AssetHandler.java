@@ -14,8 +14,6 @@ import inf112.skeleton.app.GameMechanics.Tiles.Tile;
  * This class handles all the sprites used in the game
  */
 public final class AssetHandler {
-    private TextureRegion test_start;
-
 	private Texture texture;
 
 	//CardHandGUI
@@ -25,12 +23,6 @@ public final class AssetHandler {
 
 	//Player spritesheet
 	private final TextureRegion[][] redtankSheet;
-
-	//Menu
-	private final TextureRegion menuBackground;
-	private final TextureRegion menuPlayButton;
-
-	private final TextureRegion chooseBackground;
 
 	//Card Sprites
 	private final TextureRegion backUpSprite;
@@ -59,9 +51,6 @@ public final class AssetHandler {
         manager.load("CardImages/Move3.png", Texture.class);
         manager.load("CardImages/RightTurn.png", Texture.class);
         manager.load("CardImages/U-Turn.png", Texture.class);
-        manager.load("StateImages/tempBackground.jpg", Texture.class);
-        manager.load("StateImages/start.png", Texture.class);
-        manager.load("StateImages/secondBackground.png", Texture.class);
         manager.load("clear.png", Texture.class);
         manager.load("submit.png", Texture.class);
         manager.load("CardImages/cardBar.png", Texture.class);
@@ -102,11 +91,6 @@ public final class AssetHandler {
 
 		manager.update();
 		manager.finishLoading();
-/*
-        this.texture = manager.get("StateImages/start.png", Texture.class);
-        this.test_start = new TextureRegion(texture);
-        this.test_start.flip(false, true);
-*/
 		this.texture = manager.get("RoboRallyTiles.png", Texture.class);
 		this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
 		flip(this.spriteSheet);
@@ -143,17 +127,6 @@ public final class AssetHandler {
 		this.uTurnSprite = new TextureRegion(texture);
 		this.uTurnSprite.flip(false, true);
 
-		this.texture = manager.get("StateImages/tempBackground.jpg", Texture.class);
-		this.menuBackground = new TextureRegion(texture);
-		this.menuBackground.flip(false, true);
-
-		this.texture = manager.get("StateImages/start.png", Texture.class);
-		this.menuPlayButton = new TextureRegion(texture);
-		//this.menuPlayButton.flip(false, true);
-
-		this.texture = manager.get("StateImages/secondBackground.png", Texture.class);
-		this.chooseBackground = new TextureRegion(texture);
-
 		this.texture = manager.get("clear.png", Texture.class);
 		this.cardGuiClearButton = new TextureRegion(texture);
 		this.cardGuiClearButton.flip(false, true);
@@ -169,9 +142,7 @@ public final class AssetHandler {
 		this.texture = manager.get("SpawnTile.png", Texture.class);
 		this.spawnTile = new TextureRegion(this.texture);
 		this.spawnTile.flip(false, true);
-
 	}
-
 
 	/**
 	 * Private method that flips the textures in the spriteSheet.
@@ -197,8 +168,6 @@ public final class AssetHandler {
 			return spriteSheet[spriteType.getY()][spriteType.getX()];
 		}
 		switch (spriteType) {
-            case TEST_START:
-                return test_start;
 			case BACKWARD_1:
 				return backUpSprite;
 			case FORWARD_1:
@@ -213,12 +182,6 @@ public final class AssetHandler {
 				return leftTurnSprite;
 			case ROTATE_90_R:
 				return rightTurnSprite;
-			case MENU_BACKGROUND:
-				return menuBackground;
-			case MENU_PLAY_BUTTON:
-				return menuPlayButton;
-			case CHOOSE_BACKGROUND:
-				return chooseBackground;
 			case CARD_SUBMIT:
 				return cardGuiSubmitButton;
 			case CARD_CLEAR:
