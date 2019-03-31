@@ -18,8 +18,7 @@ import inf112.skeleton.app.Visuals.SpriteType;
 
 
 public class ChooseBoardState extends State {
-    private SpriteSheet spriteSheet;
-    private TextureRegion background1;
+    private TextureRegion background;
     private Stage stage;
 
     //text bar
@@ -42,12 +41,10 @@ public class ChooseBoardState extends State {
 
     public ChooseBoardState(GameStateManager gsm) {
         super(gsm);
-
-        this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
-
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background1 = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
+
+        this.background = new TextureRegion(new Texture("StateImages/secondBackground.png"));
 
         this.start = false;
         this.halfButtonWidth = 193/2; //193 og ikke 191 fordi det passer bildet bedre
@@ -159,7 +156,7 @@ public class ChooseBoardState extends State {
         }
         this.stage.act();
         this.stage.getBatch().begin();
-        this.stage.getBatch().draw(this.background1, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
+        this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
         this.stage.getBatch().end();
         this.stage.draw();
     }
@@ -167,7 +164,6 @@ public class ChooseBoardState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        this.spriteSheet.dispose();
     }
 
     @Override

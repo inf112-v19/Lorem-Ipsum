@@ -22,8 +22,6 @@ import java.util.Stack;
 
 public class ChoosePlayerState extends State {
     private Board board;
-
-    private SpriteSheet spriteSheet;
     private TextureRegion background;
     private Stage stage;
 
@@ -47,14 +45,11 @@ public class ChoosePlayerState extends State {
 
     public ChoosePlayerState(GameStateManager gsm, Board board) {
         super(gsm);
-
         this.board = board;
-
-        this.spriteSheet = new SpriteSheet();
         this.stage = new Stage(new ScreenViewport());
-
         this.stage.getBatch().setProjectionMatrix(camera.combined);
-        this.background = this.spriteSheet.getTexture(SpriteType.CHOOSE_BACKGROUND);
+
+        this.background = new TextureRegion(new Texture("StateImages/secondBackground.png"));
 
         this.start = false;
 
@@ -226,7 +221,6 @@ public class ChoosePlayerState extends State {
     @Override
     public void dispose() {
         super.dispose();
-        this.spriteSheet.dispose();
     }
 
     @Override
