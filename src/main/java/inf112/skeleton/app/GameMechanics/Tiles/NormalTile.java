@@ -16,11 +16,11 @@ public class NormalTile extends Tile {
 
 	@Override
 	public void checkTile(Board board, Player player){
-		for(int i=0;i<gameObjects.length;i++){
-			if(gameObjects[i] instanceof Flag){
+		for(GameObject object : gameObjects){
+			if(object instanceof Flag){
 				player.increaseHealth();
 				player.setBackup(board.getPlayerPos(player));
-				player.collectFlag((Flag)gameObjects[i]);
+				player.collectFlag((Flag)object);
 				break;
 			}
 		}
