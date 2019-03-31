@@ -2,13 +2,13 @@ package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
-
-import javax.xml.soap.Text;
 
 /**
  * This class handles all the sprites used in the game
@@ -276,11 +276,16 @@ public final class AssetHandler {
 		return findCorrectTexture(gameObject.getSpriteType());
 	}
 
-
 	///NB!!!!!! will crash program if file is not loaded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public Texture getTexture(String filename) {
 		return manager.get(filename, Texture.class);
 	}
+
+    public TextureRegion getTextureRegion(String filename) {
+	    TextureRegion t = new TextureRegion(manager.get(filename, Texture.class));
+	    t.flip(false, true);
+        return t;
+    }
 
 	public void dispose() {
 		this.texture.dispose();
