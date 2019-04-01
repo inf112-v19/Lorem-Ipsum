@@ -101,7 +101,6 @@ public class ChooseBoardState extends State {
         if (this.start) {
             this.board = new Board(getBoardName());
             gsm.set(new ChoosePlayerState(this.gsm, this.board));
-            dispose();
         }
     }
 

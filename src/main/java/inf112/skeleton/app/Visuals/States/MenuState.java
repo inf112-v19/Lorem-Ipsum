@@ -51,7 +51,6 @@ public class MenuState extends State {
     public void handleInput() {
         if (this.start) {
             gsm.set(new ChooseBoardState(gsm));
-            dispose();
         }
     }
 

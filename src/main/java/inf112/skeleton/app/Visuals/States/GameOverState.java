@@ -74,7 +74,6 @@ public class GameOverState extends State {
         if(Gdx.input.justTouched()) {
             System.out.println("New game!");
             this.gsm.set(new MenuState(this.gsm));
-            dispose();
         }
     }
 

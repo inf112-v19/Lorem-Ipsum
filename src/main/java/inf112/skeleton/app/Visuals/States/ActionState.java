@@ -54,7 +54,6 @@ public class ActionState extends State {
 			if (board.isGameOver()){
 				System.out.println("Setting GameOverState");
 				gsm.set(new GameOverState(gsm, board));
-				dispose();
 				return;
 			}
 
@@ -64,7 +63,6 @@ public class ActionState extends State {
 			}else{
 				System.out.println("setting CardState");
 				gsm.set(new CardState(gsm, board, cardManager));
-				dispose();
 			}
 			pendingCardsGUI.update();
 		}
@@ -83,7 +81,6 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();
 		pendingCardsGUI.dispose();

@@ -84,7 +84,6 @@ public class PlayerNameState extends State{
 					players.addLast(player);
 				}
 				gsm.set(new SpawnPointState(gsm, board, players));
-				dispose();
 				return true;
 			}
 		});

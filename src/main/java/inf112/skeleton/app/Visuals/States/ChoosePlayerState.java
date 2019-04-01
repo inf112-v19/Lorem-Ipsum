@@ -147,7 +147,6 @@ public class ChoosePlayerState extends State {
             //gsm.set(new CardState(gsm, board, cardManager));
             //gsm.set(new SpawnPointState(gsm, board, createPlayers()));
             gsm.set(new PlayerNameState(gsm, board, playerAmount));
-            dispose();
 
         }
     }
@@ -166,12 +165,6 @@ public class ChoosePlayerState extends State {
         stage.getBatch().end();
         stage.draw();
 
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        this.assetHandler.dispose();
     }
 
     @Override

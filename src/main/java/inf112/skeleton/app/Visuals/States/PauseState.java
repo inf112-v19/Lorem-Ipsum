@@ -93,7 +93,6 @@ public class PauseState extends State{
                 System.out.println("New Game!");
                 this.gsm.pop();
                 this.gsm.set(new MenuState(this.gsm));
-                dispose();
             } else if (this.exit) {
                 System.out.println("Exit Game!");
                 Gdx.app.exit();

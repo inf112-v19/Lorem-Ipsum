@@ -50,7 +50,6 @@ public class CardState extends State {
         }
         board.initRound();
         gsm.set(new ActionState(gsm, board, cardManager));
-        dispose();
     }
 
     @Override

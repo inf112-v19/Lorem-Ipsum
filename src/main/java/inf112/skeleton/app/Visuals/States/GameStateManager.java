@@ -25,6 +25,11 @@ public class GameStateManager {
     }
 
     public void set(State state) {
+
+        System.out.println(states.peek().toString() + "disposing");
+        states.peek().dispose();
+
+
         states.pop();
         states.push(state);
     }
