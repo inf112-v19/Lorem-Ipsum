@@ -53,7 +53,7 @@ public class ActionState extends State {
 
 			if (board.isGameOver()){
 				System.out.println("Setting GameOverState");
-				gsm.set(new GameOverState(gsm));
+				gsm.set(new GameOverState(gsm, board));
 				dispose();
 				return;
 			}

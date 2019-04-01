@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public class GameOverState extends State {
@@ -23,7 +24,7 @@ public class GameOverState extends State {
     Label.LabelStyle font;
     Label playAgainLabel;
 
-    public GameOverState(GameStateManager gsm) {
+    public GameOverState(GameStateManager gsm, Board board) {
         super(gsm);
 
         //image
@@ -31,10 +32,26 @@ public class GameOverState extends State {
 
         //label
         this.table = new Table();
+        this.table.center();
+        this.table.setFillParent(true);
+        this.table.defaults().space(0,40,40,40);
         this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
         this.playAgainLabel = new Label("Click To Play Again", this.font);
 
         playAgainLabel();
+
+        if(board.getWinningPlayer().getPlayerID() != null){
+            Label label = new Label(board.getWinningPlayer().getPlayerID() + " is the winner", this.font);
+            label.setFontScale(2);
+            table.add(label);
+            table.row();
+        }else{
+            Label label = new Label("No winning player", this.font);
+            label.setFontScale(2);
+            table.add(label);
+            table.row();
+        }
+
         gameOverImage();
 
         super.stage.addActor(this.table);
@@ -43,12 +60,11 @@ public class GameOverState extends State {
 
     private void gameOverImage() {
         this.table.add(gameOverImage);
+        this.table.row();
         System.out.println("Game Over!");
     }
 
     private void playAgainLabel() {
-        this.table.center();
-        this.table.setFillParent(true);
         this.table.add(this.playAgainLabel).expandX().padTop(10f);
         this.table.row();
     }
