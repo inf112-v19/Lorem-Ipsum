@@ -38,34 +38,34 @@ public final class AssetHandler {
 
 	private AssetManager manager;
 
-    public AssetHandler() {
-        manager = new AssetManager();
-        manager.load("RoboRallyTiles.png", Texture.class);
-        manager.load("Player/redtank.png", Texture.class);
-        manager.load("CardImages/BackUp.png", Texture.class);
-        manager.load("CardImages/LeftTurn.png", Texture.class);
-        manager.load("CardImages/Move1.png", Texture.class);
-        manager.load("CardImages/Move2.png", Texture.class);
-        manager.load("CardImages/Move3.png", Texture.class);
-        manager.load("CardImages/RightTurn.png", Texture.class);
-        manager.load("CardImages/U-Turn.png", Texture.class);
-        manager.load("clear.png", Texture.class);
-        manager.load("submit.png", Texture.class);
-        manager.load("CardImages/cardBar.png", Texture.class);
-        manager.load("SpawnTile.png", Texture.class);
-        manager.load("clear_press.png", Texture.class);
-        manager.load("submit_press.png", Texture.class);
-        manager.load("lock.png", Texture.class);
-        manager.load("CardImages/button1.png", Texture.class);
-        manager.load("CardImages/button2.png", Texture.class);
-        manager.load("CardImages/button3.png", Texture.class);
-        manager.load("CardImages/button4.png", Texture.class);
-        manager.load("CardImages/button5.png", Texture.class);
-        manager.load("healthbar.png", Texture.class);
-        manager.load("heart.png", Texture.class);
+	public AssetHandler() {
+		manager = new AssetManager();
+		manager.load("RoboRallyTiles.png", Texture.class);
+		manager.load("Player/redtank.png", Texture.class);
+		manager.load("CardImages/BackUp.png", Texture.class);
+		manager.load("CardImages/LeftTurn.png", Texture.class);
+		manager.load("CardImages/Move1.png", Texture.class);
+		manager.load("CardImages/Move2.png", Texture.class);
+		manager.load("CardImages/Move3.png", Texture.class);
+		manager.load("CardImages/RightTurn.png", Texture.class);
+		manager.load("CardImages/U-Turn.png", Texture.class);
+		manager.load("clear.png", Texture.class);
+		manager.load("submit.png", Texture.class);
+		manager.load("CardImages/cardBar.png", Texture.class);
+		manager.load("SpawnTile.png", Texture.class);
+		manager.load("clear_press.png", Texture.class);
+		manager.load("submit_press.png", Texture.class);
+		manager.load("lock.png", Texture.class);
+		manager.load("CardImages/button1.png", Texture.class);
+		manager.load("CardImages/button2.png", Texture.class);
+		manager.load("CardImages/button3.png", Texture.class);
+		manager.load("CardImages/button4.png", Texture.class);
+		manager.load("CardImages/button5.png", Texture.class);
+		manager.load("healthbar.png", Texture.class);
+		manager.load("heart.png", Texture.class);
 
 		//stateimages
-        manager.load("StateImages/board.png", Texture.class);
+		manager.load("StateImages/board.png", Texture.class);
 		manager.load("StateImages/board1.png", Texture.class);
 		manager.load("StateImages/board2.png", Texture.class);
 		manager.load("StateImages/board3.png", Texture.class);
@@ -85,7 +85,7 @@ public final class AssetHandler {
 		manager.load("StateImages/start.png", Texture.class);
 		manager.load("StateImages/menuBackground.jpg", Texture.class);
 
-        //manager.load("", Texture.class);
+		//manager.load("", Texture.class);
 
 		manager.update();
 		manager.finishLoading();
@@ -257,16 +257,16 @@ public final class AssetHandler {
 		return findCorrectTexture(gameObject.getSpriteType());
 	}
 
-	///NB!!!!!! will crash program if file is not loaded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//NB - Will crash if file not found
 	public Texture getTexture(String filename) {
 		return manager.get(filename, Texture.class);
 	}
 
-    public TextureRegion getTextureRegion(String filename) {
-	    TextureRegion t = new TextureRegion(manager.get(filename, Texture.class));
-	    t.flip(false, true);
-        return t;
-    }
+	public TextureRegion getTextureRegion(String filename) {
+		TextureRegion t = new TextureRegion(manager.get(filename, Texture.class));
+		t.flip(false, true);
+		return t;
+	}
 
 	public void dispose() {
 		this.texture.dispose();

@@ -14,59 +14,58 @@ public class Text extends Widget {
 	private SpriteBatch batch;
 	private Stage stage;
 
-	public Text(String text, int x, int y, Stage stage){
+	public Text(String text, int x, int y, Stage stage) {
 		this.font = new BitmapFont(Gdx.files.internal("default.fnt"));
 		this.stage = stage;
 		this.batch = new SpriteBatch();
 		this.text = text;
 		this.dynamicsText = text;
-		this.setPosition(x,y);
+		this.setPosition(x, y);
 		this.stage.addActor(this);
 	}
 
 	public Text(Stage stage) {
-		this("", 0,0, stage);
+		this("", 0, 0, stage);
 	}
 
-	public Text(int x, int y, Stage stage){
-		this("", x,y,stage);
+	public Text(int x, int y, Stage stage) {
+		this("", x, y, stage);
 	}
 
-	public Text(String text, Stage stage){
+	public Text(String text, Stage stage) {
 		this(text, 0, 0, stage);
 	}
 
-	public void setText(String text){
+	public void setText(String text) {
 		this.text = text;
 		this.dynamicsText = text;
 	}
 
-	public void appendText(String text){
+	public void appendText(String text) {
 		this.text = this.text + text;
 		this.dynamicsText = this.text;
 	}
 
-	public void prependText(String text){
+	public void prependText(String text) {
 		this.text = text + this.text;
 		this.dynamicsText = this.text;
 	}
 
-	public void appendDynamicsText(String dynamicText){
+	public void appendDynamicsText(String dynamicText) {
 		this.dynamicsText = this.text + dynamicsText;
 	}
 
-	public void prependDynamicsText(String dynamicText){
+	public void prependDynamicsText(String dynamicText) {
 		this.dynamicsText = dynamicText + this.text;
 	}
 
-	public void draw(){
+	public void draw() {
 		batch.begin();
 		font.draw(batch, dynamicsText, super.getX(), super.getY());
 		batch.end();
-		//System.out.println(super.getX() + "," + super.getY());
 	}
 
-	public void dispose(){
+	public void dispose() {
 		font.dispose();
 		batch.dispose();
 	}

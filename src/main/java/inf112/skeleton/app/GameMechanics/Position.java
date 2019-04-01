@@ -7,7 +7,6 @@ public class Position {
 	private final int y;
 
 	/**
-	 *
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
@@ -17,7 +16,6 @@ public class Position {
 	}
 
 	/**
-	 *
 	 * @return position coordinates in array form [x, y]
 	 */
 	public int[] getPosition() {
@@ -25,7 +23,6 @@ public class Position {
 	}
 
 	/**
-	 *
 	 * @return x coordinate
 	 */
 	public int getX() {
@@ -33,7 +30,6 @@ public class Position {
 	}
 
 	/**
-	 *
 	 * @return y coodinate
 	 */
 	public int getY() {
@@ -65,13 +61,13 @@ public class Position {
 	public Position getNeighbour(Direction dir) {
 		switch (dir) {
 			case NORTH:
-				return new Position(this.x, this.y-1);
+				return new Position(this.x, this.y - 1);
 			case SOUTH:
-				return  new Position(this.x, this.y+1);
+				return new Position(this.x, this.y + 1);
 			case EAST:
-				return  new Position(this.x+1, this.y);
+				return new Position(this.x + 1, this.y);
 			case WEST:
-				return new Position(this.x-1, this.y);
+				return new Position(this.x - 1, this.y);
 			default:
 				return this;
 		}
