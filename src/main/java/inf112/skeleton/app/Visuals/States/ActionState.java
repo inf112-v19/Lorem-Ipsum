@@ -81,6 +81,7 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();
 		pendingCardsGUI.dispose();

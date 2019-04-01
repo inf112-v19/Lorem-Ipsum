@@ -344,13 +344,8 @@ public class Board implements IBoard {
 			}
 		}
 
-		//no players alive - game over, no player won
-		if (alivePlayers == 0) {
-			return true;
-		}
-
-		//game is still in progress
-		return false;
+		//if no players is alive - game over, else game is still in progress
+		return alivePlayers == 0;
 	}
 
 	/**

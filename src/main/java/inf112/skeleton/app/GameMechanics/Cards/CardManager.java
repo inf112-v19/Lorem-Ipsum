@@ -41,11 +41,7 @@ public class CardManager {
                 break;
             }
         }
-        if (currentPlayer != null) {
-            return currentPlayer;
-        } else {
-            return null;
-        }
+		return currentPlayer;
     }
 
     /**

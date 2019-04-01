@@ -34,10 +34,7 @@ public abstract class Tile extends Image implements ITile {
 
 	@Override
 	public boolean hasAnyGameObjects() {
-		if (gameObjects.length == 0) {
-			return false;
-		}
-		return true;
+		return gameObjects.length != 0;
 	}
 
 	/**
