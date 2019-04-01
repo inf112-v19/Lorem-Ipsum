@@ -2,9 +2,7 @@ package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -85,7 +83,7 @@ public final class AssetHandler {
 		manager.load("StateImages/resume.png", Texture.class);
 		manager.load("StateImages/secondBackground.png", Texture.class);
 		manager.load("StateImages/start.png", Texture.class);
-		manager.load("StateImages/startBackground.jpg", Texture.class);
+		manager.load("StateImages/menuBackground.jpg", Texture.class);
 
         //manager.load("", Texture.class);
 

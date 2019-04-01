@@ -22,7 +22,7 @@ public class MenuState extends State {
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
-        this.background = super.assetHandler.getTextureRegion("StateImages/startBackground.jpg");
+        this.background = super.assetHandler.getTextureRegion("StateImages/menuBackground.jpg");
         this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
 
         setStartButton();
