@@ -40,7 +40,7 @@ public class GameOverState extends State {
 
         playAgainLabel();
 
-        if(board.getWinningPlayer().getPlayerID() != null){
+        if(board.getWinningPlayer() != null){
             Label label = new Label(board.getWinningPlayer().getPlayerID() + " is the winner", this.font);
             label.setFontScale(2);
             table.add(label);
