@@ -6,13 +6,13 @@ import inf112.skeleton.app.Visuals.RoboRally;
 
 public class Main {
 
-    public static void main (String[] arg) {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+	public static void main(String[] arg) {
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-        config.width = RoboRally.WIDTH;
-        config.height = RoboRally.HEIGHT;
-        config.title = RoboRally.TITLE;
+		config.width = RoboRally.WIDTH;
+		config.height = RoboRally.HEIGHT;
+		config.title = RoboRally.TITLE;
 
-        new LwjglApplication(new RoboRally(), config);
-    }
+		new LwjglApplication(new RoboRally(), config);
+	}
 }

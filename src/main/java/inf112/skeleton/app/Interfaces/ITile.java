@@ -1,8 +1,8 @@
 package inf112.skeleton.app.Interfaces;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
@@ -93,4 +93,18 @@ public interface ITile {
 	void checkTile(Board board, Player player);
 
 
+	/**
+	 * Checks if the tile contains any lasers and gives damage to the player accordingly
+	 * @param player
+	 */
+	void laserCheck(Player player);
+
+
+	/**
+	 * Tries to add a flag to the tile if it does noe already contain a flag
+	 *
+	 * @param flag
+	 * @return true if the flag was placed on the tile, or false if not
+	 */
+	boolean placeFlagOnTile(Flag flag);
 }

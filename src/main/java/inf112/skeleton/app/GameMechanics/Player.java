@@ -1,23 +1,27 @@
 package inf112.skeleton.app.GameMechanics;
 
-import inf112.skeleton.app.GameMechanics.Board.Board;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements IPlayer {
+public class Player extends Image implements IPlayer {
 
-    private SpriteType spriteType = SpriteType.PLAYER;
+    private int index;
+    private SpriteType spriteType;
     private String playerID;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
     private int playerHealth = 10; //Number of damage the player can take before getting destroyed
-    private int playerlives = 4; //Number for lives the player has before losing the game
+    private int playerlives = 3; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
-
+    private boolean isOnTheBoard = true;
+    private ArrayList<Flag> collectedFlags = new ArrayList<>();
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -26,12 +30,20 @@ public class Player implements IPlayer {
     /**
      * Create a player object
      *
-     * @param playerID
-     * @param direction
+     * @param playerID Name to be displayed for the player
+     * @param direction Direction the player is facing
      */
     public Player(String playerID, Direction direction) {
         this.playerID = playerID;
         setPlayerDirection(direction);
+        spriteType = SpriteType.PLAYER1;
+    }
+
+    public Player(int index, String playerID, Direction direction) {
+        this.index = index;
+        this.playerID = playerID;
+        setPlayerDirection(direction);
+        assignSpriteType();
     }
 
 
@@ -48,25 +60,23 @@ public class Player implements IPlayer {
 
 
         switch (directionNumber) {
-
             case 0:
                 playerDirection = Direction.NORTH;
                 break;
-
             case 1:
                 playerDirection = Direction.EAST;
                 break;
-
             case 2:
                 playerDirection = Direction.SOUTH;
                 break;
-
             case 3:
                 playerDirection = Direction.WEST;
                 break;
-
+            default:
+                System.err.println("invalid directionnumber! direction not changed");
         }
     }
+
 
     /**
      * Sets the players direction
@@ -101,11 +111,6 @@ public class Player implements IPlayer {
     }
 
     /**
-     * decreses the players total lives
-     */
-    public void decreseLives() { playerlives--; }
-
-    /**
      * @return players Direction
      */
     public Direction getDirection() {
@@ -138,11 +143,20 @@ public class Player implements IPlayer {
     }
 
     /**
-     * destroy the player (lose a total life and set health to max)
+     * Destroy the player (lose a total life and set health to the right amount depending on number of lives lost) or if no more lives set health to 0
+     * and remove player from the board
      */
-    public void destroyPlayer(){
+    public void destroyPlayer() {
         playerlives--;
-        playerHealth = 10;
+
+        if (playerlives >= 2) {
+            playerHealth = 8;
+        } else if (playerlives == 1) {
+            playerHealth = 6;
+        } else {
+            playerHealth = 0;
+            isOnTheBoard = false;
+        }
     }
 
     /**
@@ -151,9 +165,8 @@ public class Player implements IPlayer {
     @Override
     public void decreaseHealth() {
         playerHealth--;
-        if(playerHealth<=0){
-            playerHealth = 10;
-            decreseLives();
+        if (playerHealth <= 0) {
+            destroyPlayer();
         }
     }
 
@@ -163,7 +176,7 @@ public class Player implements IPlayer {
     @Override
     public void increaseHealth() {
         playerHealth++;
-        if(playerHealth>10) playerHealth = 10;
+        if (playerHealth > 10) playerHealth = 10;
 
     }
 
@@ -203,6 +216,10 @@ public class Player implements IPlayer {
         ready = true;
     }
 
+    public void setNotReady() {
+        ready = false;
+    }
+
     public String getPlayerID() {
         return playerID;
     }
@@ -213,5 +230,71 @@ public class Player implements IPlayer {
             return false;
         }
         return this.playerID.equals(((Player) obj).playerID);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.index;
+    }
+
+    @Override
+    public boolean onBoardCheck() {
+        return isOnTheBoard;
+    }
+
+    @Override
+    public void setOnTheBoard(Boolean isOnTheBoard) {
+        this.isOnTheBoard = isOnTheBoard;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public boolean isDead() {
+        return !(getLives() > 0);
+    }
+
+    /**
+     * Method that checks if the flag is the next flag to be collected (index of the flag matches how many flags have
+     * already been collected) and adds the flag to the collectedFlags HashSet.
+     *
+     * @param flag
+     */
+    public void collectFlag(Flag flag) {
+        if (collectedFlags.size() == flag.getIndex()) {
+            collectedFlags.add(flag);
+            System.out.println(playerID + " collected flag number " + flag.getIndex());
+            System.out.println(collectedFlags.size());
+        }
+    }
+
+    public int numberOfFlagsCollected() {
+        return collectedFlags.size();
+    }
+
+    private void assignSpriteType() {
+        switch (index) {
+            case 0:
+                spriteType = SpriteType.PLAYER1;
+                break;
+            case 1:
+                spriteType = SpriteType.PLAYER2;
+                break;
+            case 2:
+                spriteType = SpriteType.PLAYER3;
+                break;
+            case 3:
+                spriteType = SpriteType.PLAYER4;
+                break;
+            case 4:
+                spriteType = SpriteType.PLAYER5;
+                break;
+            case 5:
+                spriteType = SpriteType.PLAYER6;
+                break;
+            default:
+                spriteType = SpriteType.PLAYER1;
+        }
     }
 }

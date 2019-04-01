@@ -1,8 +1,10 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
@@ -11,13 +13,19 @@ import inf112.skeleton.app.Interfaces.ITile;
 import inf112.skeleton.app.GameMechanics.Position;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public abstract class Tile implements ITile {
+public abstract class Tile extends Image implements ITile {
 
 	public SpriteType spriteType;
 	protected GameObject[] gameObjects;
 	protected Direction direction;
 
+
+	public Tile(GameObject[] gameObjects, Direction direction){
+		this.gameObjects = gameObjects;
+		this.direction = direction;
+	}
 
 	@Override
 	public Position getPosition() {
@@ -26,10 +34,7 @@ public abstract class Tile implements ITile {
 
 	@Override
 	public boolean hasAnyGameObjects() {
-		if (gameObjects.length == 0){
-			return false;
-		}
-		return true;
+		return gameObjects.length != 0;
 	}
 
 	/**
@@ -40,15 +45,22 @@ public abstract class Tile implements ITile {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) return false;
+
 		if (!obj.getClass().isInstance(this)) {
 			return false;
 		}
 
 		Tile tile = (Tile) obj;
-		if(!Arrays.equals(tile.getGameObjects(), this.gameObjects)){
+		if (!Arrays.equals(tile.getGameObjects(), this.gameObjects)) {
 			return false;
 		}
 		return tile.getDirection().equals(this.direction);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(direction, spriteType, gameObjects);
 	}
 
 	@Override
@@ -68,7 +80,7 @@ public abstract class Tile implements ITile {
 
 	@Override
 	public void addGameObject(GameObject gameObject) {
-		GameObject[] newGameObjects = new GameObject[gameObjects.length+1];
+		GameObject[] newGameObjects = new GameObject[gameObjects.length + 1];
 
 		for (int i = 0; i < gameObjects.length; i++) {
 			newGameObjects[i] = gameObjects[i];
@@ -85,12 +97,12 @@ public abstract class Tile implements ITile {
 			return false;
 		}
 
-		GameObject[] newGameObjects = new GameObject[gameObjects.length-1];
+		GameObject[] newGameObjects = new GameObject[gameObjects.length - 1];
 		int j = 0;
 		for (int i = 0; i < gameObjects.length; i++) {
-			if (i == gameObjectIndex){
+			if (i == gameObjectIndex) {
 				continue;
-			}else {
+			} else {
 				newGameObjects[j] = gameObjects[i];
 				j++;
 			}
@@ -100,7 +112,7 @@ public abstract class Tile implements ITile {
 	}
 
 	@Override
-	public int hasGameObject(GameObject gameObject){
+	public int hasGameObject(GameObject gameObject) {
 		for (int i = 0; i < gameObjects.length; i++) {
 			if (gameObjects[i].equals(gameObject)) {
 				return i;
@@ -116,7 +128,31 @@ public abstract class Tile implements ITile {
 	}
 
 	@Override
-	public void checkTile(Board board, Player player){
-
+	public void checkTile(Board board, Player player) {
 	}
+
+	@Override
+	public void laserCheck(Player player) {
+		for (GameObject gameObject : gameObjects) {
+			if (gameObject instanceof Laser) {
+				player.decreaseHealth();
+			}
+		}
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+
+	@Override
+	public boolean placeFlagOnTile(Flag flag) {
+		if (hasGameObject(flag) == -1 && (this instanceof NormalTile)) {
+			addGameObject(flag);
+			return true;
+		}
+		return false;
+	}
+
 }
+

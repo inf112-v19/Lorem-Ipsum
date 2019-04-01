@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class ProgramCardDeck implements ICardDeck {
 
-    Stack<Card> deck = new Stack<>();
+    private Stack<Card> deck = new Stack<>();
 
     public ProgramCardDeck() {
         createNewDeck();
@@ -69,7 +69,8 @@ public class ProgramCardDeck implements ICardDeck {
         shuffleDeck();
     }
 
-    private void shuffleDeck() {
+    @Override
+    public void shuffleDeck() {
         Collections.shuffle(deck);
     }
 
@@ -96,6 +97,16 @@ public class ProgramCardDeck implements ICardDeck {
     @Override
     public CardType getCardType(Card card) {
         return card.getCardType();
+    }
+
+    @Override
+    public void addCard(Card card) {
+        deck.add(card);
+    }
+
+    @Override
+    public Card drawCard() {
+        return deck.pop();
     }
 
     public void clearDeck() {

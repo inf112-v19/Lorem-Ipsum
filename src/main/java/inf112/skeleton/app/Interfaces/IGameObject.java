@@ -21,12 +21,6 @@ public interface IGameObject {
     void place(Position position);
 
     /**
-     * Removes the object from the board
-     */
-    void remove();
-
-
-    /**
      * function that gets the visuals of this GameObject
      * @return SpriteType of this GameObject
      */

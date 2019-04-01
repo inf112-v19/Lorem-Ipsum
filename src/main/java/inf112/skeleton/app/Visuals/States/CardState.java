@@ -1,81 +1,78 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.Visuals.BoardGUI;
-import inf112.skeleton.app.Visuals.CardGUI;
-import inf112.skeleton.app.GameMechanics.Cards.ProgramCardDeck;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
+import inf112.skeleton.app.Visuals.*;
 import inf112.skeleton.app.GameMechanics.Player;
-import inf112.skeleton.app.Interfaces.ICardDeck;
 
 public class CardState extends State {
 
-    private BoardGUI boardGUI;
-    private SpriteBatch batch;
-    private Player[] players;
-    private ICardDeck cardDeck;
-    private CardGUI cardGUI;
+	private Board board;
+	private BoardGUI boardGUI;
+	private SpriteBatch batch;
+	private Player[] players;
 
-    public CardState(GameStateManager gsm, Board board) {
-        super(gsm, board);
-        this.batch = new SpriteBatch();
-        this.batch.setProjectionMatrix(camera.combined);
-        this.boardGUI = new BoardGUI(board, camera);
+	private CardHandGUI cardHandGUI;
 
-        this.players = board.getAllPlayers();
-        this.cardDeck = new ProgramCardDeck();
-        this.cardDeck.createNewDeck();
+	private PlayerInfoGUI infoGUI;
 
-        /**
-         * code for testing CardGUI. Does not use players stored in board
-         */
+	private CardManager cardManager;
 
-        Player[] testarr = board.getAllPlayers();
-        ICardDeck testDeck = new ProgramCardDeck();
-        testDeck.createNewDeck();
-        testarr[0].setCardHand(testDeck.drawCards(9));
-        testarr[1].setCardHand(testDeck.drawCards(9));
-        this.cardGUI = new CardGUI(camera, batch, testarr);
+	public CardState(GameStateManager gsm, Board board, CardManager cardManager) {
+		super(gsm);
+		this.board = board;
+		this.batch = new SpriteBatch();
+		this.batch.setProjectionMatrix(camera.combined);
+		this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
 
+		this.players = board.getAllPlayers();
 
-        //this.cardGUI = new CardGUI(camera, batch, board, players); //this is how it should be
-    }
+		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.cardManager = cardManager;
 
-    @Override
-    protected void handleInput() {
+		this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
+	}
 
-    }
+	@Override
+	public void update(float dt) {
+		Gdx.input.setInputProcessor(stage);
+		for (Player player : players) {
+			if (!player.isReady()) {
+				return;
+			}
+		}
+		board.initRound();
+		gsm.set(new ActionState(gsm, board, cardManager));
+	}
 
-    @Override
-    public void update(float dt) {
-        for (Player player : players) {
-            if (!player.isReady()) {
-                return;
-            }
-        }
-		board.initPhase();
-        gsm.set(new ActionState(gsm, board));
-        dispose();
+	@Override
+	public void render() {
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm));
+		}
 
-    }
+		super.render();
+		cardHandGUI.render();
+		infoGUI.render();
+	}
 
-    @Override
-    public void render() {
-        boardGUI.render();
-        cardGUI.render();
-    }
+	@Override
+	public void dispose() {
+		super.dispose();
+		cardHandGUI.dispose();
+		infoGUI.dispose();
+		batch.dispose();
+	}
 
-    @Override
-    public void dispose() {
-        cardGUI.dispose();
-        batch.dispose();
-    }
-
-    @Override
-    public void resize() {
-        super.resize();
-        boardGUI.resize();
-    }
-
+	@Override
+	public void resize() {
+		super.resize();
+		boardGUI.resize();
+		infoGUI.resize();
+		cardHandGUI.resize();
+	}
 }

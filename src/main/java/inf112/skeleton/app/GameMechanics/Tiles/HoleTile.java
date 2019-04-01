@@ -7,8 +7,7 @@ import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 public class HoleTile extends Tile {
 
 	public HoleTile(GameObject[] gameObjects, Direction direction) {
-		this.gameObjects = gameObjects;
-		this.direction = direction;
+		super(gameObjects, direction);
 		super.spriteType = SpriteType.HOLE_TILE;
 	}
 

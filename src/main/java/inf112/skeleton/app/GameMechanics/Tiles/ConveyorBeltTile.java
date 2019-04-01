@@ -1,6 +1,5 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
@@ -10,13 +9,12 @@ import inf112.skeleton.app.Visuals.SpriteType;
 public class ConveyorBeltTile extends Tile {
 
     public ConveyorBeltTile(GameObject[] gameObjects, Direction direction) {
-        this.gameObjects = gameObjects;
-        this.direction = direction;
-        setDirection();
+        super(gameObjects, direction);
+        this.setDirection();
     }
 
     private void setDirection(){
-        switch (direction){
+        switch (super.direction){
             case NORTH:
                 super.spriteType = SpriteType.CONVEYOR_BELT_TILE_NORTH;
                 break;
