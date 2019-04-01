@@ -33,10 +33,6 @@ public class PlaceFlagState extends State {
 	}
 
 	@Override
-	protected void handleInput() {
-	}
-
-	@Override
 	public void render() {
 		super.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -47,11 +43,9 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public void update(float dt) {
-		//super.update(dt);
-		Gdx.input.setInputProcessor(stage);
-		if (flagCount >= players.length){
+		if (flagCount >= players.length) {
 			boardGUI.removeAllListeners();
-			gsm.set(new CardState(gsm,board,cardManager));
+			gsm.set(new CardState(gsm, board, cardManager));
 			text.dispose();
 		}
 	}
@@ -61,7 +55,7 @@ public class PlaceFlagState extends State {
 	public void tileEventHandle(Tile tile) {
 		this.text.prependDynamicsText(players[flagCount].getPlayerID());
 		Flag flag = new Flag(Direction.NORTH, flagCount);
-		if (tile.placeFlagOnTile(flag)){
+		if (tile.placeFlagOnTile(flag)) {
 			flag.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(flag)));
 			flag.setSize(tile.getWidth(), tile.getHeight());
 			flag.setPosition(tile.getX(), tile.getY());

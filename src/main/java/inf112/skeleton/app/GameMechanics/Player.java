@@ -30,8 +30,8 @@ public class Player extends Image implements IPlayer {
     /**
      * Create a player object
      *
-     * @param playerID
-     * @param direction
+     * @param playerID Name to be displayed for the player
+     * @param direction Direction the player is facing
      */
     public Player(String playerID, Direction direction) {
         this.playerID = playerID;
@@ -143,7 +143,7 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * destroy the player (lose a total life and set health to the right amount depending on number of lives lost) or if no more lives set health to 0
+     * Destroy the player (lose a total life and set health to the right amount depending on number of lives lost) or if no more lives set health to 0
      * and remove player from the board
      */
     public void destroyPlayer() {
