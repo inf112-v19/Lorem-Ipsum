@@ -22,7 +22,7 @@ public class MenuState extends State {
         this.buttonHeight = 49+16; //original size + 1/3 of the size
         this.start = false;
 
-        this.background = super.assetHandler.getTextureRegion("StateImages/tempBackground.jpg");
+        this.background = super.assetHandler.getTextureRegion("StateImages/startBackground.jpg");
         this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
 
         setStartButton();
@@ -30,7 +30,7 @@ public class MenuState extends State {
 
     private void setStartButton() {
         this.startButton.setSize(buttonWidth, buttonHeight);
-        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), this.buttonHeight*2);
+        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), this.buttonHeight*4);
         stage.addActor(this.startButton);
 
         clickable(this.startButton);

@@ -85,7 +85,7 @@ public final class AssetHandler {
 		manager.load("StateImages/resume.png", Texture.class);
 		manager.load("StateImages/secondBackground.png", Texture.class);
 		manager.load("StateImages/start.png", Texture.class);
-		manager.load("StateImages/tempBackground.jpg", Texture.class);
+		manager.load("StateImages/startBackground.jpg", Texture.class);
 
         //manager.load("", Texture.class);
 
