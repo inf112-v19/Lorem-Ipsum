@@ -33,7 +33,7 @@ public class BoardBuilderTest {
 		String testFile = "Boards/BoardBuilderTest1.txt";
 		BoardBuilder bb = new BoardBuilder();
 
-		String tileNumbers[][] = bb.readFromFile(testFile);
+		String[][] tileNumbers = bb.readFromFile(testFile);
 
 		assertArrayEquals(tileNumbers, correctNumbers);
 	}
