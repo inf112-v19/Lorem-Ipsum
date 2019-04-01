@@ -10,6 +10,8 @@ import inf112.skeleton.app.GameMechanics.Position;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static junit.framework.TestCase.*;
 
 public class CardManagerTest {
@@ -17,6 +19,12 @@ public class CardManagerTest {
     private Board board;
     private Player[] players;
 
+    /**
+     * Set up method. creates a board containing two players
+     * also creates card manager with this board
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         board = new Board("Boards/ExampleBoard.txt");
@@ -83,5 +91,28 @@ public class CardManagerTest {
         cardManager.newRound();
         cardManager.newRound();
         assertTrue(cardManager.getCardDeckSize() <= 84);
+    }
+
+    @Test
+    public void playerWith5HpShouldHaveOneLockedCard() {
+        Player testPlayer = players[0];
+
+        //simulates first round for the test player
+        cardManager.newRound();
+        List<Card> cardHand = testPlayer.getCardHand();
+        Card[] validCardSeq = new Card[5];
+        for (int i = 0; i < validCardSeq.length; i++) {
+            validCardSeq[i] = cardHand.get(i);
+        }
+        assertTrue(cardManager.setCardSeq(testPlayer, validCardSeq));
+
+        //Sets playerHP to 5
+        for (int i = 0; i < 5; i++) {
+            testPlayer.decreaseHealth();
+        }
+
+        cardManager.newRound();
+
+        assertTrue(cardManager.isLocked(validCardSeq[4]));
     }
 }
