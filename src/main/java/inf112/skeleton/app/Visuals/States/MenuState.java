@@ -30,7 +30,7 @@ public class MenuState extends State {
 
     private void setStartButton() {
         this.startButton.setSize(buttonWidth, buttonHeight);
-        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), this.buttonHeight*4);
+        this.startButton.setPosition((RoboRally.WIDTH / 2)-(this.buttonWidth/2), (RoboRally.HEIGHT/2)-(this.buttonHeight/2));
         stage.addActor(this.startButton);
 
         clickable(this.startButton);
