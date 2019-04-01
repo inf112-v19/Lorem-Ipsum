@@ -36,14 +36,9 @@ public class ActionState extends State {
 	}
 
 	@Override
-	protected void handleInput() {
-
-	}
-
-	@Override
 	public void update(float dt) {
 		updateCount += dt;
-		if (updateCount > UPDATE_LIMIT){
+		if (updateCount > UPDATE_LIMIT) {
 			updateCount = 0;
 			System.out.println("update");
 
@@ -51,16 +46,16 @@ public class ActionState extends State {
 			boardGUI.hideDeadPlayers();
 			boardGUI.showRevivedPlayers();
 
-			if (board.isGameOver()){
+			if (board.isGameOver()) {
 				System.out.println("Setting GameOverState");
 				gsm.set(new GameOverState(gsm, board));
 				return;
 			}
 
-			if(boardCanPlayCards){
+			if (boardCanPlayCards) {
 				boardCanPlayCards = board.doNextAction();
 				boardGUI.update();
-			}else{
+			} else {
 				System.out.println("setting CardState");
 				gsm.set(new CardState(gsm, board, cardManager));
 			}
@@ -81,6 +76,7 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();
 		pendingCardsGUI.dispose();

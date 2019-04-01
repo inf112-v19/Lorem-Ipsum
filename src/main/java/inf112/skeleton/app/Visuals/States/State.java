@@ -12,53 +12,44 @@ import inf112.skeleton.app.Visuals.RoboRally;
 
 public abstract class State {
 	protected final AssetHandler assetHandler = new AssetHandler();
-    protected GameStateManager gsm;
-    protected OrthographicCamera camera = new OrthographicCamera();
-    protected Stage stage  = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
+	protected GameStateManager gsm;
+	protected OrthographicCamera camera = new OrthographicCamera();
+	protected Stage stage = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
 
 
-    protected State (GameStateManager gsm) {
-        this.camera.setToOrtho(true, RoboRally.WIDTH, RoboRally.HEIGHT);
-        this.gsm = gsm;
-        Gdx.input.setInputProcessor(this.stage);
-    }
+	protected State(GameStateManager gsm) {
+		this.camera.setToOrtho(true, RoboRally.WIDTH, RoboRally.HEIGHT);
+		this.gsm = gsm;
+		Gdx.input.setInputProcessor(this.stage);
+	}
 
-    protected abstract void handleInput();
+	protected void handleInput() {
 
-    //take in a delta time, difference between one frame window and the next frame window
-    public abstract void update(float dt); /*{
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            System.out.println("PAUSE!");
-            this.gsm.push(new PauseState(this.gsm));
-        }*/ //TODO - handle the dt here so that other states dont need to handle it
+	}
 
-    // spritebatch is contaonter for everyhting we need to render to the screen texture and all that, renders everything to the screen in a big blob
-    public void render() {
-        this.stage.act();
-        this.stage.draw();
-    }
+	public abstract void update(float dt);
 
-    //dispose of our texture and other media when we are done using them, to prevent any kinds of memory leaks
-    public void dispose(){
-        this.assetHandler.dispose();
-        this.stage.dispose();
-    }
+	public void render() {
+		this.stage.act();
+		this.stage.draw();
+	}
 
-    public void resize() {
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }
+	public void dispose() {
+		this.assetHandler.dispose();
+		this.stage.dispose();
+	}
 
-    public void addToStage(Actor actor){
-        stage.addActor(actor);
-    }
+	public void resize() {
+		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	}
 
-    /**
-     * Method that handles the clicking of tiles on the board.
-     * This method is GameStateManager when the current stage is active
-     */
-    public void tileEventHandle(Tile tile){
-        //should be implemented in states width board
-    }
+	/**
+	 * Method that handles the clicking of tiles on the board.
+	 * This method is GameStateManager when the current stage is active
+	 */
+	public void tileEventHandle(Tile tile) {
+
+	}
 
 
 }

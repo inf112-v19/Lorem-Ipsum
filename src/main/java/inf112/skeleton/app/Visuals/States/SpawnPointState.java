@@ -19,7 +19,7 @@ public class SpawnPointState extends State {
 	private Text text;
 
 
-	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players){
+	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players) {
 		super(gsm);
 		this.players = players;
 		this.board = board;
@@ -27,11 +27,6 @@ public class SpawnPointState extends State {
 		this.boardGUI.addListenersToStage();
 		this.text = new Text("'s turn to to choose spawn", stage);
 		this.text.prependDynamicsText(players.first().getPlayerID());
-	}
-
-	@Override
-	protected void handleInput() {
-
 	}
 
 	@Override
@@ -45,9 +40,7 @@ public class SpawnPointState extends State {
 
 	@Override
 	public void update(float dt) {
-		//super.update(dt);
-		Gdx.input.setInputProcessor(stage);
-		if (players.isEmpty()){
+		if (players.isEmpty()) {
 			System.out.println("setting PlaceFlagState");
 			CardManager cardManager = new CardManager(board);
 			boardGUI.removeAllListeners();
@@ -59,12 +52,12 @@ public class SpawnPointState extends State {
 	@Override
 	public void tileEventHandle(Tile tile) {
 		if (!players.isEmpty()) {
-			float x = (tile.getX() - boardGUI.getxOffset())/(tile.getWidth());
-			float y = (tile.getY() - boardGUI.getyOffset())/(tile.getHeight());
-			Position playerPos = new Position((int)x, (int)y);
+			float x = (tile.getX() - boardGUI.getxOffset()) / (tile.getWidth());
+			float y = (tile.getY() - boardGUI.getyOffset()) / (tile.getHeight());
+			Position playerPos = new Position((int) x, (int) y);
 
 			Player player = players.first();
-			if (board.spawnPlayer(playerPos, player)){
+			if (board.spawnPlayer(playerPos, player)) {
 				players.removeFirst();
 				player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
 				player.setSize(tile.getWidth(), tile.getHeight());
@@ -72,7 +65,7 @@ public class SpawnPointState extends State {
 				stage.addActor(player);
 				System.out.println("placing " + player.getPlayerID());
 
-				if(!players.isEmpty()){
+				if (!players.isEmpty()) {
 					this.text.prependDynamicsText(players.first().getPlayerID());
 				}
 
