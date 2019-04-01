@@ -16,6 +16,7 @@ import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class CardHandGUI {
     private ImageButton submit;
     private Image infoBar;
     private Image[] numberLabels;
+    private List<Image> lockList;
 
     public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
@@ -77,6 +79,10 @@ public class CardHandGUI {
     }
 
     private void draw(List<Card> c) {
+        if (lockList != null) {
+            clearLockList();
+        }
+        lockList = new ArrayList<>();
         clearOldCards();
         clearLabels();
         tempCardSeq = new Card[5];
@@ -211,7 +217,14 @@ public class CardHandGUI {
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
         lock.setPosition(xPos, Gdx.graphics.getHeight() - 152);
+        lockList.add(lock);
         stage.addActor(lock);
+    }
+
+    private void clearLockList() {
+        for (Image image : lockList) {
+           image.remove();
+        }
     }
 
     private boolean cardSeqContains(Card card, Card[] cardSeq) {
