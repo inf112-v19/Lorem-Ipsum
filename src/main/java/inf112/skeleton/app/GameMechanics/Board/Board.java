@@ -188,6 +188,14 @@ public class Board implements IBoard {
 		}
 
 		for (Player player : playerPositions.keySet()) {
+
+			//players in power down gets health reset and skips cards
+			if (player.getPowerDown() == 1) {
+				player.resetHealth();
+				continue;
+			}
+
+			//skips dead players
 			if (player.isDead()) {
 				continue;
 			}
@@ -376,6 +384,8 @@ public class Board implements IBoard {
 
 	/**
 	 * Respawn all the players who has fallen off the board and puts them on their backup
+	 * Also handles power down - sets destroyed players to powerDown = 3, resets power down for players currently in
+	 * power down and sets powerDown = 1 for players pending power down(powerDown currently equals 2)
 	 */
 	private void respawnPlayers() {
 		for (Player player : playerPositions.keySet()) {
@@ -383,6 +393,20 @@ public class Board implements IBoard {
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
+
+				//if power down was requested for next round and player was destroyed - set power down to 3(cancel option)
+				if (player.getPowerDown() == 2) {
+					player.setPowerDown(3);
+				}
+			}
+
+			//players currently in power down is reset
+			if (player.getPowerDown() == 1) {
+				player.setPowerDown(0);
+			}
+			//players currently pending power down is set to power down
+			else if (player.getPowerDown() == 2) {
+				player.setPowerDown(1);
 			}
 		}
 	}
@@ -391,6 +415,17 @@ public class Board implements IBoard {
 	 * Deals damage to all players standing on tiles containing lasers
 	 */
 	private void turnOnLasers() {
+		/*
+		for (Map.Entry<Position, Tile> tileMapEntry : tileMap.entrySet()) {
+			Tile tile = tileMapEntry.getValue();
+			Position tilePos = tileMapEntry.getKey();
+
+			if (tile instanceof SingleLaserBaseTile)
+
+
+		}
+		*/
+
 		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
 			Player curPlayer = playerPositionEntry.getKey();
 			Position curPlayerPos = playerPositionEntry.getValue();

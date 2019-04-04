@@ -26,6 +26,8 @@ public class Player extends Image implements IPlayer {
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
 
+	private int powerDown = 0;
+
 
     /**
      * Create a player object
@@ -297,4 +299,25 @@ public class Player extends Image implements IPlayer {
                 spriteType = SpriteType.PLAYER1;
         }
     }
+
+	/**
+	 * Method used to set power down status:
+	 * 	0 - no power down
+	 * 	1 - power down this round
+	 * 	2 - power down next round
+	 * 	3 - was destroyed round power down was requested, player gets chance to cancel power down
+	 *
+	 * @param powerDown
+	 */
+	public void setPowerDown(int powerDown) {
+		this.powerDown = powerDown;
+	}
+
+	public int getPowerDown() {
+		return powerDown;
+	}
+
+	public void resetHealth() {
+		playerHealth = 10;
+	}
 }
