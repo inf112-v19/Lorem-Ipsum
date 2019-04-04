@@ -65,7 +65,7 @@ public class BoardBuilder {
 	 * @return
 	 */
 	public Tile getTile(String tileNumber) {
-		int tileType = Integer.parseInt(tileNumber.substring(0,1));
+		int tileType = Integer.parseInt(tileNumber.substring(0,1), 16);
 		int tileRotation = Integer.parseInt(tileNumber.substring(1,2));
 		int numberOfGO = Integer.parseInt(tileNumber.substring(2,3));
 		GameObject[] gameObjects = new GameObject[numberOfGO];
@@ -91,7 +91,11 @@ public class BoardBuilder {
 			case 6: return new RotationLeftTile(gameObjects, tileDirection);
 			case 7: return new RotationRightTile(gameObjects, tileDirection);
 			case 8: return new SpawnTile(gameObjects, tileDirection);
-			default: return new NormalTile(gameObjects, tileDirection);
+			case 9: return new LaserBaseTile(gameObjects, tileDirection);
+			case 10: return new DoubleLaserBaseTile(gameObjects, tileDirection);
+			default:
+				System.err.println("Error reading tile type in BoardBuilder");
+				return new NormalTile(gameObjects, tileDirection);
 		}
 	}
 
