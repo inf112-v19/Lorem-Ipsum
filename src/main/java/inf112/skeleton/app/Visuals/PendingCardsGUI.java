@@ -10,7 +10,9 @@ import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PendingCardsGUI {
 
@@ -27,12 +29,14 @@ public class PendingCardsGUI {
     private Player currentPlayer;
     private Player nextPlayer;
     private HashMap<Player, TextureRegion> playerTextures;
+    private List<Image> images;
 
     public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage, AssetHandler assetHandler) {
         this.batch = batch;
         this.board = board;
         this.assetHandler = assetHandler;
         this.stage = stage;
+        images = new ArrayList<>();
 
         playingCard = new BitmapFont();
         pendingCard = new BitmapFont();
@@ -52,6 +56,8 @@ public class PendingCardsGUI {
     }
 
     public void render() {
+        clearOldImages();
+        images = new ArrayList<>();
         batch.begin();
         playingCard.draw(batch, "card being played:", 10, Gdx.graphics.getHeight()-10);
         pendingCard.draw(batch, "next up: ", 10, Gdx.graphics.getHeight()-145);
@@ -62,6 +68,14 @@ public class PendingCardsGUI {
         }
         if (nextCard != null) {
             drawNextCard();
+        }
+    }
+
+    private void clearOldImages() {
+        if (images.size() > 0) {
+            for (Image image : images) {
+                image.remove();
+            }
         }
     }
 
@@ -84,6 +98,7 @@ public class PendingCardsGUI {
         Image image = new Image(cardTexture);
         image.setSize(97, 135);
         image.setPosition(10, yPos);
+        images.add(image);
         stage.addActor(image);
     }
 
@@ -91,12 +106,14 @@ public class PendingCardsGUI {
         Image image = new Image(playerTexture);
         image.setSize(40, 40);
         image.setPosition(107, yPos + 10);
+        images.add(image);
         stage.addActor(image);
     }
 
     public void dispose() {
         playingCard.dispose();
         pendingCard.dispose();
+        clearOldImages();
     }
 
 }
