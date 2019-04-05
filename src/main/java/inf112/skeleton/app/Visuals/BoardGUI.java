@@ -194,7 +194,7 @@ public class BoardGUI {
 	}
 
 	private void reposition() {
-		yOffset = 0;
+		yOffset = Gdx.graphics.getHeight() - boardPixelHeight;
 		xOffset = Gdx.graphics.getWidth() / 2 - boardPixelWidth / 2;
 	}
 
@@ -265,7 +265,6 @@ public class BoardGUI {
 	public void addListenersToStage() {
 		for (Actor actor : stage.getActors()) {
 			if (actor instanceof Tile) {
-				System.out.println("listener addet");
 				Tile tile = (Tile) actor;
 				tile.addListener(createListener(tile));
 				for (GameObject gameObject : tile.getGameObjects()) {
