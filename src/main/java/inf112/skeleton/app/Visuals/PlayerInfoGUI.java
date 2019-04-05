@@ -14,8 +14,6 @@ public class PlayerInfoGUI {
 	private BitmapFont[] fonts;
 	private String[] playerNames;
 
-	private Texture texture;
-
 	private Stage stage;
 	private AssetHandler assetHandler;
 
@@ -68,7 +66,6 @@ public class PlayerInfoGUI {
 		for (BitmapFont font : fonts) {
 			font.dispose();
 		}
-		texture.dispose();
 	}
 
 	public void resize() {
@@ -92,8 +89,7 @@ public class PlayerInfoGUI {
 				yDrawPos += 12;
 			}
 			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			texture = assetHandler.getTexture("healthbar.png");
-			TextureRegion textureRegion = new TextureRegion(texture);
+			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("healthbar.png"));
 			createActor(textureRegion, 10, 20, xDrawPos, yDrawPos, true);
 			deltaX -= 22;
 		}
@@ -105,8 +101,7 @@ public class PlayerInfoGUI {
 
 		for (int i = 0; i < numberOfLives; i++) {
 			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			texture = assetHandler.getTexture("heart.png");
-			TextureRegion textureRegion = new TextureRegion(texture);
+			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("heart.png"));
 			createActor(textureRegion, 20, 20, xDrawPos, yDrawPos, true);
 			deltaX -= 25;
 		}
