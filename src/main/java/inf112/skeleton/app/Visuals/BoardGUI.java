@@ -48,7 +48,7 @@ public class BoardGUI {
 		this.table.center();
 		this.table.setPosition((Gdx.graphics.getWidth() - this.table.getWidth())/2, Gdx.graphics.getHeight() - this.table.getHeight());
 
-		//this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+		this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
 
 		this.assetHandler = assetHandler;
@@ -264,7 +264,8 @@ public class BoardGUI {
 
 	public void addListenersToStage() {
 		for (Actor actor : stage.getActors()) {
-			if (actor instanceof Stack) {
+			if (actor instanceof Tile) {
+				System.out.println("listener addet");
 				Tile tile = (Tile) actor;
 				tile.addListener(createListener(tile));
 				for (GameObject gameObject : tile.getGameObjects()) {
