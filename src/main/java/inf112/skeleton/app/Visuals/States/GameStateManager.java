@@ -9,7 +9,7 @@ public class GameStateManager {
 	private Stack<State> states;
 
 	public GameStateManager() {
-		states = new Stack<State>();
+		states = new Stack<>();
 	}
 
 	public void push(State state) {
@@ -52,5 +52,9 @@ public class GameStateManager {
 
 	public void tileEventHandle(Tile tile) {
 		states.peek().tileEventHandle(tile);
+	}
+
+	public void stackEventHandle(com.badlogic.gdx.scenes.scene2d.ui.Stack stack) {
+		states.peek().stackEventHandle(stack);
 	}
 }

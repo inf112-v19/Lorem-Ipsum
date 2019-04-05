@@ -1,5 +1,6 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -153,6 +154,18 @@ public abstract class Tile extends Image implements ITile {
 		}
 		return false;
 	}
+
+	/*
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		for (GameObject gameObject: gameObjects) {
+			gameObject.setZIndex(100);
+			gameObject.draw(batch, parentAlpha);
+		}
+	}
+	 */
+
 
 }
 

@@ -2,6 +2,7 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
@@ -21,9 +22,11 @@ public class SpawnPointState extends State {
 
 	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players) {
 		super(gsm);
+		super.camera.setToOrtho(false);
 		this.players = players;
 		this.board = board;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
+		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
 		this.text = new Text("'s turn to to choose spawn", stage);
 		this.text.prependDynamicsText(players.first().getPlayerID());
@@ -63,6 +66,32 @@ public class SpawnPointState extends State {
 				player.setSize(tile.getWidth(), tile.getHeight());
 				player.setPosition(tile.getX(), tile.getY());
 				stage.addActor(player);
+				System.out.println("placing " + player.getPlayerID());
+
+				if (!players.isEmpty()) {
+					this.text.prependDynamicsText(players.first().getPlayerID());
+				}
+
+			}
+		}
+	}
+
+
+	@Override
+	public void stackEventHandle(Stack stack) {
+		if (!players.isEmpty()) {
+			float x = (stack.getX() - boardGUI.getxOffset()) / (stack.getWidth());
+			float y = (stack.getY() - boardGUI.getyOffset()) / (stack.getHeight());
+			Position playerPos = new Position((int) x, (int) y);
+
+			Player player = players.first();
+			if (board.spawnPlayer(playerPos, player)) {
+				System.out.println("du er her");
+				players.removeFirst();
+				player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
+				//player.setSize(stack.getWidth(), stack.getHeight());
+				//player.setPosition(stack.getX(), stack.getY());
+				stack.addActor(player);
 				System.out.println("placing " + player.getPlayerID());
 
 				if (!players.isEmpty()) {
