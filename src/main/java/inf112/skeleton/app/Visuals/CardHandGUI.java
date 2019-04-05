@@ -55,7 +55,7 @@ public class CardHandGUI {
         this.stage = stage;
 
         this.assetHandler = assetHandler;
-        font = new BitmapFont(true);
+        font = new BitmapFont();
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
@@ -237,7 +237,7 @@ public class CardHandGUI {
 
     public void render() {
         batch.begin();
-        font.draw(batch, playerTurn, 10, 10);
+        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight()-10);
         batch.end();
         renderPriorities();
     }
