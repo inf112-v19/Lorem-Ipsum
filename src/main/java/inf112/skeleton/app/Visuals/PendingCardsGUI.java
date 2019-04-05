@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,8 +34,8 @@ public class PendingCardsGUI {
         this.assetHandler = assetHandler;
         this.stage = stage;
 
-        playingCard = new BitmapFont(true);
-        pendingCard = new BitmapFont(true);
+        playingCard = new BitmapFont();
+        pendingCard = new BitmapFont();
 
         playerTextures = new HashMap<>();
         Player[] players = board.getAllPlayers();
@@ -52,8 +53,8 @@ public class PendingCardsGUI {
 
     public void render() {
         batch.begin();
-        playingCard.draw(batch, "card being played:", 10, 10);
-        pendingCard.draw(batch, "next up: ", 10, 165);
+        playingCard.draw(batch, "card being played:", 10, Gdx.graphics.getHeight()-10);
+        pendingCard.draw(batch, "next up: ", 10, Gdx.graphics.getHeight()-145);
         batch.end();
 
         if (currentCard != null) {
@@ -66,16 +67,16 @@ public class PendingCardsGUI {
 
     private void drawCurrentCard() {
         TextureRegion card = new TextureRegion(assetHandler.getTexture(currentCard));
-        addCardToStage(card, 25);
+        addCardToStage(card, Gdx.graphics.getHeight()-145);
         TextureRegion player = new TextureRegion(playerTextures.get(currentPlayer));
-        addPlayerImageToStage(player, 25);
+        addPlayerImageToStage(player, Gdx.graphics.getHeight()-145);
     }
 
     private void drawNextCard() {
         TextureRegion card = new TextureRegion(assetHandler.getTexture(nextCard));
-        addCardToStage(card, 190);
+        addCardToStage(card, Gdx.graphics.getHeight()-300);
         TextureRegion player = new TextureRegion(playerTextures.get(nextPlayer));
-        addPlayerImageToStage(player, 190);
+        addPlayerImageToStage(player, Gdx.graphics.getHeight()-300);
 
     }
 
