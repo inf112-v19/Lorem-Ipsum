@@ -265,7 +265,6 @@ public class BoardGUI {
 	public void addListenersToStage() {
 		for (Actor actor : stage.getActors()) {
 			if (actor instanceof Tile) {
-				System.out.println("listener addet");
 				Tile tile = (Tile) actor;
 				tile.addListener(createListener(tile));
 				for (GameObject gameObject : tile.getGameObjects()) {
