@@ -67,7 +67,7 @@ public class Text extends Widget {
 
 	public void dispose() {
 		font.dispose();
-		batch.dispose();
+		//batch.dispose();
 	}
 
 	@Override
