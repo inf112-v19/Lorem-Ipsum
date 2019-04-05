@@ -194,7 +194,7 @@ public class BoardGUI {
 	}
 
 	private void reposition() {
-		yOffset = 0;
+		yOffset = Gdx.graphics.getHeight() - boardPixelHeight;
 		xOffset = Gdx.graphics.getWidth() / 2 - boardPixelWidth / 2;
 	}
 
