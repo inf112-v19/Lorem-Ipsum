@@ -337,7 +337,7 @@ public class Player extends Image implements IPlayer {
 		if (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
 			Position nextPos = pos.getNeighbour(this.playerDirection);
 			Tile nextTile = board.getTile(nextPos);
-			nextTile.toggleLaser(pos, board, laserStatus, this.playerDirection);
+			nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
 		}
 	}
 

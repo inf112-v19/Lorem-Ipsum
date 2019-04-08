@@ -227,13 +227,13 @@ public abstract class Tile extends Image implements ITile {
 		Tile nextTile = board.getTile(pos.getNeighbour(dir));
 
 		//if curTile has wall blocking - return false
-		if (this.hasWallInDir(this.direction)) {
+		if (this.hasWallInDir(dir)) {
 			return false;
 		}
 		//if nextTile is not null - proceed checking
 		else if (nextTile != null) {
 			//possible to move if nextTile does not have a wall blocking
-			return nextTile.hasWallInDir(this.direction.oppositeDirection());
+			return !nextTile.hasWallInDir(dir.oppositeDirection());
 		}
 		//nextTile is not on the board - return false
 		else {
