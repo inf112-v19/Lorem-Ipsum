@@ -7,7 +7,7 @@ import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.SpriteType;
 
-public class DoubleLaserBaseTile extends LaserBaseTile {
+public class DoubleLaserBaseTile extends Tile {
 	public DoubleLaserBaseTile(GameObject[] gameObjects, Direction direction) {
 		super(gameObjects, direction);
 		this.addGameObject(new Laser(direction));

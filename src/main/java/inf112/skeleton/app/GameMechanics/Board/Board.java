@@ -421,7 +421,7 @@ public class Board implements IBoard {
 
 	/**
 	 * Toggle all the lasers on the board and deals damage to players hit by laser if toggled on or removes the lasers
-	 * from the board if toggled off
+	 * from the board if toggled off also handles players toggling lasers(shooting or removing shot laser)
 	 */
 	private void toggleLasers() {
 		laserStatus = !laserStatus;
@@ -430,25 +430,16 @@ public class Board implements IBoard {
 			Tile tile = tileMapEntry.getValue();
 			Position tilePos = tileMapEntry.getKey();
 
-			if (tile instanceof LaserBaseTile) {
-				((LaserBaseTile) tile).toggleLaser(tilePos, this, laserStatus);
-			}
-			else if (tile instanceof DoubleLaserBaseTile) {
-				((DoubleLaserBaseTile) tile).toggleLaser(tilePos, this, laserStatus);
+			if (tile instanceof LaserBaseTile || tile instanceof DoubleLaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus);
 			}
 		}
 
-		/*
-		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
-			Player curPlayer = playerPositionEntry.getKey();
-			Position curPlayerPos = playerPositionEntry.getValue();
-
-			if (curPlayer.onBoardCheck()) {
-				Tile playerTile = tileMap.get(curPlayerPos);
-				playerTile.laserCheck(curPlayer);
-			}
+		for (Map.Entry<Player, Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+			player.toggleLaser(playerPos, this, laserStatus);
 		}
-		*/
 	}
 
 	/**

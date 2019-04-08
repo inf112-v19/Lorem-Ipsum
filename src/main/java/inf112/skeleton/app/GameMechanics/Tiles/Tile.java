@@ -1,6 +1,5 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -165,6 +164,82 @@ public abstract class Tile extends Image implements ITile {
 		}
 	}
 	 */
+
+
+	/**
+	 * Overlaying method for togglingLaser - used when the direction is corresponding to the tile direction
+	 *
+	 * @param pos
+	 * @param board
+	 * @param laserStatus
+	 */
+	public void toggleLaser (Position pos, Board board, boolean laserStatus){
+		toggleLaser(pos, board, laserStatus, this.direction);
+	}
+
+	/**
+	 * Method for toggling laser - either adds or removes a laser from the current tile and is called recursively as
+	 * long as the laser is able to "move" in the given direction. Also deals damage if laser hits a player when adding
+	 * laser.
+	 *
+	 * @param pos
+	 * @param board
+	 * @param laserStatus true if adding laser, or false if removing
+	 * @param dir
+	 */
+	public void toggleLaser (Position pos, Board board, boolean laserStatus, Direction dir){
+		Position curPos = pos;
+		Position nextPos = pos.getNeighbour(dir);
+		Player playerOnCurTile = board.posToPlayer(curPos);
+
+		//if curTile has a player blocking the laser - decrease player health if adding lasers and break
+		if (playerOnCurTile != null) {
+			if (laserStatus) {
+				System.out.println("Player: " + playerOnCurTile.getPlayerID() + " took laser damage");
+				playerOnCurTile.decreaseHealth();
+			}
+		}
+		else {
+			if (laserStatus) {
+				this.addGameObject(new Laser(dir));
+			}
+			else {
+				this.removeGameObject(new Laser(dir));
+			}
+
+			if (this.isPossibleToMoveDir(curPos, board, dir)) {
+				toggleLaser(nextPos, board, laserStatus, dir);
+			}
+		}
+	}
+
+
+	/**
+	 * Method that checks if it is possible to move from the current tile to the tile in the given direction
+	 *
+	 * @param pos
+	 * @param board
+	 * @param dir
+	 * @return true if there are no walls blocking, or false if there are any walls blocking or if there is no tile in
+	 * the given direction (position is outside the board)
+	 */
+	public boolean isPossibleToMoveDir(Position pos, Board board, Direction dir) {
+		Tile nextTile = board.getTile(pos.getNeighbour(dir));
+
+		//if curTile has wall blocking - return false
+		if (this.hasWallInDir(this.direction)) {
+			return false;
+		}
+		//if nextTile is not null - proceed checking
+		else if (nextTile != null) {
+			//possible to move if nextTile does not have a wall blocking
+			return nextTile.hasWallInDir(this.direction.oppositeDirection());
+		}
+		//nextTile is not on the board - return false
+		else {
+			return false;
+		}
+	}
 
 
 }
