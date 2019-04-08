@@ -147,7 +147,7 @@ public class BoardGUI {
 		int yPos = 0;
 		Position pos;
 
-		for (int y = yOffset + boardPixelHeight; y >= yOffset; y -= tilesize) {
+		for (int y = yOffset; y <= yOffset+ boardPixelHeight; y += tilesize) {
 			for (int x = xOffset; x <= xOffset + boardPixelWidth; x += tilesize) {
 				pos = new Position(xPos, yPos);
 				Tile curTile = board.getTile(pos);
@@ -194,13 +194,14 @@ public class BoardGUI {
 	}
 
 	private void reposition() {
-		yOffset = Gdx.graphics.getHeight() - boardPixelHeight;
+		yOffset = Gdx.graphics.getHeight() - boardPixelHeight - tilesize;
 		xOffset = Gdx.graphics.getWidth() / 2 - boardPixelWidth / 2;
 	}
 
 	public void update() {
 		for (Player player : board.getAllPlayers()) {
 			Position pos = board.getPlayerPos(player);
+			System.out.println(pos);
 
 			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
 			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);

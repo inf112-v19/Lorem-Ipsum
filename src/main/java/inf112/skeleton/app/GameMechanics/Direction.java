@@ -29,9 +29,9 @@ public enum Direction {
 			case SOUTH:
 				return 180;
 			case EAST:
-				return 90;
+				return 270;
 			case WEST:
-				return -90;
+				return 90;
 			default:
 				System.err.println("direction not valid!");
 				return 0;
