@@ -74,7 +74,7 @@ public class BoardGUI {
 		Player[] allPlayers = board.getAllPlayers();
 		for (Player player : allPlayers) {
 
-			player.setScaling(fitViewport.getScaling());
+			//player.setScaling(fitViewport.getScaling());
 			player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
 
 			player.setSize(tilesize, tilesize);
@@ -148,7 +148,7 @@ public class BoardGUI {
 		Position pos;
 
 		for (int y = yOffset + boardPixelHeight; y >= yOffset; y -= tilesize) {
-			for (int x = xOffset; x < xOffset + boardPixelWidth; x += tilesize) {
+			for (int x = xOffset; x <= xOffset + boardPixelWidth; x += tilesize) {
 				pos = new Position(xPos, yPos);
 				Tile curTile = board.getTile(pos);
 				//Stack stack = makeStack(curTile);
