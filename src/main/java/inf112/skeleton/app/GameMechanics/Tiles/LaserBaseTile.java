@@ -40,7 +40,8 @@ public class LaserBaseTile extends Tile {
 			if (curTile.hasWallInDir(this.direction)){
 				break;
 			}
-			else {
+			//if nextTile is not null - proceed checking
+			else if (nextTile != null) {
 				//if the next tile has a wall blocking the laser - break
 				if (nextTile.hasWallInDir(this.direction.oppositeDirection())) {
 					break;
@@ -54,6 +55,10 @@ public class LaserBaseTile extends Tile {
 						nextTile.removeGameObject(new Laser(this.direction));
 					}
 				}
+			}
+			//nextTile is null (not on the board) - break
+			else {
+				break;
 			}
 
 			curPos = nextPos;
