@@ -28,10 +28,11 @@ public abstract class State {
 
 	}
 
-	public abstract void update(float dt);
+	public void update(float dt){
+		this.stage.act(dt);
+	}
 
 	public void render() {
-		this.stage.act();
 		this.stage.draw();
 	}
 
