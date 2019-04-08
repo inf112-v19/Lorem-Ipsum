@@ -61,9 +61,9 @@ public class Position {
 	public Position getNeighbour(Direction dir) {
 		switch (dir) {
 			case NORTH:
-				return new Position(this.x, this.y - 1);
-			case SOUTH:
 				return new Position(this.x, this.y + 1);
+			case SOUTH:
+				return new Position(this.x, this.y - 1);
 			case EAST:
 				return new Position(this.x + 1, this.y);
 			case WEST:

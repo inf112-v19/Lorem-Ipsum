@@ -165,7 +165,7 @@ public class BoardBuilder {
 
 		String[][] tileNumbers = new String[height][width];
 
-		for (int y=0; y<height; y++){
+		for (int y=height-1; y>-1; y--){
 			String line = bufferedReader.readLine();
 			if (line != null){
 				String[] numbers = line.split(" ");
