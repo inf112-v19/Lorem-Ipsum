@@ -43,8 +43,12 @@ public class BoardTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		players[0].setBackup(new Position(1, 4));
+		players[1].setBackup(new Position(1, 11));
 		testBoard.placePlayerOnPos(players[0], new Position(0, 4));
 		testBoard.placePlayerOnPos(players[1], new Position(0, 3));
+		players[0].setPlayerDirection(Direction.EAST);
+		players[1].setPlayerDirection(Direction.EAST);
 	}
 
 
@@ -357,6 +361,30 @@ public class BoardTest {
 		while (testBoard.doNextAction()){}
 
 		assertEquals(10, players[0].getHealth());
+	}
+
+
+	/**
+	 * Testing that players shooting each other both take damage - both players should have equal health and their combined
+	 * health should be 18 (9+9)
+	 */
+	@Test
+	public void playersShootingEachOther() {
+		players[0].setPlayerDirection(Direction.SOUTH);
+		players[1].setPlayerDirection(Direction.NORTH);
+		players[0].setReady();
+		players[1].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		int player0Health = players[0].getHealth();
+		int player1Health = players[0].getHealth();
+
+		if (player0Health == player1Health) {
+			assertEquals(18, player0Health+player1Health);
+		}else{
+			assert false;
+		}
 	}
 
 

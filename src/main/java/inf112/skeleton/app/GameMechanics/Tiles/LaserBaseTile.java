@@ -11,7 +11,6 @@ public class LaserBaseTile extends Tile {
 	public LaserBaseTile(GameObject[] gameObjects, Direction direction) {
 		super(gameObjects, direction);
 		this.addGameObject(new Wall(direction.oppositeDirection()));
-		this.addGameObject(new Laser(direction));
 		assignSpriteType();
 	}
 
