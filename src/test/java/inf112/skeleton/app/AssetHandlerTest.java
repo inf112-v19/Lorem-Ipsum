@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -229,6 +230,20 @@ public class AssetHandlerTest {
 	public void uTurnCardTextureTest(){
 		Card card = new Card(CardType.ROTATE_180, 1);
 		assertEquals(SpriteType.ROTATE_180, card.getSprite());
+	}
+
+	@Test
+	public void initLaserBaseTileCorrectTextureTest() {
+		GameObject[] gameObjects = new GameObject[0];
+		LaserBaseTile laserNorth = new LaserBaseTile(gameObjects, Direction.NORTH);
+		LaserBaseTile laserEast = new LaserBaseTile(gameObjects, Direction.EAST);
+		LaserBaseTile laserSouth = new LaserBaseTile(gameObjects, Direction.SOUTH);
+		LaserBaseTile laserWest = new LaserBaseTile(gameObjects, Direction.WEST);
+
+		assertEquals(laserNorth.getSpriteType(), SpriteType.LASERBASE_NORTH);
+		assertEquals(laserEast.getSpriteType(), SpriteType.LASERBASE_EAST);
+		assertEquals(laserSouth.getSpriteType(), SpriteType.LASERBASE_SOUTH);
+		assertEquals(laserWest.getSpriteType(), SpriteType.LASERBASE_WEST);
 	}
 	
 }
