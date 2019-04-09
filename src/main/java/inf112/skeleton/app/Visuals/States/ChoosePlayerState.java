@@ -111,7 +111,6 @@ public class ChoosePlayerState extends State {
 	@Override
 	public void render() {
 		super.render();
-		stage.act();
 		stage.getBatch().begin();
 		stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
 		stage.getBatch().end();

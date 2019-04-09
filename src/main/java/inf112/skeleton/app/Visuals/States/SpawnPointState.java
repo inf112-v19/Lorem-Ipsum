@@ -2,13 +2,16 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.SnapshotArray;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
+import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.Text;
@@ -27,6 +30,7 @@ public class SpawnPointState extends State {
 		this.board = board;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
 		this.boardGUI.create();
+		//this.boardGUI.addSpawnTileListeners(players);
 		this.boardGUI.addListenersToStage();
 		this.text = new Text("'s turn to to choose spawn", stage);
 		this.text.prependDynamicsText(players.first().getPlayerID());
@@ -74,31 +78,8 @@ public class SpawnPointState extends State {
 
 			}
 		}
+
 	}
 
 
-	@Override
-	public void stackEventHandle(Stack stack) {
-		if (!players.isEmpty()) {
-			float x = (stack.getX() - boardGUI.getxOffset()) / (stack.getWidth());
-			float y = (stack.getY() - boardGUI.getyOffset()) / (stack.getHeight());
-			Position playerPos = new Position((int) x, (int) y);
-
-			Player player = players.first();
-			if (board.spawnPlayer(playerPos, player)) {
-				System.out.println("du er her");
-				players.removeFirst();
-				player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
-				//player.setSize(stack.getWidth(), stack.getHeight());
-				//player.setPosition(stack.getX(), stack.getY());
-				stack.addActor(player);
-				System.out.println("placing " + player.getPlayerID());
-
-				if (!players.isEmpty()) {
-					this.text.prependDynamicsText(players.first().getPlayerID());
-				}
-
-			}
-		}
-	}
 }

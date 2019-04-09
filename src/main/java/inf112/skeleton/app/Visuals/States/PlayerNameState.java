@@ -80,8 +80,4 @@ public class PlayerNameState extends State {
 		table.add(submit);
 	}
 
-	@Override
-	public void update(float dt) {
-
-	}
 }

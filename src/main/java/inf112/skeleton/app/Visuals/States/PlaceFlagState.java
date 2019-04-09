@@ -31,6 +31,7 @@ public class PlaceFlagState extends State {
 		this.players = board.getAllPlayers();
 		this.text = new Text("'s turn to place flag", stage);
 		this.text.prependDynamicsText(players[0].getPlayerID());
+		System.out.println(players.length);
 	}
 
 	@Override

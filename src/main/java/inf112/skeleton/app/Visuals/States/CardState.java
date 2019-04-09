@@ -72,7 +72,7 @@ public class CardState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		boardGUI.resize();
+		//boardGUI.resize();
 		infoGUI.resize();
 		cardHandGUI.resize();
 	}
