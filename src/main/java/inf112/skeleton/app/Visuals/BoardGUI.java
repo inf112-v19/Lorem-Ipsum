@@ -38,8 +38,8 @@ public class BoardGUI {
 	private float boardPixelWidth;
 	private float boardPixelHeight;
 
-	private final float PAD_BOTTOM = 170;
-	private final float PAD_LEFT = 200;
+	private static final float PAD_BOTTOM = 170;
+	private static final float PAD_LEFT = 200;
 	private static final float MOVE_DURATION = 1;
 
 	public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm, AssetHandler assetHandler) {
