@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Visuals.AssetHandler;
@@ -258,6 +259,24 @@ public class AssetHandlerTest {
 		assertEquals(laserEast.getSpriteType(), SpriteType.DOUBLELASERBASE_EAST);
 		assertEquals(laserSouth.getSpriteType(), SpriteType.DOUBLELASERBASE_SOUTH);
 		assertEquals(laserWest.getSpriteType(), SpriteType.DOUBLELASERBASE_WEST);
+	}
+
+	@Test
+	public void flagsHaveRightTextureTest(){
+		Flag flag1 = new Flag(Direction.NORTH, 0);
+		Flag flag2 = new Flag(Direction.NORTH, 1);
+		Flag flag3 = new Flag(Direction.NORTH, 2);
+		Flag flag4 = new Flag(Direction.NORTH, 3);
+		Flag flag5 = new Flag(Direction.NORTH, 4);
+		Flag flag6 = new Flag(Direction.NORTH, 5);
+
+		assertEquals(SpriteType.FLAG1, flag1.getSpriteType());
+		assertEquals(SpriteType.FLAG2, flag2.getSpriteType());
+		assertEquals(SpriteType.FLAG3, flag3.getSpriteType());
+		assertEquals(SpriteType.FLAG4, flag4.getSpriteType());
+		assertEquals(SpriteType.FLAG5, flag5.getSpriteType());
+		assertEquals(SpriteType.FLAG6, flag6.getSpriteType());
+
 	}
 	
 }
