@@ -245,5 +245,19 @@ public class AssetHandlerTest {
 		assertEquals(laserSouth.getSpriteType(), SpriteType.LASERBASE_SOUTH);
 		assertEquals(laserWest.getSpriteType(), SpriteType.LASERBASE_WEST);
 	}
+
+	@Test
+	public void initDoubleLaserBaseTileCorrectTextureTest() {
+		GameObject[] gameObjects = new GameObject[0];
+		DoubleLaserBaseTile laserNorth = new DoubleLaserBaseTile(gameObjects, Direction.NORTH);
+		DoubleLaserBaseTile laserEast = new DoubleLaserBaseTile(gameObjects, Direction.EAST);
+		DoubleLaserBaseTile laserSouth = new DoubleLaserBaseTile(gameObjects, Direction.SOUTH);
+		DoubleLaserBaseTile laserWest = new DoubleLaserBaseTile(gameObjects, Direction.WEST);
+
+		assertEquals(laserNorth.getSpriteType(), SpriteType.DOUBLELASERBASE_NORTH);
+		assertEquals(laserEast.getSpriteType(), SpriteType.DOUBLELASERBASE_EAST);
+		assertEquals(laserSouth.getSpriteType(), SpriteType.DOUBLELASERBASE_SOUTH);
+		assertEquals(laserWest.getSpriteType(), SpriteType.DOUBLELASERBASE_WEST);
+	}
 	
 }
