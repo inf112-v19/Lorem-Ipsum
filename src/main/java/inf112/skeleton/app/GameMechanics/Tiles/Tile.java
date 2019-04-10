@@ -208,7 +208,8 @@ public abstract class Tile extends Image implements ITile {
 			}
 
 			if (this.isPossibleToMoveDir(curPos, board, dir)) {
-				toggleLaser(nextPos, board, laserStatus, dir);
+				Tile nextTile = board.getTile(nextPos);
+				nextTile.toggleLaser(nextPos, board, laserStatus, dir);
 			}
 		}
 	}
