@@ -26,7 +26,6 @@ public class CardHandGUI {
     private Stage stage;
 
     private AssetHandler assetHandler;
-    private Texture texture;
 
     private BitmapFont font;
     private String playerTurn;
@@ -200,8 +199,7 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        texture = assetHandler.getTexture("CardImages/" + filename + ".png");
-        TextureRegion numberTexture = new TextureRegion(texture);
+        TextureRegion numberTexture = new TextureRegion(assetHandler.getTexture("CardImages/" + filename + ".png"));
         numberLabels[cardPtr] = new Image(numberTexture);
         numberLabels[cardPtr].setSize(97, 30);
         numberLabels[cardPtr].setPosition(labelXPos, 135);
@@ -210,8 +208,7 @@ public class CardHandGUI {
     }
 
     private void drawLockImage(int xPos) {
-        texture = assetHandler.getTexture("lock.png");
-        TextureRegion lockTex = new TextureRegion(texture);
+        TextureRegion lockTex = new TextureRegion(assetHandler.getTexture("lock.png"));
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
@@ -305,9 +302,6 @@ public class CardHandGUI {
         submit.clearListeners();
         clear.clearListeners();
         clearOldCards();
-        if (texture != null){
-            texture.dispose();
-        }
         font.dispose();
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();
