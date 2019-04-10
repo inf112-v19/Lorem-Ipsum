@@ -19,7 +19,6 @@ public abstract class State {
 
 
 	protected State(GameStateManager gsm) {
-		//this.camera.setToOrtho(true, RoboRally.WIDTH, RoboRally.HEIGHT);
 		this.gsm = gsm;
 		Gdx.input.setInputProcessor(this.stage);
 	}
@@ -49,15 +48,6 @@ public abstract class State {
 	 * This method is GameStateManager when the current stage is active
 	 */
 	public void tileEventHandle(Tile tile) {
-
-	}
-
-
-	/**
-	 * Method that handles the clicking of Stacks on the board.
-	 * This method is GameStateManager when the current stage is active
-	 */
-	public void stackEventHandle(Stack stack) {
 
 	}
 

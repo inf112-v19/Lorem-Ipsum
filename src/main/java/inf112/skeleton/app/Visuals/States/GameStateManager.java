@@ -53,8 +53,4 @@ public class GameStateManager {
 	public void tileEventHandle(Tile tile) {
 		states.peek().tileEventHandle(tile);
 	}
-
-	public void stackEventHandle(com.badlogic.gdx.scenes.scene2d.ui.Stack stack) {
-		states.peek().stackEventHandle(stack);
-	}
 }
