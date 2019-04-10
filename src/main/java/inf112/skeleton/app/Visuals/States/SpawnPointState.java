@@ -30,7 +30,6 @@ public class SpawnPointState extends State {
 		this.board = board;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
 		this.boardGUI.create();
-		//this.boardGUI.addSpawnTileListeners(players);
 		this.boardGUI.addListenersToStage();
 		this.text = new Text("'s turn to to choose spawn", stage);
 		this.text.prependDynamicsText(players.first().getPlayerID());
