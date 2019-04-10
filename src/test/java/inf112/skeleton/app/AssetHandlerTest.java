@@ -23,12 +23,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestInit.class)
 public class AssetHandlerTest {
 
-	private AssetHandler assetHandler;
-
-	@Before
-	public void setUp() {
-		assetHandler = new AssetHandler();
-	}
+	private final static AssetHandler assetHandler = new AssetHandler();
 
 	@Test
 	public void initNormalTileTextureTest() {

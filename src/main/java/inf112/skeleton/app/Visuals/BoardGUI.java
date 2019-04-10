@@ -175,6 +175,8 @@ public class BoardGUI {
 			Position pos = board.getPlayerPos(player);
 			System.out.println(pos);
 
+
+
 			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
 			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
 			rotate.setUseShortestDirection(true);
