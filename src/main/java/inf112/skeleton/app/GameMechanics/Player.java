@@ -24,6 +24,7 @@ public class Player extends Image implements IPlayer {
     private boolean ready = false;
     private boolean isOnTheBoard = true;
     private ArrayList<Flag> collectedFlags = new ArrayList<>();
+    private boolean controlledByAI;
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -43,6 +44,12 @@ public class Player extends Image implements IPlayer {
         spriteType = SpriteType.PLAYER1;
     }
 
+    /**
+     *  Create Player object
+     * @param index number used to order players
+     * @param playerID Name to be displayed for the player
+     * @param direction Direction the player is facing
+     */
     public Player(int index, String playerID, Direction direction) {
         this.index = index;
         this.playerID = playerID;
@@ -50,6 +57,19 @@ public class Player extends Image implements IPlayer {
         assignSpriteType();
     }
 
+    /**
+     * Create a player object, used to create AI controlled players
+     * @param index number used to order players
+     * @param playerID Name to be displayed for the player
+     * @param direction Direction the player is facing
+     * @param controlledByAI sets player to be controlled by a user or AI
+     */
+    public Player(int index, String playerID, Direction direction, boolean controlledByAI){
+        this.index = index;
+        this.playerID = playerID;
+        this.controlledByAI = controlledByAI;
+        setPlayerDirection(direction);
+    }
 
     /**
      * Turn the player around 'numberOfTurns' to the right.
