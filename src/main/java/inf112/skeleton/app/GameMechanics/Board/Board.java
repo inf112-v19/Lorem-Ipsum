@@ -438,7 +438,11 @@ public class Board implements IBoard {
 		for (Map.Entry<Player, Position> playerPositionEntry : playerPositions.entrySet()) {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
-			player.toggleLaser(playerPos, this, laserStatus);
+
+			//if player is on the board - fire laser
+			if (player.onBoardCheck()) {
+				player.toggleLaser(playerPos, this, laserStatus);
+			}
 		}
 	}
 
