@@ -71,6 +71,11 @@ public class CardHandGUI {
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
             currentPlayer = cardManager.getPlayer();
+
+            //if (currentPlayer.isAI())
+                //do something
+
+            //else
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
             draw(currentCards);
