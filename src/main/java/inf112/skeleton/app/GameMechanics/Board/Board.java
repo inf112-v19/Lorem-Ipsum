@@ -439,8 +439,8 @@ public class Board implements IBoard {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
 
-			//if player is on the board - fire laser
-			if (player.onBoardCheck()) {
+			//only adds lasers if player is on the board
+			if (player.onBoardCheck() || !laserStatus) {
 				player.toggleLaser(playerPos, this, laserStatus);
 			}
 		}
