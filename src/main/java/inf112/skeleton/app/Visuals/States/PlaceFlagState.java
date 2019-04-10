@@ -26,10 +26,12 @@ public class PlaceFlagState extends State {
 		this.board = board;
 		this.cardManager = cardManager;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
+		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
 		this.text = new Text("'s turn to place flag", stage);
 		this.text.prependDynamicsText(players[0].getPlayerID());
+		System.out.println(players.length);
 	}
 
 	@Override

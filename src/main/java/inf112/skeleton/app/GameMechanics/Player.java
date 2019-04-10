@@ -1,8 +1,10 @@
 package inf112.skeleton.app.GameMechanics;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
 
@@ -320,4 +322,23 @@ public class Player extends Image implements IPlayer {
 	public void resetHealth() {
 		playerHealth = 10;
 	}
+
+	/**
+	 * Method for shooting or removing laser in the player direction - cast curTile to LaserBaseTile and uses the
+	 * toggleLaser method, skips first tile since this is the tile the player shooting is standing on
+	 *
+	 * @param pos
+	 * @param board
+	 */
+	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
+		Tile curTile = board.getTile(pos);
+
+		//skips the tile the player shooting is standing on
+		if (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
+			Position nextPos = pos.getNeighbour(this.playerDirection);
+			Tile nextTile = board.getTile(nextPos);
+			nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
+		}
+	}
+
 }

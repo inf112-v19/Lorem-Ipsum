@@ -28,7 +28,7 @@ public class GameOverState extends State {
 		this.table.center();
 		this.table.setFillParent(true);
 		this.table.defaults().space(0, 40, 40, 40);
-		this.font = new Label.LabelStyle(new BitmapFont(true), Color.WHITE);
+		this.font = new Label.LabelStyle(new BitmapFont(false), Color.WHITE);
 		this.playAgainLabel = new Label("Click To Play Again", this.font);
 
 		playAgainLabel();

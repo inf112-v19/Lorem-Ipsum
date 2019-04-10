@@ -14,8 +14,6 @@ public class PlayerInfoGUI {
 	private BitmapFont[] fonts;
 	private String[] playerNames;
 
-	private Texture texture;
-
 	private Stage stage;
 	private AssetHandler assetHandler;
 
@@ -32,7 +30,7 @@ public class PlayerInfoGUI {
 		playerNames = new String[players.length];
 		fonts = new BitmapFont[players.length];
 		for (int i = 0; i < fonts.length; i++) {
-			fonts[i] = new BitmapFont(true);
+			fonts[i] = new BitmapFont();
 		}
 		for (int i = 0; i < players.length; i++) {
 			playerNames[i] = players[i].getPlayerID();
@@ -68,7 +66,6 @@ public class PlayerInfoGUI {
 		for (BitmapFont font : fonts) {
 			font.dispose();
 		}
-		texture.dispose();
 	}
 
 	public void resize() {
@@ -79,7 +76,7 @@ public class PlayerInfoGUI {
 		TextureRegion texture = assetHandler.getTexture(sprite);
 		int yDrawPos = playerYbyRow(row);
 		int xDrawPos = Gdx.graphics.getWidth() - 60;
-		createActor(texture, 30, 30, xDrawPos, yDrawPos, false);
+		createActor(texture, 30, 30, xDrawPos, yDrawPos);
 	}
 
 	private void drawHealthPoint(int row, int numberOfPoints) {
@@ -92,9 +89,8 @@ public class PlayerInfoGUI {
 				yDrawPos += 12;
 			}
 			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			texture = assetHandler.getTexture("healthbar.png");
-			TextureRegion textureRegion = new TextureRegion(texture);
-			createActor(textureRegion, 10, 20, xDrawPos, yDrawPos, true);
+			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("healthbar.png"));
+			createActor(textureRegion, 10, 20, xDrawPos, yDrawPos);
 			deltaX -= 22;
 		}
 	}
@@ -105,9 +101,8 @@ public class PlayerInfoGUI {
 
 		for (int i = 0; i < numberOfLives; i++) {
 			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			texture = assetHandler.getTexture("heart.png");
-			TextureRegion textureRegion = new TextureRegion(texture);
-			createActor(textureRegion, 20, 20, xDrawPos, yDrawPos, true);
+			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("heart.png"));
+			createActor(textureRegion, 20, 20, xDrawPos, yDrawPos);
 			deltaX -= 25;
 		}
 	}
@@ -121,11 +116,8 @@ public class PlayerInfoGUI {
 	 * @param xpos
 	 * @param ypos
 	 */
-	private void createActor(TextureRegion textureRegion, int height, int width, int xpos, int ypos, boolean flip) {
+	private void createActor(TextureRegion textureRegion, int height, int width, int xpos, int ypos) {
 		TextureRegion texture = textureRegion;
-		if (flip) {
-			texture.flip(false, true);
-		}
 		Image image = new Image(texture);
 		image.setSize(width, height);
 		image.setPosition(xpos, ypos);
@@ -134,35 +126,35 @@ public class PlayerInfoGUI {
 
 	private int lifeYbyRow(int row) {
 		if (row == 0) {
-			return 20;
+			return Gdx.graphics.getHeight() - 40;
 		} else {
-			return 20 + (row * 75);
+			return Gdx.graphics.getHeight() - 40 - (row * 75);
 		}
 	}
 
 	private int healthYbyRow(int row) {
 		if (row == 0) {
-			return 45;
+			return Gdx.graphics.getHeight()-70;
 		} else {
-			return 45 + (row * 75);
+			return Gdx.graphics.getHeight()-70 - (row * 75);
 		}
 	}
 
 	private int playerYbyRow(int row) {
 		if (row == 0) {
-			return 38;
+			return Gdx.graphics.getHeight()-70;
 		} else {
-			return 38 + (row * 75);
+			return Gdx.graphics.getHeight()-70 - (row * 75);
 		}
 	}
 
 	private void renderNames() {
 		batch.begin();
 		int xpos = Gdx.graphics.getWidth() - 180;
-		int ypos = 5;
+		int ypos = Gdx.graphics.getHeight()-5;
 		for (int i = 0; i < playerNames.length; i++) {
 			fonts[i].draw(batch, playerNames[i], xpos, ypos);
-			ypos += 75;
+			ypos -= 75;
 		}
 		batch.end();
 	}

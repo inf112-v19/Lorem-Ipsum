@@ -28,6 +28,7 @@ public class ActionState extends State {
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, super.assetHandler);
+		this.boardGUI.create();
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
 		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
@@ -37,6 +38,7 @@ public class ActionState extends State {
 
 	@Override
 	public void update(float dt) {
+		super.update(dt);
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT) {
 			updateCount = 0;
@@ -76,7 +78,6 @@ public class ActionState extends State {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		batch.dispose();
 		infoGUI.dispose();
 		pendingCardsGUI.dispose();
