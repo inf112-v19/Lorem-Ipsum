@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
@@ -106,9 +107,7 @@ public class BoardGUI {
 
 	private void addGameObjectsOnTileToStage(final Tile tile, float x, float y) {
 		if (tile.hasAnyGameObjects()) {
-			GameObject[] gameObjects = tile.getGameObjects();
-			for (int i = 0; i < tile.getGameObjects().length; i++) {
-				GameObject gameObject = gameObjects[i];
+			for (GameObject gameObject : tile.getGameObjects()) {
 				addGameObjectToStage(gameObject, x, y);
 			}
 		}
@@ -175,13 +174,21 @@ public class BoardGUI {
 			Position pos = board.getPlayerPos(player);
 			System.out.println(pos);
 
-
-
 			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
 			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
 			rotate.setUseShortestDirection(true);
 			player.addAction(rotate);
 			player.addAction(move);
+		}
+
+		for (int y = 0; y < boardHeight-1; y++){
+			for(int x = 0; x < boardWidth-1; x++){
+				Position position = new Position(x,y);
+				Tile tile = board.getTile(position);
+				float tileX = tile.getX();
+				float tileY = tile.getY();
+				addGameObjectsOnTileToStage(tile, tileX, tileY);
+			}
 
 		}
 	}
