@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.Visuals.Text;
 
 
 public class PlayerNameState extends State {
@@ -49,13 +50,12 @@ public class PlayerNameState extends State {
 
 	private void creatTextFields() {
 		for (int i = 0; i < numPlayers; i++) {
-
 			textAreas[i] = new TextArea("", uiSkin);
 
-			Label label = new Label("Player " + (i + 1), uiSkin);
-			label.setFontScale(1.5f);
+			Text text = new Text("Player " + (i + 1), uiSkin);
+			text.setFontScale(1.5f);
 
-			table.add(label).width(100);
+			table.add(text).width(100);
 			table.add(textAreas[i]).width(150);
 			table.row();
 		}
