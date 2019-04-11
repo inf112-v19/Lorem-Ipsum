@@ -1,8 +1,10 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -40,6 +42,8 @@ public final class AssetHandler {
 
 	public AssetHandler() {
 		manager = new AssetManager();
+		manager.load("uiskin.json", Skin.class);
+
 		manager.load("RoboRallyTiles.png", Texture.class);
 		manager.load("Player/redtank.png", Texture.class);
 		manager.load("CardImages/BackUp.png", Texture.class);
@@ -266,6 +270,10 @@ public final class AssetHandler {
 		TextureRegion t = new TextureRegion(manager.get(filename, Texture.class));
 		//t.flip(false, true);
 		return t;
+	}
+
+	public Skin getSkin(){
+		return manager.get("uiskin.json");
 	}
 
 	public void dispose() {
