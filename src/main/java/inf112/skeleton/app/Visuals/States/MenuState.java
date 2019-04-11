@@ -4,34 +4,37 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public class MenuState extends State {
-	private TextureRegion background;
+	private TextureRegionDrawable background;
 	private Image startButton;
-
-	private int buttonWidth;
-	private int buttonHeight;
+	private Table table;
 
 	private boolean start;
 
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
 
-		this.buttonWidth = 192 + 64;
-		this.buttonHeight = 49 + 16;
+		this.table = new Table();
+		this.table.setFillParent(true);
+		this.table.center();
+
 		this.start = false;
 
-		this.background = super.assetHandler.getTextureRegion("StateImages/menuBackground.jpg");
-		this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
+		this.table.setBackground(this.background);
 
 		setStartButton();
+
+		super.stage.addActor(table);
 	}
 
 	private void setStartButton() {
-		this.startButton.setSize(buttonWidth, buttonHeight);
-		this.startButton.setPosition((RoboRally.WIDTH / 2) - (this.buttonWidth / 2), (RoboRally.HEIGHT / 2) - (this.buttonHeight / 2));
-		stage.addActor(this.startButton);
+		this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
+		this.table.add(startButton);
 
 		clickable(this.startButton);
 	}
@@ -61,9 +64,6 @@ public class MenuState extends State {
 
 	@Override
 	public void render() {
-		this.stage.getBatch().begin();
-		this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-		this.stage.getBatch().end();
 		super.render();
 	}
 

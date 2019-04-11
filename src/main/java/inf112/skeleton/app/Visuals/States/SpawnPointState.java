@@ -21,12 +21,17 @@ public class SpawnPointState extends State {
 
 	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players) {
 		super(gsm);
+		super.camera.setToOrtho(false);
 		this.players = players;
 		this.board = board;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
+		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
-		this.text = new Text("'s turn to to choose spawn", stage);
+		this.text = new Text("'s turn to choose spawn", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
 		this.text.prependDynamicsText(players.first().getPlayerID());
+		super.stage.addActor(text);
+
+
 	}
 
 	@Override
@@ -45,7 +50,6 @@ public class SpawnPointState extends State {
 			CardManager cardManager = new CardManager(board);
 			boardGUI.removeAllListeners();
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
-			text.dispose();
 		}
 	}
 
@@ -71,5 +75,8 @@ public class SpawnPointState extends State {
 
 			}
 		}
+
 	}
+
+
 }

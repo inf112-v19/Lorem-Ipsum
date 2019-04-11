@@ -1,8 +1,10 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -40,6 +42,8 @@ public final class AssetHandler {
 
 	public AssetHandler() {
 		manager = new AssetManager();
+		manager.load("uiskin.json", Skin.class);
+
 		manager.load("RoboRallyTiles.png", Texture.class);
 		manager.load("Player/redtank.png", Texture.class);
 		manager.load("CardImages/BackUp.png", Texture.class);
@@ -91,55 +95,55 @@ public final class AssetHandler {
 		manager.finishLoading();
 		this.texture = manager.get("RoboRallyTiles.png", Texture.class);
 		this.spriteSheet = new TextureRegion(texture, 336, 624).split(336 / 7, 624 / 13);
-		flip(this.spriteSheet);
+		//flip(this.spriteSheet);
 
 		this.texture = manager.get("Player/redtank.png", Texture.class);
 		this.redtankSheet = new TextureRegion(this.texture, 224, 128).split(224 / 7, 128 / 4);
-		flip(this.redtankSheet);
+		//flip(this.redtankSheet);
 
 		this.texture = manager.get("CardImages/BackUp.png", Texture.class);
 		this.backUpSprite = new TextureRegion(texture);
-		this.backUpSprite.flip(false, true);
+		//this.backUpSprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/LeftTurn.png", Texture.class);
 		this.leftTurnSprite = new TextureRegion(texture);
-		this.leftTurnSprite.flip(false, true);
+		//this.leftTurnSprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/Move1.png", Texture.class);
 		this.move1Sprite = new TextureRegion(texture);
-		this.move1Sprite.flip(false, true);
+		//this.move1Sprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/Move2.png", Texture.class);
 		this.move2Sprite = new TextureRegion(texture);
-		this.move2Sprite.flip(false, true);
+		//this.move2Sprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/Move3.png", Texture.class);
 		this.move3Sprite = new TextureRegion(texture);
-		this.move3Sprite.flip(false, true);
+		//this.move3Sprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/RightTurn.png", Texture.class);
 		this.rightTurnSprite = new TextureRegion(texture);
-		this.rightTurnSprite.flip(false, true);
+		//this.rightTurnSprite.flip(false, true);
 
 		this.texture = manager.get("CardImages/U-Turn.png", Texture.class);
 		this.uTurnSprite = new TextureRegion(texture);
-		this.uTurnSprite.flip(false, true);
+		//this.uTurnSprite.flip(false, true);
 
 		this.texture = manager.get("clear.png", Texture.class);
 		this.cardGuiClearButton = new TextureRegion(texture);
-		this.cardGuiClearButton.flip(false, true);
+		//this.cardGuiClearButton.flip(false, true);
 
 		this.texture = manager.get("submit.png", Texture.class);
 		this.cardGuiSubmitButton = new TextureRegion(texture);
-		this.cardGuiSubmitButton.flip(false, true);
+		//this.cardGuiSubmitButton.flip(false, true);
 
 		this.texture = manager.get("CardImages/cardBar.png", Texture.class);
 		this.cardBar = new TextureRegion(texture);
-		this.cardBar.flip(false, true);
+		//this.cardBar.flip(false, true);
 
 		this.texture = manager.get("SpawnTile.png", Texture.class);
 		this.spawnTile = new TextureRegion(this.texture);
-		this.spawnTile.flip(false, true);
+		//this.spawnTile.flip(false, true);
 	}
 
 	/**
@@ -264,8 +268,12 @@ public final class AssetHandler {
 
 	public TextureRegion getTextureRegion(String filename) {
 		TextureRegion t = new TextureRegion(manager.get(filename, Texture.class));
-		t.flip(false, true);
+		//t.flip(false, true);
 		return t;
+	}
+
+	public Skin getSkin(){
+		return manager.get("uiskin.json");
 	}
 
 	public void dispose() {

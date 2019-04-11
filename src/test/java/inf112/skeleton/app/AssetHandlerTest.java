@@ -3,6 +3,8 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
+import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -21,12 +23,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestInit.class)
 public class AssetHandlerTest {
 
-	private AssetHandler assetHandler;
-
-	@Before
-	public void setUp() {
-		assetHandler = new AssetHandler();
-	}
+	private final static AssetHandler assetHandler = new AssetHandler();
 
 	@Test
 	public void initNormalTileTextureTest() {
@@ -229,6 +226,52 @@ public class AssetHandlerTest {
 	public void uTurnCardTextureTest(){
 		Card card = new Card(CardType.ROTATE_180, 1);
 		assertEquals(SpriteType.ROTATE_180, card.getSprite());
+	}
+
+	@Test
+	public void initLaserBaseTileCorrectTextureTest() {
+		GameObject[] gameObjects = new GameObject[0];
+		LaserBaseTile laserNorth = new LaserBaseTile(gameObjects, Direction.NORTH);
+		LaserBaseTile laserEast = new LaserBaseTile(gameObjects, Direction.EAST);
+		LaserBaseTile laserSouth = new LaserBaseTile(gameObjects, Direction.SOUTH);
+		LaserBaseTile laserWest = new LaserBaseTile(gameObjects, Direction.WEST);
+
+		assertEquals(laserNorth.getSpriteType(), SpriteType.LASERBASE_NORTH);
+		assertEquals(laserEast.getSpriteType(), SpriteType.LASERBASE_EAST);
+		assertEquals(laserSouth.getSpriteType(), SpriteType.LASERBASE_SOUTH);
+		assertEquals(laserWest.getSpriteType(), SpriteType.LASERBASE_WEST);
+	}
+
+	@Test
+	public void initDoubleLaserBaseTileCorrectTextureTest() {
+		GameObject[] gameObjects = new GameObject[0];
+		DoubleLaserBaseTile laserNorth = new DoubleLaserBaseTile(gameObjects, Direction.NORTH);
+		DoubleLaserBaseTile laserEast = new DoubleLaserBaseTile(gameObjects, Direction.EAST);
+		DoubleLaserBaseTile laserSouth = new DoubleLaserBaseTile(gameObjects, Direction.SOUTH);
+		DoubleLaserBaseTile laserWest = new DoubleLaserBaseTile(gameObjects, Direction.WEST);
+
+		assertEquals(laserNorth.getSpriteType(), SpriteType.DOUBLELASERBASE_NORTH);
+		assertEquals(laserEast.getSpriteType(), SpriteType.DOUBLELASERBASE_EAST);
+		assertEquals(laserSouth.getSpriteType(), SpriteType.DOUBLELASERBASE_SOUTH);
+		assertEquals(laserWest.getSpriteType(), SpriteType.DOUBLELASERBASE_WEST);
+	}
+
+	@Test
+	public void flagsHaveRightTextureTest(){
+		Flag flag1 = new Flag(Direction.NORTH, 0);
+		Flag flag2 = new Flag(Direction.NORTH, 1);
+		Flag flag3 = new Flag(Direction.NORTH, 2);
+		Flag flag4 = new Flag(Direction.NORTH, 3);
+		Flag flag5 = new Flag(Direction.NORTH, 4);
+		Flag flag6 = new Flag(Direction.NORTH, 5);
+
+		assertEquals(SpriteType.FLAG1, flag1.getSpriteType());
+		assertEquals(SpriteType.FLAG2, flag2.getSpriteType());
+		assertEquals(SpriteType.FLAG3, flag3.getSpriteType());
+		assertEquals(SpriteType.FLAG4, flag4.getSpriteType());
+		assertEquals(SpriteType.FLAG5, flag5.getSpriteType());
+		assertEquals(SpriteType.FLAG6, flag6.getSpriteType());
+
 	}
 	
 }

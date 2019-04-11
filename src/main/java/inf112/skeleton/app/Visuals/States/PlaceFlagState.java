@@ -26,10 +26,12 @@ public class PlaceFlagState extends State {
 		this.board = board;
 		this.cardManager = cardManager;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
+		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
-		this.text = new Text("'s turn to place flag", stage);
+		this.text = new Text("'s turn to place flag", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
 		this.text.prependDynamicsText(players[0].getPlayerID());
+		super.stage.addActor(text);
 	}
 
 	@Override
@@ -46,7 +48,6 @@ public class PlaceFlagState extends State {
 		if (flagCount >= players.length) {
 			boardGUI.removeAllListeners();
 			gsm.set(new CardState(gsm, board, cardManager));
-			text.dispose();
 		}
 	}
 

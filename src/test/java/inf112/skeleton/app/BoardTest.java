@@ -30,8 +30,8 @@ public class BoardTest {
 		Player player1 = new Player(1,"Player 1", Direction.EAST);
 		player0.setBackup(new Position(1, 4));
 		player1.setBackup(new Position(1, 11));
-		testBoard.placePlayerOnPos(player0, new Position(0, 0));
-		testBoard.placePlayerOnPos(player1, new Position(0, 1));
+		testBoard.placePlayerOnPos(player0, new Position(0, 4));
+		testBoard.placePlayerOnPos(player1, new Position(0, 3));
 
 		players = testBoard.getAllPlayers();
 	}
@@ -43,8 +43,12 @@ public class BoardTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		testBoard.placePlayerOnPos(players[0], new Position(0, 0));
-		testBoard.placePlayerOnPos(players[1], new Position(0, 1));
+		players[0].setBackup(new Position(1, 4));
+		players[1].setBackup(new Position(1, 11));
+		testBoard.placePlayerOnPos(players[0], new Position(0, 4));
+		testBoard.placePlayerOnPos(players[1], new Position(0, 3));
+		players[0].setPlayerDirection(Direction.EAST);
+		players[1].setPlayerDirection(Direction.EAST);
 	}
 
 
@@ -54,7 +58,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void posToPlayerPlayer0Test() {
-		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,0));
+		Player shouldBePlayer0 = testBoard.posToPlayer(new Position(0,4));
 		assertEquals(shouldBePlayer0, players[0]);
 	}
 
@@ -100,7 +104,7 @@ public class BoardTest {
 		testBoard.movePlayer(players[0], Direction.SOUTH);
 		Position newPos = testBoard.getPlayerPos(players[0]);
 
-		assertEquals(new Position(2,1), newPos);
+		assertEquals(new Position(2,3), newPos);
 	}
 
 	/**
@@ -128,7 +132,7 @@ public class BoardTest {
 		testBoard.movePlayer(players[0], Direction.WEST);
 		Position newPos = testBoard.getPlayerPos(players[0]);
 
-		assertEquals(new Position(0,0), newPos);
+		assertEquals(new Position(0,4), newPos);
 	}
 
 	/**
@@ -151,7 +155,7 @@ public class BoardTest {
 
 		Position newPos = testBoard.getPlayerPos(players[1]);
 
-		assertEquals(new Position(0,3), newPos);
+		assertEquals(new Position(0,1), newPos);
 
 	}
 
@@ -190,7 +194,7 @@ public class BoardTest {
 
 		Position newPos = testBoard.getPlayerPos(players[0]);
 
-		assertEquals(new Position(3,0), newPos);
+		assertEquals(new Position(3,4), newPos);
 	}
 
 	/**
@@ -265,7 +269,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerStandingOnLeftRotationTile() {
-		testBoard.placePlayerOnPos(players[0], new Position(3,0));
+		testBoard.placePlayerOnPos(players[0], new Position(3,4));
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
@@ -280,7 +284,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerStandingOnRightRotationTile() {
-		testBoard.placePlayerOnPos(players[0], new Position(4,0));
+		testBoard.placePlayerOnPos(players[0], new Position(4,4));
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
@@ -322,12 +326,12 @@ public class BoardTest {
 	@Test
 	public void playerBackupChangedByFlag() {
 
-		testBoard.placePlayerOnPos(players[0], new Position(1, 0));
+		testBoard.placePlayerOnPos(players[0], new Position(1, 4));
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(new Position(1,0), players[0].getBackup());
+		assertEquals(new Position(1,4), players[0].getBackup());
 	}
 
 	/**
@@ -357,6 +361,30 @@ public class BoardTest {
 		while (testBoard.doNextAction()){}
 
 		assertEquals(10, players[0].getHealth());
+	}
+
+
+	/**
+	 * Testing that players shooting each other both take damage - both players should have equal health and their combined
+	 * health should be 18 (9+9)
+	 */
+	@Test
+	public void playersShootingEachOther() {
+		players[0].setPlayerDirection(Direction.SOUTH);
+		players[1].setPlayerDirection(Direction.NORTH);
+		players[0].setReady();
+		players[1].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		int player0Health = players[0].getHealth();
+		int player1Health = players[0].getHealth();
+
+		if (player0Health == player1Health) {
+			assertEquals(18, player0Health+player1Health);
+		}else{
+			assert false;
+		}
 	}
 
 

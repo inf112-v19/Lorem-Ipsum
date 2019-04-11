@@ -6,17 +6,23 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
+import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
+import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 
 
 public class BoardGUI {
+
 
 	private GameStateManager gsm;
 
@@ -24,93 +30,72 @@ public class BoardGUI {
 	private AssetHandler assetHandler;
 
 	private Stage stage;
-	private FitViewport fitViewport;
 
-	private int xOffset;
-	private int yOffset;
-	private int tilesize;
+	private float xOffset;
+	private float yOffset;
+	private float tilesize;
 	private int boardWidth;
 	private int boardHeight;
-	private int boardTileWidth;
-	private int boardTileHeight;
+	private float boardPixelWidth;
+	private float boardPixelHeight;
 
+	private static final float PAD_BOTTOM = 170;
+	private static final float PAD_LEFT = 200;
 	private static final float MOVE_DURATION = 1;
 
 	public BoardGUI(Board board, OrthographicCamera camera, Stage stage, GameStateManager gsm, AssetHandler assetHandler) {
 		this.gsm = gsm;
-
-		this.fitViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 		this.stage = stage;
-
 		this.assetHandler = assetHandler;
 		this.board = board;
 
 		this.boardWidth = board.getWidth();
 		this.boardHeight = board.getHeight();
 
-		this.tilesize = Math.min(RoboRally.HEIGHT, RoboRally.WIDTH) / (Math.min(boardWidth, boardHeight)) - 8;
+		this.tilesize = Math.min((int)stage.getHeight()-PAD_BOTTOM, (int)stage.getWidth()-PAD_LEFT) / (Math.min(boardWidth, boardHeight));
 
-		this.boardTileWidth = boardWidth * tilesize;
-		this.boardTileHeight = boardHeight * tilesize;
+		this.boardPixelWidth = (boardWidth-1) * tilesize;
+		this.boardPixelHeight = (boardHeight-1) * tilesize;
 
 		reposition();
-		create();
-
 	}
 
 	/**
-	 * Method that adds all players from the board to the stage
+	 * Method that updates all moving parts of the BoardGUI
 	 */
-	private void addPlayersToStage() {
-		Player[] allPlayers = board.getAllPlayers();
-		for (Player player : allPlayers) {
-
-			player.setScaling(fitViewport.getScaling());
-			player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
-
-			player.setSize(tilesize, tilesize);
-			player.setOrigin(player.getWidth() / 2, player.getHeight() / 2);
-			player.setRotation(player.getDirection().directionToDegrees());
-
+	public void update() {
+		for (Player player : board.getAllPlayers()) {
 			Position pos = board.getPlayerPos(player);
-			player.setPosition(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset);
 
-			stage.addActor(player);
+			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
+			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
+			rotate.setUseShortestDirection(true);
+			player.addAction(rotate);
+			player.addAction(move);
 		}
-	}
 
-	private void addGameObjectToStage(GameObject gameObject, float x, float y) {
-		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
-		gameObject.setSize(tilesize, tilesize);
-		gameObject.setPosition(x, y);
-		stage.addActor(gameObject);
-	}
-
-
-	private void addTilesToStage(final Tile tile, int x, int y) {
-		tile.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(tile)));
-		tile.setSize(tilesize, tilesize);
-		tile.setPosition(x, y);
-		stage.addActor(tile);
-	}
-
-	private void addGameObjectsOnTileToStage(final Tile tile, int x, int y) {
-		if (tile.hasAnyGameObjects()) {
-			GameObject[] gameObjects = tile.getGameObjects();
-			for (int i = 0; i < tile.getGameObjects().length; i++) {
-				GameObject gameObject = gameObjects[i];
-				addGameObjectToStage(gameObject, x, y);
+		for (int y = 0; y < boardHeight; y++){
+			for(int x = 0; x < boardWidth; x++){
+				Position position = new Position(x,y);
+				Tile tile = board.getTile(position);
+				float tileX = tile.getX();
+				float tileY = tile.getY();
+				addGameObjectsOnTileToStage(tile, tileX, tileY);
 			}
+
 		}
 	}
 
-	private void create() {
+	/**
+	 * Method that creates the board visually
+	 */
+	public void create() {
 		int xPos = 0;
 		int yPos = 0;
 		Position pos;
 
-		for (int y = yOffset; y < yOffset + boardTileHeight; y += tilesize) {
-			for (int x = xOffset; x < xOffset + boardTileWidth; x += tilesize) {
+		for (float y = yOffset; y <= yOffset+ boardPixelHeight; y += tilesize) {
+			for (float x = xOffset; x <= xOffset + boardPixelWidth; x += tilesize) {
 				pos = new Position(xPos, yPos);
 				Tile curTile = board.getTile(pos);
 				addTilesToStage(curTile, x, y);
@@ -122,6 +107,61 @@ public class BoardGUI {
 		}
 		addPlayersToStage();
 	}
+
+
+	/**
+	 * Method that adds all players from the board to the stage
+	 */
+	private void addPlayersToStage() {
+		Player[] allPlayers = board.getAllPlayers();
+		for (Player player : allPlayers) {
+			Position pos = board.getPlayerPos(player);
+			addPlayerToStage(player, pos);
+		}
+	}
+
+
+	private void addPlayerToStage(Player player, Position pos){
+		float x = pos.getX() * tilesize + xOffset;
+		float y = pos.getY() * tilesize + yOffset;
+		player.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(player)));
+		player.setSize(tilesize, tilesize);
+		player.setOrigin(tilesize / 2, tilesize / 2);
+		player.setRotation(player.getDirection().directionToDegrees());
+		player.setPosition(x,y);
+
+		stage.addActor(player);
+	}
+
+
+	private void addTilesToStage(Tile tile, float x, float y) {
+		tile.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(tile)));
+		tile.setSize(tilesize, tilesize);
+		tile.setPosition(x, y);
+		stage.addActor(tile);
+	}
+
+	/**
+	 * Methoud for adding a GameObject to the stage
+	 * @param gameObject
+	 * @param x
+	 * @param y
+	 */
+	private void addGameObjectToStage(GameObject gameObject, float x, float y) {
+		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
+		gameObject.setSize(tilesize, tilesize);
+		gameObject.setPosition(x, y);
+		stage.addActor(gameObject);
+	}
+
+	private void addGameObjectsOnTileToStage(final Tile tile, float x, float y) {
+		if (tile.hasAnyGameObjects()) {
+			for (GameObject gameObject : tile.getGameObjects()) {
+				addGameObjectToStage(gameObject, x, y);
+			}
+		}
+	}
+
 
 	private void hideDeadPlayer(Player player) {
 		if (!player.onBoardCheck()) {
@@ -151,29 +191,8 @@ public class BoardGUI {
 	}
 
 	private void reposition() {
-		yOffset = 0;
-		xOffset = Gdx.graphics.getWidth() / 2 - boardTileWidth / 2;
-	}
-
-	public void update() {
-		for (Player player : board.getAllPlayers()) {
-			Position pos = board.getPlayerPos(player);
-
-			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
-			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
-			rotate.setUseShortestDirection(true);
-			player.addAction(rotate);
-			player.addAction(move);
-
-		}
-	}
-
-	/**
-	 * Method that should resize the board
-	 * the function is called from RoboRally.resize()
-	 */
-	public void resize() {
-		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.xOffset = PAD_LEFT;//stage.getHeight();// / 2 - boardPixelWidth / 2;
+		this.yOffset = stage.getHeight()- boardPixelHeight - tilesize;
 	}
 
 
@@ -183,19 +202,22 @@ public class BoardGUI {
 		}
 	}
 
-	public void removeListener(Actor actor) {
+	private void removeListener(Actor actor) {
 		actor.clearListeners();
 	}
+
 
 	public InputListener createListener(final Tile tile) {
 		return new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println(tile.spriteType);
 				gsm.tileEventHandle(tile);
 				return true;
 			}
 		};
 	}
+
 
 	public void addListenersToStage() {
 		for (Actor actor : stage.getActors()) {
@@ -205,16 +227,15 @@ public class BoardGUI {
 				for (GameObject gameObject : tile.getGameObjects()) {
 					gameObject.addListener(createListener(tile));
 				}
-
 			}
 		}
 	}
 
-	public int getxOffset() {
+	public float getxOffset() {
 		return xOffset;
 	}
 
-	public int getyOffset() {
+	public float getyOffset() {
 		return yOffset;
 	}
 

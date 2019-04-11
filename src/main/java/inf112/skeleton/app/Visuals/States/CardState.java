@@ -25,8 +25,9 @@ public class CardState extends State {
 		super(gsm);
 		this.board = board;
 		this.batch = new SpriteBatch();
-		this.batch.setProjectionMatrix(camera.combined);
+		//this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
+		this.boardGUI.create();
 
 		this.players = board.getAllPlayers();
 
@@ -38,6 +39,7 @@ public class CardState extends State {
 
 	@Override
 	public void update(float dt) {
+		super.update(dt);
 		Gdx.input.setInputProcessor(stage);
 		for (Player player : players) {
 			if (!player.isReady()) {
@@ -62,7 +64,7 @@ public class CardState extends State {
 
 	@Override
 	public void dispose() {
-		super.dispose();
+		//super.dispose();
 		cardHandGUI.dispose();
 		infoGUI.dispose();
 		batch.dispose();
@@ -71,7 +73,7 @@ public class CardState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		boardGUI.resize();
+		//boardGUI.resize();
 		infoGUI.resize();
 		cardHandGUI.resize();
 	}

@@ -26,7 +26,6 @@ public class CardHandGUI {
     private Stage stage;
 
     private AssetHandler assetHandler;
-    private Texture texture;
 
     private BitmapFont font;
     private String playerTurn;
@@ -55,7 +54,7 @@ public class CardHandGUI {
         this.stage = stage;
 
         this.assetHandler = assetHandler;
-        font = new BitmapFont(true);
+        font = new BitmapFont();
         buttonByXPos = new HashMap<>();
         cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
@@ -74,6 +73,12 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
+
+            
+            //if (currentPlayer.isAI())
+                //do something
+
+            //else
             draw(currentCards);
         }
     }
@@ -94,13 +99,13 @@ public class CardHandGUI {
         cardPriorities = new BitmapFont[cards.size()];
 
         for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i] = new BitmapFont(true);
+            cardPriorities[i] = new BitmapFont();
         }
 
         for (int i = 0; i < cards.size(); i++) {
             displayedCardsArr[i] = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(cards.get(i))));
             displayedCardsArr[i].setSize(97, 135);
-            displayedCardsArr[i].setPosition(cardXPos, Gdx.graphics.getHeight() - 135);
+            displayedCardsArr[i].setPosition(cardXPos, 0);
             buttonByXPos.put(cardXPos, displayedCardsArr[i]);
             cardByXPos.put(cardXPos, cards.get(i));
 
@@ -138,7 +143,7 @@ public class CardHandGUI {
 
         infoBar = new Image(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_BAR)));
         infoBar.setSize(485, 30);
-        infoBar.setPosition(0, Gdx.graphics.getHeight() - 165);
+        infoBar.setPosition(0, 135);
         infoBar.addAction(Actions.sequence(Actions.fadeOut(0.15f), Actions.fadeIn(0.15f)));
         stage.addActor(infoBar);
         renderPriorities();
@@ -176,7 +181,7 @@ public class CardHandGUI {
     }
 
     private void swapCardPlacement(ImageButton a, ImageButton b) {
-        int drawYPos = Gdx.graphics.getHeight() - 135;
+        int drawYPos = 0;
 
         int aXPos = (int) a.getX();
         int bXPos = (int) b.getX();
@@ -200,19 +205,16 @@ public class CardHandGUI {
         infoBar.remove();
 
         String filename = "button" + (cardPtr + 1);
-        texture = assetHandler.getTexture("CardImages/" + filename + ".png");
-        TextureRegion numberTexture = new TextureRegion(texture);
-        numberTexture.flip(false, true);
+        TextureRegion numberTexture = new TextureRegion(assetHandler.getTexture("CardImages/" + filename + ".png"));
         numberLabels[cardPtr] = new Image(numberTexture);
         numberLabels[cardPtr].setSize(97, 30);
-        numberLabels[cardPtr].setPosition(labelXPos, Gdx.graphics.getHeight() - 165);
+        numberLabels[cardPtr].setPosition(labelXPos, 135);
         stage.addActor(numberLabels[cardPtr]);
         labelXPos += 97;
     }
 
     private void drawLockImage(int xPos) {
-        texture = assetHandler.getTexture("lock.png");
-        TextureRegion lockTex = new TextureRegion(texture);
+        TextureRegion lockTex = new TextureRegion(assetHandler.getTexture("lock.png"));
         lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
@@ -238,7 +240,7 @@ public class CardHandGUI {
 
     public void render() {
         batch.begin();
-        font.draw(batch, playerTurn, 10, 10);
+        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight()-10);
         batch.end();
         renderPriorities();
     }
@@ -252,7 +254,7 @@ public class CardHandGUI {
         for (int i = 0; i < cardPriorities.length; i++) {
             cardPriorities[i].getData().setScale(0.90f);
             cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
-            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, Gdx.graphics.getHeight() - 120);
+            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
             xPos += 97;
         }
         batch.end();
@@ -260,9 +262,8 @@ public class CardHandGUI {
 
     private void createSubmitButton() {
         submit.setSize(95, 32);
-        submit.setPosition(873, Gdx.graphics.getHeight() - 100);
+        submit.setPosition(873, 50);
         TextureRegion pressed = new TextureRegion(assetHandler.getTexture("submit_press.png"));
-        pressed.flip(false, true);
         submit.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(submit);
 
@@ -287,9 +288,8 @@ public class CardHandGUI {
 
     private void createClearButton() {
         clear.setSize(76, 32);
-        clear.setPosition(873, Gdx.graphics.getHeight() - 60);
+        clear.setPosition(873, 10);
         TextureRegion pressed = new TextureRegion(assetHandler.getTexture("clear_press.png"));
-        pressed.flip(false, true);
         clear.getStyle().imageDown = new TextureRegionDrawable(pressed);
         stage.addActor(clear);
 
@@ -308,9 +308,6 @@ public class CardHandGUI {
         submit.clearListeners();
         clear.clearListeners();
         clearOldCards();
-        if (texture != null){
-            texture.dispose();
-        }
         font.dispose();
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();

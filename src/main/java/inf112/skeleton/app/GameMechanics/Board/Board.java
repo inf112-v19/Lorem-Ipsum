@@ -3,12 +3,10 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.Tiles.HoleTile;
-import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
+import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
-import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
 import java.util.*;
 
@@ -28,6 +26,8 @@ public class Board implements IBoard {
 
 	private int height;
 	private int width;
+
+	private boolean laserStatus = false;
 
 	public Board(String filename) {
 		BoardBuilder builder = new BoardBuilder();
@@ -188,6 +188,14 @@ public class Board implements IBoard {
 		}
 
 		for (Player player : playerPositions.keySet()) {
+
+			//players in power down gets health reset and skips cards
+			if (player.getPowerDown() == 1) {
+				player.resetHealth();
+				continue;
+			}
+
+			//skips dead players
 			if (player.isDead()) {
 				continue;
 			}
@@ -314,7 +322,15 @@ public class Board implements IBoard {
 			return true;
 		}
 
-		turnOnLasers();
+		//turns on lasers if off
+		if (!laserStatus) {
+			toggleLasers();
+			return true;
+		}
+
+		//toggles off the lasers after 1 update
+		toggleLasers();
+
 		respawnPlayers();
 		gameOver = checkForGameOver();
 
@@ -376,6 +392,8 @@ public class Board implements IBoard {
 
 	/**
 	 * Respawn all the players who has fallen off the board and puts them on their backup
+	 * Also handles power down - sets destroyed players to powerDown = 3, resets power down for players currently in
+	 * power down and sets powerDown = 1 for players pending power down(powerDown currently equals 2)
 	 */
 	private void respawnPlayers() {
 		for (Player player : playerPositions.keySet()) {
@@ -383,22 +401,45 @@ public class Board implements IBoard {
 				System.out.println("Player" + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
+
+				//if power down was requested for next round and player was destroyed - set power down to 3(cancel option)
+				if (player.getPowerDown() == 2) {
+					player.setPowerDown(3);
+				}
+			}
+
+			//players currently in power down is reset
+			if (player.getPowerDown() == 1) {
+				player.setPowerDown(0);
+			}
+			//players currently pending power down is set to power down
+			else if (player.getPowerDown() == 2) {
+				player.setPowerDown(1);
 			}
 		}
 	}
 
 	/**
-	 * Deals damage to all players standing on tiles containing lasers
+	 * Toggle all the lasers on the board and deals damage to players hit by laser if toggled on or removes the lasers
+	 * from the board if toggled off also handles players toggling lasers(shooting or removing shot laser)
 	 */
-	private void turnOnLasers() {
-		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
-			Player curPlayer = playerPositionEntry.getKey();
-			Position curPlayerPos = playerPositionEntry.getValue();
+	private void toggleLasers() {
+		laserStatus = !laserStatus;
 
-			if (curPlayer.onBoardCheck()) {
-				Tile playerTile = tileMap.get(curPlayerPos);
-				playerTile.laserCheck(curPlayer);
+		for (Map.Entry<Position, Tile> tileMapEntry : tileMap.entrySet()) {
+			Tile tile = tileMapEntry.getValue();
+			Position tilePos = tileMapEntry.getKey();
+
+			if (tile instanceof LaserBaseTile || tile instanceof DoubleLaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus);
 			}
+		}
+
+		for (Map.Entry<Player, Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
+			player.toggleLaser(playerPos, this, laserStatus);
 		}
 	}
 

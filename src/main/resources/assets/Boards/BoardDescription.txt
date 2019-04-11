@@ -21,7 +21,7 @@ D - Direction of the GameObject
 GD is rewritten N times
 
 
-Tile types:
+Tile types(written in hex form and converted to decimal):
 0 - NormalTile
 1 - HoleTile
 2 - RepairTile
@@ -31,6 +31,8 @@ Tile types:
 6 - RotationLeftTile
 7 - RotationRightTile
 8 - SpawnTile
+9 - LaserBaseTile
+a - DoubleLaserTile
 
 GameObjects:
 0 - Wall
