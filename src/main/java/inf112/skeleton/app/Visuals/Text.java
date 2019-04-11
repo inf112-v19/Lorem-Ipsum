@@ -1,84 +1,108 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class Text extends Widget {
+public class Text extends Label {
 
-	private String text;
-	private String dynamicsText;
-	private BitmapFont font;
-	private SpriteBatch batch;
-	private Stage stage;
+	/**
+	 * Enum for positions on the stage.
+	 * TOP_LEFT is default
+	 */
+	public enum TextPosition {
+		//TODO - make positioning better and correct
+		TOP_LEFT(5, Gdx.graphics.getHeight()-(Text.fontSize * 35)),
+		TOP_RIGHT(Gdx.graphics.getWidth() - DEFAULT_WIDTH - 20,Gdx.graphics.getHeight()-(Text.fontSize * 35)),
+		BOTTOM_LEFT(20,20),
+		BOTTOM_RIGHT(20,20),
+		CENTER(0,0),
+		TOP_CENTER(0,0),
+		BOTTOM_CENTER(0,0);
 
-	public Text(String text, int x, int y, Stage stage) {
-		this.font = new BitmapFont(Gdx.files.internal("default.fnt"));
-		this.stage = stage;
-		this.batch = new SpriteBatch();
-		this.text = text;
-		this.dynamicsText = text;
-		this.setPosition(x, y);
-		this.stage.addActor(this);
+		private float x;
+		private float y;
+
+		TextPosition(float x, float y){
+			System.out.println(x+","+y);
+			this.x = x;
+			this.y = y;
+		}
 	}
 
-	public Text(Stage stage) {
-		this("", 0, 0, stage);
+	private static final float fontSize = 1;
+	private static final float DEFAULT_WIDTH = 190;
+	private static final TextPosition DEFAULT_TEXT_POSITION = TextPosition.TOP_LEFT;
+	private StringBuilder text;
+
+	/**
+	 * Use this constructor if the text should be positioned on the stage
+	 * @param text
+	 * @param skin
+	 * @param textPosition
+	 * @param width
+	 */
+	public Text(String text, Skin skin, TextPosition textPosition, float width) {
+		super(text, skin);
+		super.setWrap(true);
+		super.setWidth(width);
+		super.setFontScale(fontSize);
+		super.setPosition(textPosition.x, textPosition.y);
+
+		this.text = new StringBuilder();
+		this.text.append(text);
 	}
 
-	public Text(int x, int y, Stage stage) {
-		this("", x, y, stage);
+	public Text(String text, Skin skin, TextPosition textPosition) {
+		this(text, skin, textPosition, DEFAULT_WIDTH);
 	}
 
-	public Text(String text, Stage stage) {
-		this(text, 0, 0, stage);
+
+	/**
+	 * Use this constructor if the text should be placed in a Table or WidgetGroup.
+	 * in this case the positioning and width should be handled by the table and not us.
+	 * @param text
+	 * @param skin
+	 */
+	public Text(String text, Skin skin) {
+		super(text, skin);
+		super.setWrap(true);
+		super.setFontScale(fontSize);
+
+		this.text = new StringBuilder();
+		this.text.append(text);
 	}
 
-	public void setText(String text) {
-		this.text = text;
-		this.dynamicsText = text;
-	}
 
 	public void appendText(String text) {
-		this.text = this.text + text;
-		this.dynamicsText = this.text;
+		this.text.append(text);
+		this.setText(this.text);
+
 	}
 
 	public void prependText(String text) {
-		this.text = text + this.text;
-		this.dynamicsText = this.text;
+		this.text.insert(0, text);
+		super.setText(this.text);
 	}
 
 	public void appendDynamicsText(String dynamicText) {
-		this.dynamicsText = this.text + dynamicsText;
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.text);
+		builder.append(dynamicText);
+		System.out.println("dynamic text: " + builder.toString());
+		super.setText(builder);
 	}
 
 	public void prependDynamicsText(String dynamicText) {
-		this.dynamicsText = dynamicText + this.text;
-	}
-
-	public void draw() {
-		batch.begin();
-		font.draw(batch, dynamicsText, super.getX(), super.getY());
-		batch.end();
-	}
-
-	public void dispose() {
-		font.dispose();
+		StringBuilder builder = new StringBuilder();
+		builder.append(dynamicText);
+		builder.append(this.text);
+		System.out.println("dynamic text: " + builder.toString());
+		super.setText(builder);
 	}
 
 	@Override
-	public void act(float delta) {
-		super.act(delta);
-		this.draw();
+	public void setText(CharSequence newText) {
+		super.setText(newText);
 	}
-
-	@Override
-	public void setPosition(float x, float y) {
-		super.setPosition(x, stage.getHeight() - y);
-	}
-
-
 }

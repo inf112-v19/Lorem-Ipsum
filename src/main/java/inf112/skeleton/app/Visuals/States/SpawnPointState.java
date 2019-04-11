@@ -2,16 +2,12 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Queue;
-import com.badlogic.gdx.utils.SnapshotArray;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
-import inf112.skeleton.app.GameMechanics.Tiles.SpawnTile;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.Text;
@@ -31,8 +27,11 @@ public class SpawnPointState extends State {
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
 		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
-		this.text = new Text("'s turn to to choose spawn", stage);
+		this.text = new Text("'s turn to choose spawn", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
 		this.text.prependDynamicsText(players.first().getPlayerID());
+		super.stage.addActor(text);
+
+
 	}
 
 	@Override
@@ -51,7 +50,6 @@ public class SpawnPointState extends State {
 			CardManager cardManager = new CardManager(board);
 			boardGUI.removeAllListeners();
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
-			text.dispose();
 		}
 	}
 

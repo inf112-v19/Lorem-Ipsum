@@ -28,7 +28,7 @@ public class PlayerNameState extends State {
 		super(gsm);
 		super.camera.setToOrtho(false);
 
-		this.uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+		this.uiSkin = assetHandler.getSkin();
 		this.numPlayers = numPlayers;
 		this.board = board;
 		this.players = new Queue<>();
