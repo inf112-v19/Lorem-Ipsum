@@ -60,6 +60,53 @@ public class BoardGUI {
 		reposition();
 	}
 
+	/**
+	 * Method that updates all moving parts of the BoardGUI
+	 */
+	public void update() {
+		for (Player player : board.getAllPlayers()) {
+			Position pos = board.getPlayerPos(player);
+
+			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
+			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
+			rotate.setUseShortestDirection(true);
+			player.addAction(rotate);
+			player.addAction(move);
+		}
+
+		for (int y = 0; y < boardHeight; y++){
+			for(int x = 0; x < boardWidth; x++){
+				Position position = new Position(x,y);
+				Tile tile = board.getTile(position);
+				float tileX = tile.getX();
+				float tileY = tile.getY();
+				addGameObjectsOnTileToStage(tile, tileX, tileY);
+			}
+
+		}
+	}
+
+	/**
+	 * Method that creates the board visually
+	 */
+	public void create() {
+		int xPos = 0;
+		int yPos = 0;
+		Position pos;
+
+		for (float y = yOffset; y <= yOffset+ boardPixelHeight; y += tilesize) {
+			for (float x = xOffset; x <= xOffset + boardPixelWidth; x += tilesize) {
+				pos = new Position(xPos, yPos);
+				Tile curTile = board.getTile(pos);
+				addTilesToStage(curTile, x, y);
+				addGameObjectsOnTileToStage(curTile, x, y);
+				xPos++;
+			}
+			xPos = 0;
+			yPos++;
+		}
+		addPlayersToStage();
+	}
 
 
 	/**
@@ -87,16 +134,6 @@ public class BoardGUI {
 	}
 
 
-
-
-	private void addGameObjectToStage(GameObject gameObject, float x, float y) {
-		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
-		gameObject.setSize(tilesize, tilesize);
-		gameObject.setPosition(x, y);
-		stage.addActor(gameObject);
-	}
-
-
 	private void addTilesToStage(Tile tile, float x, float y) {
 		tile.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(tile)));
 		tile.setSize(tilesize, tilesize);
@@ -104,6 +141,18 @@ public class BoardGUI {
 		stage.addActor(tile);
 	}
 
+	/**
+	 * Methoud for adding a GameObject to the stage
+	 * @param gameObject
+	 * @param x
+	 * @param y
+	 */
+	private void addGameObjectToStage(GameObject gameObject, float x, float y) {
+		gameObject.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(gameObject)));
+		gameObject.setSize(tilesize, tilesize);
+		gameObject.setPosition(x, y);
+		stage.addActor(gameObject);
+	}
 
 	private void addGameObjectsOnTileToStage(final Tile tile, float x, float y) {
 		if (tile.hasAnyGameObjects()) {
@@ -112,29 +161,6 @@ public class BoardGUI {
 			}
 		}
 	}
-
-
-	public void create() {
-		int xPos = 0;
-		int yPos = 0;
-		Position pos;
-
-		for (float y = yOffset; y <= yOffset+ boardPixelHeight; y += tilesize) {
-			for (float x = xOffset; x <= xOffset + boardPixelWidth; x += tilesize) {
-				pos = new Position(xPos, yPos);
-				Tile curTile = board.getTile(pos);
-				addTilesToStage(curTile, x, y);
-				addGameObjectsOnTileToStage(curTile, x, y);
-				xPos++;
-			}
-			xPos = 0;
-			yPos++;
-		}
-		addPlayersToStage();
-	}
-
-
-
 
 
 	private void hideDeadPlayer(Player player) {
@@ -167,30 +193,6 @@ public class BoardGUI {
 	private void reposition() {
 		this.xOffset = PAD_LEFT;//stage.getHeight();// / 2 - boardPixelWidth / 2;
 		this.yOffset = stage.getHeight()- boardPixelHeight - tilesize;
-	}
-
-	public void update() {
-		for (Player player : board.getAllPlayers()) {
-			Position pos = board.getPlayerPos(player);
-			System.out.println(pos);
-
-			Action move = Actions.moveTo(pos.getX() * tilesize + xOffset, pos.getY() * tilesize + yOffset, MOVE_DURATION);
-			RotateToAction rotate = Actions.rotateTo(player.getDirection().directionToDegrees(), MOVE_DURATION);
-			rotate.setUseShortestDirection(true);
-			player.addAction(rotate);
-			player.addAction(move);
-		}
-
-		for (int y = 0; y < boardHeight-1; y++){
-			for(int x = 0; x < boardWidth-1; x++){
-				Position position = new Position(x,y);
-				Tile tile = board.getTile(position);
-				float tileX = tile.getX();
-				float tileY = tile.getY();
-				addGameObjectsOnTileToStage(tile, tileX, tileY);
-			}
-
-		}
 	}
 
 
@@ -228,32 +230,6 @@ public class BoardGUI {
 			}
 		}
 	}
-
-	/*
-	public void addSpawnTileListeners(final Queue<Player> players){
-		for (final Actor actor : stage.getActors()) {
-			if (actor instanceof SpawnTile) {
-				final SpawnTile spawnTile = (SpawnTile)actor;
-				spawnTile.addListener(new InputListener(){
-					@Override
-					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-						float playerX = (spawnTile.getX() - xOffset)/tilesize;
-						float playerY = (spawnTile.getY() - yOffset)/tilesize;
-						Position position = new Position((int)playerX,(int)playerY);
-						System.out.println(position);
-						if(board.spawnPlayer(position, players.first())){
-							addPlayerToStage(players.removeFirst(), position);
-						}
-						return true;
-					}
-				});
-
-			}
-		}
-	}
-	 */
-
-
 
 	public float getxOffset() {
 		return xOffset;
