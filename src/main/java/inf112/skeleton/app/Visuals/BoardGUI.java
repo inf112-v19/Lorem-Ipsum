@@ -78,6 +78,11 @@ public class BoardGUI {
 			for(int x = 0; x < boardWidth; x++){
 				Position position = new Position(x,y);
 				Tile tile = board.getTile(position);
+				for (GameObject gameObject : tile.getGameObjects()) {
+					if (gameObject instanceof Laser){
+						gameObject.remove();
+					}
+				}
 				float tileX = tile.getX();
 				float tileY = tile.getY();
 				addGameObjectsOnTileToStage(tile, tileX, tileY);
