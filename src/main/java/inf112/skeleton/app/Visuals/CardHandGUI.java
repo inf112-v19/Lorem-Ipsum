@@ -75,11 +75,12 @@ public class CardHandGUI {
             List<Card> currentCards = currentPlayer.getCardHand();
 
             
-            //if (currentPlayer.isAI())
-                //do something
-
-            //else
-            draw(currentCards);
+            if (currentPlayer.isControlledByAI()){
+                currentPlayer.chooseAICards();
+            }
+            else {
+                draw(currentCards);
+            }
         }
     }
 

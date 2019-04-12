@@ -68,6 +68,7 @@ public class Player extends Image implements IPlayer {
         this.index = index;
         this.playerID = playerID;
         this.controlledByAI = controlledByAI;
+        assignSpriteType();
         setPlayerDirection(direction);
     }
 
@@ -141,6 +142,13 @@ public class Player extends Image implements IPlayer {
         return playerDirection;
     }
 
+    public boolean isControlledByAI(){ return controlledByAI; }
+
+    public void chooseAICards(){
+        for(int i=0;i<5;i++){
+           playerCardSequence[i] = playerHand.get(i);
+        }
+    }
 
     @Override
     public Card[] getCardSequence() {
