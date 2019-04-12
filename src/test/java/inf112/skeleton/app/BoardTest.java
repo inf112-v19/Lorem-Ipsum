@@ -265,7 +265,7 @@ public class BoardTest {
 
 	/**
 	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
-	 * player direction should be NORTH
+	 * player direction should be WEST (since there are 2 players on the board it will trigger the doTileAction twice
 	 */
 	@Test
 	public void playerStandingOnLeftRotationTile() {
@@ -366,15 +366,18 @@ public class BoardTest {
 
 	/**
 	 * Testing that players shooting each other both take damage - both players should have equal health and their combined
-	 * health should be 18 (9+9)
+	 * health should be 18 (9+9). Places player both players on NormalTiles facing each other so they both will get hit.
 	 */
 	@Test
 	public void playersShootingEachOther() {
 		players[0].setPlayerDirection(Direction.SOUTH);
 		players[1].setPlayerDirection(Direction.NORTH);
+		testBoard.placePlayerOnPos(players[0], new Position(0,3));
+		testBoard.placePlayerOnPos(players[1], new Position(0,2));
 		players[0].setReady();
 		players[1].setReady();
 
+		System.out.println(testBoard.getTile(new Position(0,2)));
 		while (testBoard.doNextAction()){}
 
 		int player0Health = players[0].getHealth();
