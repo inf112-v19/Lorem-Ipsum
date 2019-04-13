@@ -120,36 +120,29 @@ public class Board implements IBoard {
 		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
 
-		//if tile currently standing on has no wall blocking the player - proceed
-        if (!curTile.hasWallInDir(dir)){
-            if (isValidPos(newPos)) {
-                Tile newTile = tileMap.get(newPos);
-                //if tile walking on to has no wall blocking the player - proceed
-                if (!newTile.hasWallInDir(dir.oppositeDirection())) {
-                    Player otherPlayer = posToPlayer(newPos);
+		switch (curTile.isPossibleToMoveDir(curPos, this, dir)){
+			//nothing obstructing the move - proceed
+			case 0:
+				checkForHole(player, newPos);
+				break;
 
-                    //player collision occurred
-                    if (otherPlayer != null){
-                        //proceed moving if the colliding player moved or stand still if no movement happened
-                        if (movePlayer(otherPlayer, dir)){
-							checkForHole(player, newPos);
-                        }
-                    }
+			//player collision occurred - start recursive calling
+			case 2:
+				Player otherPlayer = posToPlayer(newPos);
+				//proceed moving if the colliding player moved or stand still if no movement happened
+				if (movePlayer(otherPlayer, dir)){
+					checkForHole(player, newPos);
+				}
+				break;
 
-                    //no player in direction trying to move - moves player to newPos
-                    else {
-						checkForHole(player, newPos);
-                    }
-                }
-            }
-            //player walks off the board
-            else {
+			//player fell off the board
+			case 3:
 				playerFellOffTheBoard(player, newPos);
-            }
-        }
+				break;
+		}
 
-        //returns true if the player position has changed
-        return !curPos.equals(playerPositions.get(player));
+		//returns true if the player position has changed
+		return !curPos.equals(playerPositions.get(player));
 	}
 
 

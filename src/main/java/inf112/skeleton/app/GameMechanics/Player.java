@@ -332,14 +332,26 @@ public class Player extends Image implements IPlayer {
 	 */
 	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
 		Tile curTile = board.getTile(pos);
+		Position nextPos = pos.getNeighbour(this.playerDirection);
 
 		//curTile could be null if the player is not on the board - no laser should be added
 		if (curTile != null) {
-			//skips the tile the player shooting is standing on
-			if (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
-				Position nextPos = pos.getNeighbour(this.playerDirection);
-				Tile nextTile = board.getTile(nextPos);
-				nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
+			switch (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
+				//laser is able to proceed to next tile
+				case 0:
+					Tile nextTile = board.getTile(nextPos);
+					nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
+					break;
+
+				//hit player on next tile - damage player if laserStatus is true
+				case 2:
+					Player playerOnNextTile = board.posToPlayer(nextPos);
+
+					if (laserStatus) {
+						System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+						playerOnNextTile.decreaseHealth();
+					}
+					break;
 			}
 		}
 	}

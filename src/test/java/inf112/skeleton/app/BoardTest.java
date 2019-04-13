@@ -377,7 +377,6 @@ public class BoardTest {
 		players[0].setReady();
 		players[1].setReady();
 
-		System.out.println(testBoard.getTile(new Position(0,2)));
 		while (testBoard.doNextAction()){}
 
 		int player0Health = players[0].getHealth();
