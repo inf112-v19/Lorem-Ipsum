@@ -64,6 +64,14 @@ public class BoardGUI {
 	 * Method that updates all moving parts of the BoardGUI
 	 */
 	public void update() {
+		//hiding all lasers every update
+		for (Actor actor : stage.getActors()) {
+			if(actor instanceof Laser){
+				actor.setVisible(false);
+			}
+		}
+
+		//moving players width actions
 		for (Player player : board.getAllPlayers()) {
 			Position pos = board.getPlayerPos(player);
 
@@ -74,20 +82,15 @@ public class BoardGUI {
 			player.addAction(move);
 		}
 
+		//adding all lasers every update
 		for (int y = 0; y < boardHeight; y++){
 			for(int x = 0; x < boardWidth; x++){
 				Position position = new Position(x,y);
 				Tile tile = board.getTile(position);
-				for (GameObject gameObject : tile.getGameObjects()) {
-					if (gameObject instanceof Laser){
-						gameObject.remove();
-					}
-				}
 				float tileX = tile.getX();
 				float tileY = tile.getY();
 				addGameObjectsOnTileToStage(tile, tileX, tileY);
 			}
-
 		}
 	}
 
