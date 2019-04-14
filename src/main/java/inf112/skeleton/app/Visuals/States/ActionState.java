@@ -39,6 +39,7 @@ public class ActionState extends State {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		infoGUI.update();
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT) {
 			updateCount = 0;
@@ -68,7 +69,7 @@ public class ActionState extends State {
 	@Override
 	public void render() {
 		super.render();
-		infoGUI.render();
+		//infoGUI.render();
 		pendingCardsGUI.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");

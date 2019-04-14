@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerInfoGUI {
 	private BitmapFont[] fonts;
 	private String[] playerNames;
@@ -19,6 +22,8 @@ public class PlayerInfoGUI {
 
 	private Player[] players;
 	private Batch batch;
+
+	private List<Image> images;
 
 	public PlayerInfoGUI(Board board, Batch batch, Stage stage, AssetHandler assetHandler) {
 		this.batch = batch;
@@ -35,13 +40,19 @@ public class PlayerInfoGUI {
 		for (int i = 0; i < players.length; i++) {
 			playerNames[i] = players[i].getPlayerID();
 		}
-		update();
+
+		images = new ArrayList<>();
+
+		//update();
 	}
 
 	/**
 	 * Updates health and lives of each player
 	 */
 	public void update() {
+		if (images.size() > 0) {
+			clearImages();
+		}
 		for (int i = 0; i < players.length; i++) {
 			int lives = players[i].getLives();
 			int health = players[i].getHealth();
@@ -50,6 +61,13 @@ public class PlayerInfoGUI {
 			drawPlayerImage(i, players[i].getSpriteType());
 		}
 		render();
+	}
+
+	private void clearImages() {
+		for (Image image : images) {
+			image.remove();
+		}
+		images = new ArrayList<>();
 	}
 
 	/**
@@ -121,6 +139,7 @@ public class PlayerInfoGUI {
 		Image image = new Image(texture);
 		image.setSize(width, height);
 		image.setPosition(xpos, ypos);
+		images.add(image);
 		stage.addActor(image);
 	}
 

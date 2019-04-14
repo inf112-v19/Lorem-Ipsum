@@ -40,6 +40,7 @@ public class CardState extends State {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		infoGUI.update();
 		Gdx.input.setInputProcessor(stage);
 		for (Player player : players) {
 			if (!player.isReady()) {
@@ -59,7 +60,7 @@ public class CardState extends State {
 
 		super.render();
 		cardHandGUI.render();
-		infoGUI.render();
+		//infoGUI.render();
 	}
 
 	@Override
