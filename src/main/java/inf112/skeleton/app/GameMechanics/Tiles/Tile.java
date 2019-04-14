@@ -225,28 +225,6 @@ public abstract class Tile extends Image implements ITile {
 				}
 				break;
 		}
-
-		/*
-		//if curTile has a player blocking the laser - decrease player health if adding lasers and break
-		if (playerOnCurTile != null) {
-			if (laserStatus) {
-				System.out.println("Player: " + playerOnCurTile.getPlayerID() + " took laser damage");
-				playerOnCurTile.decreaseHealth();
-			}
-		}
-		else {
-			if (laserStatus) {
-				this.addGameObject(new Laser(dir));
-			}
-			else {
-				this.removeGameObject(new Laser(dir));
-			}
-
-			if (this.isPossibleToMoveDir(curPos, board, dir) == 0) {
-				nextTile.toggleLaser(nextPos, board, laserStatus, dir);
-			}
-		}
-		*/
 	}
 
 
