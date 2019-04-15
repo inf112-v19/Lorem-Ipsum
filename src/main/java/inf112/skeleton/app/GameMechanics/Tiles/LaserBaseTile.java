@@ -5,6 +5,7 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
 import inf112.skeleton.app.GameMechanics.GameObjects.Laser;
 import inf112.skeleton.app.GameMechanics.GameObjects.Wall;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.SpriteType;
 
@@ -34,14 +35,34 @@ public class LaserBaseTile extends Tile {
 		}
 	}
 
+	/**
+	 * Skips adding laser to the base tile since the laser is already drawn as part of the tile texture
+	 *
+	 * @param pos
+	 * @param board
+	 * @param laserStatus
+	 */
 	@Override
 	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
+		Player playerOnTile = board.posToPlayer(pos);
 		int possibleToMoveDir = this.isPossibleToMoveDir(pos, board, this.direction);
-		Tile nextTile = board.getTile(pos.getNeighbour(this.direction));
 
-		//skips adding laser to the base since its already drawn as part of the texture
-		if (possibleToMoveDir == 0 || possibleToMoveDir == 2) {
+		if (playerOnTile != null) {
+			if (laserStatus) {
+				System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
+				playerOnTile.decreaseHealth();
+			}
+		}
+		else if (possibleToMoveDir == 0) {
+			Tile nextTile = board.getTile(pos.getNeighbour(this.direction));
 			nextTile.toggleLaser(pos, board, laserStatus, this.direction);
+		}
+		else if (possibleToMoveDir == 2) {
+			if (laserStatus) {
+				Player playerOnNextTile = board.posToPlayer(pos.getNeighbour(this.direction));
+				System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+				playerOnNextTile.decreaseHealth();
+			}
 		}
 	}
 }
