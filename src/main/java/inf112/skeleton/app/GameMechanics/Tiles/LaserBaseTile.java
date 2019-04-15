@@ -37,10 +37,11 @@ public class LaserBaseTile extends Tile {
 	@Override
 	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
 		int possibleToMoveDir = this.isPossibleToMoveDir(pos, board, this.direction);
+		Tile nextTile = board.getTile(pos.getNeighbour(this.direction));
 
 		//skips adding laser to the base since its already drawn as part of the texture
 		if (possibleToMoveDir == 0 || possibleToMoveDir == 2) {
-			super.toggleLaser(pos, board, laserStatus);
+			nextTile.toggleLaser(pos, board, laserStatus, this.direction);
 		}
 	}
 }
