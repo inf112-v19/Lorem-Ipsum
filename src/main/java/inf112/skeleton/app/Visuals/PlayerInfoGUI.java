@@ -116,7 +116,7 @@ public class PlayerInfoGUI {
 				yDrawPos += 12;
 			}
 			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("healthbar.png"));
+			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("damageBar.png"));
 			createActor(textureRegion, 10, 20, xDrawPos, yDrawPos);
 			deltaX -= 22;
 		}

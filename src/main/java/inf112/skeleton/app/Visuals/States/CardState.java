@@ -17,7 +17,7 @@ public class CardState extends State {
 
 	private CardHandGUI cardHandGUI;
 
-	private PlayerInfoGUI infoGUI;
+	private InfoGUI infoGUI;
 
 	private CardManager cardManager;
 
@@ -31,7 +31,7 @@ public class CardState extends State {
 
 		this.players = board.getAllPlayers();
 
-		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.infoGUI = new InfoGUI(board, batch, stage, super.assetHandler);
 		this.cardManager = cardManager;
 
 		this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
@@ -75,7 +75,6 @@ public class CardState extends State {
 	public void resize() {
 		super.resize();
 		//boardGUI.resize();
-		infoGUI.resize();
 		cardHandGUI.resize();
 	}
 }
