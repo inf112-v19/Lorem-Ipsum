@@ -187,7 +187,7 @@ public class Player extends Image implements IPlayer {
      * @return returns the health/damage of the player
      */
     @Override
-    public int getHealth() {
+    public int getDamage() {
         return playerDamage;
     }
 
@@ -318,8 +318,8 @@ public class Player extends Image implements IPlayer {
 		return powerDown;
 	}
 
-	public void resetHealth() {
-		playerDamage = 10;
+	public void resetDamage() {
+		playerDamage = 0;
 	}
 
 	/**

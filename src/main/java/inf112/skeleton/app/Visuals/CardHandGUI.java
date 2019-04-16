@@ -73,7 +73,6 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
-
             
             //if (currentPlayer.isAI())
                 //do something
@@ -124,7 +123,7 @@ public class CardHandGUI {
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (tempCardPtr < 5 && !cardManager.isLocked(cards.get(finalI))) {
+                    if (tempCardPtr < 5-lockList.size() && !cardManager.isLocked(cards.get(finalI))) {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
@@ -215,10 +214,9 @@ public class CardHandGUI {
 
     private void drawLockImage(int xPos) {
         TextureRegion lockTex = new TextureRegion(assetHandler.getTexture("lock.png"));
-        lockTex.flip(false, true);
         Image lock = new Image(lockTex);
         lock.setSize(97, 50);
-        lock.setPosition(xPos, Gdx.graphics.getHeight() - 152);
+        lock.setPosition(xPos, 135);
         lockList.add(lock);
         stage.addActor(lock);
     }

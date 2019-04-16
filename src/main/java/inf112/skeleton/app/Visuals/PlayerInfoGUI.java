@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -62,7 +61,7 @@ public class PlayerInfoGUI {
 		}
 		for (int i = 0; i < players.length; i++) {
 			int lives = players[i].getLives();
-			int health = players[i].getHealth();
+			int health = players[i].getDamage();
 			drawLives(i, lives);
 			drawHealthPoint(i, health);
 			drawPlayerImage(i, players[i].getSpriteType());

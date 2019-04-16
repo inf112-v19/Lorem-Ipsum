@@ -202,7 +202,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerTakingLaserDamage() {
-		int originHealth = players[1].getHealth();
+		int originHealth = players[1].getDamage();
 
 		testBoard.movePlayer(players[1], Direction.SOUTH);
 		testBoard.movePlayer(players[1], Direction.EAST);
@@ -210,7 +210,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(originHealth-1, players[1].getHealth());
+		assertEquals(originHealth-1, players[1].getDamage());
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(10, players[0].getDamage());
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(10, players[0].getDamage());
 	}
 
 	/**
@@ -360,7 +360,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(10, players[0].getDamage());
 	}
 
 
@@ -379,8 +379,8 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		int player0Health = players[0].getHealth();
-		int player1Health = players[0].getHealth();
+		int player0Health = players[0].getDamage();
+		int player1Health = players[0].getDamage();
 
 		if (player0Health == player1Health) {
 			assertEquals(18, player0Health+player1Health);

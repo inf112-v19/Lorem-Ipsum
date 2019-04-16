@@ -188,7 +188,7 @@ public class Board implements IBoard {
 
 			//players in power down gets health reset and skips cards
 			if (player.getPowerDown() == 1) {
-				player.resetHealth();
+				player.resetDamage();
 				continue;
 			}
 
