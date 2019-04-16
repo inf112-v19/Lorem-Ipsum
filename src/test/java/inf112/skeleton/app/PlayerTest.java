@@ -50,19 +50,19 @@ public class PlayerTest {
     @Test
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
-        player.decreaseHealth();
+        player.increaseDamage();
         assertEquals(9, player.getHealth());
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
-        player.increaseHealth();
+        player.decreaseDamage();
         assertEquals(10, player.getHealth()); //max health = 10
 
-        player.decreaseHealth();
-        player.decreaseHealth();
-        player.increaseHealth();
+        player.increaseDamage();
+        player.increaseDamage();
+        player.decreaseDamage();
         assertEquals(9, player.getHealth());
     }
 
@@ -154,7 +154,7 @@ public class PlayerTest {
     public void playerGetsRightHealthAmountAfterDestructionFromDamageTest(){
         Player player = new Player("Player", Direction.NORTH);
         for(int i=0;i<10;i++){
-            player.decreaseHealth();
+            player.increaseDamage();
         }
         assertEquals(8, player.getHealth());
     }

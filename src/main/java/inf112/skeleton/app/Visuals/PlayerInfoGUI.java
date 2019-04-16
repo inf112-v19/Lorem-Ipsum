@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 
@@ -25,11 +26,17 @@ public class PlayerInfoGUI {
 
 	private List<Image> images;
 
+	private Table table;
+
 	public PlayerInfoGUI(Board board, Batch batch, Stage stage, AssetHandler assetHandler) {
 		this.batch = batch;
 		this.stage = stage;
 
 		this.assetHandler = assetHandler;
+
+		table = new Table();
+		table.top().right();
+		table.setFillParent(true);
 
 		players = board.getAllPlayers();
 		playerNames = new String[players.length];
@@ -84,6 +91,9 @@ public class PlayerInfoGUI {
 		for (BitmapFont font : fonts) {
 			font.dispose();
 		}
+
+		table.clearChildren();
+
 	}
 
 	public void resize() {

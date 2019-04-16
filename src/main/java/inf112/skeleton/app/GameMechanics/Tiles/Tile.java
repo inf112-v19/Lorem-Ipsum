@@ -135,7 +135,7 @@ public abstract class Tile extends Image implements ITile {
 	public void laserCheck(Player player) {
 		for (GameObject gameObject : gameObjects) {
 			if (gameObject instanceof Laser) {
-				player.decreaseHealth();
+				player.increaseDamage();
 			}
 		}
 	}
@@ -179,7 +179,7 @@ public abstract class Tile extends Image implements ITile {
 		Player playerOnTile = board.posToPlayer(pos);
 		if (playerOnTile != null && laserStatus) {
 			System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
-			playerOnTile.decreaseHealth();
+			playerOnTile.increaseDamage();
 		}
 		else{
 			toggleLaser(pos, board, laserStatus, this.direction);
@@ -221,7 +221,7 @@ public abstract class Tile extends Image implements ITile {
 
 				if (laserStatus) {
 					System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
-					playerOnNextTile.decreaseHealth();
+					playerOnNextTile.increaseDamage();
 				}
 				break;
 		}

@@ -23,9 +23,9 @@ public interface IPlayer {
 
 	void sortCardSeqence();
 
-	void decreaseHealth();
+	void increaseDamage();
 
-	void increaseHealth();
+	void decreaseDamage();
 
 	int getHealth();
 

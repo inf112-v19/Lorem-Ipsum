@@ -299,8 +299,8 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerStandingOnRepairTileWhenDamaged() {
-		players[0].decreaseHealth();
-		players[0].decreaseHealth();
+		players[0].increaseDamage();
+		players[0].increaseDamage();
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
@@ -354,7 +354,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerHealthIncreasedByOptionTile() {
-		players[0].decreaseHealth();
+		players[0].increaseDamage();
 		testBoard.placePlayerOnPos(players[0], new Position(4, 2));
 		players[0].setReady();
 
