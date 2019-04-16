@@ -152,7 +152,7 @@ public class CardManager {
             int cardsToRemove = playerDamage;
             if (cardsToRemove > 0) {
                 for (int j = 0; j < cardsToRemove; j++) {
-                    if (j > 4) {
+                    if (j > 3) {
                         break;
                     }
                     cardDeck.addCard(newCardHand.remove(newCardHand.size() - 1));

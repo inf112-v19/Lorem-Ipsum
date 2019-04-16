@@ -31,7 +31,6 @@ public class PendingCardsGUI {
     Label pendingCard;
 
     public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage, AssetHandler assetHandler) {
-
         table = new Table();
         table.top().left();
         table.setFillParent(true);
@@ -49,9 +48,6 @@ public class PendingCardsGUI {
 
         playingCard = new Label("card being played: ", assetHandler.getSkin());
         pendingCard = new Label("next up: ", assetHandler.getSkin());
-
-
-
     }
 
     public void update() {
@@ -74,7 +70,6 @@ public class PendingCardsGUI {
             table.row();
             drawNextCard();
         }
-
         stage.addActor(table);
     }
 

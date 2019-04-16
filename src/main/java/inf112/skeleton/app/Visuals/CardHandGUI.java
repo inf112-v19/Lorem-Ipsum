@@ -215,8 +215,8 @@ public class CardHandGUI {
     private void drawLockImage(int xPos) {
         TextureRegion lockTex = new TextureRegion(assetHandler.getTexture("lock.png"));
         Image lock = new Image(lockTex);
-        lock.setSize(97, 50);
-        lock.setPosition(xPos, 135);
+        lock.setSize(97, 25);
+        lock.setPosition(xPos, 130);
         lockList.add(lock);
         stage.addActor(lock);
     }
