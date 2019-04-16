@@ -17,7 +17,7 @@ public class CardState extends State {
 
 	private CardHandGUI cardHandGUI;
 
-	private InfoGUI infoGUI;
+	private PlayerInfoGUI playerInfoGUI;
 
 	private CardManager cardManager;
 
@@ -31,7 +31,7 @@ public class CardState extends State {
 
 		this.players = board.getAllPlayers();
 
-		this.infoGUI = new InfoGUI(board, batch, stage, super.assetHandler);
+		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.cardManager = cardManager;
 
 		this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
@@ -40,7 +40,7 @@ public class CardState extends State {
 	@Override
 	public void update(float dt) {
 		super.update(dt);
-		infoGUI.update();
+		playerInfoGUI.update();
 		Gdx.input.setInputProcessor(stage);
 		for (Player player : players) {
 			if (!player.isReady()) {
@@ -60,14 +60,14 @@ public class CardState extends State {
 
 		super.render();
 		cardHandGUI.render();
-		//infoGUI.render();
+		//playerInfoGUI.render();
 	}
 
 	@Override
 	public void dispose() {
 		//super.dispose();
 		cardHandGUI.dispose();
-		infoGUI.dispose();
+		playerInfoGUI.dispose();
 		batch.dispose();
 	}
 
