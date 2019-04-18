@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Netcode;
 
+import inf112.skeleton.app.Visuals.States.GameStateManager;
+import inf112.skeleton.app.Visuals.States.LobbyState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -14,9 +16,10 @@ import java.net.InetSocketAddress;
 public class Host {
 
 	private static final int PORT = 6666;
+	private GameStateManager gsm;
 
-	public Host() {
-
+	public Host(GameStateManager gsm) {
+		this.gsm = gsm;
 	}
 
 	public void start() throws Exception {
@@ -33,6 +36,12 @@ public class Host {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
 					ch.pipeline().addLast(new HostHandler());
+
+					//updating connected client list in LobbyState
+					if (gsm.peek() instanceof LobbyState){
+						LobbyState lobby = (LobbyState)gsm.peek();
+						lobby.addSocketChannel(ch);
+					}
 				}
 			});
 			ChannelFuture f = b.bind().sync();
@@ -46,11 +55,12 @@ public class Host {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		if(PORT < 0) {
 			System.err.println("Usage: " + Host.class.getSimpleName() + " <port>");
 			return;
 		}
 		new Host().start();
 	}
+	 */
 }

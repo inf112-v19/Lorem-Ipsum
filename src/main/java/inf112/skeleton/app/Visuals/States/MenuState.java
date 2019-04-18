@@ -73,7 +73,7 @@ public class MenuState extends State {
 		this.table.add(joinGameButton);
 		this.table.row();
 
-		this.hostGameButton.addListener(new InputListener() {
+		this.joinGameButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("Join Game!");
@@ -100,9 +100,9 @@ public class MenuState extends State {
 			gsm.set(new ChooseBoardState(gsm));
 		}else if(this.isHostingGame){
 			System.out.println("Hosting a game!");
-			gsm.set(new ChooseBoardState(gsm));
+			gsm.set(new LobbyState(gsm));
 		}else if(this.isJoiningGame){
-			System.out.println("joining a game");
+			System.out.println("Joining a game");
 		}
 	}
 
