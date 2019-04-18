@@ -31,7 +31,6 @@ public class ActionState extends State {
 		this.boardGUI.create();
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		//this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
 		this.cardManager = cardManager;
@@ -70,7 +69,6 @@ public class ActionState extends State {
 	@Override
 	public void render() {
 		super.render();
-		//playerInfoGUI.render();
 		pendingCardsGUI.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");

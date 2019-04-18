@@ -25,7 +25,6 @@ public class CardState extends State {
 		super(gsm);
 		this.board = board;
 		this.batch = new SpriteBatch();
-		//this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
 		this.boardGUI.create();
 
@@ -57,15 +56,12 @@ public class CardState extends State {
 			System.out.println("PAUSE!");
 			this.gsm.push(new PauseState(this.gsm));
 		}
-
 		super.render();
 		cardHandGUI.render();
-		//playerInfoGUI.render();
 	}
 
 	@Override
 	public void dispose() {
-		//super.dispose();
 		cardHandGUI.dispose();
 		playerInfoGUI.dispose();
 		batch.dispose();
@@ -74,7 +70,6 @@ public class CardState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		//boardGUI.resize();
 		cardHandGUI.resize();
 	}
 }
