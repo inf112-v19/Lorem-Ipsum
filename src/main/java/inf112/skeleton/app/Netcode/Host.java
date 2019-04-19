@@ -46,7 +46,6 @@ public class Host {
 			});
 			ChannelFuture f = b.bind().sync();
 
-
 			f.channel().closeFuture().sync();
 		} finally {
 			System.err.println("shutdown server");

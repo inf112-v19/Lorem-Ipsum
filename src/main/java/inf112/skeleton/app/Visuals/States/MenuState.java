@@ -103,6 +103,7 @@ public class MenuState extends State {
 			gsm.set(new LobbyState(gsm));
 		}else if(this.isJoiningGame){
 			System.out.println("Joining a game");
+			gsm.set(new JoinGameState(gsm));
 		}
 	}
 

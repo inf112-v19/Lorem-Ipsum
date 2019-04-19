@@ -34,7 +34,7 @@ public class LobbyState extends State {
 		this.table = new Table();
 		this.table.center();
 		this.table.setFillParent(true);
-		this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg")));
+		this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png")));
 		updateConnectedPlayers();
 
 		super.stage.addActor(this.table);
@@ -88,7 +88,7 @@ public class LobbyState extends State {
 
 
 	private void startServer(){
-		System.out.print("Staring server... ");
+		System.out.println("Staring server... ");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -100,7 +100,6 @@ public class LobbyState extends State {
 				}
 			}
 		}).start();
-		System.out.println("Success");
 	}
 
 

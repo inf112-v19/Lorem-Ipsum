@@ -10,11 +10,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.net.InetSocketAddress;
 
 public class Client {
-	private static final String HOST = "localhost";
-	private static final int PORT = 6666;
+	private String host;
+	private int port;
+	private String name;
 
-	public Client() {
-
+	public Client(final String host, final int port, String name) {
+		this.host = host;
+		this.port = port;
+		this.name = name;
 	}
 
 	public void start() throws Exception {
@@ -24,7 +27,7 @@ public class Client {
 			b.group(group);
 			b.channel(NioSocketChannel.class);
 			b.option(ChannelOption.SO_KEEPALIVE, true);
-			b.remoteAddress(new InetSocketAddress(HOST, PORT));
+			b.remoteAddress(new InetSocketAddress(host, port));
 			b.handler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				public void initChannel(SocketChannel ch) throws Exception {
@@ -41,11 +44,12 @@ public class Client {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		if(HOST == null || PORT < 0) {
-			System.err.println("Usage: " + Client.class.getSimpleName() + " <host> <port>");
-			return;
-		}
-		new Client().start();
+	public String getName() {
+		return name;
 	}
+
+	public static void main(String[] args) throws Exception {
+		new Client("localhost", 6666, "test").start();
+	}
+
 }
