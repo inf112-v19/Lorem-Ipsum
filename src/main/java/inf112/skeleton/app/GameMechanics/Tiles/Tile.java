@@ -175,14 +175,18 @@ public abstract class Tile extends Image implements ITile {
 	 * @param board
 	 * @param laserStatus
 	 */
-	public void toggleLaser (Position pos, Board board, boolean laserStatus){
+	public void toggleLaser (Position pos, Board board, boolean laserStatus, boolean doubleLaser){
 		Player playerOnTile = board.posToPlayer(pos);
 		if (playerOnTile != null && laserStatus) {
 			System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
 			playerOnTile.increaseDamage();
+
+			if (doubleLaser) {
+				playerOnTile.increaseDamage();
+			}
 		}
 		else{
-			toggleLaser(pos, board, laserStatus, this.direction);
+			toggleLaser(pos, board, laserStatus, this.direction, doubleLaser);
 		}
 	}
 
@@ -195,24 +199,25 @@ public abstract class Tile extends Image implements ITile {
 	 * @param board
 	 * @param laserStatus true if adding laser, or false if removing
 	 * @param dir
+	 * @param doubleLaser true if laser is from a DoubleLaserBase (also deals double the damage)
 	 */
-	public void toggleLaser (Position pos, Board board, boolean laserStatus, Direction dir){
+	public void toggleLaser (Position pos, Board board, boolean laserStatus, Direction dir, boolean doubleLaser){
 		Position curPos = pos;
 		Position nextPos = pos.getNeighbour(dir);
 
 		//either adds or remove laser from the current tile
 		if (laserStatus) {
-			this.addGameObject(new Laser(dir));
+			this.addGameObject(new Laser(dir, doubleLaser));
 		}
 		else {
-			this.removeGameObject(new Laser(dir));
+			this.removeGameObject(new Laser(dir, doubleLaser));
 		}
 
 		switch (this.isPossibleToMoveDir(curPos, board, dir)) {
 			//laser is able to proceed to next tile
 			case 0:
 				Tile nextTile = board.getTile(nextPos);
-				nextTile.toggleLaser(nextPos, board, laserStatus, dir);
+				nextTile.toggleLaser(nextPos, board, laserStatus, dir, doubleLaser);
 				break;
 
 			//hit player on next tile
@@ -222,6 +227,10 @@ public abstract class Tile extends Image implements ITile {
 				if (laserStatus) {
 					System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
 					playerOnNextTile.increaseDamage();
+
+					if (doubleLaser) {
+						playerOnNextTile.increaseDamage();
+					}
 				}
 				break;
 		}
