@@ -9,7 +9,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
 
-public class Client {
+public class Client implements INetCode{
 	private String host;
 	private int port;
 	private String name;

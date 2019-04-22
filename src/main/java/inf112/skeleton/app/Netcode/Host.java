@@ -13,7 +13,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
 
-public class Host {
+public class Host implements INetCode{
 
 	private static final int PORT = 6666;
 	private GameStateManager gsm;
