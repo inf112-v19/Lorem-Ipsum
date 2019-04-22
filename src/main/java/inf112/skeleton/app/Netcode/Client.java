@@ -13,11 +13,15 @@ public class Client {
 	private String host;
 	private int port;
 	private String name;
+	private ClientHandler clientHandler;
+	private boolean hostReady;
 
 	public Client(final String host, final int port, String name) {
 		this.host = host;
 		this.port = port;
 		this.name = name;
+		this.hostReady = false;
+		this.clientHandler = new ClientHandler(this);
 	}
 
 	public void start() throws Exception {
@@ -31,7 +35,7 @@ public class Client {
 			b.handler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				public void initChannel(SocketChannel ch) throws Exception {
-					ch.pipeline().addLast(new ClientHandler());
+					ch.pipeline().addLast(clientHandler);
 				}
 			});
 			ChannelFuture f = b.connect().sync();
@@ -46,6 +50,14 @@ public class Client {
 
 	public String getName() {
 		return name;
+	}
+
+	public ClientHandler getClientHandler() {
+		return clientHandler;
+	}
+
+	public boolean isHostReady() {
+		return hostReady;
 	}
 
 	public static void main(String[] args) throws Exception {

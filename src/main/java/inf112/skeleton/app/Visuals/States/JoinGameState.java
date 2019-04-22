@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Queue;
+import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Netcode.Client;
 import inf112.skeleton.app.Netcode.ClientHandler;
 import inf112.skeleton.app.Visuals.Text;
@@ -95,6 +98,16 @@ public class JoinGameState extends State {
 
 	@Override
 	protected void handleInput() {
+		if(client != null){
+			if(client.isHostReady()){
+				System.out.println("host is ready! You should set SpawnPointState");
+
+				//gsm.set(new SpawnPointState(gsm, new Board(""), new Queue<Player>()));
+				//TODO - set SpawnPointState
+			}
+		}
+
+
 		if (this.tryConnect){
 			String inputText = textArea.getText();
 			final int port = 6666;
@@ -102,7 +115,7 @@ public class JoinGameState extends State {
 			InetSocketAddress socketAddress = new InetSocketAddress(inputText, port);
 			boolean isReachable = false;
 			try{
-				isReachable = socketAddress.getAddress().isReachable(1000);
+				isReachable = socketAddress.getAddress().isReachable(timeout);
 			}catch (IOException ioE){
 				ioE.printStackTrace();
 			}catch (NullPointerException nullPointerE){
@@ -185,6 +198,7 @@ public class JoinGameState extends State {
 				}
 			}
 		}).start();
+
 	}
 
 

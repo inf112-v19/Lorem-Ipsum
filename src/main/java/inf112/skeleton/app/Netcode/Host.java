@@ -17,9 +17,11 @@ public class Host {
 
 	private static final int PORT = 6666;
 	private GameStateManager gsm;
+	private HostHandler hostHandler;
 
 	public Host(GameStateManager gsm) {
 		this.gsm = gsm;
+		this.hostHandler = new HostHandler(gsm);
 	}
 
 	public void start() throws Exception {
@@ -35,13 +37,7 @@ public class Host {
 			b.childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
-					ch.pipeline().addLast(new HostHandler());
-
-					//updating connected client list in LobbyState
-					if (gsm.peek() instanceof LobbyState){
-						LobbyState lobby = (LobbyState)gsm.peek();
-						lobby.addSocketChannel(ch);
-					}
+					ch.pipeline().addLast(hostHandler);
 				}
 			});
 			ChannelFuture f = b.bind().sync();
@@ -52,6 +48,10 @@ public class Host {
 			boss.shutdownGracefully().sync();
 			worker.shutdownGracefully().sync();
 		}
+	}
+
+	public HostHandler getHostHandler() {
+		return hostHandler;
 	}
 
 	/*public static void main(String[] args) throws Exception {

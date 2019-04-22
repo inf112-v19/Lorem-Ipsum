@@ -13,6 +13,11 @@ import java.util.Scanner;
 @ChannelHandler.Sharable
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
+	private Client client;
+
+	public ClientHandler(Client client) {
+		this.client = client;
+	}
 
 	private void writeOut(ChannelHandlerContext ctx){
 		Scanner in = new Scanner(System.in);
@@ -24,6 +29,20 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Server received: " + in.toString(CharsetUtil.UTF_8));
+		String inString = in.toString(CharsetUtil.UTF_8);
+
+		switch (inString){
+			case "HOST_DONE":
+				//TODO
+				break;
+			case "HOST_READY":
+
+				break;
+
+			default:
+				System.err.println(inString + " has no handling");
+		}
+
 		writeOut(ctx);
 	}
 

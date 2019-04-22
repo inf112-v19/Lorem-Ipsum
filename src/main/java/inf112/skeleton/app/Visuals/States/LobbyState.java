@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
+import io.netty.channel.Channel;
 import io.netty.channel.socket.SocketChannel;
 
 import java.util.ArrayList;
@@ -19,14 +20,14 @@ public class LobbyState extends State {
 	private Table table;
 	private Skin skin;
 	private Host server;
-	private ArrayList<SocketChannel> socketChannels;
+	private ArrayList<Channel> channels;
 	private Text status;
 
 	public LobbyState(GameStateManager gsm) {
 		super(gsm);
 		this.server = new Host(gsm);
 		this.skin = super.assetHandler.getSkin();
-		this.socketChannels = new ArrayList<>();
+		this.channels = new ArrayList<>();
 
 		this.status = new Text("", skin, Text.TextPosition.TOP_LEFT);
 		this.status.setColor(Color.RED);
@@ -43,15 +44,15 @@ public class LobbyState extends State {
 		startServer();
 	}
 
-	public void addSocketChannel(SocketChannel ch){
-		socketChannels.add(ch);
+	public void addSocketChannel(Channel ch){
+		channels.add(ch);
 		updateConnectedPlayers();
 	}
 
 	public void updateConnectedPlayers(){
 		this.table.clearChildren();
 		addTableHeader();
-		for (SocketChannel ch : socketChannels) {
+		for (Channel ch : channels) {
 			this.table.add(new Text(ch.toString(), this.skin));
 			this.table.row();
 		}
@@ -66,7 +67,7 @@ public class LobbyState extends State {
 		textButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (socketChannels.size() > 0){
+				if (channels.size() > 0){
 					System.out.println("setting ChooseBoardState");
 					gsm.set(new ChooseBoardState(gsm));
 					return true;
