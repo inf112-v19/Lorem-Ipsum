@@ -3,7 +3,6 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
 import io.netty.channel.Channel;
-import io.netty.channel.socket.SocketChannel;
 
 import java.util.ArrayList;
 
@@ -19,13 +17,15 @@ public class LobbyState extends State {
 
 	private Table table;
 	private Skin skin;
-	private Host server;
+	private Host host;
 	private ArrayList<Channel> channels;
 	private Text status;
+	private boolean submit;
 
 	public LobbyState(GameStateManager gsm) {
 		super(gsm);
-		this.server = new Host(gsm);
+		this.submit = false;
+		this.host = new Host(gsm);
 		this.skin = super.assetHandler.getSkin();
 		this.channels = new ArrayList<>();
 
@@ -42,6 +42,14 @@ public class LobbyState extends State {
 		super.stage.addActor(status);
 
 		startServer();
+	}
+
+	@Override
+	protected void handleInput() {
+		if (this.submit){
+			System.out.println("setting ChooseBoardState");
+			gsm.set(new ChooseBoardState(gsm, this.host));
+		}
 	}
 
 	public void addSocketChannel(Channel ch){
@@ -68,8 +76,7 @@ public class LobbyState extends State {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if (channels.size() > 0){
-					System.out.println("setting ChooseBoardState");
-					gsm.set(new ChooseBoardState(gsm));
+					submit = true;
 					return true;
 				}
 				status.setText("There must be at least one player connected to play online");
@@ -94,7 +101,7 @@ public class LobbyState extends State {
 			@Override
 			public void run() {
 				try{
-					server.start();
+					host.start();
 				}catch (Exception e){
 					System.err.println("Error while starting the server");
 					e.printStackTrace();

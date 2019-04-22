@@ -137,10 +137,6 @@ public class JoinGameState extends State {
 		}
 	}
 
-	@Override
-	public void update(float dt) {
-		handleInput();
-	}
 
 	private void addHostsToTabel(){
 

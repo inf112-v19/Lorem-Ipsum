@@ -5,11 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 
 public class ChooseBoardState extends State {
 	private boolean start;
+
+	private Host host;
 
 	private Image textBar;
 	private TextureRegion background;
@@ -21,8 +24,10 @@ public class ChooseBoardState extends State {
 	private int bigButtonWidth;
 	private String boardName;
 
-	public ChooseBoardState(GameStateManager gsm) {
+	public ChooseBoardState(GameStateManager gsm, Host host) {
 		super(gsm);
+
+		this.host = host;
 
 		this.start = false;
 		this.halfButtonWidth = 193 / 2;

@@ -97,7 +97,7 @@ public class MenuState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			gsm.set(new ChooseBoardState(gsm));
+			gsm.set(new ChooseBoardState(gsm, null));
 		}else if(this.isHostingGame){
 			System.out.println("Hosting a game!");
 			gsm.set(new LobbyState(gsm));
