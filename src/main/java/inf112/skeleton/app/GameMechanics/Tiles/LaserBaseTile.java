@@ -42,7 +42,7 @@ public class LaserBaseTile extends Tile {
 	 * @param laserStatus
 	 */
 	@Override
-	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
+	public void toggleLaser(Position pos, Board board, boolean laserStatus, boolean doubleLaser) {
 		Player playerOnTile = board.posToPlayer(pos);
 		int possibleToMoveDir = this.isPossibleToMoveDir(pos, board, this.direction);
 
@@ -50,11 +50,15 @@ public class LaserBaseTile extends Tile {
 			if (laserStatus) {
 				System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
 				playerOnTile.increaseDamage();
+
+				if (doubleLaser) {
+					playerOnTile.increaseDamage();
+				}
 			}
 		}
 		else if (possibleToMoveDir == 0) {
 			Tile nextTile = board.getTile(pos.getNeighbour(this.direction));
-			nextTile.toggleLaser(pos, board, laserStatus, this.direction);
+			nextTile.toggleLaser(pos, board, laserStatus, this.direction, doubleLaser);
 		}
 		else if (possibleToMoveDir == 2) {
 			if (laserStatus) {

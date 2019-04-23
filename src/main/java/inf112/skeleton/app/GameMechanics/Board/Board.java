@@ -489,8 +489,11 @@ public class Board implements IBoard {
 			Tile tile = tileMapEntry.getValue();
 			Position tilePos = tileMapEntry.getKey();
 
-			if (tile instanceof LaserBaseTile || tile instanceof DoubleLaserBaseTile) {
-				tile.toggleLaser(tilePos, this, laserStatus);
+			if (tile instanceof DoubleLaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus, true);
+			}
+			else if (tile instanceof LaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus, false);
 			}
 		}
 

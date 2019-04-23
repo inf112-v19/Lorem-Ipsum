@@ -339,7 +339,7 @@ public class Player extends Image implements IPlayer {
 				//laser is able to proceed to next tile
 				case 0:
 					Tile nextTile = board.getTile(nextPos);
-					nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
+					nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection, false);
 					break;
 
 				//hit player on next tile - damage player if laserStatus is true
