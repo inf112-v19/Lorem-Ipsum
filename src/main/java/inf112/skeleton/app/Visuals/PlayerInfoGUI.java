@@ -69,7 +69,7 @@ public class PlayerInfoGUI {
                     table.add(getDamageTokenImage(assetHandler.getTexture("emptyDamageBar.png"))).width(20).height(10).spaceRight(2).spaceTop(2);
                 }
             }
-            table.row().spaceTop(10);
+            table.row();
         }
         stage.addActor(table);
     }
