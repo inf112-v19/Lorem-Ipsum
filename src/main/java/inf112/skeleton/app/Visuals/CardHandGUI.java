@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -30,7 +32,7 @@ public class CardHandGUI {
     private BitmapFont font;
     private String playerTurn;
 
-    private BitmapFont[] cardPriorities;
+    private Label[] cardPriorities;
     private int[] tempPriorities;
 
     private ImageButton[] displayedCardsArr;
@@ -48,6 +50,8 @@ public class CardHandGUI {
     private Image[] numberLabels;
     private List<Image> lockList;
 
+    private Table priTable;
+
     public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
         this.batch = batch;
@@ -59,6 +63,10 @@ public class CardHandGUI {
         cardByXPos = new HashMap<>();
         displayedCardsArr = new ImageButton[9];
         numberLabels = new Image[5];
+
+        priTable = new Table();
+        priTable.bottom().left().padBottom(104).padLeft(31);
+        priTable.setFillParent(true);
 
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
@@ -95,10 +103,11 @@ public class CardHandGUI {
         tempCardPtr = 0;
         final List<Card> cards = c;
         tempPriorities = new int[cards.size()];
-        cardPriorities = new BitmapFont[cards.size()];
+        cardPriorities = new Label[cards.size()];
 
         for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i] = new BitmapFont();
+            cardPriorities[i] = new Label("", assetHandler.getSkin());
+            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
         }
 
         for (int i = 0; i < cards.size(); i++) {
@@ -244,18 +253,41 @@ public class CardHandGUI {
     }
 
     private void renderPriorities() {
+        priTable.clearChildren();
+        priTable = new Table();
+        priTable.bottom().left().padBottom(104).padLeft(31);
+        priTable.setFillParent(true);
+
         batch.begin();
         int xPos = 38;
+
         for (int i = 0; i < tempPriorities.length; i++) {
             tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
+
         }
         for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i].getData().setScale(0.90f);
-            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
-            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
+            //cardPriorities[i].getData().setScale(0.90f);
+
+
+            cardPriorities[i].setText(tempPriorities[i]);
+            //cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
+            cardPriorities[i].setPosition(xPos, 120);
+            cardPriorities[i].setFontScale(0.9f);
+            stage.addActor(cardPriorities[i]);
+            priTable.add(cardPriorities[i]).width(97).center();
             xPos += 97;
         }
         batch.end();
+
+        /*
+        priTable.clearChildren();
+        Label label = new Label("test", assetHandler.getSkin());
+        priTable.setZIndex(0);
+        priTable.add(label);
+        stage.addActor(priTable);
+        */
+
+        stage.addActor(priTable);
     }
 
     private void createSubmitButton() {
@@ -275,6 +307,7 @@ public class CardHandGUI {
                         System.out.print(tempCardSeq[i].toString() + ", ");
                     }
                     System.out.println();
+                    //priTable.clearChildren();
                     selectCards();
                 } else {
                     System.out.println("Select 5 cards!");
@@ -297,6 +330,7 @@ public class CardHandGUI {
                 infoBar.remove();
                 System.out.println("Clear");
                 selectCards();
+                priTable.clearChildren();
                 return true;
             }
         });
@@ -307,9 +341,12 @@ public class CardHandGUI {
         clear.clearListeners();
         clearOldCards();
         font.dispose();
+        /*
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();
         }
+        */
+        priTable.clearChildren();
     }
 
     public void resize(){
