@@ -46,9 +46,12 @@ public class CardHandGUI {
 
     private ImageButton clear;
     private ImageButton submit;
+    private ImageButton powerDown;
     private Image infoBar;
     private Image[] numberLabels;
     private List<Image> lockList;
+
+    private boolean powerDownPressed = false;
 
     private Table priTable;
 
@@ -70,14 +73,17 @@ public class CardHandGUI {
 
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
+        powerDown = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("powerDown.png")));
         createSubmitButton();
         createClearButton();
+        createPowerDownButton();
         cardManager.newRound();
         selectCards();
     }
 
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
+            powerDownPressed = false;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
@@ -302,6 +308,9 @@ public class CardHandGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if (cardManager.setCardSeq(currentPlayer, tempCardSeq)) {
+                    if (powerDownPressed) {
+                        currentPlayer.setPowerDown(1);
+                    }
                     System.out.print("Cards submitted: ");
                     for (int i = 0; i < tempCardPtr; i++) {
                         System.out.print(tempCardSeq[i].toString() + ", ");
@@ -336,9 +345,31 @@ public class CardHandGUI {
         });
     }
 
+    private void createPowerDownButton() {
+        powerDown.setSize(100, 32);
+        powerDown.setPosition(873, 88);
+        stage.addActor(powerDown);
+
+        powerDown.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (powerDownPressed) {
+                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
+                    powerDownPressed = false;
+                } else {
+                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("undo.png")));
+                    powerDownPressed = true;
+                }
+                System.out.println("Power Down");
+                return true;
+            }
+        });
+    }
+
     public void dispose() {
         submit.clearListeners();
         clear.clearListeners();
+        powerDown.clearListeners();
         clearOldCards();
         font.dispose();
         /*
