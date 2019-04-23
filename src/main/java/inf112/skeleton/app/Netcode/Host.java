@@ -48,11 +48,13 @@ public class Host implements INetCode{
 			boss.shutdownGracefully().sync();
 			worker.shutdownGracefully().sync();
 		}
+
 	}
 
 	public HostHandler getHostHandler() {
 		return hostHandler;
 	}
+
 
 	/*public static void main(String[] args) throws Exception {
 		if(PORT < 0) {
