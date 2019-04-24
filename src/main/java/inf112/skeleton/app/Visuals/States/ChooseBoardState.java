@@ -27,6 +27,7 @@ public class ChooseBoardState extends State {
 	public ChooseBoardState(GameStateManager gsm, Host host) {
 		super(gsm);
 
+		//Only hosts should ba able to choose board. can be null.
 		this.host = host;
 
 		this.start = false;
@@ -97,14 +98,16 @@ public class ChooseBoardState extends State {
 	public void handleInput() {
 		if (this.start) {
 			this.board = new Board(getBoardName());
-			gsm.set(new ChoosePlayerState(this.gsm, this.board));
+			if (this.host != null){
+				System.out.println("hello??????????");
+				this.host.send(boardName);
+				gsm.set(new PlayerNameState(gsm, this.board, 1, this.host));
+			}else{
+				gsm.set(new ChoosePlayerState(this.gsm, this.board));
+			}
 		}
 	}
 
-	@Override
-	public void update(float dt) {
-		handleInput();
-	}
 
 	@Override
 	public void render() {

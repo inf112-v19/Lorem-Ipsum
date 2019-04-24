@@ -99,12 +99,9 @@ public class JoinGameState extends State {
 	@Override
 	protected void handleInput() {
 		if(client != null){
-			if(client.isHostReady()){
-				//TODO - get boardname from host
-				gsm.set(new PlayerNameState(gsm, new Board(""), 1));
-
-				//gsm.set(new SpawnPointState(gsm, new Board(""), new Queue<Player>()));
-				//TODO - set SpawnPointState
+			String boardName = client.receive();
+			if (boardName != null){
+				gsm.set(new PlayerNameState(gsm, new Board(boardName), this.client));
 			}
 		}
 
@@ -131,7 +128,6 @@ public class JoinGameState extends State {
 				startClient();
 				this.table.reset();
 				addText("Waiting for host");
-				client.getClientHandler().send("BOARD");
 			}else{
 				System.err.println("unable to connect to host");
 			}

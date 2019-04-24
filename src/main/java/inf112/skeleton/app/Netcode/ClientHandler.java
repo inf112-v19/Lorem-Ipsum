@@ -13,6 +13,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	private Client client;
 	private ChannelHandlerContext ctx;
 
+	private String received;
+
 	public ClientHandler(Client client) {
 		this.client = client;
 	}
@@ -32,6 +34,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		send(msg);
 	}
 
+	public String receive(){
+		if (received != null){
+			String s = received;
+			received = null;
+			return s;
+		}
+		return null;
+	}
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
@@ -47,13 +58,14 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 				break;
 
 			default:
+				this.received = inString;
 				System.err.println(inString + " has no handling");
 		}
 
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) {
+	public synchronized void channelActive(ChannelHandlerContext ctx) {
 		System.out.println("CLIENT CONNECTED");
 		this.ctx = ctx;
 
@@ -65,4 +77,5 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		cause.printStackTrace();
 		ctx.close();
 	}
+
 }

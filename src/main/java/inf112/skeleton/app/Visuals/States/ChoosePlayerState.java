@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.Netcode.Client;
+import inf112.skeleton.app.Netcode.Host;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 
@@ -25,6 +28,7 @@ public class ChoosePlayerState extends State {
 	private int bigButtonWidth;
 	private int playerAmount;
 
+	//this state is only for local games, not network
 	public ChoosePlayerState(GameStateManager gsm, Board board) {
 		super(gsm);
 		this.board = board;
@@ -99,14 +103,10 @@ public class ChoosePlayerState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			gsm.set(new PlayerNameState(gsm, board, playerAmount));
+			gsm.set(new PlayerNameState(gsm, board, playerAmount, null));
 		}
 	}
 
-	@Override
-	public void update(float dt) {
-		handleInput();
-	}
 
 	@Override
 	public void render() {
@@ -117,9 +117,5 @@ public class ChoosePlayerState extends State {
 		stage.draw();
 	}
 
-	@Override
-	public void resize() {
-		super.resize();
-	}
 
 }

@@ -56,12 +56,19 @@ public class Client implements INetCode{
 		return clientHandler;
 	}
 
-	public boolean isHostReady() {
-		return hostReady;
+	@Override
+	public void send(String msg) {
+		this.clientHandler.send(msg);
+	}
+
+	public String receive() {
+		return this.clientHandler.receive();
 	}
 
 	public static void main(String[] args) throws Exception {
-		new Client("localhost", 6666, "test").start();
+		Client client = new Client("localhost", 6666, "test");
+		client.start();
+
 	}
 
 }

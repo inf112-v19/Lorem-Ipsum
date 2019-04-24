@@ -6,4 +6,8 @@ package inf112.skeleton.app.Netcode;
 public interface INetCode {
 
 	void start() throws Exception;
+
+	void send(String msg);
+
+	//String receive();
 }
