@@ -75,9 +75,11 @@ public class CardHandGUI {
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
         powerDown = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("powerDown.png")));
+
         createSubmitButton();
         createClearButton();
         createPowerDownButton();
+
         cardManager.newRound();
         selectCards();
     }
@@ -89,9 +91,9 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
-            
+
             //if (currentPlayer.isAI())
-                //do something
+            //do something
 
             //else
             if (currentPlayer.getPowerDown() == 3) {
@@ -103,6 +105,10 @@ public class CardHandGUI {
     }
 
     private void draw(List<Card> c) {
+        submit.setVisible(true);
+        clear.setVisible(true);
+        powerDown.setVisible(true);
+
         if (lockList != null) {
             clearLockList();
         }
@@ -144,7 +150,7 @@ public class CardHandGUI {
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (tempCardPtr < 5-lockList.size() && !cardManager.isLocked(cards.get(finalI))) {
+                    if (tempCardPtr < 5 - lockList.size() && !cardManager.isLocked(cards.get(finalI))) {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
@@ -244,7 +250,7 @@ public class CardHandGUI {
 
     private void clearLockList() {
         for (Image image : lockList) {
-           image.remove();
+            image.remove();
         }
     }
 
@@ -259,9 +265,11 @@ public class CardHandGUI {
 
     public void render() {
         batch.begin();
-        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight()-10);
+        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight() - 10);
         batch.end();
-        renderPriorities();
+        if (tempPriorities != null) {
+            renderPriorities();
+        }
     }
 
     private void renderPriorities() {
@@ -374,8 +382,12 @@ public class CardHandGUI {
 
     public void drawPowerDownOptions(final List<Card> currentCards) {
         cancelPowerDownTable = new Table();
-        cancelPowerDownTable.bottom().center();
+        cancelPowerDownTable.bottom().padBottom(30);
         cancelPowerDownTable.setFillParent(true);
+
+        submit.setVisible(false);
+        clear.setVisible(false);
+        powerDown.setVisible(false);
 
         ImageButton cancel = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("cancelPowerDown.png")));
         ImageButton proceed = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("proceed.png")));
@@ -396,6 +408,7 @@ public class CardHandGUI {
                 cancelPowerDownTable.clearChildren();
                 currentPlayer.setPowerDown(1);
                 currentPlayer.setReady();
+                selectCards();
                 return true;
             }
         });
@@ -421,7 +434,7 @@ public class CardHandGUI {
         priTable.clearChildren();
     }
 
-    public void resize(){
+    public void resize() {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 }
