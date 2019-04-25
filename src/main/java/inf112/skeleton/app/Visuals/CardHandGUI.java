@@ -54,6 +54,7 @@ public class CardHandGUI {
     private boolean powerDownPressed = false;
 
     private Table priTable;
+    private Table cancelPowerDownTable;
 
     public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
@@ -83,6 +84,7 @@ public class CardHandGUI {
 
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
+            powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
             powerDownPressed = false;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
@@ -92,7 +94,11 @@ public class CardHandGUI {
                 //do something
 
             //else
-            draw(currentCards);
+            if (currentPlayer.getPowerDown() == 3) {
+                drawPowerDownOptions(currentCards);
+            } else {
+                draw(currentCards);
+            }
         }
     }
 
@@ -364,6 +370,41 @@ public class CardHandGUI {
                 return true;
             }
         });
+    }
+
+    public void drawPowerDownOptions(final List<Card> currentCards) {
+        cancelPowerDownTable = new Table();
+        cancelPowerDownTable.bottom().center();
+        cancelPowerDownTable.setFillParent(true);
+
+        ImageButton cancel = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("cancelPowerDown.png")));
+        ImageButton proceed = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("proceed.png")));
+
+        cancel.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cancelPowerDownTable.clearChildren();
+                currentPlayer.setPowerDown(0);
+                draw(currentCards);
+                return true;
+            }
+        });
+
+        proceed.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cancelPowerDownTable.clearChildren();
+                currentPlayer.setPowerDown(1);
+                currentPlayer.setReady();
+                return true;
+            }
+        });
+
+        cancelPowerDownTable.add(proceed);
+        cancelPowerDownTable.row();
+        cancelPowerDownTable.add(cancel);
+
+        stage.addActor(cancelPowerDownTable);
     }
 
     public void dispose() {

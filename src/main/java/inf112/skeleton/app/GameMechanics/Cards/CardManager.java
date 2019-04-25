@@ -36,7 +36,7 @@ public class CardManager {
     public Player getPlayer() {
         Player currentPlayer = null;
         for (Player player : players) {
-            if (!player.isReady() && !player.isDead()){
+            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1){
                 currentPlayer = player;
                 break;
             }
