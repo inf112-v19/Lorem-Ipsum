@@ -51,6 +51,10 @@ public class CardManager {
      */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
+            if (player.getPowerDown() == 1) {
+                player.setReady();
+                continue;
+            }
             if (player.isDead()) {
                 player.setReady();
             }

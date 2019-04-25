@@ -309,7 +309,7 @@ public class CardHandGUI {
 
                 if (cardManager.setCardSeq(currentPlayer, tempCardSeq)) {
                     if (powerDownPressed) {
-                        currentPlayer.setPowerDown(1);
+                        currentPlayer.setPowerDown(2);
                     }
                     System.out.print("Cards submitted: ");
                     for (int i = 0; i < tempCardPtr; i++) {
