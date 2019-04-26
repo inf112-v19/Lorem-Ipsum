@@ -333,7 +333,7 @@ public class Player extends Image implements IPlayer {
 		Tile curTile = board.getTile(pos);
 		Position nextPos = pos.getNeighbour(this.playerDirection);
 
-		//curTile could be null if the player is not on the board - no laser should be added
+		//curTile could be null if the player is not on the board - no laser should be added/removed
 		if (curTile != null) {
 			switch (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
 				//laser is able to proceed to next tile

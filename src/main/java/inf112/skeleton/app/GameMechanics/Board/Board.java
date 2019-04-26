@@ -371,7 +371,7 @@ public class Board implements IBoard {
 
 			//respawn dead players
 			if (!player.onBoardCheck() && !player.isDead()){
-				System.out.println("Player" + player.getPlayerID() + " respawned");
+				System.out.println("Player " + player.getPlayerID() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
 
@@ -501,7 +501,10 @@ public class Board implements IBoard {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
 
-			player.toggleLaser(playerPos, this, laserStatus);
+			//only calls the toggleLaser if the player is alive or if toggling off the laser
+			if (!player.isDead() || !laserStatus){
+				player.toggleLaser(playerPos, this, laserStatus);
+			}
 		}
 	}
 
