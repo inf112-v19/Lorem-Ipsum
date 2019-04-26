@@ -39,6 +39,8 @@ public class PlayerNameState extends State {
 	ArrayList<String> receiveFromClients;
 	private boolean clientHasSendt = false;
 
+	private Text waitingText;
+
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
 		super.camera.setToOrtho(false);
@@ -56,6 +58,7 @@ public class PlayerNameState extends State {
 		this.textAreas = new TextArea[numPlayers];
 		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
 		this.background = new TextureRegionDrawable(texture);
+		this.waitingText = new Text("Waiting on clients", uiSkin);
 
 		this.table = new Table(uiSkin);
 		this.table.setFillParent(true);
@@ -87,6 +90,8 @@ public class PlayerNameState extends State {
 		this.table.setFillParent(true);
 		this.table.setBackground(background);
 		this.table.defaults().space(0, 40, 40, 40);
+
+		this.waitingText = new Text("Waiting on host", uiSkin);
 
 		creatTextFields();
 		creatSubmitButton();
@@ -123,29 +128,20 @@ public class PlayerNameState extends State {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				continueToNextState = true;
 				table.clearChildren();
-				String msg;
-				if (host != null){
-					msg = "waiting for clients...";
-				}else{
-					msg = "waiting for host...";
-				}
-				Text text = new Text(msg, uiSkin);
-				table.add(text);
+				table.add(waitingText);
 				return true;
 			}
 		});
 		table.add(submit);
 	}
 
-	private void isHostHandling(){
+	private synchronized void isHostHandling(){
 		if (this.receiveFromClients == null){
-			System.out.println("venter på alle klienter");
-			//TODO - add status text
 			return;
 		}
+
+		//this should never happen
 		if (this.receiveFromClients.size() != host.getHostHandler().getNumClients()){
-			System.out.println("venter på noen klienter");
-			//TODO - add status text
 			return;
 		}
 
@@ -169,7 +165,8 @@ public class PlayerNameState extends State {
 		}
 	}
 
-	private void isClientHandling(){
+	private synchronized void isClientHandling(){
+		//clients should only send name one time
 		if (!clientHasSendt){
 			String name = textAreas[0].getText();
 			this.client.send(name);
