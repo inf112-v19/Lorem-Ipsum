@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -35,6 +36,8 @@ public class PlayerNameState extends State {
 	private TextureRegionDrawable background;
 	private Table table;
 	private boolean continueToNextState;
+	ArrayList<String> receiveFromClients;
+	private boolean clientHasSendt = false;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
@@ -119,6 +122,15 @@ public class PlayerNameState extends State {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				continueToNextState = true;
+				table.clearChildren();
+				String msg;
+				if (host != null){
+					msg = "waiting for clients...";
+				}else{
+					msg = "waiting for host...";
+				}
+				Text text = new Text(msg, uiSkin);
+				table.add(text);
 				return true;
 			}
 		});
@@ -126,16 +138,16 @@ public class PlayerNameState extends State {
 	}
 
 	private void isHostHandling(){
-		ArrayList<String> receiveFromClients = this.host.receive();
-		if (receiveFromClients == null){
+		if (this.receiveFromClients == null){
+			System.out.println("venter på alle klienter");
 			//TODO - add status text
 			return;
 		}
-		if (receiveFromClients.size() != host.getHostHandler().getNumClients()){
+		if (this.receiveFromClients.size() != host.getHostHandler().getNumClients()){
+			System.out.println("venter på noen klienter");
 			//TODO - add status text
 			return;
 		}
-
 
 		//adding connected clients to players queue and at last the host
 		for (int i = 0; i < receiveFromClients.size(); i++){
@@ -158,17 +170,15 @@ public class PlayerNameState extends State {
 	}
 
 	private void isClientHandling(){
-		String name = textAreas[0].getText();
-		System.out.println(name);
-		this.client.send(name);
-		//TODO - set waiting screen
-
-
-		//TODO - get Players
+		if (!clientHasSendt){
+			String name = textAreas[0].getText();
+			this.client.send(name);
+			this.clientHasSendt = true;
+		}
 
 		// listen to host
 		String received = this.client.receive();
-		if (received != null){
+		if (received != null && clientHasSendt){
 			String[] playernames = received.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));
@@ -197,10 +207,16 @@ public class PlayerNameState extends State {
 			}else{
 				localGameHandling();
 			}
-
-			this.continueToNextState = false;
 		}
+	}
 
+
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		if (this.host != null && this.receiveFromClients == null){
+			this.receiveFromClients = this.host.receive();
+		}
 
 	}
 }
