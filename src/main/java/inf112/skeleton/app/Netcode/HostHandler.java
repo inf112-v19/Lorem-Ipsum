@@ -11,6 +11,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 @ChannelHandler.Sharable
@@ -131,9 +132,13 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 
 		//updating connected client list in LobbyState
-		if (gsm.peek() instanceof LobbyState){
-			LobbyState lobby = (LobbyState)gsm.peek();
-			lobby.addSocketChannel(ctx.channel());
+		try{
+			if (gsm.peek() instanceof LobbyState){
+				LobbyState lobby = (LobbyState)gsm.peek();
+				lobby.addSocketChannel(ctx.channel());
+			}
+		}catch (EmptyStackException e){
+			System.err.println("the GameStateManager stack is empty");
 		}
 	}
 

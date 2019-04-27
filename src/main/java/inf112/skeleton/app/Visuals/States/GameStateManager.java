@@ -2,6 +2,7 @@ package inf112.skeleton.app.Visuals.States;
 
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class GameStateManager {
@@ -20,7 +21,7 @@ public class GameStateManager {
 		return states.pop();
 	}
 
-	public State peek() {
+	public State peek() throws EmptyStackException {
 		return states.peek();
 	}
 
