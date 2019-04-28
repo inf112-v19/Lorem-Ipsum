@@ -70,9 +70,15 @@ public class PlayerNameState extends State {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				for (int i = 0; i < textAreas.length; i++) {
 					System.out.println(textAreas[i].getText());
-					Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
+					Player player = new Player(i, textAreas[i].getText(), Direction.EAST, false);
 					players.addLast(player);
 				}
+
+				//AI test TODO: remove AI player
+				//Player aiPlayer = new Player(1, "Test AI", Direction.NORTH, true);
+			//	players.addLast(aiPlayer);
+
+
 				gsm.set(new SpawnPointState(gsm, board, players));
 				return true;
 			}
