@@ -1,18 +1,27 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Visuals.RoboRally;
-
+import inf112.skeleton.app.Visuals.Text;
 
 public class ChooseBoardState extends State {
 	private boolean start;
+	private Table table;
+	private Table tablebutton;
 
 	private Image textBar;
-	private TextureRegion background;
+	private TextureRegionDrawable background;
 
 	private Board board;
 
@@ -21,27 +30,79 @@ public class ChooseBoardState extends State {
 	private int bigButtonWidth;
 	private String boardName;
 
+	private Skin skin;
+
+
 	public ChooseBoardState(GameStateManager gsm) {
 		super(gsm);
 
 		this.start = false;
-		this.halfButtonWidth = 193 / 2;
-		this.bigButtonWidth = this.halfButtonWidth + 193;
 
-		this.background = super.assetHandler.getTextureRegion("StateImages/secondBackground.png");
-		this.textBar = new Image(assetHandler.getTextureRegion("StateImages/chooseBoardType.png"));
+		this.skin = assetHandler.getSkin();
 
-		setTextBar();
-		setBoardTypes();
+		this.table = new Table(skin);
+		this.table.setFillParent(true);
+
+		this.tablebutton = new Table(skin);
+
+		//this.table.setDebug(true);
+		//this.tablebutton.setDebug(true);
+
+		//adds background
+		this.background = new TextureRegionDrawable(super.assetHandler.getTextureRegion("StateImages/secondBackground.png"));
+		this.table.setBackground(this.background);
+
+		//tekst
+		Label topLabel = new Label("CHOOSE BOARD TYPE", skin);
+		topLabel.setFontScale(2);
+		topLabel.setAlignment(Align.center);
+
+		//knapper
+		TextButton button1 = new TextButton("BOARD 1", skin);
+		TextButton button2 = new TextButton("BOARD 2", skin);
+		TextButton button3 = new TextButton("BOARD 3", skin);
+
+		//button1.getLabel().setFontScale(2);
+		button1.addListener(new ChangeListener() {
+			@Override
+			public void  changed(ChangeEvent event, Actor actor) {
+				start = true;
+				saveBoardName("Boards/BigBoard.txt");
+			}
+		});
+		button2.addListener(new ChangeListener() {
+			@Override
+			public void  changed(ChangeEvent event, Actor actor) {
+				start = true;
+				saveBoardName("Boards/BigBoard.txt");
+			}
+		});
+		button3.addListener(new ChangeListener() {
+			@Override
+			public void  changed(ChangeEvent event, Actor actor) {
+				start = true;
+				saveBoardName("Boards/BigBoard.txt");
+			}
+		});
+
+		tablebutton.defaults().pad(0,80,0,80).width(150).height(50);
+		tablebutton.add(button1);
+		tablebutton.add(button2);
+		tablebutton.add(button3);
+
+		table.defaults().pad(20F);
+		table.add(topLabel);
+		table.row();
+		table.add(tablebutton);
+
+		super.stage.addActor(table); //knappene
 	}
-
-	/**
-	 * set the textbar "Choose board type"
-	 */
+/*
 	private void setTextBar() {
 		this.textBar.setSize(1070 / 3, 102 / 3);
 		this.textBar.setPosition((RoboRally.WIDTH / 2) - ((1070 / 3) / 2), 102);
 		stage.addActor(this.textBar);
+		table.add(textBar);
 	}
 
 	private void setBoardTypes() {
@@ -77,8 +138,9 @@ public class ChooseBoardState extends State {
 				return false;
 			}
 		});
+		table.add(buttonType);
 	}
-
+*/
 	private String saveBoardName(String boardName) {
 		this.boardName = boardName;
 		return this.boardName;
@@ -104,12 +166,6 @@ public class ChooseBoardState extends State {
 	@Override
 	public void render() {
 		super.render();
-		this.stage.act();
-		this.stage.getBatch().begin();
-		this.stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-		this.stage.getBatch().end();
-		this.stage.draw();
-
 	}
 
 	@Override
