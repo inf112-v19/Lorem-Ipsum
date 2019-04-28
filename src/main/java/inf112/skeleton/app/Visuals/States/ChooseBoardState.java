@@ -1,50 +1,30 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.Text;
 
 public class ChooseBoardState extends State {
 	private boolean start;
-	private Table table;
-	private Table tablebutton;
-
-	private Image textBar;
-	private TextureRegionDrawable background;
-
 	private Board board;
-
-	//board types
-	private int halfButtonWidth;
-	private int bigButtonWidth;
 	private String boardName;
 
 	private Skin skin;
-
+	private Table table;
+	private Table tablebutton;
+	private TextureRegionDrawable background;
 
 	public ChooseBoardState(GameStateManager gsm) {
 		super(gsm);
-
 		this.start = false;
 
 		this.skin = assetHandler.getSkin();
-
 		this.table = new Table(skin);
 		this.table.setFillParent(true);
-
 		this.tablebutton = new Table(skin);
-
 		//this.table.setDebug(true);
 		//this.tablebutton.setDebug(true);
 
@@ -52,16 +32,17 @@ public class ChooseBoardState extends State {
 		this.background = new TextureRegionDrawable(super.assetHandler.getTextureRegion("StateImages/secondBackground.png"));
 		this.table.setBackground(this.background);
 
-		//tekst
+		//label
 		Label topLabel = new Label("CHOOSE BOARD TYPE", skin);
 		topLabel.setFontScale(2);
 		topLabel.setAlignment(Align.center);
 
-		//knapper
+		//buttons
 		TextButton button1 = new TextButton("BOARD 1", skin);
 		TextButton button2 = new TextButton("BOARD 2", skin);
 		TextButton button3 = new TextButton("BOARD 3", skin);
 
+		//clickable
 		//button1.getLabel().setFontScale(2);
 		button1.addListener(new ChangeListener() {
 			@Override
@@ -85,12 +66,13 @@ public class ChooseBoardState extends State {
 			}
 		});
 
+		//the visuals
 		tablebutton.defaults().pad(0,80,0,80).width(150).height(50);
 		tablebutton.add(button1);
 		tablebutton.add(button2);
 		tablebutton.add(button3);
 
-		table.defaults().pad(20F);
+		table.defaults().padBottom(170F);
 		table.add(topLabel);
 		table.row();
 		table.add(tablebutton);
