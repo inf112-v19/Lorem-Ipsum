@@ -153,10 +153,9 @@ public class Player extends Image implements IPlayer {
     public void destroyPlayer() {
         playerlives--;
 
-        if (playerlives >= 2) {
-            playerDamage = 2;
-        } else if (playerlives == 1) {
-            playerDamage = 4;
+        if (playerlives >= 0) {
+            this.decreaseDamage();
+            this.decreaseDamage();
         } else {
             playerDamage = 10;
             isOnTheBoard = false;
@@ -164,7 +163,7 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * Decrease the players health/damage by 1
+     * Increase the players health/damage by 1
      */
     @Override
     public void increaseDamage() {
@@ -175,7 +174,7 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * Increase the players health/damage by 1
+     * Decrease the players health/damage by 1
      */
     @Override
     public void decreaseDamage() {
