@@ -51,19 +51,14 @@ public class PlayerTest {
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
         player.increaseDamage();
-        assertEquals(9, player.getDamage());
+        assertEquals(1, player.getDamage());
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
-        player.decreaseDamage();
-        assertEquals(10, player.getDamage()); //max health = 10
-
         player.increaseDamage();
-        player.increaseDamage();
-        player.decreaseDamage();
-        assertEquals(9, player.getDamage());
+        assertEquals(1, player.getDamage());
     }
 
     /**
@@ -82,22 +77,11 @@ public class PlayerTest {
     }
 
     @Test
-    public void setNotReadyTest(){
+    public void setNotReadyTest() {
         Player player = new Player("Player", Direction.NORTH);
         player.setReady();
         player.setNotReady();
         assertFalse(player.isReady());
-    }
-
-    @Test
-    public void playerGetsRightHealthAmountAfterDestructionTest(){
-        Player player = new Player("player", Direction.NORTH);
-        player.destroyPlayer();
-        assertEquals(8, player.getDamage());
-        player.destroyPlayer();
-        assertEquals(6, player.getDamage());
-        player.destroyPlayer();
-        assertEquals(0, player.getDamage());
     }
 
     @Test
@@ -156,7 +140,7 @@ public class PlayerTest {
         for(int i=0;i<10;i++){
             player.increaseDamage();
         }
-        assertEquals(8, player.getDamage());
+        assertEquals(2, player.getDamage());
     }
 
     @Test
