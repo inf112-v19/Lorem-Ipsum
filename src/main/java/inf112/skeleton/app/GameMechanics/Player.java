@@ -7,7 +7,6 @@ import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.SpriteType;
 import inf112.skeleton.app.Interfaces.IPlayer;
-import inf112.skeleton.app.Visuals.States.CardState;
 
 import java.util.ArrayList;
 import java.util.List;
