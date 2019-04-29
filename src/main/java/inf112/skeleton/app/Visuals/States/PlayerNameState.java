@@ -160,7 +160,7 @@ public class PlayerNameState extends State {
 				playernames += player.getPlayerID() + ",";
 			}
 
-			this.host.send("PLAYER_NAMES " + playernames);
+			this.host.send("PLAYER_NAMES!" + playernames);
 			gsm.set(new SpawnPointState(gsm, board, players));
 		}
 	}
@@ -169,7 +169,7 @@ public class PlayerNameState extends State {
 		//clients should only send name one time
 		if (!clientHasSendt){
 			String name = textAreas[0].getText();
-			this.client.send("NAME " + name);
+			this.client.send("NAME!" + name);
 			this.clientHasSendt = true;
 		}
 
@@ -209,7 +209,7 @@ public class PlayerNameState extends State {
 
 
 	@Override
-	public void update(float dt) {
+	public synchronized void update(float dt) {
 		super.update(dt);
 		if (this.host != null && this.receiveFromClients == null){
 			this.receiveFromClients = this.host.getHostHandler().getNames();

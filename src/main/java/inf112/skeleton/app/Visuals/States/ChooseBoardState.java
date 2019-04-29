@@ -100,7 +100,7 @@ public class ChooseBoardState extends State {
 			this.board = new Board(getBoardName());
 			if (this.host != null){
 				System.out.println("hello??????????");
-				this.host.send("BOARD " + boardName);
+				this.host.send("BOARD!" + boardName);
 				gsm.set(new PlayerNameState(gsm, this.board, 1, this.host));
 			}else{
 				gsm.set(new ChoosePlayerState(this.gsm, this.board));

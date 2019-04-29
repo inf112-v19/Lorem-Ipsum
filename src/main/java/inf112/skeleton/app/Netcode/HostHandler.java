@@ -67,8 +67,8 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		System.out.println("Host received: " + in.toString(CharsetUtil.UTF_8));
 
 		String inString = in.toString(CharsetUtil.UTF_8);
-		String command = inString.split(" ")[0];
-		String message = inString.split(" ")[1];
+		String command = inString.split("!")[0];
+		String message = inString.split("!")[1];
 
 		switch (command){
 			case "NAME":

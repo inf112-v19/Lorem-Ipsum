@@ -64,7 +64,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		System.out.println("client inString = " + inString + "---------------- ");
 
 		inString = extractIndex(inString);
-		String[] split = inString.split(" ");
+		String[] split = inString.split("!");
 		String command = split[0];
 		String message = split[1];
 
