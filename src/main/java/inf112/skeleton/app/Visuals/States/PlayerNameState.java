@@ -83,7 +83,7 @@ public class PlayerNameState extends State {
 			Text text = new Text("Player " + (i + 1), uiSkin);
 			text.setFontScale(1.5f);
 
-            nameButton.defaults().pad(20,5,30,5).width(150).height(50);
+            nameButton.defaults().pad(20,5,30,5);
             if (i <= 2) {
                 nameButton.add(text).width(100);
                 nameButton.add(textAreas[i]).width(150);
@@ -133,6 +133,7 @@ public class PlayerNameState extends State {
                 gsm.set(new SpawnPointState(gsm, board, players));
             }
         });
+        tablebutton.defaults().width(150).height(50);
         tablebutton.add(button);
     }
 
