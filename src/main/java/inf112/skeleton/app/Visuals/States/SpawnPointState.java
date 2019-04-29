@@ -65,39 +65,42 @@ public class SpawnPointState extends State {
 		}
 	}
 
+	private synchronized void isHostHandle(){
+		if(this.hostShouldSend){
+			host.send("CLIENT_TURN!" + clientNumber);
+			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
+
+			if(clientNumber < host.getHostHandler().getNumClients()){
+				this.clientNumber++;
+			}
+			else if(clientNumber == host.getHostHandler().getNumClients()){
+				this.clientNumber++;
+				host.getHostHandler().setThisTurn(true);
+			}
+			this.hostShouldSend = false;
+		}
+
+		Position spawnPosition = this.host.getHostHandler().getSpawnPosition();
+		if(spawnPosition != null){
+			putPlayerOnStage(board.getTile(spawnPosition));
+			this.hostShouldSend = true;
+		}
+	}
+
+	private synchronized void isClientHandle(){
+		Position spawnPosition = this.client.getClientHandler().getSpawnPosition();
+		if(spawnPosition != null){
+			System.out.println("the possition is: " + spawnPosition );
+			putPlayerOnStage(board.getTile(spawnPosition));
+		}
+	}
+
 	@Override
 	public synchronized void update(float dt) {
 		if (this.host != null){
-			if(this.hostShouldSend){
-				host.send("CLIENT_TURN!" + clientNumber);
-				System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
-				if(clientNumber < host.getHostHandler().getNumClients()){
-					this.clientNumber++;
-				}
-				else if(clientNumber == host.getHostHandler().getNumClients()){
-					this.clientNumber++;
-					host.getHostHandler().setThisTurn(true);
-				}
-				this.hostShouldSend = false;
-			}
-
-			Position spawnPosition = this.host.getHostHandler().getSpawnPosition();
-			if(spawnPosition != null){
-				putPlayerOnStage(board.getTile(spawnPosition));
-				this.hostShouldSend = true;
-			}
-
-
-
-
+			isHostHandle();
 		}else if(this.client != null){
-			Position spawnPosition = this.client.getClientHandler().getSpawnPosition();
-			if(spawnPosition != null){
-				System.out.println("the possition is: " + spawnPosition );
-				putPlayerOnStage(board.getTile(spawnPosition));
-			}
-		}else{
-
+			isClientHandle();
 		}
 
 		if (players.isEmpty()) {
