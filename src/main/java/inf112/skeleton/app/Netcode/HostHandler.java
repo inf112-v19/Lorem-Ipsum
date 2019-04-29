@@ -11,22 +11,24 @@ import io.netty.util.CharsetUtil;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.HashMap;
 
 @ChannelHandler.Sharable
 public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	private GameStateManager gsm;
-	//private ChannelHandlerContext ctx;
 	private ArrayList<ChannelHandlerContext> connections;
-	//private String received;
 	private ArrayList<String> received;
+	private HashMap<Integer, String> nameList;
 
 	private int index;
 
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.connections = new ArrayList<>();
-		received = new ArrayList<>();
+		this.received = new ArrayList<>();
+		this.nameList = new HashMap<>();
+
 	}
 
 	private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index){
@@ -48,65 +50,14 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			}
 			send(s, connections.get(i), i);
 		}
-/*
-		for (ChannelHandlerContext ctx : connections) {
-			if (ctx == null){
-				return;
-			}
-			send(s, ctx);
-		}
-
- */
 	}
 
 	public int getNumClients(){
 		return this.connections.size();
 	}
 
-	/*
-	public synchronized void send(String msg){
-		if (this.ctx != null){
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
-			return;
-		}
-
-		//if ctx is null wait til it's not
-		try {
-			this.wait(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		send(msg);
-	}
-	*/
-
-	/*
-	public String receive(ChannelHandlerContext ctx){
-		if (received != null){
-			String s = received.get(ctx);
-			received = null;
-			return s;
-		}
-		return null;
-	}
-	 */
-
-
-	public ArrayList<String> receiveFromAll(){
-		if (received.size() == connections.size()){
-			return received;
-		}
-		return null;
-
-		/*
-		try {
-			this.wait(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-
-		 */
+	public HashMap<Integer, String> getNames(){
+		return nameList;
 	}
 
 
@@ -117,27 +68,23 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 		String inString = in.toString(CharsetUtil.UTF_8);
 		String command = inString.split(" ")[0];
-		//String data = inString.split(" ")[1];
+		String message = inString.split(" ")[1];
 
 		switch (command){
-			case "BOARD":
-				//send("Boards/BigBoard.txt");
+			case "NAME":
+				System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
+				this.nameList.put(connections.indexOf(ctx), message);
 				break;
-				default:
-					received.add(inString);
-					System.err.println(command + " has no handling");
+			default:
+				received.add(inString);
+				System.err.println(command + " has no handling");
 
 		}
-		//ctx.writeAndFlush(msg);
 	}
 
 	@Override
 	public synchronized void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("SERVER CONNECTED WITH CLIENT");
-
-		//det er mulig dette fører til at hosten bare sankker med den nyeste hosten.
-		//lag en liste med ctx-er for å fikse dette
-		//this.ctx = ctx;
 
 		this.connections.add(ctx);
 		this.index = this.connections.size();
@@ -154,16 +101,16 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		}
 	}
 
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		cause.printStackTrace();
+		ctx.close();
+	}
+
 	/*
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) {
 		ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
 	}
 	 */
-
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		cause.printStackTrace();
-		ctx.close();
-	}
 }

@@ -60,9 +60,11 @@ public class Host implements INetCode{
 	}
 
 
+	/*
 	public ArrayList<String> receive() {
 		return this.hostHandler.receiveFromAll();
 	}
+	 */
 
 
 

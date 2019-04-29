@@ -99,7 +99,7 @@ public class JoinGameState extends State {
 	@Override
 	protected void handleInput() {
 		if(client != null){
-			String boardName = client.receive();
+			String boardName = client.getClientHandler().getBoardName();
 			if (boardName != null){
 				gsm.set(new PlayerNameState(gsm, new Board(boardName), this.client));
 			}

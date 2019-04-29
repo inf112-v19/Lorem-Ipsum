@@ -36,7 +36,7 @@ public class PlayerNameState extends State {
 	private TextureRegionDrawable background;
 	private Table table;
 	private boolean continueToNextState;
-	ArrayList<String> receiveFromClients;
+	private HashMap<Integer, String> receiveFromClients;
 	private boolean clientHasSendt = false;
 
 	private Text waitingText;
@@ -160,7 +160,7 @@ public class PlayerNameState extends State {
 				playernames += player.getPlayerID() + ",";
 			}
 
-			this.host.send(playernames);
+			this.host.send("PLAYER_NAMES " + playernames);
 			gsm.set(new SpawnPointState(gsm, board, players));
 		}
 	}
@@ -169,14 +169,14 @@ public class PlayerNameState extends State {
 		//clients should only send name one time
 		if (!clientHasSendt){
 			String name = textAreas[0].getText();
-			this.client.send(name);
+			this.client.send("NAME " + name);
 			this.clientHasSendt = true;
 		}
 
 		// listen to host
-		String received = this.client.receive();
-		if (received != null && clientHasSendt){
-			String[] playernames = received.split(",");
+		String playerNames = this.client.getClientHandler().getNames();
+		if (playerNames!= null && clientHasSendt){
+			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));
 			}
@@ -212,7 +212,8 @@ public class PlayerNameState extends State {
 	public void update(float dt) {
 		super.update(dt);
 		if (this.host != null && this.receiveFromClients == null){
-			this.receiveFromClients = this.host.receive();
+			this.receiveFromClients = this.host.getHostHandler().getNames();
+			System.out.println(this.receiveFromClients.size());
 		}
 
 	}
