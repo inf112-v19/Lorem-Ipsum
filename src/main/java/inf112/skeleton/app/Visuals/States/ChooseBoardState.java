@@ -79,50 +79,7 @@ public class ChooseBoardState extends State {
 
 		super.stage.addActor(table);
 	}
-/*
-	private void setTextBar() {
-		this.textBar.setSize(1070 / 3, 102 / 3);
-		this.textBar.setPosition((RoboRally.WIDTH / 2) - ((1070 / 3) / 2), 102);
-		stage.addActor(this.textBar);
-		table.add(textBar);
-	}
 
-	private void setBoardTypes() {
-		Image board;
-		for (int i = 1; i < 4; i++) {
-			String filename = "board" + i;
-			board = new Image(assetHandler.getTextureRegion("StateImages/" + filename + ".png"));
-			board.setSize(191, 49);
-			if (i == 1) {
-				board.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT / 2) - (49 / 2));
-			} else if (i == 2) {
-				board.setPosition((this.halfButtonWidth + this.bigButtonWidth), (RoboRally.HEIGHT / 2) - (49 / 2));
-			} else if (i == 3) {
-				board.setPosition((this.halfButtonWidth + ((this.bigButtonWidth) * 2)), (RoboRally.HEIGHT / 2) - (49 / 2));
-			}
-			stage.addActor(board);
-			clickable(board, "Boards/BigBoard.txt");
-		}
-	}
-
-	private void clickable(Image buttonType, final String buttonName) {
-		buttonType.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println(buttonName + " was chosen!");
-				saveBoardName(buttonName);
-				if (buttonName.equals("Options")) {
-					gsm.push(new PauseState(gsm));
-				} else {
-					start = true;
-					return true;
-				}
-				return false;
-			}
-		});
-		table.add(buttonType);
-	}
-*/
 	private String saveBoardName(String boardName) {
 		this.boardName = boardName;
 		return this.boardName;
