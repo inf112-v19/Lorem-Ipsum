@@ -76,7 +76,7 @@ public class CardHandGUI {
 
             
             if (currentPlayer.isControlledByAI()){
-                currentPlayer.chooseAICards();
+                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
             }
             else {
                 draw(currentCards);

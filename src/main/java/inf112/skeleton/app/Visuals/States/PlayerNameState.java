@@ -76,9 +76,13 @@ public class PlayerNameState extends State {
 
 				//AI test TODO: remove AI player
 				//Player aiPlayer = new Player(1, "Test AI", Direction.NORTH, true);
-			//	players.addLast(aiPlayer);
+				//players.addLast(aiPlayer);
 
 
+
+
+
+				
 				gsm.set(new SpawnPointState(gsm, board, players));
 				return true;
 			}
