@@ -4,7 +4,6 @@ import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.LobbyState;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -12,7 +11,6 @@ import io.netty.util.CharsetUtil;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.HashMap;
 
 @ChannelHandler.Sharable
 public class HostHandler extends ChannelInboundHandlerAdapter {
@@ -23,13 +21,17 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	//private String received;
 	private ArrayList<String> received;
 
+	private int index;
+
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.connections = new ArrayList<>();
 		received = new ArrayList<>();
 	}
 
-	private synchronized boolean send(String msg, ChannelHandlerContext ctx){
+	private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index){
+		msg = index + "#" + msg;
+		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
 			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
 			return true;
@@ -40,12 +42,21 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	public synchronized void sendToAll(String s){
+		for(int i = 0; i < connections.size(); i++){
+			if (connections.get(i) == null){
+				return;
+			}
+			send(s, connections.get(i), i);
+		}
+/*
 		for (ChannelHandlerContext ctx : connections) {
 			if (ctx == null){
 				return;
 			}
 			send(s, ctx);
 		}
+
+ */
 	}
 
 	public int getNumClients(){
@@ -129,6 +140,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		//this.ctx = ctx;
 
 		this.connections.add(ctx);
+		this.index = this.connections.size();
 
 
 		//updating connected client list in LobbyState

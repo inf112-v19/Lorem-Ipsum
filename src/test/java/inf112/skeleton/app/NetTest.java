@@ -30,7 +30,7 @@ public class NetTest {
 
 	@Test
 	public void noHostToConnectToFailsGracefullyTest(){
-		client = new Client(ip, port, "test");
+		client = new Client(ip, port);
 		try{
 			startClient();
 		} catch (Exception e){
@@ -41,7 +41,7 @@ public class NetTest {
 	@Test
 	public void connectToHostTest() throws InterruptedException{
 		host = new Host(gsm);
-		client = new Client(ip, port, "test");
+		client = new Client(ip, port);
 		startHost();
 		startClient();
 		assertFalse(host.getHostHandler().getNumClients() == 0);
@@ -50,7 +50,7 @@ public class NetTest {
 	@Test
 	public void wrongPortFailsTest() {
 		host = new Host(gsm);
-		client = new Client(ip, 1234, "test");
+		client = new Client(ip, 1234);
 		startHost();
 		startClient();
 		assertFalse(host.getHostHandler().getNumClients() > 0);

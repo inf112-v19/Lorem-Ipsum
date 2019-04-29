@@ -12,15 +12,11 @@ import java.net.InetSocketAddress;
 public class Client implements INetCode{
 	private String host;
 	private int port;
-	private String name;
 	private ClientHandler clientHandler;
-	private boolean hostReady;
 
-	public Client(final String host, final int port, String name) {
+	public Client(final String host, final int port) {
 		this.host = host;
 		this.port = port;
-		this.name = name;
-		this.hostReady = false;
 		this.clientHandler = new ClientHandler(this);
 	}
 
@@ -48,10 +44,6 @@ public class Client implements INetCode{
 		}
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public ClientHandler getClientHandler() {
 		return clientHandler;
 	}
@@ -66,7 +58,7 @@ public class Client implements INetCode{
 	}
 
 	public static void main(String[] args) throws Exception {
-		Client client = new Client("localhost", 6666, "test");
+		Client client = new Client("localhost", 6666);
 		client.start();
 
 	}

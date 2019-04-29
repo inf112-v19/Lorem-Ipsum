@@ -12,6 +12,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	private Client client;
 	private ChannelHandlerContext ctx;
+	private int index;
 
 	private String received;
 
@@ -43,11 +44,22 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		return null;
 	}
 
+	private String extractIndex(String msg){
+		String[] split = msg.split("#");
+		if (split.length > 1){
+			this.index = Integer.parseInt(split[0]);
+			return split[1];
+		}
+		return msg;
+
+	}
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));
 		String inString = in.toString(CharsetUtil.UTF_8);
+		inString = extractIndex(inString);
 
 		switch (inString){
 			case "HOST_DONE":

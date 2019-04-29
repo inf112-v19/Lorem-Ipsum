@@ -124,7 +124,7 @@ public class JoinGameState extends State {
 			}
 
 			if (isReachable){
-				client = new Client(inputText, port, "TestName");
+				client = new Client(inputText, port);
 				startClient();
 				this.table.reset();
 				addText("Waiting for host");
