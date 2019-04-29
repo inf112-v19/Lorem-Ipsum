@@ -63,7 +63,7 @@ public class CardState extends State {
 
 	@Override
 	public void dispose() {
-		//cardHandGUI.dispose();
+		cardHandGUI.dispose();
 		playerInfoGUI.dispose();
 		batch.dispose();
 	}

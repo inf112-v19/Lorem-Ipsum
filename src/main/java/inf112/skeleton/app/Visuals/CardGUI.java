@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Player;
+import org.lwjgl.Sys;
 
 import java.util.HashSet;
 import java.util.List;
@@ -20,13 +23,14 @@ public class CardGUI {
     private AssetHandler assetHandler;
 
     private Table table;
+    private Table buttonTable;
 
     private Player currentPlayer;
+    private List<Card> currentCards;
     private String playerTurn;
 
     private Card[] tempCardSeq;
     private HashSet<Card> selectedCards;
-    private ImageButton[] displayedCardsArr;
     private int cardsToSelect;
 
     private ImageButton clear;
@@ -41,6 +45,7 @@ public class CardGUI {
         table = new Table();
         table.bottom().left();
         table.setFillParent(true);
+        buttonTable = new Table();
 
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
@@ -51,20 +56,33 @@ public class CardGUI {
         selectCards();
     }
 
+    public void dispose() {
+        table.clearChildren();
+        buttonTable.clearChildren();
+    }
+
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
-            List<Card> currentCards = currentPlayer.getCardHand();
+            currentCards = currentPlayer.getCardHand();
 
-            //if (currentPlayer.isAI())
-            //do something
-
-            //else
 
             if (currentPlayer.getPowerDown() == 3) {
                 //drawPowerDownOptions(currentCards);
             } else {
+
+                tempCardSeq = new Card[5];
+                selectedCards = new HashSet<>();
+                cardsToSelect = 5;
+
+
+                for (int i = 0; i < currentCards.size(); i++) {
+                    if (cardManager.isLocked(currentCards.get(i))) {
+                        tempCardSeq[i] = currentCards.get(i);
+                        cardsToSelect--;
+                    }
+                }
                 draw(currentCards);
             }
         }
@@ -73,33 +91,38 @@ public class CardGUI {
     private void draw(List<Card> cards) {
         table.clearChildren();
 
-        tempCardSeq = new Card[5];
-        selectedCards = new HashSet<>();
-        cardsToSelect = 5;
-
-        table.add(powerDown).height(32).width(100);
-        table.row();
+        Label infoField = new Label(playerTurn, assetHandler.getSkin());
+        table.add(infoField).expand().top().left().row();
 
         //handle indicators over cards
         for (int i = 0; i < cards.size(); i++) {
             if (cardManager.isLocked(cards.get(i))) {
-                cardsToSelect--;
-                //do something
-            }
-            if (selectedCards.contains(cards.get(i))) {
-                cardsToSelect--;
-                //do something
+                addLockLabel();
+            } else if (selectedCards.contains(cards.get(i))) {
+                addSelectLabel(i);
+            } else {
+                table.add(); //empty cell
             }
         }
 
-        table.add(submit).height(32).width(100);
         table.row();
 
         for (int i = 0; i < cards.size(); i++) {
             putCardInTable(cards.get(i));
         }
-        table.add(clear).height(32).width(100);
+        table.add(buttonTable).expandX().right();
         stage.addActor(table);
+    }
+
+    private void addSelectLabel(int index) {
+        String filename = "button" + (index + 1);
+        Image image = new Image(new TextureRegion(assetHandler.getTexture("CardImages/" + filename + ".png")));
+        table.add(image).height(30).width(97);
+    }
+
+    private void addLockLabel() {
+        Image lock = new Image(new TextureRegion(assetHandler.getTexture("lock.png")));
+        table.add(lock).height(30).width(97);
     }
 
     private void putCardInTable(Card c) {
@@ -111,15 +134,36 @@ public class CardGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (!selectedCards.contains(cardButton) && cardsToSelect > 0 && !cardManager.isLocked(card)) {
                     putInTempSeq(card);
+                    swapCards(card);
+                    cardsToSelect--;
                 }
                 if (cardManager.isLocked(card)) {
                     System.out.println("CARD IS LOCKED IN HAND");
                 }
                 System.out.println("Card priority: " + card.getPriority() + ", card type: " + card.getCardType());
+                draw(currentCards);
                 return true;
             }
         });
         table.add(cardButton).width(97).height(135);
+    }
+
+    private void swapCards(Card card) {
+        for (int i = 0; i < currentCards.size(); i++) {
+            if (currentCards.get(i) == card) {
+                break;
+            }
+            if (!selectedCards.contains(currentCards.get(i)) && !cardManager.isLocked(currentCards.get(i))) {
+                System.out.println("wut");
+                Card temp = currentCards.get(i);
+                int tempPos = currentCards.indexOf(temp);
+                int swapPos = currentCards.indexOf(card);
+
+                currentCards.set(tempPos, card);
+                currentCards.set(swapPos, temp);
+                break;
+            }
+        }
     }
 
     private void putInTempSeq(Card card) {
@@ -161,5 +205,10 @@ public class CardGUI {
             }
         });
 
+        buttonTable.add(submit).height(32).width(100);
+        buttonTable.row();
+        buttonTable.add(clear).height(32).width(100);
+
     }
+
 }
