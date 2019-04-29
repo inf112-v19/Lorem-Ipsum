@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
@@ -30,7 +32,7 @@ public class CardHandGUI {
     private BitmapFont font;
     private String playerTurn;
 
-    private BitmapFont[] cardPriorities;
+    private Label[] cardPriorities;
     private int[] tempPriorities;
 
     private ImageButton[] displayedCardsArr;
@@ -44,9 +46,15 @@ public class CardHandGUI {
 
     private ImageButton clear;
     private ImageButton submit;
+    private ImageButton powerDown;
     private Image infoBar;
     private Image[] numberLabels;
     private List<Image> lockList;
+
+    private boolean powerDownPressed = false;
+
+    private Table priTable;
+    private Table cancelPowerDownTable;
 
     public CardHandGUI(CardManager cardManager, SpriteBatch batch, Stage stage, AssetHandler assetHandler) {
         this.cardManager = cardManager;
@@ -60,30 +68,47 @@ public class CardHandGUI {
         displayedCardsArr = new ImageButton[9];
         numberLabels = new Image[5];
 
+        priTable = new Table();
+        priTable.bottom().left().padBottom(104).padLeft(31);
+        priTable.setFillParent(true);
+
         clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
         submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
+        powerDown = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("powerDown.png")));
+
         createSubmitButton();
         createClearButton();
+        createPowerDownButton();
+
         cardManager.newRound();
         selectCards();
     }
 
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
+            powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
+            powerDownPressed = false;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
 
-            
             //if (currentPlayer.isAI())
-                //do something
+            //do something
 
             //else
-            draw(currentCards);
+            if (currentPlayer.getPowerDown() == 3) {
+                drawPowerDownOptions(currentCards);
+            } else {
+                draw(currentCards);
+            }
         }
     }
 
     private void draw(List<Card> c) {
+        submit.setVisible(true);
+        clear.setVisible(true);
+        powerDown.setVisible(true);
+
         if (lockList != null) {
             clearLockList();
         }
@@ -96,10 +121,11 @@ public class CardHandGUI {
         tempCardPtr = 0;
         final List<Card> cards = c;
         tempPriorities = new int[cards.size()];
-        cardPriorities = new BitmapFont[cards.size()];
+        cardPriorities = new Label[cards.size()];
 
         for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i] = new BitmapFont();
+            cardPriorities[i] = new Label("", assetHandler.getSkin());
+            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
         }
 
         for (int i = 0; i < cards.size(); i++) {
@@ -124,7 +150,7 @@ public class CardHandGUI {
             displayedCardsArr[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (tempCardPtr < 5 && !cardManager.isLocked(cards.get(finalI))) {
+                    if (tempCardPtr < 5 - lockList.size() && !cardManager.isLocked(cards.get(finalI))) {
                         if (!cardSeqContains(cards.get(finalI), tempCardSeq)) {
                             tempCardSeq[tempCardPtr] = cards.get(finalI);
                             addLabel(tempCardPtr);
@@ -215,17 +241,16 @@ public class CardHandGUI {
 
     private void drawLockImage(int xPos) {
         TextureRegion lockTex = new TextureRegion(assetHandler.getTexture("lock.png"));
-        lockTex.flip(false, true);
         Image lock = new Image(lockTex);
-        lock.setSize(97, 50);
-        lock.setPosition(xPos, Gdx.graphics.getHeight() - 152);
+        lock.setSize(97, 25);
+        lock.setPosition(xPos, 130);
         lockList.add(lock);
         stage.addActor(lock);
     }
 
     private void clearLockList() {
         for (Image image : lockList) {
-           image.remove();
+            image.remove();
         }
     }
 
@@ -240,24 +265,49 @@ public class CardHandGUI {
 
     public void render() {
         batch.begin();
-        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight()-10);
+        font.draw(batch, playerTurn, 10, Gdx.graphics.getHeight() - 10);
         batch.end();
-        renderPriorities();
+        if (tempPriorities != null) {
+            renderPriorities();
+        }
     }
 
     private void renderPriorities() {
+        priTable.clearChildren();
+        priTable = new Table();
+        priTable.bottom().left().padBottom(104).padLeft(31);
+        priTable.setFillParent(true);
+
         batch.begin();
         int xPos = 38;
+
         for (int i = 0; i < tempPriorities.length; i++) {
             tempPriorities[i] = cardByXPos.get(getDrawPos(i)).getPriority();
+
         }
         for (int i = 0; i < cardPriorities.length; i++) {
-            cardPriorities[i].getData().setScale(0.90f);
-            cardPriorities[i].setColor(0.109f, 0.258f, 0.168f, 1);
-            cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
+            //cardPriorities[i].getData().setScale(0.90f);
+
+
+            cardPriorities[i].setText(tempPriorities[i]);
+            //cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
+            cardPriorities[i].setPosition(xPos, 120);
+            cardPriorities[i].setFontScale(0.9f);
+            stage.addActor(cardPriorities[i]);
+            priTable.add(cardPriorities[i]).width(97).center();
             xPos += 97;
         }
         batch.end();
+
+        /*
+        priTable.clearChildren();
+        Label label = new Label("test", assetHandler.getSkin());
+        priTable.setZIndex(0);
+        priTable.add(label);
+        stage.addActor(priTable);
+        */
+
+        stage.addActor(priTable);
     }
 
     private void createSubmitButton() {
@@ -272,11 +322,15 @@ public class CardHandGUI {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if (cardManager.setCardSeq(currentPlayer, tempCardSeq)) {
+                    if (powerDownPressed) {
+                        currentPlayer.setPowerDown(2);
+                    }
                     System.out.print("Cards submitted: ");
                     for (int i = 0; i < tempCardPtr; i++) {
                         System.out.print(tempCardSeq[i].toString() + ", ");
                     }
                     System.out.println();
+                    //priTable.clearChildren();
                     selectCards();
                 } else {
                     System.out.println("Select 5 cards!");
@@ -299,22 +353,88 @@ public class CardHandGUI {
                 infoBar.remove();
                 System.out.println("Clear");
                 selectCards();
+                priTable.clearChildren();
                 return true;
             }
         });
     }
 
+    private void createPowerDownButton() {
+        powerDown.setSize(100, 32);
+        powerDown.setPosition(873, 88);
+        stage.addActor(powerDown);
+
+        powerDown.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (powerDownPressed) {
+                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
+                    powerDownPressed = false;
+                } else {
+                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("undo.png")));
+                    powerDownPressed = true;
+                }
+                System.out.println("Power Down");
+                return true;
+            }
+        });
+    }
+
+    public void drawPowerDownOptions(final List<Card> currentCards) {
+        cancelPowerDownTable = new Table();
+        cancelPowerDownTable.bottom().padBottom(30);
+        cancelPowerDownTable.setFillParent(true);
+
+        submit.setVisible(false);
+        clear.setVisible(false);
+        powerDown.setVisible(false);
+
+        ImageButton cancel = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("cancelPowerDown.png")));
+        ImageButton proceed = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("proceed.png")));
+
+        cancel.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cancelPowerDownTable.clearChildren();
+                currentPlayer.setPowerDown(0);
+                draw(currentCards);
+                return true;
+            }
+        });
+
+        proceed.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                cancelPowerDownTable.clearChildren();
+                currentPlayer.setPowerDown(1);
+                currentPlayer.setReady();
+                selectCards();
+                return true;
+            }
+        });
+
+        cancelPowerDownTable.add(proceed);
+        cancelPowerDownTable.row();
+        cancelPowerDownTable.add(cancel);
+
+        stage.addActor(cancelPowerDownTable);
+    }
+
     public void dispose() {
         submit.clearListeners();
         clear.clearListeners();
+        powerDown.clearListeners();
         clearOldCards();
         font.dispose();
+        /*
         for (BitmapFont fonts : cardPriorities) {
             fonts.dispose();
         }
+        */
+        priTable.clearChildren();
     }
 
-    public void resize(){
+    public void resize() {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 }

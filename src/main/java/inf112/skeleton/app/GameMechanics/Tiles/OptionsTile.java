@@ -15,7 +15,7 @@ public class OptionsTile extends Tile{
 
     @Override
     public void checkTile(Board board, Player player){
-        player.increaseHealth();
+        player.decreaseDamage();
         player.setBackup(board.getPlayerPos(player));
     }
 }

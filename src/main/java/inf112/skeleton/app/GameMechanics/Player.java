@@ -18,7 +18,7 @@ public class Player extends Image implements IPlayer {
     private String playerID;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
-    private int playerHealth = 10; //Number of damage the player can take before getting destroyed
+    private int playerDamage = 0; //Player gets destroyed when 10 damage tokens are collected
     private int playerlives = 3; //Number for lives the player has before losing the game
     private Position backup;
     private boolean ready = false;
@@ -153,24 +153,12 @@ public class Player extends Image implements IPlayer {
     public void destroyPlayer() {
         playerlives--;
 
-        if (playerlives >= 2) {
-            playerHealth = 8;
-        } else if (playerlives == 1) {
-            playerHealth = 6;
+        if (playerlives >= 0) {
+            this.decreaseDamage();
+            this.decreaseDamage();
         } else {
-            playerHealth = 0;
+            playerDamage = 10;
             isOnTheBoard = false;
-        }
-    }
-
-    /**
-     * Decrease the players health/damage by 1
-     */
-    @Override
-    public void decreaseHealth() {
-        playerHealth--;
-        if (playerHealth <= 0) {
-            destroyPlayer();
         }
     }
 
@@ -178,18 +166,28 @@ public class Player extends Image implements IPlayer {
      * Increase the players health/damage by 1
      */
     @Override
-    public void increaseHealth() {
-        playerHealth++;
-        if (playerHealth > 10) playerHealth = 10;
+    public void increaseDamage() {
+        playerDamage++;
+        if (playerDamage >= 10) {
+            destroyPlayer();
+        }
+    }
 
+    /**
+     * Decrease the players health/damage by 1
+     */
+    @Override
+    public void decreaseDamage() {
+        playerDamage--;
+        if (playerDamage <= 0) playerDamage = 0;
     }
 
     /**
      * @return returns the health/damage of the player
      */
     @Override
-    public int getHealth() {
-        return playerHealth;
+    public int getDamage() {
+        return playerDamage;
     }
 
     @Override
@@ -319,8 +317,8 @@ public class Player extends Image implements IPlayer {
 		return powerDown;
 	}
 
-	public void resetHealth() {
-		playerHealth = 10;
+	public void resetDamage() {
+		playerDamage = 0;
 	}
 
 	/**
@@ -332,14 +330,26 @@ public class Player extends Image implements IPlayer {
 	 */
 	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
 		Tile curTile = board.getTile(pos);
+		Position nextPos = pos.getNeighbour(this.playerDirection);
 
-		//curTile could be null if the player is not on the board - no laser should be added
+		//curTile could be null if the player is not on the board - no laser should be added/removed
 		if (curTile != null) {
-			//skips the tile the player shooting is standing on
-			if (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
-				Position nextPos = pos.getNeighbour(this.playerDirection);
-				Tile nextTile = board.getTile(nextPos);
-				nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection);
+			switch (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
+				//laser is able to proceed to next tile
+				case 0:
+					Tile nextTile = board.getTile(nextPos);
+					nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection, false);
+					break;
+
+				//hit player on next tile - damage player if laserStatus is true
+				case 2:
+					Player playerOnNextTile = board.posToPlayer(nextPos);
+
+					if (laserStatus) {
+						System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+						playerOnNextTile.increaseDamage();
+					}
+					break;
 			}
 		}
 	}

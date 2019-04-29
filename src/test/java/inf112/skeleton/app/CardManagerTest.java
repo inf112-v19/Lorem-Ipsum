@@ -79,7 +79,7 @@ public class CardManagerTest {
     @Test
     public void playerShouldGet8CardsWith9HP() {
         cardManager.newRound();
-        players[0].decreaseHealth();
+        players[0].increaseDamage();
         cardManager.newRound();
         assertEquals(8, players[0].getCardHand().size());
     }
@@ -108,7 +108,7 @@ public class CardManagerTest {
 
         //Sets playerHP to 5
         for (int i = 0; i < 5; i++) {
-            testPlayer.decreaseHealth();
+            testPlayer.increaseDamage();
         }
 
         cardManager.newRound();

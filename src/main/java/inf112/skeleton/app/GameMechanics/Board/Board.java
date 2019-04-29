@@ -16,6 +16,9 @@ public class Board implements IBoard {
 	private HashMap<Card, Player> cardToPlayer = new HashMap<>();
 	private Queue<Card> thisRoundsCards = new LinkedList<>();
 
+	private int phaseCardCount = 0;
+	private int phasePlayerCount = 0;
+
 	private Card curCard;
 	private int movementCount = 0;
 	private Player curPlayer;
@@ -117,36 +120,29 @@ public class Board implements IBoard {
 		Position newPos = curPos.getNeighbour(dir);
 		Tile curTile = tileMap.get(curPos);
 
-		//if tile currently standing on has no wall blocking the player - proceed
-        if (!curTile.hasWallInDir(dir)){
-            if (isValidPos(newPos)) {
-                Tile newTile = tileMap.get(newPos);
-                //if tile walking on to has no wall blocking the player - proceed
-                if (!newTile.hasWallInDir(dir.oppositeDirection())) {
-                    Player otherPlayer = posToPlayer(newPos);
+		switch (curTile.isPossibleToMoveDir(curPos, this, dir)){
+			//nothing obstructing the move - proceed
+			case 0:
+				checkForHole(player, newPos);
+				break;
 
-                    //player collision occurred
-                    if (otherPlayer != null){
-                        //proceed moving if the colliding player moved or stand still if no movement happened
-                        if (movePlayer(otherPlayer, dir)){
-							checkForHole(player, newPos);
-                        }
-                    }
+			//player collision occurred - start recursive calling
+			case 2:
+				Player otherPlayer = posToPlayer(newPos);
+				//proceed moving if the colliding player moved or stand still if no movement happened
+				if (movePlayer(otherPlayer, dir)){
+					checkForHole(player, newPos);
+				}
+				break;
 
-                    //no player in direction trying to move - moves player to newPos
-                    else {
-						checkForHole(player, newPos);
-                    }
-                }
-            }
-            //player walks off the board
-            else {
+			//player fell off the board
+			case 3:
 				playerFellOffTheBoard(player, newPos);
-            }
-        }
+				break;
+		}
 
-        //returns true if the player position has changed
-        return !curPos.equals(playerPositions.get(player));
+		//returns true if the player position has changed
+		return !curPos.equals(playerPositions.get(player));
 	}
 
 
@@ -181,8 +177,9 @@ public class Board implements IBoard {
 
 	@Override
 	public void initRound() {
+		//init phaseQueues and reset phasePlayerCount(number of players which play cards this round)
+		phasePlayerCount = 0;
 		PriorityQueue<Card>[] phaseQueues = new PriorityQueue[5];
-		//init phaseQueues
 		for (int i = 0; i < 5; i++) {
 			phaseQueues[i] = new PriorityQueue<>();
 		}
@@ -191,7 +188,7 @@ public class Board implements IBoard {
 
 			//players in power down gets health reset and skips cards
 			if (player.getPowerDown() == 1) {
-				player.resetHealth();
+				player.resetDamage();
 				continue;
 			}
 
@@ -207,6 +204,7 @@ public class Board implements IBoard {
 				cardToPlayer.put(curCard, player);
 				phaseQueues[i].add(curCard);
 			}
+			phasePlayerCount++;
 		}
 
 		for (int i = 0; i < 5; i++) {
@@ -259,17 +257,27 @@ public class Board implements IBoard {
 
 	/**
 	 * Tries to play the next card of the round. Interprets the actions of the card and
-	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves
+	 * calls the movePlayer appropriately and increases the movementCount if the card contains multiple moves.
+	 * Also checks whether all the cards of this phase has been played or if all the cards of the round has been played
+	 * and calls either the endRound or endPhase method accordingly.
 	 *
 	 * @return false if there is cards left to be played in thisRoundsCards or true if it played a card
 	 */
 	private boolean playNextCard() {
+		//all cards of the round has been played - round is over, endRound is called
 		if (thisRoundsCards.isEmpty()) {
 			return endRound();
 		}
 
+		//all cards of the phase has been played - do endPhase method
+		else if (phaseCardCount == phasePlayerCount){
+			endPhase();
+			return true;
+		}
+
 		curCard = thisRoundsCards.poll();
 		curPlayer = cardToPlayer.get(curCard);
+		phaseCardCount++;
 
 		//if player has fallen off the board - skip the card
 		if (!curPlayer.onBoardCheck()){
@@ -310,33 +318,99 @@ public class Board implements IBoard {
 	}
 
 	/**
-	 * Resets the round by setting every players state to not ready, respawn players who has fallen off the board,
-	 * and also calls the checkTile method for the players still on the board - checkTile method will execute the
-	 * correct action according to the tile-type and gameObjects on the tile(movePlayer, set backup).
-	 * Finally every player standing on a tile with lasers at the end of the round take damage.
+	 * Handles the final parts of the phase:
+	 * - does all the tile actions(movement and rotation of the players)
+	 * - toggles lasers on and then off after 1 update (both laser bases and players shooting)
+	 * - updates gameOver boolean
+	 * - resets phaseCardCount so the cards for the next phase can be played next update (set to 0)
 	 *
-	 * @return true if checkTile increased the movementCount from 0 - if moves are pending
+	 * @return false if the phase is not yet over (moves pending or laser need to stay on 1 update before toggling off),
+	 * else true if all the actions in the endPhase has happened and the phase is over
 	 */
-	private boolean endRound() {
-		if (doTileActions() == false) {
-			return true;
+	private boolean endPhase() {
+		//do tile actions only if the laser has not yet been toggled - return if false if there are moves pending
+		if (!laserStatus && !doTileActions()) {
+			return false;
 		}
 
 		//turns on lasers if off
 		if (!laserStatus) {
 			toggleLasers();
-			return true;
+			return false;
 		}
 
 		//toggles off the lasers after 1 update
 		toggleLasers();
 
-		respawnPlayers();
 		gameOver = checkForGameOver();
+		phaseCardCount = 0;
+
+		//phase is over
+		return true;
+	}
+
+	/**
+	 * Handles the end of the round actions:
+	 * - final calls of the endPhase (2 times since toggleLasers takes 2 updates)
+	 * - respawn players who fell off the board during the round
+	 * - updating checkpoints and collections of flags
+	 * - power down, sets destroyed players to powerDown = 3, resets power down for players currently in
+	 * 	 power down and sets powerDown = 1 for players pending power down(powerDown currently equals 2)
+	 * - sets all players to not ready
+	 *
+	 * @return false if the round is over, or true if the the endPhase still needs to be called once more
+	 */
+	private boolean endRound() {
+		if (!endPhase()) {
+			return true;
+		}
+
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
+			//respawn dead players
+			if (!player.onBoardCheck() && !player.isDead()){
+				System.out.println("Player " + player.getPlayerID() + " respawned");
+				playerPositions.put(player, player.getBackup());
+				player.setOnTheBoard(true);
+
+				//if power down was requested for next round and player was destroyed - set power down to 3(cancel option)
+				if (player.getPowerDown() == 2) {
+					player.setPowerDown(3);
+				}
+			}
+
+			//handle checkpoints for player on the board
+			else {
+				Tile playerTile = tileMap.get(playerPos);
+
+				if (playerTile instanceof NormalTile ||
+					playerTile instanceof OptionsTile ||
+					playerTile instanceof RepairTile) {
+
+					playerTile.checkTile(this, player);
+				}
+			}
+
+
+			//players currently in power down is reset
+			if (player.getPowerDown() == 1) {
+				player.setPowerDown(0);
+			}
+			//players currently pending power down is set to power down
+			else if (player.getPowerDown() == 2) {
+				player.setPowerDown(1);
+			}
+
+			//finally set player to not ready - boolean is used in the card state (players choosing cards)
+			player.setNotReady();
+		}
 
 		//round is over
 		return false;
 	}
+
 
 	/**
 	 * Method for checking if the game is over after the round has finished - checks if any player has collected all
@@ -365,7 +439,7 @@ public class Board implements IBoard {
 	}
 
 	/**
-	 * Calls the checkTile method on all tiles players are standing on
+	 * Calls the checkTile method on all tiles players are standing on regarding movement and rotation
 	 *
 	 * @return true if it managed to do all tile actions, or false if there are moves pending
 	 */
@@ -376,7 +450,15 @@ public class Board implements IBoard {
 
 			if (player.isReady() && player.onBoardCheck()) {
 				Tile playerTile = tileMap.get(playerPos);
-				playerTile.checkTile(this, player);
+
+				//only do tile action for movement and rotation
+				if (playerTile instanceof ConveyorBeltTile ||
+					playerTile instanceof DoubleConveyorBeltTile ||
+					playerTile instanceof RotationRightTile ||
+					playerTile instanceof RotationLeftTile) {
+
+					playerTile.checkTile(this, player);
+				}
 			}
 			player.setNotReady();
 
@@ -386,37 +468,14 @@ public class Board implements IBoard {
 			}
 		}
 
+		//since the player ready boolean is used to keep track of which players has been handled it is
+		//reset for next phase - all players are set to ready once more
+		for (Player player : playerPositions.keySet()) {
+			player.setReady();
+		}
+
 		//no movement pending - return true
 		return true;
-	}
-
-	/**
-	 * Respawn all the players who has fallen off the board and puts them on their backup
-	 * Also handles power down - sets destroyed players to powerDown = 3, resets power down for players currently in
-	 * power down and sets powerDown = 1 for players pending power down(powerDown currently equals 2)
-	 */
-	private void respawnPlayers() {
-		for (Player player : playerPositions.keySet()) {
-			if (!player.onBoardCheck() && !player.isDead()){
-				System.out.println("Player" + player.getPlayerID() + " respawned");
-				playerPositions.put(player, player.getBackup());
-				player.setOnTheBoard(true);
-
-				//if power down was requested for next round and player was destroyed - set power down to 3(cancel option)
-				if (player.getPowerDown() == 2) {
-					player.setPowerDown(3);
-				}
-			}
-
-			//players currently in power down is reset
-			if (player.getPowerDown() == 1) {
-				player.setPowerDown(0);
-			}
-			//players currently pending power down is set to power down
-			else if (player.getPowerDown() == 2) {
-				player.setPowerDown(1);
-			}
-		}
 	}
 
 	/**
@@ -430,8 +489,11 @@ public class Board implements IBoard {
 			Tile tile = tileMapEntry.getValue();
 			Position tilePos = tileMapEntry.getKey();
 
-			if (tile instanceof LaserBaseTile || tile instanceof DoubleLaserBaseTile) {
-				tile.toggleLaser(tilePos, this, laserStatus);
+			if (tile instanceof DoubleLaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus, true);
+			}
+			else if (tile instanceof LaserBaseTile) {
+				tile.toggleLaser(tilePos, this, laserStatus, false);
 			}
 		}
 
@@ -439,7 +501,10 @@ public class Board implements IBoard {
 			Player player = playerPositionEntry.getKey();
 			Position playerPos = playerPositionEntry.getValue();
 
-			player.toggleLaser(playerPos, this, laserStatus);
+			//only calls the toggleLaser if the player is alive or if toggling off the laser
+			if (!player.isDead() || !laserStatus){
+				player.toggleLaser(playerPos, this, laserStatus);
+			}
 		}
 	}
 

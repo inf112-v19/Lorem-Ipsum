@@ -135,7 +135,7 @@ public abstract class Tile extends Image implements ITile {
 	public void laserCheck(Player player) {
 		for (GameObject gameObject : gameObjects) {
 			if (gameObject instanceof Laser) {
-				player.decreaseHealth();
+				player.increaseDamage();
 			}
 		}
 	}
@@ -167,14 +167,27 @@ public abstract class Tile extends Image implements ITile {
 
 
 	/**
-	 * Overlaying method for togglingLaser - used when the direction is corresponding to the tile direction
+	 * Overlaying method for togglingLaser - used when the direction is corresponding to the tile direction(LaseBase)
+	 * Starts by checking if the current tile contains a player and handles potential damage if laserStatus is true,
+	 * otherwise call underlying  toggleLaser method.
 	 *
 	 * @param pos
 	 * @param board
 	 * @param laserStatus
 	 */
-	public void toggleLaser (Position pos, Board board, boolean laserStatus){
-		toggleLaser(pos, board, laserStatus, this.direction);
+	public void toggleLaser (Position pos, Board board, boolean laserStatus, boolean doubleLaser){
+		Player playerOnTile = board.posToPlayer(pos);
+		if (playerOnTile != null && laserStatus) {
+			System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
+			playerOnTile.increaseDamage();
+
+			if (doubleLaser) {
+				playerOnTile.increaseDamage();
+			}
+		}
+		else{
+			toggleLaser(pos, board, laserStatus, this.direction, doubleLaser);
+		}
 	}
 
 	/**
@@ -186,31 +199,40 @@ public abstract class Tile extends Image implements ITile {
 	 * @param board
 	 * @param laserStatus true if adding laser, or false if removing
 	 * @param dir
+	 * @param doubleLaser true if laser is from a DoubleLaserBase (also deals double the damage)
 	 */
-	public void toggleLaser (Position pos, Board board, boolean laserStatus, Direction dir){
+	public void toggleLaser (Position pos, Board board, boolean laserStatus, Direction dir, boolean doubleLaser){
 		Position curPos = pos;
 		Position nextPos = pos.getNeighbour(dir);
-		Player playerOnCurTile = board.posToPlayer(curPos);
 
-		//if curTile has a player blocking the laser - decrease player health if adding lasers and break
-		if (playerOnCurTile != null) {
-			if (laserStatus) {
-				System.out.println("Player: " + playerOnCurTile.getPlayerID() + " took laser damage");
-				playerOnCurTile.decreaseHealth();
-			}
+		//either adds or remove laser from the current tile
+		if (laserStatus) {
+			this.addGameObject(new Laser(dir, doubleLaser));
 		}
 		else {
-			if (laserStatus) {
-				this.addGameObject(new Laser(dir));
-			}
-			else {
-				this.removeGameObject(new Laser(dir));
-			}
+			this.removeGameObject(new Laser(dir, doubleLaser));
+		}
 
-			if (this.isPossibleToMoveDir(curPos, board, dir)) {
+		switch (this.isPossibleToMoveDir(curPos, board, dir)) {
+			//laser is able to proceed to next tile
+			case 0:
 				Tile nextTile = board.getTile(nextPos);
-				nextTile.toggleLaser(nextPos, board, laserStatus, dir);
-			}
+				nextTile.toggleLaser(nextPos, board, laserStatus, dir, doubleLaser);
+				break;
+
+			//hit player on next tile
+			case 2:
+				Player playerOnNextTile = board.posToPlayer(nextPos);
+
+				if (laserStatus) {
+					System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+					playerOnNextTile.increaseDamage();
+
+					if (doubleLaser) {
+						playerOnNextTile.increaseDamage();
+					}
+				}
+				break;
 		}
 	}
 
@@ -221,24 +243,43 @@ public abstract class Tile extends Image implements ITile {
 	 * @param pos
 	 * @param board
 	 * @param dir
-	 * @return true if there are no walls blocking, or false if there are any walls blocking or if there is no tile in
-	 * the given direction (position is outside the board)
+	 * @return
+	 * 		- 0 if it is possible to move in the given direction
+	 * 		- 1 if there is a wall blocking either on the current tile or the tile in the given direction
+	 * 		- 2 if the tile in the given direction contains a player
+	 * 		- 3 if there is no tile in the given direction (outside the board)
 	 */
-	public boolean isPossibleToMoveDir(Position pos, Board board, Direction dir) {
-		Tile nextTile = board.getTile(pos.getNeighbour(dir));
+	public int isPossibleToMoveDir(Position pos, Board board, Direction dir) {
+		Position nextPos = pos.getNeighbour(dir);
+		Tile nextTile = board.getTile(nextPos);
 
 		//if curTile has wall blocking - return false
 		if (this.hasWallInDir(dir)) {
-			return false;
+			return 1;
 		}
 		//if nextTile is not null - proceed checking
 		else if (nextTile != null) {
 			//possible to move if nextTile does not have a wall blocking
-			return !nextTile.hasWallInDir(dir.oppositeDirection());
+			if (nextTile.hasWallInDir(dir.oppositeDirection())) {
+				return 1;
+			}
+			else {
+				Player otherPlayer = board.posToPlayer(nextPos);
+
+				//player collision occurred
+				if (otherPlayer != null){
+					return 2;
+				}
+
+				//no player in direction trying to move - moves player to newPos
+				else {
+					return 0;
+				}
+			}
 		}
 		//nextTile is not on the board - return false
 		else {
-			return false;
+			return 3;
 		}
 	}
 
