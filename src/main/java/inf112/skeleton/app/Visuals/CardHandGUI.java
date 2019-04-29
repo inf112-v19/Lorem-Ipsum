@@ -278,7 +278,7 @@ public class CardHandGUI {
         priTable.bottom().left().padBottom(104).padLeft(31);
         priTable.setFillParent(true);
 
-        batch.begin();
+        //batch.begin();
         int xPos = 38;
 
         for (int i = 0; i < tempPriorities.length; i++) {
@@ -293,11 +293,11 @@ public class CardHandGUI {
             //cardPriorities[i].draw(batch, "" + tempPriorities[i], xPos, 120);
             cardPriorities[i].setPosition(xPos, 120);
             cardPriorities[i].setFontScale(0.9f);
-            stage.addActor(cardPriorities[i]);
+            //stage.addActor(cardPriorities[i]);
             priTable.add(cardPriorities[i]).width(97).center();
             xPos += 97;
         }
-        batch.end();
+        //batch.end();
 
         /*
         priTable.clearChildren();
