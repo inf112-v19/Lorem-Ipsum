@@ -36,7 +36,7 @@ public class PlayerNameState extends State {
 	private TextureRegionDrawable background;
 	private Table table;
 	private boolean continueToNextState;
-	private HashMap<Integer, String> receiveFromClients;
+	private HashMap<Integer, String> clientNames;
 	private boolean clientHasSendt = false;
 
 	private Text waitingText;
@@ -136,20 +136,20 @@ public class PlayerNameState extends State {
 	}
 
 	private synchronized void isHostHandling(){
-		if (this.receiveFromClients == null){
+		if (this.clientNames == null){
 			return;
 		}
 
 		//this should never happen
-		if (this.receiveFromClients.size() != host.getHostHandler().getNumClients()){
+		if (this.clientNames.size() != host.getHostHandler().getNumClients()){
 			return;
 		}
 
 		//adding connected clients to players queue and at last the host
-		for (int i = 0; i < receiveFromClients.size(); i++){
-			players.addLast(new Player(i, receiveFromClients.get(i), Direction.EAST));
+		for (int i = 0; i < clientNames.size(); i++){
+			players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
 		}
-		players.addLast(new Player(receiveFromClients.size(), textAreas[0].getText(), Direction.EAST));
+		players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
 
 		//checking if correct amount of players are in the queue
 		if (players.size == host.getHostHandler().getNumClients() + 1){
@@ -161,7 +161,7 @@ public class PlayerNameState extends State {
 			}
 
 			this.host.send("PLAYER_NAMES!" + playernames);
-			gsm.set(new SpawnPointState(gsm, board, players));
+			gsm.set(new SpawnPointState(gsm, board, players, host));
 		}
 	}
 
@@ -175,12 +175,13 @@ public class PlayerNameState extends State {
 
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
+		System.out.println("playernames = " + playerNames);
 		if (playerNames!= null && clientHasSendt){
 			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));
 			}
-			gsm.set(new SpawnPointState(gsm, board, players));
+			gsm.set(new SpawnPointState(gsm, board, players, client));
 		}
 	}
 
@@ -189,7 +190,7 @@ public class PlayerNameState extends State {
 			System.out.println(textAreas[i].getText());
 			Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
 			players.addLast(player);
-			gsm.set(new SpawnPointState(gsm, board, players));
+			gsm.set(new SpawnPointState(gsm, board, players, null));
 		}
 	}
 
@@ -211,9 +212,9 @@ public class PlayerNameState extends State {
 	@Override
 	public synchronized void update(float dt) {
 		super.update(dt);
-		if (this.host != null && this.receiveFromClients == null){
-			this.receiveFromClients = this.host.getHostHandler().getNames();
-			System.out.println(this.receiveFromClients.size());
+		if (this.host != null && this.clientNames == null){
+			this.clientNames = this.host.getHostHandler().getNames();
+			System.out.println(this.clientNames.size());
 		}
 
 	}

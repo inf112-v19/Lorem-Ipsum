@@ -1,11 +1,10 @@
 package inf112.skeleton.app.Netcode;
 
+import inf112.skeleton.app.GameMechanics.Position;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
-
-import java.util.Scanner;
 
 //@ChannelHandler.Sharable
 public class ClientHandler extends ChannelInboundHandlerAdapter {
@@ -15,7 +14,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	private int index;
 	private String boardName;
 	private String clientNames;
+	private Position spawnPosition;
 
+	private boolean thisTurn;
 	private String received;
 
 	public ClientHandler(Client client) {
@@ -69,28 +70,42 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		String message = split[1];
 
 		switch (command){
-			case "HOST_DONE":
-				//TODO
-				break;
-			case "HOST_READY":
-
-				break;
 			case "BOARD":
 				System.out.println(message);
 				this.boardName = message;
 				break;
 			case "PLAYER_NAMES":
-				//TODO - make players
 				System.out.println("dette er playernamene " + message);
 				this.clientNames = message;
-
 				break;
-
+			case "CLIENT_TURN":
+				if(Integer.parseInt(message) == index){
+					this.thisTurn = true;
+				}else{
+					this.thisTurn = false;
+				}
+				break;
+			case "SPAWN":
+				String xandY = message.substring(9);
+				String xs = xandY.split(", ")[0].split("=")[1];
+				String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
+				int x = Integer.parseInt(xs);
+				int y = Integer.parseInt(ys);
+				this.spawnPosition = new Position(x,y);
+				break;
 			default:
 				this.received = inString;
-				System.err.println(inString + " has no handling");
+				System.err.println(command + " has no handling CLIENT");
 		}
 
+	}
+
+	public boolean isThisTurn() {
+		return thisTurn;
+	}
+
+	public void setThisTurn(boolean thisTurn) {
+		this.thisTurn = thisTurn;
 	}
 
 	public String getBoardName() {
@@ -99,6 +114,16 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	public String getNames(){
 		return clientNames;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public Position getSpawnPosition() {
+		Position pos = this.spawnPosition;
+		this.spawnPosition = null;
+		return pos;
 	}
 
 	@Override
