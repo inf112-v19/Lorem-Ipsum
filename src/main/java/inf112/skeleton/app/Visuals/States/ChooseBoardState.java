@@ -14,7 +14,7 @@ public class ChooseBoardState extends State {
 
 	private Skin skin;
 	private Table table;
-	private Table tablebutton;
+	private Table tableButton;
 	private TextureRegionDrawable background;
 
 	public ChooseBoardState(GameStateManager gsm) {
@@ -22,77 +22,54 @@ public class ChooseBoardState extends State {
 		this.start = false;
 
 		this.skin = assetHandler.getSkin();
-		this.table = new Table(skin);
+		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-		this.tablebutton = new Table(skin);
+		this.tableButton = new Table(this.skin);
 		//this.table.setDebug(true);
 		//this.tablebutton.setDebug(true);
 
-		//adds background
-		this.background = new TextureRegionDrawable(super.assetHandler.getTextureRegion("StateImages/secondBackground.png"));
-		this.table.setBackground(this.background);
+		setBackground();
+		this.table.defaults().padBottom(170F);
+		this.table.add(getTopLabel());
+		this.table.row();
+		this.table.add(getButtons());
 
-		//label
-		Label topLabel = new Label("CHOOSE BOARD TYPE", skin);
+		super.stage.addActor(this.table);
+	}
+
+	private void setBackground() {
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
+		this.table.setBackground(this.background);
+	}
+
+	private Label getTopLabel() {
+		Label topLabel = new Label("CHOOSE BOARD TYPE", this.skin);
 		topLabel.setFontScale(2);
 		topLabel.setAlignment(Align.center);
-
-		//buttons
-		TextButton button1 = new TextButton("BOARD 1", skin);
-		TextButton button2 = new TextButton("BOARD 2", skin);
-		TextButton button3 = new TextButton("BOARD 3", skin);
-
-		//clickable
-		//button1.getLabel().setFontScale(2);
-		button1.addListener(new ChangeListener() {
-			@Override
-			public void  changed(ChangeEvent event, Actor actor) {
-				start = true;
-				saveBoardName("Boards/BigBoard.txt");
-			}
-		});
-		button2.addListener(new ChangeListener() {
-			@Override
-			public void  changed(ChangeEvent event, Actor actor) {
-				start = true;
-				saveBoardName("Boards/BigBoard.txt");
-			}
-		});
-		button3.addListener(new ChangeListener() {
-			@Override
-			public void  changed(ChangeEvent event, Actor actor) {
-				start = true;
-				saveBoardName("Boards/BigBoard.txt");
-			}
-		});
-
-		//the visuals
-		tablebutton.defaults().pad(0,80,0,80).width(150).height(50);
-		tablebutton.add(button1);
-		tablebutton.add(button2);
-		tablebutton.add(button3);
-
-		table.defaults().padBottom(170F);
-		table.add(topLabel);
-		table.row();
-		table.add(tablebutton);
-
-		super.stage.addActor(table);
+		return topLabel;
 	}
 
-	private String saveBoardName(String boardName) {
-		this.boardName = boardName;
-		return this.boardName;
-	}
+	private Table getButtons() {
+		this.tableButton.defaults().pad(0,80,0,80).width(150).height(50);
+		for (int i = 0; i < 3; i++) {
+			TextButton button = new TextButton("BOARD " + (i+1), this.skin);
 
-	public String getBoardName() {
-		return this.boardName;
+			button.addListener(new ChangeListener() {
+				@Override
+				public void  changed(ChangeEvent event, Actor actor) {
+					start = true;
+					boardName = "Boards/BigBoard.txt";
+				}
+			});
+			this.tableButton.add(button);
+		}
+		return this.tableButton;
 	}
 
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			this.board = new Board(getBoardName());
+			this.board = new Board(this.boardName);
 			gsm.set(new ChoosePlayerState(this.gsm, this.board));
 		}
 	}

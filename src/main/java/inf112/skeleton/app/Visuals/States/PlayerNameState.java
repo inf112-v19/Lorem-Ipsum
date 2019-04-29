@@ -1,11 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -16,112 +12,89 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Visuals.Text;
 
-
 public class PlayerNameState extends State {
-
 	private int numPlayers;
 	private Board board;
 	private Queue<Player> players;
 	private TextArea[] textAreas;
-	private Texture texture;
 
-    private Skin uiSkin;
+    private Skin skin;
     private TextureRegionDrawable background;
 	private Table table;
-    private Table tablebutton;
-    private Table nameButton;
+    private Table tableSubmit;
+    private Table tableButton;
 
-    private boolean space;
+    private boolean row;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers) {
 		super(gsm);
 		super.camera.setToOrtho(false);
-		this.space = false;
+		this.row = false;
 
-		this.uiSkin = assetHandler.getSkin();
 		this.numPlayers = numPlayers;
 		this.board = board;
 		this.players = new Queue<>();
 		this.textAreas = new TextArea[numPlayers];
 
-		this.table = new Table(uiSkin);
+        this.skin = assetHandler.getSkin();
+        this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-        this.tablebutton = new Table(uiSkin);
-        this.nameButton = new Table(uiSkin);
+        this.tableSubmit = new Table(this.skin);
+        this.tableButton = new Table(this.skin);
         //this.table.setDebug(true);
         //this.tablebutton.setDebug(true);
-        //this.nameButton.setDebug(true);
+        //this.tableName.setDebug(true);
 
-        //set background
-        this.background = new TextureRegionDrawable(super.assetHandler.getTextureRegion("StateImages/secondBackground.png"));
+        setBackground();
+        this.table.defaults().padBottom(60F);
+        this.table.add(getTopLabel());
+        this.table.row();
+        this.table.add(getTextFields());
+        this.table.row();
+        this.table.add(getSubmitButton());
+
+		super.stage.addActor(this.table);
+	}
+
+    private void setBackground() {
+        this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
         this.table.setBackground(this.background);
+    }
 
-        //label
-        Label topLabel = new Label("NAME YOUR PLAYER", uiSkin);
+    private Label getTopLabel() {
+        Label topLabel = new Label("NAME YOUR PLAYER", this.skin);
         topLabel.setFontScale(2);
         topLabel.setAlignment(Align.center);
+        return topLabel;
+    }
 
-        //this.nameButton.defaults().space(0, 40, 40, 40);
+	private Table getTextFields() {
+		for (int i = 0; i < this.numPlayers; i++) {
+			this.textAreas[i] = new TextArea("", this.skin);
 
-        //the visuals
-        table.defaults().padBottom(60F);
-        table.add(topLabel);
-        table.row();
-		creatTextFields();
-		table.add(nameButton);
-		table.row();
-        submitButton();
-        table.add(tablebutton);
-
-		stage.addActor(table);
-	}
-
-	private void creatTextFields() {
-		for (int i = 0; i < numPlayers; i++) {
-			textAreas[i] = new TextArea("", uiSkin);
-
-			Text text = new Text("Player " + (i + 1), uiSkin);
+			Text text = new Text("Player " + (i + 1), this.skin);
 			text.setFontScale(1.5f);
 
-            nameButton.defaults().pad(20,5,30,5);
+            this.tableButton.defaults().pad(20,5,30,5);
             if (i <= 2) {
-                nameButton.add(text).width(100);
-                nameButton.add(textAreas[i]).width(150);
+                this.tableButton.add(text).width(100);
+                this.tableButton.add(this.textAreas[i]).width(150);
             } else {
-                if (!space) {
-                    nameButton.row();
-                    this.space = true;
+                if (!this.row) {
+                    this.tableButton.row();
+                    this.row = true;
                 }
-                nameButton.add(text).width(100);
-                nameButton.add(textAreas[i]).width(150);
+                this.tableButton.add(text).width(100);
+                this.tableButton.add(this.textAreas[i]).width(150);
             }
         }
+		return this.tableButton;
 	}
 
-	/*private void creatSubmitButton() {
-		TextureRegion textureRegion = assetHandler.getTextureRegion("submit.png");
-		Image submit = new Image(textureRegion);
-		submit.setPosition((Gdx.graphics.getWidth() / (float) 2) - (submit.getWidth() / (float) 2), 50);
-		submit.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				for (int i = 0; i < textAreas.length; i++) {
-					System.out.println(textAreas[i].getText());
-					Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
-					players.addLast(player);
-				}
-				gsm.set(new SpawnPointState(gsm, board, players));
-				return true;
-			}
-		});
-		table.add(submit);
-	}*/
-
-    private void submitButton() {
-        //submit button
-        TextButton button = new TextButton("SUBMIT", uiSkin);
+    private Table getSubmitButton() {
+        TextButton button = new TextButton("SUBMIT", this.skin);
         button.getLabel().setFontScale(1.5f);
-        //clickable
+
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -133,8 +106,9 @@ public class PlayerNameState extends State {
                 gsm.set(new SpawnPointState(gsm, board, players));
             }
         });
-        tablebutton.defaults().width(150).height(50);
-        tablebutton.add(button);
+        this.tableSubmit.defaults().width(150).height(50);
+        this.tableSubmit.add(button);
+        return this.tableSubmit;
     }
 
 }
