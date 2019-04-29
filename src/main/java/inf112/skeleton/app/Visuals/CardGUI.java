@@ -47,6 +47,7 @@ public class CardGUI {
         powerDown = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("powerDown.png")));
 
         cardManager.newRound();
+        createOptionButtons();
         selectCards();
     }
 
@@ -76,6 +77,9 @@ public class CardGUI {
         selectedCards = new HashSet<>();
         cardsToSelect = 5;
 
+        table.add(powerDown).height(32).width(100);
+        table.row();
+
         //handle indicators over cards
         for (int i = 0; i < cards.size(); i++) {
             if (cardManager.isLocked(cards.get(i))) {
@@ -88,12 +92,14 @@ public class CardGUI {
             }
         }
 
+        table.add(submit).height(32).width(100);
         table.row();
 
         for (int i = 0; i < cards.size(); i++) {
             putCardInTable(cards.get(i));
         }
-
+        table.add(clear).height(32).width(100);
+        stage.addActor(table);
     }
 
     private void putCardInTable(Card c) {
@@ -113,18 +119,47 @@ public class CardGUI {
                 return true;
             }
         });
-
         table.add(cardButton).width(97).height(135);
     }
 
     private void putInTempSeq(Card card) {
         for (int i = 0; i < tempCardSeq.length; i++) {
-            if (tempCardSeq[i] != null) {
+            if (tempCardSeq[i] == null) {
                 tempCardSeq[i] = card;
-            } else {
-                System.out.println("TempCardSeq full");
+                selectedCards.add(card);
+                break;
             }
         }
     }
 
+    private void createOptionButtons() {
+
+        clear.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Clear");
+                selectCards();
+                return true;
+            }
+        });
+
+        submit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                if (cardManager.setCardSeq(currentPlayer, tempCardSeq)) {
+                    System.out.print("Cards submitted: ");
+                    for (int i = 0; i < tempCardSeq.length; i++) {
+                        System.out.print(tempCardSeq[i].toString() + ", ");
+                    }
+                    System.out.println();
+                    selectCards();
+                } else {
+                    System.out.println("Select 5 cards!");
+                }
+                return true;
+            }
+        });
+
+    }
 }

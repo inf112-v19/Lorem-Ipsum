@@ -15,7 +15,7 @@ public class CardState extends State {
 	private SpriteBatch batch;
 	private Player[] players;
 
-	private CardHandGUI cardHandGUI;
+	private CardGUI cardHandGUI;
 
 	private PlayerInfoGUI playerInfoGUI;
 
@@ -33,7 +33,8 @@ public class CardState extends State {
 		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.cardManager = cardManager;
 
-		this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
+		//this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
+		this.cardHandGUI = new CardGUI(cardManager, stage, super.assetHandler);
 	}
 
 	@Override
@@ -57,12 +58,12 @@ public class CardState extends State {
 			this.gsm.push(new PauseState(this.gsm));
 		}
 		super.render();
-		cardHandGUI.render();
+		//cardHandGUI.render();
 	}
 
 	@Override
 	public void dispose() {
-		cardHandGUI.dispose();
+		//cardHandGUI.dispose();
 		playerInfoGUI.dispose();
 		batch.dispose();
 	}
@@ -70,6 +71,6 @@ public class CardState extends State {
 	@Override
 	public void resize() {
 		super.resize();
-		cardHandGUI.resize();
+		//cardHandGUI.resize();
 	}
 }
