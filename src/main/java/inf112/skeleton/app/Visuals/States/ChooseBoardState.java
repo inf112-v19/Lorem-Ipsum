@@ -77,7 +77,7 @@ public class ChooseBoardState extends State {
 		table.row();
 		table.add(tablebutton);
 
-		super.stage.addActor(table); //knappene
+		super.stage.addActor(table);
 	}
 /*
 	private void setTextBar() {

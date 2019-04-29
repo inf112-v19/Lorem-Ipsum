@@ -48,9 +48,9 @@ public class PlayerNameState extends State {
 		this.table.setFillParent(true);
         this.tablebutton = new Table(uiSkin);
         this.nameButton = new Table(uiSkin);
-        this.table.setDebug(true);
-        this.tablebutton.setDebug(true);
-        this.nameButton.setDebug(true);
+        //this.table.setDebug(true);
+        //this.tablebutton.setDebug(true);
+        //this.nameButton.setDebug(true);
 
         //set background
         this.background = new TextureRegionDrawable(super.assetHandler.getTextureRegion("StateImages/secondBackground.png"));
