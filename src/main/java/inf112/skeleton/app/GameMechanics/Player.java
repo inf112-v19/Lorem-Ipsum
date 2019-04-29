@@ -152,6 +152,8 @@ public class Player extends Image implements IPlayer {
         return cards;
     }
 
+
+
     @Override
     public Card[] getCardSequence() {
         return playerCardSequence;
