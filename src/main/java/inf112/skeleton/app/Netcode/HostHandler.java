@@ -69,6 +69,10 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return thisTurn;
 	}
 
+	public void setThisTurn(boolean thisTurn) {
+		this.thisTurn = thisTurn;
+	}
+
 	public Position getSpawnPosition() {
 		Position pos = this.spawnPosition;
 		this.spawnPosition = null;

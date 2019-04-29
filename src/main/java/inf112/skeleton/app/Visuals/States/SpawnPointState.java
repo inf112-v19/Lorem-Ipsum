@@ -74,6 +74,10 @@ public class SpawnPointState extends State {
 				if(clientNumber < host.getHostHandler().getNumClients()){
 					this.clientNumber++;
 				}
+				else if(clientNumber == host.getHostHandler().getNumClients()){
+					this.clientNumber++;
+					host.getHostHandler().setThisTurn(true);
+				}
 				this.hostShouldSend = false;
 			}
 
@@ -83,7 +87,6 @@ public class SpawnPointState extends State {
 				this.hostShouldSend = true;
 			}
 
-			//TODO - get the spawn positions, spawn, and then send once more
 
 
 
@@ -145,6 +148,7 @@ public class SpawnPointState extends State {
 			//host
 			if(host.getHostHandler().isThisTurn()){
 				putPlayerOnStage(tile);
+				this.host.send("SPAWN!" + calcTilePosition(tile));
 			}
 		}else{
 			putPlayerOnStage(tile);
