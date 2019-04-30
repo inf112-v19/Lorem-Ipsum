@@ -147,19 +147,19 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * Destroy the player (lose a total life and set health to the right amount depending on number of lives lost) or if no more lives set health to 0
+     * Destroy the player (lose a total life and set damage to the right amount depending on number of lives lost) or if no more lives set damage to 10
      * and remove player from the board
      */
     public void destroyPlayer() {
         playerlives--;
+		isOnTheBoard = false;
 
-        if (playerlives >= 0) {
-            this.decreaseDamage();
-            this.decreaseDamage();
-        } else {
-            playerDamage = 10;
-            isOnTheBoard = false;
-        }
+        if (this.isDead()) {
+			playerDamage = 10;
+		}
+        else {
+			playerDamage = 0;
+		}
     }
 
     /**

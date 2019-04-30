@@ -131,16 +131,17 @@ public class PlayerTest {
         player.destroyPlayer();
         player.destroyPlayer();
         player.destroyPlayer();
+		player.destroyPlayer();
         assertFalse(player.onBoardCheck());
     }
 
-    @Test
-    public void playerGetsRightHealthAmountAfterDestructionFromDamageTest(){
+	@Test
+    public void playerGetsRightDamageAmountAfterDestructionFromDamageTest(){
         Player player = new Player("Player", Direction.NORTH);
         for(int i=0;i<10;i++){
             player.increaseDamage();
         }
-        assertEquals(2, player.getDamage());
+        assertEquals(0, player.getDamage());
     }
 
     @Test
