@@ -57,21 +57,19 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 	 */
 
-	public synchronized boolean sendToAll(String s){
+	public synchronized void sendToAll(String s){
 		try{
-			wait(10);
+			wait(1);
 		}catch (InterruptedException e){
 			e.printStackTrace();
-			return false;
 		}
 
 		for(int i = 0; i < connections.size(); i++){
 			if (connections.get(i) == null){
-				return false;
+				return;
 			}
 			send(s, connections.get(i), i);
 		}
-		return true;
 	}
 
 	public int getNumClients(){
