@@ -41,11 +41,18 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
 			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).syncUninterruptibly();
-			return true;
 		}catch (Exception e){
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+
+		try{
+			wait(1000);
+		}catch (InterruptedException e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	public synchronized void sendToClient(String msg, int clientNumber){
