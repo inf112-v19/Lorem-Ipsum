@@ -45,13 +45,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			e.printStackTrace();
 			return false;
 		}
-
-		try{
-			wait(100);
-		}catch (InterruptedException e){
-			e.printStackTrace();
-			return false;
-		}
 		return true;
 	}
 
@@ -59,6 +52,13 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		if (clientNumber == connections.size()){
 			return;
 		}
+
+		try{
+			wait(1000);
+		}catch (InterruptedException e){
+			e.printStackTrace();
+		}
+
 		send(msg, connections.get(clientNumber), clientNumber);
 	}
 	public synchronized void sendToAll(String s){
