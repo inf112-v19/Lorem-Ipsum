@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
+import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -105,7 +106,7 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean movePlayer(Player player, Direction dir) {
-		System.out.println("Tried to move player" + player.getPlayerID() + " " + dir);
+		System.out.println("Tried to move player" + player.getPlayerName() + " " + dir);
 		if(!playerPositions.containsKey(player)) {
 			// TODO - Handle custom PLayerNotFoundException
 			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
@@ -289,7 +290,7 @@ public class Board implements IBoard {
 		//if card is rotate card do the rotation and return
 		if (numRotation != 0){
 			curPlayer.turnPlayer(numRotation);
-			System.out.println("Rotated player" + curPlayer.getPlayerID() + " " + numRotation + " times");
+			System.out.println("Rotated player " + curPlayer.getPlayerName() + " " + numRotation + " times");
 			return true;
 		}
 
@@ -371,7 +372,7 @@ public class Board implements IBoard {
 
 			//respawn dead players
 			if (!player.onBoardCheck() && !player.isDead()){
-				System.out.println("Player " + player.getPlayerID() + " respawned");
+				System.out.println("Player " + player.getPlayerName() + " respawned");
 				playerPositions.put(player, player.getBackup());
 				player.setOnTheBoard(true);
 
@@ -425,7 +426,7 @@ public class Board implements IBoard {
 
 			//player has collected all the flags - game over, player has won
 			if (player.numberOfFlagsCollected() == playerPositions.size()) {
-				System.out.println(player.getPlayerID() + " has won the game");
+				System.out.println(player.getPlayerName() + " has won the game");
 				winningPlayer = player;
 				return true;
 			}
@@ -520,10 +521,10 @@ public class Board implements IBoard {
 		player.setOnTheBoard(false);
 
     	if (!player.isDead()) {
-			System.out.println("Player" + player.getPlayerID() + " fell off the board");
+			System.out.println("Player" + player.getPlayerName() + " fell off the board");
 		}
     	else {
-			System.out.println("Player" + player.getPlayerID() + " fell off the board and died");
+			System.out.println("Player" + player.getPlayerName() + " fell off the board and died");
 		}
 	}
 
@@ -543,6 +544,13 @@ public class Board implements IBoard {
 		}else{
 			playerPositions.put(player, newPos);
 		}
+	}
+
+	/**
+	 * @return returns the boards tilemap
+	 */
+	public HashMap<Position,Tile> getTileMap(){
+		return tileMap;
 	}
 
 }

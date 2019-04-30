@@ -30,7 +30,7 @@ public class PlaceFlagState extends State {
 		this.boardGUI.addListenersToStage();
 		this.players = board.getAllPlayers();
 		this.text = new Text("'s turn to place flag", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
-		this.text.prependDynamicsText(players[0].getPlayerID());
+		this.text.prependDynamicsText(players[0].getPlayerName());
 		super.stage.addActor(text);
 	}
 
@@ -54,7 +54,7 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public void tileEventHandle(Tile tile) {
-		this.text.prependDynamicsText(players[flagCount].getPlayerID());
+		this.text.prependDynamicsText(players[flagCount].getPlayerName());
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)) {
 			flag.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(flag)));

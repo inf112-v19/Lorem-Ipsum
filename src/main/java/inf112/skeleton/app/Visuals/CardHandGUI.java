@@ -79,18 +79,29 @@ public class CardHandGUI {
             powerDownPressed = false;
             showGreetingText = true;
             currentPlayer = cardManager.getPlayer();
-            playerTurn = currentPlayer.getPlayerID() + "'s turn";
+            playerTurn = currentPlayer.getPlayerName() + "'s turn";
             currentCards = currentPlayer.getCardHand();
 
-            if (currentPlayer.getPowerDown() == 3) {
-                table.clearChildren();
-                drawPowerDownOptions();
-            } else {
-                resetPlayerValues();
-                draw(currentCards);
+
+            
+            if (currentPlayer.isControlledByAI()){
+                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
+            }
+            else {
+                if (currentPlayer.getPowerDown() == 3) {
+                    table.clearChildren();
+                    drawPowerDownOptions();
+                } else {
+                    resetPlayerValues();
+                    draw(currentCards);
+                }
+            }
             }
         }
-    }
+
+
+
+
 
     /**
      * Resets variables uses to keep track of selected cards
@@ -121,7 +132,7 @@ public class CardHandGUI {
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
-            table.add(txt).right().colspan(5);
+            table.add(txt).right().colspan(5).row();
         }
 
         //handle indicators over cards

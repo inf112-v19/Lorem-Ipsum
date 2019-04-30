@@ -31,7 +31,7 @@ public class PlayerInfoGUI {
         playerLabels = new Label[players.length];
 
         for (int i = 0; i < players.length; i++) {
-            playerLabels[i] = new Label(players[i].getPlayerID(), assetHandler.getSkin());
+            playerLabels[i] = new Label(players[i].getPlayerName(), assetHandler.getSkin());
         }
 
         table = new Table();
