@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -89,7 +88,7 @@ public class CardHandGUI {
             powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
             powerDownPressed = false;
             currentPlayer = cardManager.getPlayer();
-            playerTurn = currentPlayer.getPlayerID() + "'s turn";
+            playerTurn = currentPlayer.getPlayerName() + "'s turn";
             List<Card> currentCards = currentPlayer.getCardHand();
 
             //if (currentPlayer.isAI())

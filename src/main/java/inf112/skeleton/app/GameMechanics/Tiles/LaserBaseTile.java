@@ -48,7 +48,7 @@ public class LaserBaseTile extends Tile {
 
 		if (playerOnTile != null) {
 			if (laserStatus) {
-				System.out.println("Player: " + playerOnTile.getPlayerID() + " took laser damage");
+				System.out.println("Player: " + playerOnTile.getPlayerName() + " took laser damage");
 				playerOnTile.increaseDamage();
 
 				if (doubleLaser) {
@@ -63,7 +63,7 @@ public class LaserBaseTile extends Tile {
 		else if (possibleToMoveDir == 2) {
 			if (laserStatus) {
 				Player playerOnNextTile = board.posToPlayer(pos.getNeighbour(this.direction));
-				System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+				System.out.println("Player: " + playerOnNextTile.getPlayerName() + " took laser damage");
 				playerOnNextTile.increaseDamage();
 			}
 		}
