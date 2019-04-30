@@ -26,7 +26,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public synchronized void send(String msg){
 		if (this.ctx != null){
 			try{
-				ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
+				ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
 				System.out.println("Client sent " + msg + "-------------------------###");
 				return;
 			}catch (Exception e){
