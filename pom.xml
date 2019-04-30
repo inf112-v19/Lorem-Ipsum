@@ -49,7 +49,7 @@
     <dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty-all</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
-      <version>X.Y.Z.Q</version>
+      <version>4.1.32.Final</version>
       <scope>compile</scope>
     </dependency>
 
