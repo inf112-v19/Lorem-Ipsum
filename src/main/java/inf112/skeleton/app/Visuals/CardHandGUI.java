@@ -117,11 +117,11 @@ public class CardHandGUI {
         table.clearChildren();
 
         Label infoField = new Label(playerTurn, assetHandler.getSkin());
-        table.add(infoField).expand().top().left().row();
+        table.add(infoField).top().left().colspan(3).expandY().row();
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
-            table.add(txt).colspan(5).right().padLeft(10);
+            table.add(txt).right().colspan(5);
         }
 
         //handle indicators over cards
@@ -188,7 +188,7 @@ public class CardHandGUI {
         priority.setAlignment(Align.top);
         drawStack.add(priority);
 
-        table.add(drawStack).width(97).height(120).padBottom(5);
+        table.add(drawStack).width(97).height(120).padBottom(5).left();
     }
 
     /**
