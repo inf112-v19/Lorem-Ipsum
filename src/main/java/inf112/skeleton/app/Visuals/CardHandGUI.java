@@ -33,6 +33,7 @@ public class CardHandGUI {
     private HashSet<Card> selectedCards;
     private int cardsToSelect;
     private boolean powerDownPressed;
+    private boolean showGreetingText;
 
     private TextButton clear;
     private TextButton submit;
@@ -69,6 +70,7 @@ public class CardHandGUI {
         if (cardManager.hasNotReadyPlayers()) {
             powerDown.setText("Power Down");
             powerDownPressed = false;
+            showGreetingText = true;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             currentCards = currentPlayer.getCardHand();
@@ -101,6 +103,11 @@ public class CardHandGUI {
 
         Label infoField = new Label(playerTurn, assetHandler.getSkin());
         table.add(infoField).expand().top().left().row();
+
+        if (showGreetingText) {
+            Label txt = new Label("Select 5 cards", assetHandler.getSkin());
+            table.add(txt).colspan(3).left().padLeft(10);
+        }
 
         //handle indicators over cards
         for (int i = 0; i < cards.size(); i++) {
@@ -141,6 +148,7 @@ public class CardHandGUI {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (!selectedCards.contains(card) && cardsToSelect > 0 && !cardManager.isLocked(card)) {
+                    showGreetingText = false;
                     putInTempSeq(card);
                     swapCards(card);
                     cardsToSelect--;
