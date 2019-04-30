@@ -24,7 +24,7 @@ public class Text extends Label {
 		private float y;
 
 		TextPosition(float x, float y){
-			System.out.println(x+","+y);
+			//System.out.println(x+","+y);
 			this.x = x;
 			this.y = y;
 		}
@@ -66,7 +66,6 @@ public class Text extends Label {
 	 */
 	public Text(String text, Skin skin) {
 		super(text, skin);
-		super.setWrap(true);
 		super.setFontScale(fontSize);
 
 		this.text = new StringBuilder();
