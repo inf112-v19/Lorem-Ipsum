@@ -7,27 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Netcode.Client;
 import inf112.skeleton.app.Netcode.Host;
-import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.Text;
-import io.netty.channel.ChannelHandlerContext;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class PlayerNameState extends State {
-
 	private Client client;
 	private Host host;
 
-	private Skin uiSkin;
+	private Skin skin;
 	private int numPlayers;
 	private Board board;
 	private Queue<Player> players;
@@ -43,12 +37,9 @@ public class PlayerNameState extends State {
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
-		super.camera.setToOrtho(false);
-
 		this.host = host;
 		this.client = null;
-
-		this.uiSkin = assetHandler.getSkin();
+		this.skin = assetHandler.getSkin();
 
 		// should be one if host is null
 		this.numPlayers = numPlayers;
@@ -58,9 +49,9 @@ public class PlayerNameState extends State {
 		this.textAreas = new TextArea[numPlayers];
 		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
 		this.background = new TextureRegionDrawable(texture);
-		this.waitingText = new Text("Waiting on clients", uiSkin);
+		this.waitingText = new Text("Waiting on clients", skin);
 
-		this.table = new Table(uiSkin);
+		this.table = new Table(skin);
 		this.table.setFillParent(true);
 		this.table.setBackground(background);
 		this.table.defaults().space(0, 40, 40, 40);
@@ -78,7 +69,7 @@ public class PlayerNameState extends State {
 		this.host = null;
 		this.client = client;
 
-		this.uiSkin = assetHandler.getSkin();
+		this.skin = assetHandler.getSkin();
 		this.numPlayers = 1;
 		this.board = board;
 		this.players = new Queue<>();
@@ -86,12 +77,12 @@ public class PlayerNameState extends State {
 		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
 		this.background = new TextureRegionDrawable(texture);
 
-		this.table = new Table(uiSkin);
+		this.table = new Table(skin);
 		this.table.setFillParent(true);
 		this.table.setBackground(background);
 		this.table.defaults().space(0, 40, 40, 40);
 
-		this.waitingText = new Text("Waiting on host", uiSkin);
+		this.waitingText = new Text("Waiting on host", skin);
 
 		creatTextFields();
 		creatSubmitButton();
@@ -108,9 +99,9 @@ public class PlayerNameState extends State {
 		}
 
 		for (int i = 0; i < numberOfTextAreas; i++) {
-			textAreas[i] = new TextArea("", uiSkin);
+			textAreas[i] = new TextArea("", skin);
 
-			Text text = new Text("Player " + (i + 1), uiSkin);
+			Text text = new Text("Player " + (i + 1), skin);
 			text.setFontScale(1.5f);
 
 			table.add(text).width(100);
@@ -139,18 +130,15 @@ public class PlayerNameState extends State {
 		if (this.clientNames == null){
 			return;
 		}
-
 		//this should never happen
 		if (this.clientNames.size() != host.getHostHandler().getNumClients()){
 			return;
 		}
-
 		//adding connected clients to players queue and at last the host
 		for (int i = 0; i < clientNames.size(); i++){
 			players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
 		}
 		players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
-
 		//checking if correct amount of players are in the queue
 		if (players.size == host.getHostHandler().getNumClients() + 1){
 			System.out.println("Players: " + players.toString());
@@ -172,7 +160,6 @@ public class PlayerNameState extends State {
 			this.client.send("NAME!" + name);
 			this.clientHasSendt = true;
 		}
-
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
 		System.out.println("playernames = " + playerNames);
@@ -194,7 +181,6 @@ public class PlayerNameState extends State {
 		}
 	}
 
-
 	@Override
 	protected void handleInput() {
 		if (this.continueToNextState){
@@ -208,7 +194,6 @@ public class PlayerNameState extends State {
 		}
 	}
 
-
 	@Override
 	public synchronized void update(float dt) {
 		super.update(dt);
@@ -216,6 +201,5 @@ public class PlayerNameState extends State {
 			this.clientNames = this.host.getHostHandler().getNames();
 			System.out.println(this.clientNames.size());
 		}
-
 	}
 }

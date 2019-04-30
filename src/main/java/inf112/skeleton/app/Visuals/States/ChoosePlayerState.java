@@ -29,8 +29,6 @@ public class ChoosePlayerState extends State {
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
 		this.tableButton = new Table(skin);
-		//this.table.setDebug(true);
-		//this.tablebutton.setDebug(true);
 
 		setBackground();
 		this.table.defaults().padBottom(100F);
