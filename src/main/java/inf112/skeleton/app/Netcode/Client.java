@@ -26,7 +26,7 @@ public class Client implements INetCode{
 			Bootstrap b = new Bootstrap();
 			b.group(group);
 			b.channel(NioSocketChannel.class);
-			b.option(ChannelOption.SO_KEEPALIVE, true);
+			//b.option(ChannelOption.SO_KEEPALIVE, true);
 			b.remoteAddress(new InetSocketAddress(host, port));
 			b.handler(new ChannelInitializer<SocketChannel>() {
 				@Override

@@ -31,8 +31,8 @@ public class Host implements INetCode{
 			b.group(boss, worker);
 			b.channel(NioServerSocketChannel.class);
 			b.localAddress(new InetSocketAddress(PORT));
-			b.option(ChannelOption.SO_BACKLOG, 128);
-			b.childOption(ChannelOption.SO_KEEPALIVE, true);
+			//b.option(ChannelOption.SO_BACKLOG, 128);
+			//b.childOption(ChannelOption.SO_KEEPALIVE, true);
 			b.childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
