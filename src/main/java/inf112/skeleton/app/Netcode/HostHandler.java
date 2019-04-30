@@ -47,7 +47,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		}
 
 		try{
-			wait(1000);
+			wait(100);
 		}catch (InterruptedException e){
 			e.printStackTrace();
 			return false;
