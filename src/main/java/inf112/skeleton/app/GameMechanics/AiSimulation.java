@@ -15,6 +15,8 @@ public class AiSimulation {
     private Player originalPlayer;
     private Board originalBoard;
     private List<Card> cards;
+    private Tile nextFlagTile;
+    private int maxFlags;
 
     /**
      * Compares tiles with a flag, returns 1 if tile1 has a flag with lower index than flag2
@@ -50,12 +52,24 @@ public class AiSimulation {
                 if(object instanceof Flag) flagTiles.add(t);
             }
         }
+        maxFlags = flagTiles.size();
+        nextFlagTile = flagTiles.poll();
     }
 
     public Card[] findBestCards(){
+        checkNextFlag();
         cards = originalPlayer.getCardHand();
+        Board testBoard = originalBoard;
+        Player testPlayer = originalPlayer;
+
 
         return null;
+    }
+
+    private void checkNextFlag(){
+        while((originalPlayer.numberOfFlagsCollected() + flagTiles.size() + 1) > maxFlags){
+            nextFlagTile = flagTiles.poll();
+        }
     }
 
 }
