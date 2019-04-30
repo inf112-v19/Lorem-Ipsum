@@ -40,7 +40,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		msg = index + "#" + msg;
 		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).syncUninterruptibly();
+			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
 		}catch (Exception e){
 			e.printStackTrace();
 			return false;
@@ -48,24 +48,27 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return true;
 	}
 
+	/*
 	public synchronized void sendToClient(String msg, int clientNumber){
 		if (clientNumber == connections.size()){
 			return;
 		}
 		send(msg, connections.get(clientNumber), clientNumber);
 	}
+	 */
+
 	public synchronized void sendToAll(String s){
+		try{
+			wait(1000);
+		}catch (InterruptedException e){
+			e.printStackTrace();
+		}
+
 		for(int i = 0; i < connections.size(); i++){
 			if (connections.get(i) == null){
 				return;
 			}
 			send(s, connections.get(i), i);
-		}
-
-		try{
-			wait(1000);
-		}catch (InterruptedException e){
-			e.printStackTrace();
 		}
 	}
 
