@@ -23,10 +23,14 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		this.client = client;
 	}
 
-	public synchronized void send(String msg) throws Exception{
+	public synchronized void send(String msg){
 		if (this.ctx != null){
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
-			return;
+			try{
+				ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
+				return;
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		//if ctx is null wait til it's not
