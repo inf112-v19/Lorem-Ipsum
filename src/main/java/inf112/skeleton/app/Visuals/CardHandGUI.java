@@ -82,6 +82,7 @@ public class CardHandGUI {
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
             currentCards = currentPlayer.getCardHand();
 
+
             if (currentPlayer.getPowerDown() == 3) {
                 table.clearChildren();
                 drawPowerDownOptions();
@@ -121,7 +122,7 @@ public class CardHandGUI {
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
-            table.add(txt).right().colspan(5);
+            table.add(txt).right().colspan(5).row();
         }
 
         //handle indicators over cards
