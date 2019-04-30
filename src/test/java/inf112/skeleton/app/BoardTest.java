@@ -210,7 +210,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(originHealth-1, players[1].getDamage());
+		assertEquals(originHealth+1, players[1].getDamage());
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getDamage());
+		assertEquals(0, players[0].getDamage());
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getDamage());
+		assertEquals(0, players[0].getDamage());
 	}
 
 	/**
@@ -360,13 +360,13 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getDamage());
+		assertEquals(0, players[0].getDamage());
 	}
 
 
 	/**
 	 * Testing that players shooting each other both take damage - both players should have equal health and their combined
-	 * health should be 18 (9+9). Places player both players on NormalTiles facing each other so they both will get hit.
+	 * health should be 2 (1+1). Places player both players on NormalTiles facing each other so they both will get hit.
 	 */
 	@Test
 	public void playersShootingEachOther() {
@@ -383,7 +383,7 @@ public class BoardTest {
 		int player1Health = players[0].getDamage();
 
 		if (player0Health == player1Health) {
-			assertEquals(18, player0Health+player1Health);
+			assertEquals(2, player0Health+player1Health);
 		}else{
 			assert false;
 		}

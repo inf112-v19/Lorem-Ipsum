@@ -116,18 +116,18 @@ public class CardManager {
             if (players[i].getCardSequence() != null) {
                 Card[] tempCards = players[i].getCardSequence();
                 int playerDamage = players[i].getDamage();
-                if (playerDamage > 0) {
+                if (playerDamage > 4) {
                     lockedCards.add(tempCards[4]);
-                    if (playerDamage > 1) {
+                    if (playerDamage > 5) {
                         lockedCards.add(tempCards[3]);
                     }
-                    if (playerDamage > 2) {
+                    if (playerDamage > 6) {
                         lockedCards.add(tempCards[2]);
                     }
-                    if (playerDamage > 3) {
+                    if (playerDamage > 7) {
                         lockedCards.add(tempCards[1]);
                     }
-                    if (playerDamage > 4) {
+                    if (playerDamage > 8) {
                         lockedCards.add(tempCards[0]);
                     }
                 }
