@@ -31,6 +31,7 @@ public class Host implements INetCode{
 			b.group(boss, worker);
 			b.channel(NioServerSocketChannel.class);
 			b.localAddress(new InetSocketAddress(PORT));
+			b.childOption(ChannelOption.TCP_NODELAY, true);
 			//b.option(ChannelOption.SO_BACKLOG, 128);
 			//b.childOption(ChannelOption.SO_KEEPALIVE, true);
 			b.childHandler(new ChannelInitializer<SocketChannel>() {
