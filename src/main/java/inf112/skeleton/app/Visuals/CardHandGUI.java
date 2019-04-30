@@ -83,15 +83,25 @@ public class CardHandGUI {
             List<Card> currentCards = currentPlayer.getCardHand();
 
 
-            if (currentPlayer.getPowerDown() == 3) {
-                table.clearChildren();
-                drawPowerDownOptions();
-            } else {
-                resetPlayerValues();
-                draw(currentCards);
+            
+            if (currentPlayer.isControlledByAI()){
+                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
+            }
+            else {
+                if (currentPlayer.getPowerDown() == 3) {
+                    table.clearChildren();
+                    drawPowerDownOptions();
+                } else {
+                    resetPlayerValues();
+                    draw(currentCards);
+                }
+            }
             }
         }
-    }
+
+
+
+
 
     /**
      * Resets variables uses to keep track of selected cards

@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
+import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.SpriteType;
@@ -24,6 +25,7 @@ public class Player extends Image implements IPlayer {
     private boolean ready = false;
     private boolean isOnTheBoard = true;
     private ArrayList<Flag> collectedFlags = new ArrayList<>();
+    private boolean controlledByAI;
 
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
@@ -43,13 +45,36 @@ public class Player extends Image implements IPlayer {
         spriteType = SpriteType.PLAYER1;
     }
 
-    public Player(int index, String playerName, Direction direction) {
+
+
+
+    /**
+     *  Create Player object
+     * @param index number used to order players
+     * @param playerName Name to be displayed for the player
+     * @param direction Direction the player is facing
+     */
+   public Player(int index, String playerName, Direction direction) {
         this.index = index;
         this.playerName = playerName;
         setPlayerDirection(direction);
         assignSpriteType();
     }
 
+    /**
+     * Create a player object, used to create AI controlled players
+     * @param index number used to order players
+     * @param playerID Name to be displayed for the player
+     * @param direction Direction the player is facing
+     * @param controlledByAI sets player to be controlled by a user or AI
+     */
+    public Player(int index, String playerID, Direction direction, boolean controlledByAI){
+        this.index = index;
+        this.playerName = playerID;
+        this.controlledByAI = controlledByAI;
+        assignSpriteType();
+        setPlayerDirection(direction);
+    }
 
     /**
      * Turn the player around 'numberOfTurns' to the right.
@@ -120,6 +145,17 @@ public class Player extends Image implements IPlayer {
     public Direction getDirection() {
         return playerDirection;
     }
+
+    public boolean isControlledByAI(){ return controlledByAI; }
+
+    public Card[] chooseAICards(CardManager cardManager){
+        Card[] cards = new Card[5];
+        for(int i=0;i<5;i++){
+           cards[i] = playerHand.get(i);
+        }
+        return cards;
+    }
+
 
 
     @Override
