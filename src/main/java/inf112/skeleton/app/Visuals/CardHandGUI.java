@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -33,9 +34,9 @@ public class CardHandGUI {
     private int cardsToSelect;
     private boolean powerDownPressed;
 
-    private ImageButton clear;
-    private ImageButton submit;
-    private ImageButton powerDown;
+    private TextButton clear;
+    private TextButton submit;
+    private TextButton powerDown;
 
     public CardHandGUI(CardManager cardManager, Stage stage, AssetHandler assetHandler) {
         this.stage = stage;
@@ -47,9 +48,9 @@ public class CardHandGUI {
         table.setFillParent(true);
         buttonTable = new Table();
 
-        clear = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_CLEAR)));
-        submit = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture(SpriteType.CARD_SUBMIT)));
-        powerDown = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("powerDown.png")));
+        clear = new TextButton("Clear", assetHandler.getSkin());
+        submit = new TextButton("Submit", assetHandler.getSkin());
+        powerDown = new TextButton("Power Down", assetHandler.getSkin());
 
         cardManager.newRound();
         createOptionButtons();
@@ -66,7 +67,7 @@ public class CardHandGUI {
 
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
-            powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
+            powerDown.setText("Power Down");
             powerDownPressed = false;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerID() + "'s turn";
@@ -232,7 +233,8 @@ public class CardHandGUI {
     }
 
     private void createOptionButtons() {
-
+        buttonTable.defaults().width(100).height(30).padBottom(5);
+        clear.setColor(Color.RED);
         clear.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -242,6 +244,7 @@ public class CardHandGUI {
             }
         });
 
+        submit.setColor(Color.GREEN);
         submit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -263,14 +266,15 @@ public class CardHandGUI {
             }
         });
 
+        powerDown.setColor(Color.ORANGE);
         powerDown.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (powerDownPressed) {
-                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("powerDown.png")));
+                    powerDown.setText("Power Down");
                     powerDownPressed = false;
                 } else {
-                    powerDown.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(assetHandler.getTexture("undo.png")));
+                    powerDown.setText("Undo");
                     powerDownPressed = true;
                 }
                 System.out.println("Power Down");
@@ -278,9 +282,8 @@ public class CardHandGUI {
             }
         });
 
-        buttonTable.add(powerDown).height(32).width(100).row();
-        buttonTable.add(submit).height(32).width(100).row();
-        buttonTable.add(clear).height(32).width(100);
-
+        buttonTable.add(powerDown).height(25).padBottom(10).row();
+        buttonTable.add(submit).row();
+        buttonTable.add(clear);
     }
 }
