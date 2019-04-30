@@ -28,7 +28,7 @@ public class SpawnPointState extends State {
 		this.boardGUI.create();
 		this.boardGUI.addListenersToStage();
 		this.text = new Text("'s turn to choose spawn", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
-		this.text.prependDynamicsText(players.first().getPlayerID());
+		this.text.prependDynamicsText(players.first().getPlayerName());
 		super.stage.addActor(text);
 
 
@@ -67,10 +67,10 @@ public class SpawnPointState extends State {
 				player.setSize(tile.getWidth(), tile.getHeight());
 				player.setPosition(tile.getX(), tile.getY());
 				stage.addActor(player);
-				System.out.println("placing " + player.getPlayerID());
+				System.out.println("placing " + player.getPlayerName());
 
 				if (!players.isEmpty()) {
-					this.text.prependDynamicsText(players.first().getPlayerID());
+					this.text.prependDynamicsText(players.first().getPlayerName());
 				}
 
 			}

@@ -15,7 +15,7 @@ public class Player extends Image implements IPlayer {
 
     private int index;
     private SpriteType spriteType;
-    private String playerID;
+    private String playerName;
     private List<Card> playerHand;
     private Card[] playerCardSequence;
     private int playerDamage = 0; //Player gets destroyed when 10 damage tokens are collected
@@ -34,18 +34,18 @@ public class Player extends Image implements IPlayer {
     /**
      * Create a player object
      *
-     * @param playerID Name to be displayed for the player
+     * @param playerName Name to be displayed for the player
      * @param direction Direction the player is facing
      */
-    public Player(String playerID, Direction direction) {
-        this.playerID = playerID;
+    public Player(String playerName, Direction direction) {
+        this.playerName = playerName;
         setPlayerDirection(direction);
         spriteType = SpriteType.PLAYER1;
     }
 
-    public Player(int index, String playerID, Direction direction) {
+    public Player(int index, String playerName, Direction direction) {
         this.index = index;
-        this.playerID = playerID;
+        this.playerName = playerName;
         setPlayerDirection(direction);
         assignSpriteType();
     }
@@ -147,19 +147,19 @@ public class Player extends Image implements IPlayer {
     }
 
     /**
-     * Destroy the player (lose a total life and set health to the right amount depending on number of lives lost) or if no more lives set health to 0
+     * Destroy the player (lose a total life and set damage to the right amount depending on number of lives lost) or if no more lives set damage to 10
      * and remove player from the board
      */
     public void destroyPlayer() {
         playerlives--;
+		isOnTheBoard = false;
 
-        if (playerlives >= 0) {
-            this.decreaseDamage();
-            this.decreaseDamage();
-        } else {
-            playerDamage = 10;
-            isOnTheBoard = false;
-        }
+        if (this.isDead()) {
+			playerDamage = 10;
+		}
+        else {
+			playerDamage = 0;
+		}
     }
 
     /**
@@ -222,8 +222,8 @@ public class Player extends Image implements IPlayer {
         ready = false;
     }
 
-    public String getPlayerID() {
-        return playerID;
+    public String getPlayerName() {
+        return playerName;
     }
 
     @Override
@@ -231,7 +231,8 @@ public class Player extends Image implements IPlayer {
         if (!(obj instanceof Player)) {
             return false;
         }
-        return this.playerID.equals(((Player) obj).playerID);
+
+        return this.index == ((Player) obj).index;
     }
 
     @Override
@@ -266,7 +267,7 @@ public class Player extends Image implements IPlayer {
     public void collectFlag(Flag flag) {
         if (collectedFlags.size() == flag.getIndex()) {
             collectedFlags.add(flag);
-            System.out.println(playerID + " collected flag number " + flag.getIndex());
+            System.out.println(playerName + " collected flag number " + flag.getIndex());
             System.out.println(collectedFlags.size());
         }
     }
@@ -346,7 +347,7 @@ public class Player extends Image implements IPlayer {
 					Player playerOnNextTile = board.posToPlayer(nextPos);
 
 					if (laserStatus) {
-						System.out.println("Player: " + playerOnNextTile.getPlayerID() + " took laser damage");
+						System.out.println("Player: " + playerOnNextTile.getPlayerName() + " took laser damage");
 						playerOnNextTile.increaseDamage();
 					}
 					break;
