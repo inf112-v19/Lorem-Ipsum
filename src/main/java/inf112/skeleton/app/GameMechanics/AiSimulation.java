@@ -63,12 +63,19 @@ public class AiSimulation {
     public Card[] findBestCards(){
         checkNextFlag();
         cards = originalPlayer.getCardHand();
+        List<Card> lockedCards = new ArrayList<>();
 
-        for(int i=0;i<cards.size();i++){
-
+        for (Card value : cards) {
+            if (cardManager.isLocked(value)) {
+                lockedCards.add(value);
+            }
+        }
+        for(Card card : lockedCards){
+            cards.remove(card);
         }
         Board testBoard = originalBoard;
         Player testPlayer = originalPlayer;
+
 
 
         return null;
