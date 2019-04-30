@@ -40,9 +40,9 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		msg = index + "#" + msg;
 		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
+			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
 			return true;
-		}catch (InterruptedException e){
+		}catch (Exception e){
 			e.printStackTrace();
 		}
 		return false;
