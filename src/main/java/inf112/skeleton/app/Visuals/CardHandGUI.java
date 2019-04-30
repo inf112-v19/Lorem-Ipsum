@@ -80,7 +80,7 @@ public class CardHandGUI {
             showGreetingText = true;
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerName() + "'s turn";
-            List<Card> currentCards = currentPlayer.getCardHand();
+            currentCards = currentPlayer.getCardHand();
 
 
             if (currentPlayer.getPowerDown() == 3) {
