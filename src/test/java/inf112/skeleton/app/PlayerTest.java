@@ -50,20 +50,15 @@ public class PlayerTest {
     @Test
     public void decreseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
-        player.decreaseHealth();
-        assertEquals(9, player.getHealth());
+        player.increaseDamage();
+        assertEquals(1, player.getDamage());
     }
 
     @Test
     public void increaseHealthTest(){
         Player player = new Player("Player1", Direction.NORTH);
-        player.increaseHealth();
-        assertEquals(10, player.getHealth()); //max health = 10
-
-        player.decreaseHealth();
-        player.decreaseHealth();
-        player.increaseHealth();
-        assertEquals(9, player.getHealth());
+        player.increaseDamage();
+        assertEquals(1, player.getDamage());
     }
 
     /**
@@ -82,22 +77,11 @@ public class PlayerTest {
     }
 
     @Test
-    public void setNotReadyTest(){
+    public void setNotReadyTest() {
         Player player = new Player("Player", Direction.NORTH);
         player.setReady();
         player.setNotReady();
         assertFalse(player.isReady());
-    }
-
-    @Test
-    public void playerGetsRightHealthAmountAfterDestructionTest(){
-        Player player = new Player("player", Direction.NORTH);
-        player.destroyPlayer();
-        assertEquals(8, player.getHealth());
-        player.destroyPlayer();
-        assertEquals(6, player.getHealth());
-        player.destroyPlayer();
-        assertEquals(0, player.getHealth());
     }
 
     @Test
@@ -147,16 +131,17 @@ public class PlayerTest {
         player.destroyPlayer();
         player.destroyPlayer();
         player.destroyPlayer();
+		player.destroyPlayer();
         assertFalse(player.onBoardCheck());
     }
 
-    @Test
-    public void playerGetsRightHealthAmountAfterDestructionFromDamageTest(){
+	@Test
+    public void playerGetsRightDamageAmountAfterDestructionFromDamageTest(){
         Player player = new Player("Player", Direction.NORTH);
         for(int i=0;i<10;i++){
-            player.decreaseHealth();
+            player.increaseDamage();
         }
-        assertEquals(8, player.getHealth());
+        assertEquals(0, player.getDamage());
     }
 
     @Test

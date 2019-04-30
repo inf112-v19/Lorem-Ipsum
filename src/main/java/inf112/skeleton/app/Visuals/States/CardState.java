@@ -17,7 +17,7 @@ public class CardState extends State {
 
 	private CardHandGUI cardHandGUI;
 
-	private PlayerInfoGUI infoGUI;
+	private PlayerInfoGUI playerInfoGUI;
 
 	private CardManager cardManager;
 
@@ -25,21 +25,21 @@ public class CardState extends State {
 		super(gsm);
 		this.board = board;
 		this.batch = new SpriteBatch();
-		//this.batch.setProjectionMatrix(camera.combined);
 		this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
 		this.boardGUI.create();
 
 		this.players = board.getAllPlayers();
 
-		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.cardManager = cardManager;
 
-		this.cardHandGUI = new CardHandGUI(cardManager, batch, stage, super.assetHandler);
+		this.cardHandGUI = new CardHandGUI(cardManager, stage, super.assetHandler);
 	}
 
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		playerInfoGUI.update();
 		Gdx.input.setInputProcessor(stage);
 		for (Player player : players) {
 			if (!player.isReady()) {
@@ -56,25 +56,18 @@ public class CardState extends State {
 			System.out.println("PAUSE!");
 			this.gsm.push(new PauseState(this.gsm));
 		}
-
 		super.render();
-		cardHandGUI.render();
-		infoGUI.render();
 	}
 
 	@Override
 	public void dispose() {
-		//super.dispose();
 		cardHandGUI.dispose();
-		infoGUI.dispose();
+		playerInfoGUI.dispose();
 		batch.dispose();
 	}
 
 	@Override
 	public void resize() {
 		super.resize();
-		//boardGUI.resize();
-		infoGUI.resize();
-		cardHandGUI.resize();
 	}
 }

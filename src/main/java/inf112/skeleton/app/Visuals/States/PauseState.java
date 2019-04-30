@@ -1,9 +1,12 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 
@@ -19,6 +22,10 @@ public class PauseState extends State {
 	private Image mainMenuButton;
 	private Image exitButton;
 
+	private Skin skin;
+	private Table table;
+	private Table tablebutton;
+
 
 	public PauseState(GameStateManager gsm) {
 		super(gsm);
@@ -29,14 +36,66 @@ public class PauseState extends State {
 		this.exit = false;
 		this.start = false;
 
-		this.resumeButton = new Image(assetHandler.getTextureRegion("StateImages/resume.png"));
-		this.mainMenuButton = new Image(assetHandler.getTextureRegion("StateImages/mainMenu.png"));
-		this.exitButton = new Image(assetHandler.getTextureRegion("StateImages/exit.png"));
+		this.skin = assetHandler.getSkin();
+		this.table = new Table(skin);
+		this.table.setFillParent(true);
+		this.tablebutton = new Table(skin);
+		//this.tablebutton.setDebug(true);
+		//this.table.setDebug(true);
+
+		//label
+		Label topLabel = new Label("PAUSE", skin);
+		topLabel.setFontScale(2);
+		topLabel.setAlignment(Align.center);
+		
+		table.defaults().padBottom(100F);
+		table.add(topLabel);
+		table.row();
 		setResume();
-		setMainMenu();
-		setExit();
+
+		table.add(tablebutton);
+
+		super.stage.addActor(table);
+
 	}
 
+	private void setResume() {
+		TextButton resumeBut = new TextButton("RESUME", skin);
+		TextButton mainMenuBut = new TextButton("MAIN MENU", skin);
+		TextButton exitBut = new TextButton("EXIT", skin);
+
+		resumeBut.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				start = true;
+				resume = true;
+			}
+		});
+		mainMenuBut.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				start = true;
+				mainMenu = true;
+			}
+		});
+		exitBut.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				start = true;
+				exit = true;
+			}
+		});
+
+		//the visuals
+		tablebutton.defaults().pad(0,80,20,80).width(150).height(50);
+		tablebutton.add(resumeBut);
+		tablebutton.row();
+		tablebutton.add(mainMenuBut);
+		tablebutton.row();
+		tablebutton.add(exitBut);
+	}
+
+/*
 	private void setResume() {
 		this.resumeButton.setSize(191, 49);
 		this.resumeButton.setPosition((RoboRally.WIDTH / 2) - (191 / 2), 49 * 3);
@@ -74,6 +133,7 @@ public class PauseState extends State {
 			}
 		});
 	}
+	*/
 
 	@Override
 	protected void handleInput() {
