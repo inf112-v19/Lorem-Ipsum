@@ -157,7 +157,7 @@ public class PlayerNameState extends State {
 
 			String playernames = "";
 			for (Player player : players){
-				playernames += player.getPlayerID() + ",";
+				playernames += player.getPlayerName() + ",";
 			}
 
 			this.host.send("PLAYER_NAMES!" + playernames);

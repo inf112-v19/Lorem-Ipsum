@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -16,18 +17,17 @@ public class ChooseBoardState extends State {
 	private Host host;
 
 	private Image textBar;
-	private TextureRegion background;
 
 	private Board board;
 	private String boardName;
 
-	public ChooseBoardState(GameStateManager gsm, Host host) {
 	private Skin skin;
 	private Table table;
 	private Table tableButton;
 	private TextureRegionDrawable background;
 
-	public ChooseBoardState(GameStateManager gsm) {
+	public ChooseBoardState(GameStateManager gsm, Host host) {
+
 		super(gsm);
 
 		//Only hosts should ba able to choose board. can be null.
@@ -83,7 +83,7 @@ public class ChooseBoardState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			this.board = new Board(getBoardName());
+			this.board = new Board(this.boardName);
 			if (this.host != null){
 				System.out.println("hello??????????");
 				this.host.send("BOARD!" + boardName);
@@ -92,24 +92,6 @@ public class ChooseBoardState extends State {
 				gsm.set(new ChoosePlayerState(this.gsm, this.board));
 			}
 		}
-			this.board = new Board(this.boardName);
-			gsm.set(new ChoosePlayerState(this.gsm, this.board));
-		}
 	}
 
-	@Override
-	public void update(float dt) {
-		handleInput();
-	}
-
-
-	@Override
-	public void render() {
-		super.render();
-	}
-
-	@Override
-	public void resize() {
-		super.resize();
-	}
 }

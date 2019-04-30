@@ -83,7 +83,7 @@ public class ChoosePlayerState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			this.gsm.set(new PlayerNameState(this.gsm, this.board, this.playerAmount));
+			this.gsm.set(new PlayerNameState(this.gsm, this.board, this.playerAmount, null));
 		}
 	}
 
