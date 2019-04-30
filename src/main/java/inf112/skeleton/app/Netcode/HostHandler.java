@@ -80,7 +80,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Host received: " + in.toString(CharsetUtil.UTF_8));
 
