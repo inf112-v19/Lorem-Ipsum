@@ -46,6 +46,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
+      <version>X.Y.Z.Q</version>
+      <scope>compile</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
