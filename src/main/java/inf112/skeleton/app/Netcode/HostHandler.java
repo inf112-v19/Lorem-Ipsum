@@ -59,14 +59,13 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			if (connections.get(i) == null){
 				return;
 			}
-
-			try{
-				wait(1000);
-			}catch (InterruptedException e){
-				e.printStackTrace();
-			}
-
 			send(s, connections.get(i), i);
+		}
+
+		try{
+			wait(1000);
+		}catch (InterruptedException e){
+			e.printStackTrace();
 		}
 	}
 
