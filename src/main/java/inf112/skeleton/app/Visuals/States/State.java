@@ -28,6 +28,7 @@ public abstract class State {
 	}
 
 	public void update(float dt){
+		handleInput();
 		this.stage.act(dt);
 	}
 

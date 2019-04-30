@@ -57,13 +57,13 @@ public class ChoosePlayerState extends State {
 		this.tableButton.defaults().pad(20, 80, 30, 80).width(150).height(50);
 		for (int i = 0; i < 6; i++) {
 			TextButton button = new TextButton((i + 1) + " PLAYER", this.skin);
-			final int chosenNumber = (i + 1);
+			final int tempPlayerAmount = (i + 1);
 
 			button.addListener(new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
 					start = true;
-					playerAmount = chosenNumber;
+					playerAmount = tempPlayerAmount;
 				}
 			});
 
@@ -83,7 +83,7 @@ public class ChoosePlayerState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			this.gsm.set(new PlayerNameState(this.gsm, this.board, this.playerAmount));
+			this.gsm.set(new PlayerNameState(this.gsm, this.board, this.playerAmount, null));
 		}
 	}
 
