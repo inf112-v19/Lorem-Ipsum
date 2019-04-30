@@ -7,7 +7,7 @@ public interface INetCode {
 
 	void start() throws Exception;
 
-	void send(String msg);
+	boolean send(String msg);
 
 	//String receive();
 }

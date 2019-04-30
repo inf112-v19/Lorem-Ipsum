@@ -85,7 +85,6 @@ public class SpawnPointState extends State {
 		Position spawnPosition = this.host.getHostHandler().getSpawnPosition();
 		if(spawnPosition != null){
 			putPlayerOnStage(board.getTile(spawnPosition));
-			this.hostShouldSend = true;
 		}
 	}
 
@@ -153,7 +152,9 @@ public class SpawnPointState extends State {
 			//host
 			if(host.getHostHandler().isThisTurn()){
 				putPlayerOnStage(tile);
-				this.host.send("SPAWN!" + calcTilePosition(tile));
+				if (this.host.send("SPAWN!" + calcTilePosition(tile))){
+					this.hostShouldSend = true;
+				}
 			}
 		}else{
 			putPlayerOnStage(tile);
