@@ -23,9 +23,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		this.client = client;
 	}
 
-	public synchronized void send(String msg){
+	public synchronized void send(String msg) throws Exception{
 		if (this.ctx != null){
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
+			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
 			return;
 		}
 
@@ -38,7 +38,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		send(msg);
 	}
 
-	public synchronized String receive(){
+	public String receive(){
 		if (received != null){
 			String s = received;
 			received = null;
@@ -58,7 +58,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));
 		String inString = in.toString(CharsetUtil.UTF_8);
