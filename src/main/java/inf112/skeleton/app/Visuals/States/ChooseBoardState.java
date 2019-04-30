@@ -53,12 +53,18 @@ public class ChooseBoardState extends State {
 		this.tableButton.defaults().pad(0,80,0,80).width(150).height(50);
 		for (int i = 0; i < 3; i++) {
 			TextButton button = new TextButton("BOARD " + (i+1), this.skin);
-
+			final int tempBoardNumber = i;
 			button.addListener(new ChangeListener() {
 				@Override
 				public void  changed(ChangeEvent event, Actor actor) {
 					start = true;
-					boardName = "Boards/BigBoard.txt";
+					if (tempBoardNumber == 0) {
+						boardName = "Boards/BigBoard.txt";
+					} else if (tempBoardNumber == 1) {
+						boardName = "Boards/BigBoard.txt";
+					} else if (tempBoardNumber == 2) {
+						boardName = "Boards/BigBoard.txt";
+					}
 				}
 			});
 			this.tableButton.add(button);
