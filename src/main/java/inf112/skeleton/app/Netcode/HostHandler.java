@@ -59,7 +59,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	public synchronized void sendToAll(String s){
 		try{
-			wait(1000);
+			wait(100);
 		}catch (InterruptedException e){
 			e.printStackTrace();
 		}
