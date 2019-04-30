@@ -106,7 +106,7 @@ public class CardHandGUI {
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
-            table.add(txt).colspan(3).left().padLeft(10);
+            table.add(txt).colspan(5).right().padLeft(10);
         }
 
         //handle indicators over cards
@@ -173,7 +173,7 @@ public class CardHandGUI {
         priority.setAlignment(Align.top);
         drawStack.add(priority);
 
-        table.add(drawStack).width(97).height(135);
+        table.add(drawStack).width(97).height(120).padBottom(5);
     }
 
     private void swapCards(Card card) {
