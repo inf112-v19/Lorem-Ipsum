@@ -34,12 +34,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		}
 
 		//if ctx is null wait til it's not
+		/*
 		try {
 			this.wait(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		send(msg);
+
+		 */
+		//send(msg);
 	}
 
 	public String receive(){
