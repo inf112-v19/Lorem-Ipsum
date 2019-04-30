@@ -55,7 +55,7 @@ public class Host implements INetCode{
 	}
 
 	@Override
-	public void send(String msg) {
+	public synchronized void send(String msg) {
 		this.hostHandler.sendToAll(msg);
 	}
 

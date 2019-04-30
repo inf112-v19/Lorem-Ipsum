@@ -38,7 +38,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		send(msg);
 	}
 
-	public String receive(){
+	public synchronized String receive(){
 		if (received != null){
 			String s = received;
 			received = null;
@@ -58,7 +58,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public synchronized void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));
 		String inString = in.toString(CharsetUtil.UTF_8);
