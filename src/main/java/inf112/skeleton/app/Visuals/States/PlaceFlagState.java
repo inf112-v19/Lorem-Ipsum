@@ -9,6 +9,9 @@ import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import inf112.skeleton.app.Netcode.Client;
+import inf112.skeleton.app.Netcode.Host;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.Visuals.Text;
 
@@ -21,7 +24,14 @@ public class PlaceFlagState extends State {
 	private Player[] players;
 	private Text text;
 
-	public PlaceFlagState(GameStateManager gsm, Board board, CardManager cardManager) {
+	private INetCode net;
+	private Host host;
+	private Client client;
+	private int clientNumber;
+	private boolean hostShouldSend;
+
+
+	public PlaceFlagState(GameStateManager gsm, Board board, CardManager cardManager, INetCode net) {
 		super(gsm);
 		this.board = board;
 		this.cardManager = cardManager;
@@ -32,6 +42,20 @@ public class PlaceFlagState extends State {
 		this.text = new Text("'s turn to place flag", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);
 		this.text.prependDynamicsText(players[0].getPlayerName());
 		super.stage.addActor(text);
+
+		this.net = net;
+		if (net instanceof Host){
+			this.host = (Host)net;
+			this.client = null;
+		}else if(net instanceof Client){
+			this.client = (Client)net;
+			this.host = null;
+		}else{
+			this.client = null;
+			this.host = null;
+		}
+
+		this.clientNumber = 0;
 	}
 
 	@Override
