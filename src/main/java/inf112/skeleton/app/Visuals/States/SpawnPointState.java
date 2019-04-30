@@ -141,7 +141,7 @@ public class SpawnPointState extends State {
 	}
 
 	@Override
-	public  synchronized void tileEventHandle(Tile tile) {
+	public void tileEventHandle(Tile tile) {
 		if (this.client != null){
 			//client
 			if (client.getClientHandler().isThisTurn()){

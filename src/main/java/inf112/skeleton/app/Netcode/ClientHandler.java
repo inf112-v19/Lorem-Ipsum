@@ -86,6 +86,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 				this.clientNames = message;
 				break;
 			case "CLIENT_TURN":
+				System.out.println("dette skal være din index: " + message + "--------------------------------se her----------------------");
 				if(Integer.parseInt(message) == index){
 					this.thisTurn = true;
 				}else{
