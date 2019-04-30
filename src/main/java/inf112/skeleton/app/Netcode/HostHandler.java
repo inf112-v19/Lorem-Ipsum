@@ -48,6 +48,12 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return false;
 	}
 
+	public synchronized void sendToClient(String msg, int clientNumber){
+		if (clientNumber == connections.size()){
+			return;
+		}
+		send(msg, connections.get(clientNumber), clientNumber);
+	}
 	public synchronized void sendToAll(String s){
 		for(int i = 0; i < connections.size(); i++){
 			if (connections.get(i) == null){

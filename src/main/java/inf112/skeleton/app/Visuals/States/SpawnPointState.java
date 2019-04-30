@@ -69,7 +69,7 @@ public class SpawnPointState extends State {
 
 	private synchronized void isHostHandle(){
 		if(this.hostShouldSend){
-			host.send("CLIENT_TURN!" + clientNumber);
+			host.getHostHandler().sendToClient("CLIENT_TURN!" + clientNumber, clientNumber);
 			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
 
 			if(clientNumber < host.getHostHandler().getNumClients()){
