@@ -109,7 +109,7 @@ public class JoinGameState extends State {
 		if (this.tryConnect){
 			String inputText = textArea.getText();
 			final int port = 6666;
-			final int timeout = 1000;
+			final int timeout = 100000;
 			InetSocketAddress socketAddress = new InetSocketAddress(inputText, port);
 			boolean isReachable = false;
 			try{
