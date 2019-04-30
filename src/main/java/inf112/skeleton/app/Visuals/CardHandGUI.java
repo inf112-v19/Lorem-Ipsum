@@ -58,6 +58,9 @@ public class CardHandGUI {
         selectCards();
     }
 
+    /**
+     * Empties tables used in the GUI
+     */
     public void dispose() {
         table.clearChildren();
         buttonTable.clearChildren();
@@ -66,6 +69,10 @@ public class CardHandGUI {
         }
     }
 
+    /**
+     * Checks card manager for players that is not ready
+     * and calls appropriate methods
+     */
     private void selectCards() {
         if (cardManager.hasNotReadyPlayers()) {
             powerDown.setText("Power Down");
@@ -85,6 +92,9 @@ public class CardHandGUI {
         }
     }
 
+    /**
+     * Resets variables uses to keep track of selected cards
+     */
     private void resetPlayerValues() {
         tempCardSeq = new Card[5];
         selectedCards = new HashSet<>();
@@ -98,6 +108,11 @@ public class CardHandGUI {
         }
     }
 
+    /**
+     * Draws a given set of cards and adds listener on them
+     *
+     * @param cards to draw on screen
+     */
     private void draw(List<Card> cards) {
         table.clearChildren();
 
@@ -176,13 +191,17 @@ public class CardHandGUI {
         table.add(drawStack).width(97).height(120).padBottom(5);
     }
 
+    /**
+     * swap card placement with first available position in currentCards
+     *
+     * @param card to swap
+     */
     private void swapCards(Card card) {
         for (int i = 0; i < currentCards.size(); i++) {
             if (currentCards.get(i) == card) {
                 break;
             }
             if (!selectedCards.contains(currentCards.get(i)) && !cardManager.isLocked(currentCards.get(i))) {
-                System.out.println("wut");
                 Card temp = currentCards.get(i);
                 int tempPos = currentCards.indexOf(temp);
                 int swapPos = currentCards.indexOf(card);
@@ -230,6 +249,9 @@ public class CardHandGUI {
         stage.addActor(cancelPowerDownTable);
     }
 
+    /**
+     * @param card to put in card sequence ready to execute
+     */
     private void putInTempSeq(Card card) {
         for (int i = 0; i < tempCardSeq.length; i++) {
             if (tempCardSeq[i] == null) {
