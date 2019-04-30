@@ -1,93 +1,114 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
-
+import inf112.skeleton.app.Visuals.Text;
 
 public class PlayerNameState extends State {
-
-	private Skin uiSkin;
 	private int numPlayers;
 	private Board board;
 	private Queue<Player> players;
 	private TextArea[] textAreas;
-	private Texture texture;
-	private TextureRegionDrawable background;
+
+    private Skin skin;
+    private TextureRegionDrawable background;
 	private Table table;
+    private Table tableSubmit;
+    private Table tableButton;
+
+    private boolean row;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers) {
 		super(gsm);
 		super.camera.setToOrtho(false);
+		this.row = false;
 
-		this.uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
 		this.numPlayers = numPlayers;
 		this.board = board;
 		this.players = new Queue<>();
 		this.textAreas = new TextArea[numPlayers];
-		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
-		this.background = new TextureRegionDrawable(texture);
 
-		this.table = new Table(uiSkin);
+        this.skin = assetHandler.getSkin();
+        this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-		this.table.setBackground(background);
-		this.table.defaults().space(0, 40, 40, 40);
+        this.tableSubmit = new Table(this.skin);
+        this.tableButton = new Table(this.skin);
+        //this.table.setDebug(true);
+        //this.tablebutton.setDebug(true);
+        //this.tableName.setDebug(true);
 
-		creatTextFields();
-		creatSubmitButton();
+        setBackground();
+        this.table.defaults().padBottom(60F);
+        this.table.add(getTopLabel());
+        this.table.row();
+        this.table.add(getTextFields());
+        this.table.row();
+        this.table.add(getSubmitButton());
 
-		stage.addActor(table);
+		super.stage.addActor(this.table);
 	}
 
-	private void creatTextFields() {
-		for (int i = 0; i < numPlayers; i++) {
+    private void setBackground() {
+        this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
+        this.table.setBackground(this.background);
+    }
 
-			textAreas[i] = new TextArea("", uiSkin);
+    private Label getTopLabel() {
+        Label topLabel = new Label("NAME YOUR PLAYER", this.skin);
+        topLabel.setFontScale(2);
+        topLabel.setAlignment(Align.center);
+        return topLabel;
+    }
 
-			Label label = new Label("Player " + (i + 1), uiSkin);
-			label.setFontScale(1.5f);
+	private Table getTextFields() {
+		for (int i = 0; i < this.numPlayers; i++) {
+			this.textAreas[i] = new TextArea("", this.skin);
 
-			table.add(label).width(100);
-			table.add(textAreas[i]).width(150);
-			table.row();
-		}
+			Text text = new Text("Player " + (i + 1), this.skin);
+			text.setFontScale(1.5f);
+
+            this.tableButton.defaults().pad(20,5,30,5);
+            if (i <= 2) {
+                this.tableButton.add(text).width(100);
+                this.tableButton.add(this.textAreas[i]).width(150);
+            } else {
+                if (!this.row) {
+                    this.tableButton.row();
+                    this.row = true;
+                }
+                this.tableButton.add(text).width(100);
+                this.tableButton.add(this.textAreas[i]).width(150);
+            }
+        }
+		return this.tableButton;
 	}
 
-	private void creatSubmitButton() {
-		TextureRegion textureRegion = assetHandler.getTextureRegion("submit.png");
-		Image submit = new Image(textureRegion);
-		submit.setPosition((Gdx.graphics.getWidth() / (float) 2) - (submit.getWidth() / (float) 2), 50);
-		submit.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				for (int i = 0; i < textAreas.length; i++) {
-					System.out.println(textAreas[i].getText());
-					Player player = new Player(i, textAreas[i].getText(), Direction.EAST, false);
-					players.addLast(player);
-				}
+    private Table getSubmitButton() {
+        TextButton button = new TextButton("SUBMIT", this.skin);
+        button.getLabel().setFontScale(1.5f);
 
-				//AI test TODO: remove AI player
-				//Player aiPlayer = new Player(1, "Test AI", Direction.NORTH, true);
-				//players.addLast(aiPlayer);
-
-
-
-
-
-				
-				gsm.set(new SpawnPointState(gsm, board, players));
-				return true;
-			}
-		});
-		table.add(submit);
-	}
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                for (int i = 0; i < textAreas.length; i++) {
+                    System.out.println(textAreas[i].getText());
+                    Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
+                    players.addLast(player);
+                }
+                gsm.set(new SpawnPointState(gsm, board, players));
+            }
+        });
+        this.tableSubmit.defaults().width(150).height(50);
+        this.tableSubmit.add(button);
+        return this.tableSubmit;
+    }
 
 }

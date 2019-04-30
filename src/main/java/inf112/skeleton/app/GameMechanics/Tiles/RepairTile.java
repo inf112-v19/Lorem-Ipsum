@@ -15,8 +15,8 @@ public class RepairTile extends Tile {
 
 	@Override
 	public void checkTile(Board board, Player player){
-		player.increaseHealth();
-		player.increaseHealth();
+		player.decreaseDamage();
+		player.decreaseDamage();
 		player.setBackup(board.getPlayerPos(player));
 	}
 }
