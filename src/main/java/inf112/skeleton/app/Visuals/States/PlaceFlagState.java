@@ -70,7 +70,6 @@ public class PlaceFlagState extends State {
 	}
 
 	private synchronized void isHostHandle(){
-		//TODO - send client turn update
 		if(this.hostShouldSend){
 			host.getHostHandler().sendToAll("CLIENT_TURN!" + clientNumber);
 			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
@@ -86,7 +85,6 @@ public class PlaceFlagState extends State {
 			this.hostShouldSend = false;
 		}
 
-		//TODO - get position and place flag
 		Position flagPosition = this.host.getHostHandler().getFlagPosition();
 		if(flagPosition != null){
 			placeFlag(board.getTile(flagPosition));
