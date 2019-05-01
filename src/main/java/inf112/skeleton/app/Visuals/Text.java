@@ -88,7 +88,6 @@ public class Text extends Label {
 		StringBuilder builder = new StringBuilder();
 		builder.append(this.text);
 		builder.append(dynamicText);
-		System.out.println("dynamic text: " + builder.toString());
 		super.setText(builder);
 	}
 
@@ -96,7 +95,6 @@ public class Text extends Label {
 		StringBuilder builder = new StringBuilder();
 		builder.append(dynamicText);
 		builder.append(this.text);
-		System.out.println("dynamic text: " + builder.toString());
 		super.setText(builder);
 	}
 
