@@ -87,4 +87,13 @@ public class AiSimulation {
         }
     }
 
+    public double distFromFlag(Position pos1, Position pos2){
+        double distanceToFlag = Integer.MAX_VALUE;
+        if(pos1 == null || pos2 == null) return distanceToFlag;
+
+        distanceToFlag = Math.sqrt(Math.pow(pos2.getX() - pos1.getX(), 2)
+                + Math.pow(pos2.getY() - pos1.getY(), 2));
+        return distanceToFlag;
+    }
+
 }
