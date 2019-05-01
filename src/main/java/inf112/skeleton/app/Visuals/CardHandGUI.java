@@ -298,6 +298,7 @@ public class CardHandGUI {
                     for (int i = 0; i < tempCardSeq.length; i++) {
                         System.out.print(tempCardSeq[i].toString() + ", ");
                     }
+                    //TODO - send cards to host
                     System.out.println();
                     selectCards();
                 } else {

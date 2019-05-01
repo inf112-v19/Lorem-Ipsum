@@ -21,6 +21,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	private ArrayList<ChannelHandlerContext> connections;
 	private ArrayList<String> received;
 	private HashMap<Integer, String> nameList;
+	private HashMap<Integer, String> cardList;
 
 	private int index;
 	private boolean thisTurn;
@@ -32,6 +33,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		this.connections = new ArrayList<>();
 		this.received = new ArrayList<>();
 		this.nameList = new HashMap<>();
+		this.cardList = new HashMap<>();
 		this.thisTurn = false;
 
 
@@ -95,6 +97,10 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return pos;
 	}
 
+	public HashMap<Integer, String> getCardList() {
+		return cardList;
+	}
+
 	private Position translateStringToPosition(String positionString){
 		String xandY = positionString.substring(9);
 		String xs = xandY.split(", ")[0].split("=")[1];
@@ -127,6 +133,12 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			case "PLACE_FLAG":
 				this.flagPosition = new Position(message);
 				sendToAll(inString);
+				break;
+			case "CARDS":
+
+				break;
+			case "POWER_DOWN":
+
 				break;
 			default:
 				received.add(inString);
