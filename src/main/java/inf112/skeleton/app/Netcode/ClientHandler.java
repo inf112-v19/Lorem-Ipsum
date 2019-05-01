@@ -15,6 +15,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	private String boardName;
 	private String clientNames;
 	private Position spawnPosition;
+	private Position flagPosition;
 
 	private boolean thisTurn;
 	private String received;
@@ -59,7 +60,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			return split[1];
 		}
 		return msg;
+	}
 
+	private Position translateStringToPosition(String positionString){
+		String xandY = positionString.substring(9);
+		String xs = xandY.split(", ")[0].split("=")[1];
+		String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
+		int x = Integer.parseInt(xs);
+		int y = Integer.parseInt(ys);
+		return new Position(x,y);
 	}
 
 	@Override
@@ -84,7 +93,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 				this.clientNames = message;
 				break;
 			case "CLIENT_TURN":
-				System.out.println(Integer.parseInt(message) == index);
+				System.out.println("din tur: " + (Integer.parseInt(message) == index));
 				if(Integer.parseInt(message) == index){
 					this.thisTurn = true;
 				}else{
@@ -92,12 +101,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 				}
 				break;
 			case "SPAWN":
-				String xandY = message.substring(9);
-				String xs = xandY.split(", ")[0].split("=")[1];
-				String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
-				int x = Integer.parseInt(xs);
-				int y = Integer.parseInt(ys);
-				this.spawnPosition = new Position(x,y);
+				this.spawnPosition = translateStringToPosition(message);
+				break;
+			case "PLACE_FLAG":
+				this.flagPosition = translateStringToPosition(message);
 				break;
 			default:
 				this.received = inString;
@@ -129,6 +136,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public Position getSpawnPosition() {
 		Position pos = this.spawnPosition;
 		this.spawnPosition = null;
+		return pos;
+	}
+
+	public Position getFlagPosition() {
+		Position pos = this.flagPosition;
+		this.flagPosition = null;
 		return pos;
 	}
 

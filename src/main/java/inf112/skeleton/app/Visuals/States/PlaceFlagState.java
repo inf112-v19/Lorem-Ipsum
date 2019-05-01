@@ -8,6 +8,7 @@ import inf112.skeleton.app.GameMechanics.Cards.CardManager;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Player;
+import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Netcode.Client;
 import inf112.skeleton.app.Netcode.Host;
@@ -56,6 +57,7 @@ public class PlaceFlagState extends State {
 		}
 
 		this.clientNumber = 0;
+		this.hostShouldSend = true;
 	}
 
 	@Override
@@ -67,8 +69,49 @@ public class PlaceFlagState extends State {
 		}
 	}
 
+	private synchronized void isHostHandle(){
+		//TODO - send client turn update
+		if(this.hostShouldSend){
+			host.getHostHandler().sendToAll("CLIENT_TURN!" + clientNumber);
+			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
+
+			if(clientNumber < host.getHostHandler().getNumClients()){
+				this.clientNumber++;
+				host.getHostHandler().setThisTurn(false);
+			}
+			else if(clientNumber == host.getHostHandler().getNumClients()){
+				this.clientNumber++;
+				host.getHostHandler().setThisTurn(true);
+			}
+			this.hostShouldSend = false;
+		}
+
+		//TODO - get position and place flag
+		Position flagPosition = this.host.getHostHandler().getFlagPosition();
+		if(flagPosition != null){
+			placeFlag(board.getTile(flagPosition));
+			this.hostShouldSend = true;
+		}
+
+
+	}
+
+	private synchronized void isClientHandle(){
+		Position flagPosition = this.client.getClientHandler().getFlagPosition();
+		if(flagPosition != null){
+			System.out.println("the flag possition is: " + flagPosition );
+			placeFlag(board.getTile(flagPosition));
+		}
+	}
+
 	@Override
 	public void update(float dt) {
+		if(this.host != null){
+			isHostHandle();
+		} else if(this.client != null){
+			isClientHandle();
+		}
+
 		if (flagCount >= players.length) {
 			boardGUI.removeAllListeners();
 			gsm.set(new CardState(gsm, board, cardManager));
@@ -76,8 +119,7 @@ public class PlaceFlagState extends State {
 	}
 
 
-	@Override
-	public void tileEventHandle(Tile tile) {
+	private void placeFlag(Tile tile){
 		this.text.prependDynamicsText(players[flagCount].getPlayerName());
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)) {
@@ -88,5 +130,26 @@ public class PlaceFlagState extends State {
 			stage.addActor(flag);
 			flagCount++;
 		}
+	}
+
+	@Override
+	public synchronized void tileEventHandle(Tile tile) {
+		if (this.host != null){
+			//host
+			if(this.host.getHostHandler().isThisTurn()){
+				placeFlag(tile);
+				this.host.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+			}
+		}else if(this.client != null){
+			//client
+			if(this.client.getClientHandler().isThisTurn()){
+				placeFlag(tile);
+				this.client.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+			}
+		}else{
+			//local
+			placeFlag(tile);
+		}
+
 	}
 }

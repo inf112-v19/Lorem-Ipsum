@@ -74,6 +74,7 @@ public class SpawnPointState extends State {
 
 			if(clientNumber < host.getHostHandler().getNumClients()){
 				this.clientNumber++;
+				host.getHostHandler().setThisTurn(false);
 			}
 			else if(clientNumber == host.getHostHandler().getNumClients()){
 				this.clientNumber++;
@@ -92,7 +93,7 @@ public class SpawnPointState extends State {
 	private synchronized void isClientHandle(){
 		Position spawnPosition = this.client.getClientHandler().getSpawnPosition();
 		if(spawnPosition != null){
-			System.out.println("the possition is: " + spawnPosition );
+			System.out.println("the spawn possition is: " + spawnPosition );
 			putPlayerOnStage(board.getTile(spawnPosition));
 		}
 	}
@@ -146,16 +147,16 @@ public class SpawnPointState extends State {
 			//client
 			if (client.getClientHandler().isThisTurn()){
 				putPlayerOnStage(tile);
-				client.send("SPAWN!" + calcTilePosition(tile));
-				//client.getClientHandler().setThisTurn(false);
+				client.send("SPAWN!" + new Position(tile, this.boardGUI));
 			}
 		}else if (this.host != null){
 			//host
 			if(host.getHostHandler().isThisTurn()){
 				putPlayerOnStage(tile);
-				this.host.send("SPAWN!" + calcTilePosition(tile));
+				this.host.send("SPAWN!" + new Position(tile, this.boardGUI));
 			}
 		}else{
+			//local
 			putPlayerOnStage(tile);
 		}
 	}

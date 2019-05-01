@@ -25,6 +25,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	private int index;
 	private boolean thisTurn;
 	private Position spawnPosition;
+	private Position flagPosition;
 
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -40,7 +41,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		msg = index + "#" + msg;
 		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
-			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync().await(10);
+			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync().await(100);
 		}catch (Exception e){
 			e.printStackTrace();
 			return false;
@@ -88,6 +89,21 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return pos;
 	}
 
+	public Position getFlagPosition(){
+		Position pos = this.flagPosition;
+		this.flagPosition = null;
+		return pos;
+	}
+
+	private Position translateStringToPosition(String positionString){
+		String xandY = positionString.substring(9);
+		String xs = xandY.split(", ")[0].split("=")[1];
+		String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
+		int x = Integer.parseInt(xs);
+		int y = Integer.parseInt(ys);
+		return new Position(x,y);
+	}
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		ByteBuf in = (ByteBuf) msg;
@@ -105,13 +121,11 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				System.out.println(nameList);
 				break;
 			case "SPAWN":
-				System.out.println("player spawned on " + message);
-				String xandY = message.substring(9);
-				String xs = xandY.split(", ")[0].split("=")[1];
-				String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
-				int x = Integer.parseInt(xs);
-				int y = Integer.parseInt(ys);
-				this.spawnPosition = new Position(x,y);
+				this.spawnPosition = translateStringToPosition(message);
+				sendToAll(inString);
+				break;
+			case "PLACE_FLAG":
+				this.flagPosition = translateStringToPosition(message);
 				sendToAll(inString);
 				break;
 			default:
