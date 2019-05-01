@@ -29,7 +29,6 @@ public class SpawnPointState extends State {
 
 	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players, INetCode net) {
 		super(gsm);
-		super.camera.setToOrtho(false);
 		this.players = players;
 		this.board = board;
 		this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
@@ -146,14 +145,14 @@ public class SpawnPointState extends State {
 
 	@Override
 	public synchronized void tileEventHandle(Tile tile) {
-		if (this.client != null){
-			//client
-			if (client.getClientHandler().isThisTurn()){
+		if (this.net != null){
+			if (net.isThisTurn()){
 				if(putPlayerOnStage(tile)) {
-					client.send("SPAWN!" + new Position(tile, this.boardGUI));
+					net.send("SPAWN!" + new Position(tile, this.boardGUI));
 				}
 			}
-		}else if (this.host != null){
+			return;
+		}/*else if (this.host != null){
 			//host
 			if(host.getHostHandler().isThisTurn()){
 				if(putPlayerOnStage(tile)){
@@ -164,6 +163,8 @@ public class SpawnPointState extends State {
 			//local
 			putPlayerOnStage(tile);
 		}
+		*/
+		putPlayerOnStage(tile);
 	}
 
 

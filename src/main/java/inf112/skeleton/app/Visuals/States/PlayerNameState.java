@@ -37,13 +37,12 @@ public class PlayerNameState extends State {
 	private Table table;
 	private boolean continueToNextState;
 	private HashMap<Integer, String> clientNames;
-	private boolean clientHasSendt = false;
+	private boolean clientHasSent = false;
 
 	private Text waitingText;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
-		super.camera.setToOrtho(false);
 
 		this.host = host;
 		this.client = null;
@@ -167,16 +166,16 @@ public class PlayerNameState extends State {
 
 	private synchronized void isClientHandling(){
 		//clients should only send name one time
-		if (!clientHasSendt){
+		if (!clientHasSent){
 			String name = textAreas[0].getText();
 			this.client.send("NAME!" + name);
-			this.clientHasSendt = true;
+			this.clientHasSent = true;
 		}
 
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
 		System.out.println("playernames = " + playerNames);
-		if (playerNames!= null && clientHasSendt){
+		if (playerNames!= null && clientHasSent){
 			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));

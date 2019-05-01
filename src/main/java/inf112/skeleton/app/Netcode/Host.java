@@ -60,6 +60,11 @@ public class Host implements INetCode{
 		this.hostHandler.sendToAll(msg);
 	}
 
+	@Override
+	public boolean isThisTurn() {
+		return this.hostHandler.isThisTurn();
+	}
+
 
 	/*
 	public ArrayList<String> receive() {

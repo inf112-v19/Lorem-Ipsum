@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.*;
 import inf112.skeleton.app.GameMechanics.Player;
 
@@ -21,7 +22,9 @@ public class CardState extends State {
 
 	private CardManager cardManager;
 
-	public CardState(GameStateManager gsm, Board board, CardManager cardManager) {
+	private INetCode net;
+
+	public CardState(GameStateManager gsm, Board board, CardManager cardManager, INetCode net) {
 		super(gsm);
 		this.board = board;
 		this.batch = new SpriteBatch();
@@ -34,6 +37,8 @@ public class CardState extends State {
 		this.cardManager = cardManager;
 
 		this.cardHandGUI = new CardHandGUI(cardManager, stage, super.assetHandler);
+
+		this.net = net;
 	}
 
 	@Override
@@ -47,7 +52,7 @@ public class CardState extends State {
 			}
 		}
 		board.initRound();
-		gsm.set(new ActionState(gsm, board, cardManager));
+		gsm.set(new ActionState(gsm, board, cardManager, this.net));
 	}
 
 	@Override

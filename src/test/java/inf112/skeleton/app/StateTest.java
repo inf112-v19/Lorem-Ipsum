@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.States.ActionState;
 import inf112.skeleton.app.Visuals.States.CardState;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
@@ -18,21 +19,23 @@ public class StateTest {
 	private GameStateManager gsm;
 	private Board board;
 	private CardManager cardManager;
+	private INetCode net;
 	@Before
 	public void setUp() {
 		gsm = new GameStateManager();
 		board = new Board("Boards/ExampleBoard.txt");
 		cardManager = new CardManager(board);
+		net = null;
 	}
 
 	@Test
 	public void pushStateTest() {
-		ActionState actionState = new ActionState(gsm,board,cardManager);
+		ActionState actionState = new ActionState(gsm,board,cardManager,net);
 		gsm.push(actionState);
 		assertSame(gsm.peek(), actionState);
 		assertEquals(gsm.size(), 1);
 
-        CardState cardState = new CardState(gsm,board,cardManager);
+        CardState cardState = new CardState(gsm,board,cardManager,net);
         gsm.push(cardState);
         gsm.push(actionState);
         gsm.push(cardState);
@@ -42,7 +45,7 @@ public class StateTest {
 
 	@Test
 	public void popStateTest() {
-		ActionState actionState = new ActionState(gsm,board,cardManager);
+		ActionState actionState = new ActionState(gsm,board,cardManager,net);
 		gsm.push(new MenuState(gsm));
 		gsm.push(actionState);
 		assertSame(gsm.pop(), actionState);
@@ -51,7 +54,7 @@ public class StateTest {
 
     @Test
     public void peekStateTest() {
-        ActionState actionState = new ActionState(gsm,board,cardManager);
+        ActionState actionState = new ActionState(gsm,board,cardManager,net);
         gsm.push(new MenuState(gsm));
         gsm.push(actionState);
         assertSame(gsm.peek(), actionState);
@@ -60,7 +63,7 @@ public class StateTest {
 
 	@Test
 	public void setStateTest() {
-		ActionState actionState = new ActionState(gsm,board,cardManager);
+		ActionState actionState = new ActionState(gsm,board,cardManager,net);
 		gsm.push(new MenuState(gsm));
 		gsm.set(actionState);
 		assertSame(gsm.peek(), actionState);

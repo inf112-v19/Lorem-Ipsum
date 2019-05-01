@@ -9,5 +9,7 @@ public interface INetCode {
 
 	void send(String msg);
 
+	boolean isThisTurn();
+
 	//String receive();
 }

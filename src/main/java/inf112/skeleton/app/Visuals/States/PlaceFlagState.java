@@ -117,7 +117,7 @@ public class PlaceFlagState extends State {
 
 		if (flagCount >= players.length) {
 			boardGUI.removeAllListeners();
-			gsm.set(new CardState(gsm, board, cardManager));
+			gsm.set(new CardState(gsm, board, cardManager, this.net));
 		}
 	}
 
@@ -139,14 +139,14 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public synchronized void tileEventHandle(Tile tile) {
-		if (this.host != null){
-			//host
-			if(this.host.getHostHandler().isThisTurn()){
+		if (this.net != null){
+			if(this.net.isThisTurn()){
 				if(placeFlag(tile)){
-					this.host.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+					this.net.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
 				}
 			}
-		}else if(this.client != null){
+			return;
+		}/*else if(this.client != null){
 			//client
 			if(this.client.getClientHandler().isThisTurn()){
 				if(placeFlag(tile)){
@@ -157,6 +157,7 @@ public class PlaceFlagState extends State {
 			//local
 			placeFlag(tile);
 		}
-
+		/*/
+		placeFlag(tile);
 	}
 }

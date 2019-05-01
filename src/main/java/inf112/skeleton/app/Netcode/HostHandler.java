@@ -97,18 +97,10 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return pos;
 	}
 
-	public HashMap<Integer, String> getCardList() {
+	public HashMap<Integer, String> getCardHashMap() {
 		return cardList;
 	}
 
-	private Position translateStringToPosition(String positionString){
-		String xandY = positionString.substring(9);
-		String xs = xandY.split(", ")[0].split("=")[1];
-		String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
-		int x = Integer.parseInt(xs);
-		int y = Integer.parseInt(ys);
-		return new Position(x,y);
-	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {

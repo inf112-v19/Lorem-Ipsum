@@ -2,7 +2,9 @@ package inf112.skeleton.app.Netcode;
 
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -51,6 +53,11 @@ public class Client implements INetCode{
 	@Override
 	public void send(String msg) {
 		this.clientHandler.send(msg);
+	}
+
+	@Override
+	public boolean isThisTurn() {
+		return this.clientHandler.isThisTurn();
 	}
 
 	public String receive() {
