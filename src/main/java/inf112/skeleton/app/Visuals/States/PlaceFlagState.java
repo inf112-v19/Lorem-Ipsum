@@ -47,6 +47,7 @@ public class PlaceFlagState extends State {
 		this.net = net;
 		if (net instanceof Host){
 			this.host = (Host)net;
+			this.host.getHostHandler().requireSend();
 			this.client = null;
 		}else if(net instanceof Client){
 			this.client = (Client)net;
@@ -56,8 +57,8 @@ public class PlaceFlagState extends State {
 			this.host = null;
 		}
 
-		this.clientNumber = 0;
-		this.hostShouldSend = true;
+		//this.clientNumber = 0;
+		//this.hostShouldSend = true;
 	}
 
 	@Override
@@ -70,25 +71,13 @@ public class PlaceFlagState extends State {
 	}
 
 	private synchronized void isHostHandle(){
-		if(this.hostShouldSend){
-			host.getHostHandler().sendToAll("CLIENT_TURN!" + clientNumber);
-			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
-
-			if(clientNumber < host.getHostHandler().getNumClients()){
-				this.clientNumber++;
-				host.getHostHandler().setThisTurn(false);
-			}
-			else if(clientNumber == host.getHostHandler().getNumClients()){
-				this.clientNumber++;
-				host.getHostHandler().setThisTurn(true);
-			}
-			this.hostShouldSend = false;
-		}
+		this.host.getHostHandler().sendWhenReqiured();
 
 		Position flagPosition = this.host.getHostHandler().getFlagPosition();
 		if(flagPosition != null){
-			placeFlag(board.getTile(flagPosition));
-			this.hostShouldSend = true;
+			if(placeFlag(board.getTile(flagPosition))){
+				this.host.getHostHandler().requireSend();
+			}
 		}
 
 

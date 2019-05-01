@@ -28,15 +28,43 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	private Position spawnPosition;
 	private Position flagPosition;
 
+	private boolean hostShouldSend;
+	private int clientNumber;
+
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.connections = new ArrayList<>();
 		this.received = new ArrayList<>();
 		this.nameList = new HashMap<>();
 		this.cardList = new HashMap<>();
+
 		this.thisTurn = false;
 
+		this.hostShouldSend = true;
+		this.clientNumber = 0;
 
+
+	}
+
+	public synchronized void requireSend(){
+		this.hostShouldSend = true;
+	}
+
+	public synchronized void sendWhenReqiured(){
+		if(this.hostShouldSend){
+			this.hostShouldSend = false;
+			sendToAll("CLIENT_TURN!" + clientNumber);
+			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
+
+			if(clientNumber < this.connections.size()){
+				this.clientNumber++;
+				setThisTurn(false);
+			}
+			else if(clientNumber == this.connections.size()){
+				this.clientNumber = 0;
+				setThisTurn(true);
+			}
+		}
 	}
 
 	private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index){

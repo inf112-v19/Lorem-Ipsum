@@ -38,7 +38,7 @@ public class SpawnPointState extends State {
 		this.text.prependDynamicsText(players.first().getPlayerName());
 		super.stage.addActor(text);
 
-		this.hostShouldSend = true;
+		//this.hostShouldSend = true;
 
 		this.net = net;
 		if (net instanceof Host){
@@ -52,7 +52,7 @@ public class SpawnPointState extends State {
 			this.host = null;
 		}
 
-		this.clientNumber = 0;
+		//this.clientNumber = 0;
 
 
 	}
@@ -67,25 +67,12 @@ public class SpawnPointState extends State {
 	}
 
 	private synchronized void isHostHandle(){
-		if(this.hostShouldSend){
-			host.getHostHandler().sendToAll("CLIENT_TURN!" + clientNumber);
-			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
-
-			if(clientNumber < host.getHostHandler().getNumClients()){
-				this.clientNumber++;
-				host.getHostHandler().setThisTurn(false);
-			}
-			else if(clientNumber == host.getHostHandler().getNumClients()){
-				this.clientNumber++;
-				host.getHostHandler().setThisTurn(true);
-			}
-			this.hostShouldSend = false;
-		}
+		this.host.getHostHandler().sendWhenReqiured();
 
 		Position spawnPosition = this.host.getHostHandler().getSpawnPosition();
 		if(spawnPosition != null){
 			putPlayerOnStage(board.getTile(spawnPosition));
-			this.hostShouldSend = true;
+			host.getHostHandler().requireSend();
 		}
 	}
 

@@ -70,9 +70,4 @@ public class CardState extends State {
 		playerInfoGUI.dispose();
 		batch.dispose();
 	}
-
-	@Override
-	public void resize() {
-		super.resize();
-	}
 }
