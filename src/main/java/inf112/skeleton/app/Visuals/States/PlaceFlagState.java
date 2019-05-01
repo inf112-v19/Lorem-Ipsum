@@ -102,8 +102,13 @@ public class PlaceFlagState extends State {
 		}
 	}
 
+
 	@Override
-	public void update(float dt) {
+	public synchronized void update(float dt) {
+		if(players.length > flagCount){
+			this.text.prependDynamicsText(players[flagCount].getPlayerName());
+		}
+
 		if(this.host != null){
 			isHostHandle();
 		} else if(this.client != null){
@@ -117,8 +122,8 @@ public class PlaceFlagState extends State {
 	}
 
 
-	private void placeFlag(Tile tile){
-		this.text.prependDynamicsText(players[flagCount].getPlayerName());
+	//TODO make this boolean
+	private synchronized void placeFlag(Tile tile){
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)) {
 			flag.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(flag)));
