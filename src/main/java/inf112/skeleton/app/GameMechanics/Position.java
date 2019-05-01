@@ -29,6 +29,15 @@ public class Position {
 		this.y = (int)y;
 	}
 
+	public Position(String positionToString){
+		String xandY = positionToString.substring(9);
+		String xs = xandY.split(", ")[0].split("=")[1];
+		String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
+		this.x = Integer.parseInt(xs);
+		this.y = Integer.parseInt(ys);
+
+	}
+
 	/**
 	 * @return position coordinates in array form [x, y]
 	 */

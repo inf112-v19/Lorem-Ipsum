@@ -122,7 +122,7 @@ public class SpawnPointState extends State {
 
 
 	//TODO - make this boolean
-	private void putPlayerOnStage(Tile tile){
+	private synchronized boolean putPlayerOnStage(Tile tile){
 		if (!players.isEmpty()) {
 			Position playerPos = calcTilePosition(tile);
 
@@ -138,9 +138,10 @@ public class SpawnPointState extends State {
 				if (!players.isEmpty()) {
 					this.text.prependDynamicsText(players.first().getPlayerName());
 				}
-
+				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -148,14 +149,16 @@ public class SpawnPointState extends State {
 		if (this.client != null){
 			//client
 			if (client.getClientHandler().isThisTurn()){
-				putPlayerOnStage(tile);
-				client.send("SPAWN!" + new Position(tile, this.boardGUI));
+				if(putPlayerOnStage(tile)) {
+					client.send("SPAWN!" + new Position(tile, this.boardGUI));
+				}
 			}
 		}else if (this.host != null){
 			//host
 			if(host.getHostHandler().isThisTurn()){
-				putPlayerOnStage(tile);
-				this.host.send("SPAWN!" + new Position(tile, this.boardGUI));
+				if(putPlayerOnStage(tile)){
+					this.host.send("SPAWN!" + new Position(tile, this.boardGUI));
+				}
 			}
 		}else{
 			//local

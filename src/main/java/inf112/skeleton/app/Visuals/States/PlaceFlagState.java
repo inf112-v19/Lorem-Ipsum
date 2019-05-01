@@ -123,7 +123,7 @@ public class PlaceFlagState extends State {
 
 
 	//TODO make this boolean
-	private synchronized void placeFlag(Tile tile){
+	private synchronized boolean placeFlag(Tile tile){
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)) {
 			flag.setDrawable(new TextureRegionDrawable(assetHandler.getTexture(flag)));
@@ -132,7 +132,9 @@ public class PlaceFlagState extends State {
 
 			stage.addActor(flag);
 			flagCount++;
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -140,14 +142,16 @@ public class PlaceFlagState extends State {
 		if (this.host != null){
 			//host
 			if(this.host.getHostHandler().isThisTurn()){
-				placeFlag(tile);
-				this.host.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+				if(placeFlag(tile)){
+					this.host.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+				}
 			}
 		}else if(this.client != null){
 			//client
 			if(this.client.getClientHandler().isThisTurn()){
-				placeFlag(tile);
-				this.client.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+				if(placeFlag(tile)){
+					this.client.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
+				}
 			}
 		}else{
 			//local

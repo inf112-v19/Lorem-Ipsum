@@ -121,11 +121,11 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				System.out.println(nameList);
 				break;
 			case "SPAWN":
-				this.spawnPosition = translateStringToPosition(message);
+				this.spawnPosition = new Position(message);
 				sendToAll(inString);
 				break;
 			case "PLACE_FLAG":
-				this.flagPosition = translateStringToPosition(message);
+				this.flagPosition = new Position(message);
 				sendToAll(inString);
 				break;
 			default:
