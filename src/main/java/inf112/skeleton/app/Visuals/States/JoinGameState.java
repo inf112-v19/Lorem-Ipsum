@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -194,6 +196,51 @@ public class JoinGameState extends State {
 		});
 		thread.start();
 
+	}
+
+	private ArrayList<String> findHosts() {
+		final int port = 6666;
+		final int timeout = 1000;
+		final ExecutorService es = Executors.newFixedThreadPool(20);
+		String localHost = "192.168.1.1";
+		try {
+			localHost = InetAddress.getLocalHost().getHostAddress();
+		}
+		catch (UnknownHostException e) {
+			System.err.println("UnknownHostException was thrown - assumed localHost was 192.168.1.1");
+		}
+
+		String subnet = getSubnet(localHost);
+		System.out.println(subnet);
+		HashMap<String, Future<Boolean>> addresses = new HashMap<>();
+		ArrayList<String> reachableAddresses = new ArrayList<>();
+
+
+		for (int i = 1; i < 256; i++) {
+			String ip = subnet+"."+i;
+			Future<Boolean> isReachable = portIsOpen(es, ip, port, timeout);
+			addresses.put(ip, isReachable);
+		}
+		es.shutdown();
+
+		for (HashMap.Entry<String, Future<Boolean>> entry : addresses.entrySet()) {
+			try {
+				if (entry.getValue().get()) {
+					reachableAddresses.add(entry.getKey());
+				}
+			}
+			catch (Exception e) {
+				System.err.println(e);
+			}
+
+		}
+
+		return reachableAddresses;
+	}
+
+	private String getSubnet(String ip) {
+		int indexEnd = ip.lastIndexOf(".");
+		return ip.substring(0, indexEnd);
 	}
 
 
