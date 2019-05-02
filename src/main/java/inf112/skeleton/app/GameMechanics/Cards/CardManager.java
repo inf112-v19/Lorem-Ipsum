@@ -63,6 +63,11 @@ public class CardManager {
                 }
             }
             if (player.getPowerDown() == 1) {
+                Card[] cards = new Card[5];
+                for (int i = 0; i < cards.length; i++) {
+                    cards[i] = new Card(CardType.FORWARD_1, 10);
+                }
+                player.setCardSequence(cards);
                 player.setReady();
                 continue;
             }

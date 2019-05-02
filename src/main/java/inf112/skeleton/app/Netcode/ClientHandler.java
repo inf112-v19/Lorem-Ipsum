@@ -27,11 +27,14 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	private String received;
 
 	private HashMap<Integer, Card[]> playerCards;
+	private HashMap<Integer, Integer> powerdownStatus;
 	private boolean cardsReady;
+
 
 	public ClientHandler(Client client) {
 		this.client = client;
 		this.playerCards = new HashMap<>();
+		this.powerdownStatus = new HashMap<>();
 		this.cardsReady = false;
 	}
 
@@ -117,15 +120,34 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			case "PLACE_FLAG":
 				this.flagPosition = translateStringToPosition(message);
 				break;
+			case "POWERDOWN_HOST":
+				String[] splitKeyAndPowerdown = message.split("%");
+				int key = Integer.parseInt(splitKeyAndPowerdown[0]);
+				int value = Integer.parseInt(splitKeyAndPowerdown[1]);
+				this.powerdownStatus.put(key, value);
+				break;
 			case "CARDS":
 				message = message.replace("{", "").replace("}", "");
 				String[] playerCardStrings = message.split(",, ");
 				for (String cardString : playerCardStrings) {
-					int playerIndex = Integer.parseInt(cardString.split("=")[0]);
-					String[] stringCards = cardString.split("=")[1].split(",");
+
+					String[] splitIndexFromCard = cardString.split("=");
+					String indexString = splitIndexFromCard[0];
+					int playerIndex = Integer.parseInt(indexString);
+					String restString = splitIndexFromCard[1];
+
+					String[] splitPowerdownFromCards = restString.split("%");
+					int powerdown = Integer.parseInt(splitPowerdownFromCards[0]);
+					this.powerdownStatus.put(playerIndex, powerdown);
+
+					restString = splitPowerdownFromCards[1];
+					String[] cardStringArray = restString.split(",");
+
+					System.out.println(restString);
+
 					Card[] cards = new Card[5];
-					for (int i = 0; i < stringCards.length; i++) {
-						String[] typeAndPriority = stringCards[i].split("&");
+					for (int i = 0; i < cardStringArray.length; i++) {
+						String[] typeAndPriority = cardStringArray[i].split("&");
 						int priority = Integer.parseInt(typeAndPriority[1]);
 						Card card = new Card(typeAndPriority[0], priority);
 						cards[i] = card;
@@ -169,6 +191,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	public int getIndex() {
 		return index;
+	}
+
+	public HashMap<Integer, Integer> getPowerdownStatus(){
+		return this.powerdownStatus;
 	}
 
 	public Position getSpawnPosition() {

@@ -45,7 +45,9 @@ public class CardState extends State {
 		this.cardHandGUI = new CardHandGUI(cardManager, stage, super.assetHandler);
 
 		this.net = net;
-		this.net.resetCards();
+		if(this.net != null){
+			this.net.resetCards();
+		}
 		this.shouldSend = true;
 	}
 
@@ -57,12 +59,17 @@ public class CardState extends State {
 			this.shouldSend = false;
 			host.send("CARDS!" + cards.toString());
 			for (int i = 0; i < players.length; i++) {
+				HashMap<Integer,Integer> powerdownStatusMap = host.getHostHandler().getPowerdownStatus();
+				if(powerdownStatusMap != null){
+					int powerdownStatus = powerdownStatusMap.get(players[i].getIndex());
+					players[i].setPowerDown(powerdownStatus);
+				}
 				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
 			}
 		}
 
 		if(players[host.getIndex()].isReady()){
-			String cardString = "";
+			String cardString = players[host.getIndex()].getPowerDown() + "%";
 			for(Card card : players[host.getIndex()].getCardSequence()){
 				cardString += card.getCardType() + "&" + card.getPriority() + ",";
 			}
@@ -70,13 +77,12 @@ public class CardState extends State {
 		}
 
 
-
 	}
 
 	private synchronized void isClientHandling(){
 		Client client = (Client)this.net;
 		if(players[client.getIndex()].isReady() && this.shouldSend){
-			String sendString = "CARDS!";
+			String sendString = "CARDS!" + players[client.getIndex()].getPowerDown() + "%";
 			for(Card card : players[client.getIndex()].getCardSequence()){
 				sendString += card.getCardType() + "&" + card.getPriority() + ",";
 			}
@@ -86,8 +92,12 @@ public class CardState extends State {
 
 		HashMap<Integer, Card[]> cards = client.getClientHandler().getCards();
 		if(cards != null){
-			System.err.println("hello");
 			for (Player player : players) {
+				HashMap<Integer,Integer> powerdownStatusMap = client.getClientHandler().getPowerdownStatus();
+				if(powerdownStatusMap != null){
+					int powerdownStatus = powerdownStatusMap.get(player.getIndex());
+					player.setPowerDown(powerdownStatus);
+				}
 				cardManager.setCardSeq(player, cards.get(player.getIndex()));
 			}
 

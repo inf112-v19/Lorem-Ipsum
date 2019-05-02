@@ -32,17 +32,23 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	private boolean hostShouldSend;
 	private int clientNumber;
 
+	private HashMap<Integer,Integer> powerdownStatus;
+	private boolean cardsAlreadyAdded;
+
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.connections = new ArrayList<>();
 		this.received = new ArrayList<>();
 		this.nameList = new HashMap<>();
 		this.cardList = new HashMap<>();
+		this.powerdownStatus = new HashMap<>();
 
 		this.thisTurn = false;
 
 		this.hostShouldSend = true;
 		this.clientNumber = 0;
+
+		cardsAlreadyAdded = false;
 
 
 	}
@@ -138,11 +144,11 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	public void resetCards(){
 		this.cardList.clear();
+		cardsAlreadyAdded = false;
 	}
 
 	public Card[] getCardArray(int index){
-		String cardStrings = cardList.get(index);
-		System.out.println(cardStrings);
+		String cardStrings = cardList.get(index).split("%")[1];
 		Card[] cards = new Card[5];
 		String[] cardString = cardStrings.split(",");
 		for (int i = 0; i < cardString.length; i++) {
@@ -154,8 +160,21 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return cards;
 	}
 
+	public HashMap<Integer, Integer> getPowerdownStatus() {
+		return powerdownStatus;
+	}
+
 	public void addHostCards(String cards){
-		cardList.put(index, cards);
+		if(cardsAlreadyAdded){
+			return;
+		}
+		String[] split = cards.split("%");
+		String powerdownString = split[0];
+		int powerdown = Integer.parseInt(powerdownString);
+		this.powerdownStatus.put(index,powerdown);
+		this.cardList.put(index, cards);
+		sendToAll("POWERDOWN_HOST!" + this.index + "%" + powerdown);
+		cardsAlreadyAdded = true;
 	}
 
 
@@ -184,10 +203,9 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				sendToAll(inString);
 				break;
 			case "CARDS":
+				String[] temp = message.split("%");
+				this.powerdownStatus.put(connections.indexOf(ctx), Integer.parseInt(temp[0]));
 				this.cardList.put(connections.indexOf(ctx), message);
-				break;
-			case "POWER_DOWN":
-
 				break;
 			default:
 				received.add(inString);
