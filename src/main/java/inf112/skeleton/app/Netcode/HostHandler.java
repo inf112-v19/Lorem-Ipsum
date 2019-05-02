@@ -17,66 +17,67 @@ import java.util.HashMap;
 @ChannelHandler.Sharable
 public class HostHandler extends ChannelInboundHandlerAdapter {
 
-    private GameStateManager gsm;
-    private ArrayList<ChannelHandlerContext> connections;
-    private ArrayList<String> received;
-    private HashMap<Integer, String> nameList;
-    private HashMap<Integer, String> cardList;
+	private GameStateManager gsm;
+	private ArrayList<ChannelHandlerContext> connections;
+	private ArrayList<String> received;
+	private HashMap<Integer, String> nameList;
+	private HashMap<Integer, String> cardList;
 
-    private int index;
-    private boolean thisTurn;
-    private Position spawnPosition;
-    private Position flagPosition;
+	private int index;
+	private boolean thisTurn;
+	private Position spawnPosition;
+	private Position flagPosition;
 
-    private boolean hostShouldSend;
-    private int clientNumber;
+	private boolean hostShouldSend;
+	private int clientNumber;
 
-    public HostHandler(GameStateManager gsm) {
-        this.gsm = gsm;
-        this.connections = new ArrayList<>();
-        this.received = new ArrayList<>();
-        this.nameList = new HashMap<>();
-        this.cardList = new HashMap<>();
+	public HostHandler(GameStateManager gsm) {
+		this.gsm = gsm;
+		this.connections = new ArrayList<>();
+		this.received = new ArrayList<>();
+		this.nameList = new HashMap<>();
+		this.cardList = new HashMap<>();
 
-        this.thisTurn = false;
+		this.thisTurn = false;
 
-        this.hostShouldSend = true;
-        this.clientNumber = 0;
+		this.hostShouldSend = true;
+		this.clientNumber = 0;
 
 
-    }
+	}
 
-    public synchronized void requireSend() {
-        this.hostShouldSend = true;
-    }
+	public synchronized void requireSend(){
+		this.hostShouldSend = true;
+	}
 
-    public synchronized void sendWhenReqiured() {
-        if (this.hostShouldSend) {
-            this.hostShouldSend = false;
-            sendToAll("CLIENT_TURN!" + clientNumber);
-            System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
+	public synchronized void sendWhenReqiured(){
+		if(this.hostShouldSend){
+			this.hostShouldSend = false;
+			sendToAll("CLIENT_TURN!" + clientNumber);
+			System.out.println("UPDATING PLAYERTURN TO: " + clientNumber);
 
-            if (clientNumber < this.connections.size()) {
-                this.clientNumber++;
-                setThisTurn(false);
-            } else if (clientNumber == this.connections.size()) {
-                this.clientNumber = 0;
-                setThisTurn(true);
-            }
-        }
-    }
+			if(clientNumber < this.connections.size()){
+				this.clientNumber++;
+				setThisTurn(false);
+			}
+			else if(clientNumber == this.connections.size()){
+				this.clientNumber = 0;
+				setThisTurn(true);
+			}
+		}
+	}
 
-    private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index) {
-        msg = index + "#" + msg;
-        System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
-        try {
-            ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync().await(100);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+	private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index){
+		msg = index + "#" + msg;
+		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
+		try{
+			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync().await(100);
+		}catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 	/*
 	public synchronized void sendToClient(String msg, int clientNumber){
@@ -87,115 +88,115 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 	 */
 
-    public synchronized void sendToAll(String s) {
-        for (int i = 0; i < connections.size(); i++) {
-            if (connections.get(i) == null) {
-                return;
-            }
-            send(s, connections.get(i), i);
-        }
-    }
+	public synchronized void sendToAll(String s){
+		for(int i = 0; i < connections.size(); i++){
+			if (connections.get(i) == null){
+				return;
+			}
+			send(s, connections.get(i), i);
+		}
+	}
 
-    public int getNumClients() {
-        return this.connections.size();
-    }
+	public int getNumClients(){
+		return this.connections.size();
+	}
 
-    public HashMap<Integer, String> getNames() {
-        if (connections.size() == nameList.size()) {
-            return nameList;
-        }
-        return null;
-    }
+	public HashMap<Integer, String> getNames(){
+		if(connections.size() == nameList.size()){
+			return nameList;
+		}
+		return null;
+	}
 
-    public boolean isThisTurn() {
-        return thisTurn;
-    }
+	public boolean isThisTurn() {
+		return thisTurn;
+	}
 
-    public void setThisTurn(boolean thisTurn) {
-        this.thisTurn = thisTurn;
-    }
+	public void setThisTurn(boolean thisTurn) {
+		this.thisTurn = thisTurn;
+	}
 
-    public Position getSpawnPosition() {
-        Position pos = this.spawnPosition;
-        this.spawnPosition = null;
-        return pos;
-    }
+	public Position getSpawnPosition() {
+		Position pos = this.spawnPosition;
+		this.spawnPosition = null;
+		return pos;
+	}
 
-    public Position getFlagPosition() {
-        Position pos = this.flagPosition;
-        this.flagPosition = null;
-        return pos;
-    }
+	public Position getFlagPosition(){
+		Position pos = this.flagPosition;
+		this.flagPosition = null;
+		return pos;
+	}
 
-    public HashMap<Integer, String> getCards() {
-        if (connections.size() == nameList.size()) {
-            return cardList;
-        }
-        return null;
-    }
-
-
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf in = (ByteBuf) msg;
-        System.out.println("Host received: " + in.toString(CharsetUtil.UTF_8));
-
-        String inString = in.toString(CharsetUtil.UTF_8);
-        String[] split = inString.split("!");
-        String command = split[0];
-        String message = split[1];
-
-        switch (command) {
-            case "NAME":
-                //System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
-                this.nameList.put(connections.indexOf(ctx), message);
-                System.out.println(nameList);
-                break;
-            case "SPAWN":
-                this.spawnPosition = new Position(message);
-                sendToAll(inString);
-                break;
-            case "PLACE_FLAG":
-                this.flagPosition = new Position(message);
-                sendToAll(inString);
-                break;
-            case "CARDS":
-                this.cardList.put(connections.indexOf(ctx), message);
-                break;
-            case "POWER_DOWN":
-
-                break;
-            default:
-                received.add(inString);
-                System.err.println(command + " has no handling HOST");
-
-        }
-    }
-
-    @Override
-    public synchronized void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("SERVER CONNECTED WITH CLIENT");
-
-        this.connections.add(ctx);
-        this.index = this.connections.size();
+	public HashMap<Integer, String> getCards() {
+		if(connections.size()+1 == cardList.size()){
+			return cardList;
+		}
+		return null;
+	}
 
 
-        //updating connected client list in LobbyState
-        try {
-            if (gsm.peek() instanceof LobbyState) {
-                LobbyState lobby = (LobbyState) gsm.peek();
-                lobby.addSocketChannel(ctx.channel());
-            }
-        } catch (EmptyStackException e) {
-            System.err.println("the GameStateManager stack is empty");
-        }
-    }
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		ByteBuf in = (ByteBuf) msg;
+		System.out.println("Host received: " + in.toString(CharsetUtil.UTF_8));
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        ctx.close();
-    }
+		String inString = in.toString(CharsetUtil.UTF_8);
+		String[] split = inString.split("!");
+		String command = split[0];
+		String message = split[1];
+
+		switch (command){
+			case "NAME":
+				//System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
+				this.nameList.put(connections.indexOf(ctx), message);
+				System.out.println(nameList);
+				break;
+			case "SPAWN":
+				this.spawnPosition = new Position(message);
+				sendToAll(inString);
+				break;
+			case "PLACE_FLAG":
+				this.flagPosition = new Position(message);
+				sendToAll(inString);
+				break;
+			case "CARDS":
+				this.cardList.put(connections.indexOf(ctx), message);
+				break;
+			case "POWER_DOWN":
+
+				break;
+			default:
+				received.add(inString);
+				System.err.println(command + " has no handling HOST");
+
+		}
+	}
+
+	@Override
+	public synchronized void channelActive(ChannelHandlerContext ctx) throws Exception {
+		System.out.println("SERVER CONNECTED WITH CLIENT");
+
+		this.connections.add(ctx);
+		this.index = this.connections.size();
+
+
+		//updating connected client list in LobbyState
+		try{
+			if (gsm.peek() instanceof LobbyState){
+				LobbyState lobby = (LobbyState)gsm.peek();
+				lobby.addSocketChannel(ctx.channel());
+			}
+		}catch (EmptyStackException e){
+			System.err.println("the GameStateManager stack is empty");
+		}
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		cause.printStackTrace();
+		ctx.close();
+	}
 
 	/*
 	@Override

@@ -67,7 +67,7 @@ public class Host implements INetCode{
 
 	@Override
 	public int getIndex() {
-		return this.hostHandler.getNumClients()+1;
+		return this.hostHandler.getNumClients();
 	}
 
 	/*

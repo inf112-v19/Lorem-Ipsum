@@ -73,7 +73,7 @@ public class JoinGameState extends State {
 	}
 
 	private void addTextArea(){
-		this.textArea = new TextArea("192.168.1.22", skin);
+		this.textArea = new TextArea("localhost", skin);
 		this.table.add(textArea);
 		this.table.row();
 	}
