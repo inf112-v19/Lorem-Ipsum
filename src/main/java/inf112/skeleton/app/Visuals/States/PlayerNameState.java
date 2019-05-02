@@ -17,6 +17,8 @@ import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Netcode.Client;
 import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
+
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -39,8 +41,11 @@ public class PlayerNameState extends State {
 	private Text waitingText;
 	private boolean row;
 
-	private Table tableSubmit;
+	private Table lowerTable;
 	private Table tableButton;
+
+	//em
+    private int aiAmount;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
@@ -52,7 +57,7 @@ public class PlayerNameState extends State {
 		this.skin = assetHandler.getSkin();
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-		this.tableSubmit = new Table(this.skin);
+		this.lowerTable = new Table(this.skin);
 		this.tableButton = new Table(this.skin);
 		// should be one if host is null
 		this.numPlayers = numPlayers;
@@ -66,7 +71,10 @@ public class PlayerNameState extends State {
 		this.table.row();
 		this.table.add(getTextFields());
 		this.table.row();
-		this.table.add(getSubmitButton());
+		this.table.add(getSliderAndSubmit());
+
+		//DEBUG
+        //this.lowerTable.setDebug(true);
 
 		super.stage.addActor(this.table);
 	}
@@ -81,7 +89,7 @@ public class PlayerNameState extends State {
 		this.skin = assetHandler.getSkin();
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-		this.tableSubmit = new Table(this.skin);
+		this.lowerTable = new Table(this.skin);
 		this.tableButton = new Table(this.skin);
 		// should be one if host is null
 		this.numPlayers = numPlayers;
@@ -95,9 +103,9 @@ public class PlayerNameState extends State {
 		this.table.row();
 		this.table.add(getTextFields());
 		this.table.row();
-		this.table.add(getSubmitButton());
+        this.table.add(getSliderAndSubmit());
 
-		super.stage.addActor(this.table);
+        super.stage.addActor(this.table);
 	}
 
 	private void setBackground() {
@@ -135,40 +143,62 @@ public class PlayerNameState extends State {
 		return this.tableButton;
 	}
 
-	private Table getSubmitButton() {
+	private Table getSliderAndSubmit() {
+	    //submit
 		TextButton button = new TextButton("SUBMIT", this.skin);
 		button.getLabel().setFontScale(1.5f);
-
 		button.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				continueToNextState = true;
 				table.clearChildren();
 				table.add(waitingText);
-
-			}
+                System.out.println("You chose " + aiAmount + " AI(s)");
+            }
 		});
-		this.tableSubmit.defaults().width(150).height(50);
-		this.tableSubmit.add(button);
-		return this.tableSubmit;
-	}
 
-	private synchronized void isHostHandling(){
-		if (this.clientNames == null){
-			return;
-		}
-		//this should never happen
-		if (this.clientNames.size() != host.getHostHandler().getNumClients()){
-			return;
-		}
-		//adding connected clients to players queue and at last the host
-		for (int i = 0; i < clientNames.size(); i++){
-			players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
-		}
-		players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
-		//checking if correct amount of players are in the queue
-		if (players.size == host.getHostHandler().getNumClients() + 1){
-			System.out.println("Players: " + players.toString());
+		//slider
+        aiAmount = 6-this.numPlayers;
+        final Slider slider = new Slider(0, aiAmount, 1, false, skin);
+        Label aiAmounts = new Label("Max " + aiAmount + " AI(s)", skin);
+        aiAmounts.setFontScale(1.5f);
+        final int[] value = {0};
+
+        slider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                value[0] = (int) slider.getValue();
+                saveAIAmount(value);
+
+            }
+        });
+        this.lowerTable.defaults().width(150).height(50).padLeft(25);
+        this.lowerTable.add(aiAmounts);
+        this.lowerTable.add(slider);
+        this.lowerTable.add(button);
+        return this.lowerTable;
+    }
+
+    private void saveAIAmount(int[] value) {
+        aiAmount = value[0];
+    }
+
+    private synchronized void isHostHandling(){
+        if (this.clientNames == null){
+            return;
+        }
+        //this should never happen
+        if (this.clientNames.size() != host.getHostHandler().getNumClients()){
+            return;
+        }
+        //adding connected clients to players queue and at last the host
+        for (int i = 0; i < clientNames.size(); i++){
+            players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
+        }
+        players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
+        //checking if correct amount of players are in the queue
+        if (players.size == host.getHostHandler().getNumClients() + 1){
+            System.out.println("Players: " + players.toString());
 
 			String playernames = "";
 			for (Player player : players){
