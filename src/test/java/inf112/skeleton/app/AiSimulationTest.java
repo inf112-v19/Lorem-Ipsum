@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 public class AiSimulationTest {
 
@@ -20,8 +21,8 @@ public class AiSimulationTest {
     public void setup(){
         Board testBoard = new Board("Boards/ExampleBoard.txt");
         CardManager cm = new CardManager(testBoard);
-        Player player1 = new Player(1,"Player 1", Direction.EAST, true);
-        testSim = new AiSimulation(testBoard, player1, cm);
+        Player player1 = new Player(1,"Player 1", Direction.EAST,testBoard, true);
+        testSim = new AiSimulation(testBoard, player1);
     }
 
     @Test
@@ -45,8 +46,12 @@ public class AiSimulationTest {
         Position pos3 = new Position(5,2);
         Position pos4 = new Position(5,6);
 
+        Position pos5 = new Position(0,1);
+        Position pos6 = new Position(1,1);
 
         assertEquals(testSim.distFromFlag(pos1, pos2), 2.0);
         assertEquals(testSim.distFromFlag(pos3, pos4), 4.0);
+
+        assertTrue(testSim.distFromFlag(pos1,pos5) < testSim.distFromFlag(pos1, pos6));
     }
 }
