@@ -105,6 +105,7 @@ public class AiSimulation {
         Player tempPlayer = player;
         Board tempBoard = board;
         while(true){
+            //map of cards with a number that represents the new distance to the flag after they are played
             HashMap<Card, Double> cardRating = new HashMap<>();
             Card tempBestCard = cards.get(0);
 
