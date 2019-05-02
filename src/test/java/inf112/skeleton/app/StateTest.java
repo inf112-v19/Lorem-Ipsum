@@ -24,7 +24,7 @@ public class StateTest {
 	public void setUp() {
 		gsm = new GameStateManager();
 		board = new Board("Boards/ExampleBoard.txt");
-		cardManager = new CardManager(board);
+		cardManager = new CardManager(board, net);
 		net = null;
 	}
 

@@ -94,7 +94,7 @@ public class SpawnPointState extends State {
 
 		if (players.isEmpty()) {
 			System.out.println("setting PlaceFlagState");
-			CardManager cardManager = new CardManager(board);
+			CardManager cardManager = new CardManager(board, net);
 			boardGUI.removeAllListeners();
 			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager, this.net));
 		}

@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Cards;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
+import inf112.skeleton.app.Netcode.INetCode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,10 +14,12 @@ public class CardManager {
     private ICardDeck cardDeck;
     private Player[] players;
     private HashSet<Card> lockedCards;
+    private INetCode net;
 
-    public CardManager(Board board) {
+    public CardManager(Board board, INetCode net) {
         players = board.getAllPlayers();
         cardDeck = new ProgramCardDeck();
+        this.net = net;
     }
 
     /**
@@ -36,7 +39,10 @@ public class CardManager {
     public Player getPlayer() {
         Player currentPlayer = null;
         for (Player player : players) {
-            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1){
+            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && net == null){
+                currentPlayer = player;
+                break;
+            }else if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && player.getIndex() == net.getIndex()){
                 currentPlayer = player;
                 break;
             }
@@ -51,6 +57,11 @@ public class CardManager {
      */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
+            if(net != null){
+                if(player.getIndex() != net.getIndex()){
+                    continue;
+                }
+            }
             if (player.getPowerDown() == 1) {
                 player.setReady();
                 continue;

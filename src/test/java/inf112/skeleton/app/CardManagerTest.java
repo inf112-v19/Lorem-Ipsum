@@ -36,7 +36,7 @@ public class CardManagerTest {
         board.placePlayerOnPos(player1, new Position(0, 1));
 
         players = board.getAllPlayers();
-        cardManager = new CardManager(board);
+        cardManager = new CardManager(board, null);
     }
 
     /**

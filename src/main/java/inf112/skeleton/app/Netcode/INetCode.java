@@ -11,5 +11,7 @@ public interface INetCode {
 
 	boolean isThisTurn();
 
+	int getIndex();
+
 	//String receive();
 }

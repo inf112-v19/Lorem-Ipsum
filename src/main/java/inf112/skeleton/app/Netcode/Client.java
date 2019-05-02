@@ -60,6 +60,11 @@ public class Client implements INetCode{
 		return this.clientHandler.isThisTurn();
 	}
 
+	@Override
+	public int getIndex() {
+		return this.clientHandler.getIndex();
+	}
+
 	public String receive() {
 		return this.clientHandler.receive();
 	}

@@ -65,6 +65,10 @@ public class Host implements INetCode{
 		return this.hostHandler.isThisTurn();
 	}
 
+	@Override
+	public int getIndex() {
+		return this.hostHandler.getNumClients()+1;
+	}
 
 	/*
 	public ArrayList<String> receive() {

@@ -128,8 +128,11 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return pos;
 	}
 
-	public HashMap<Integer, String> getCardHashMap() {
-		return cardList;
+	public HashMap<Integer, String> getCards() {
+		if(connections.size() == nameList.size()){
+			return cardList;
+		}
+		return null;
 	}
 
 
@@ -158,7 +161,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				sendToAll(inString);
 				break;
 			case "CARDS":
-
+				this.cardList.put(connections.indexOf(ctx), message);
 				break;
 			case "POWER_DOWN":
 
