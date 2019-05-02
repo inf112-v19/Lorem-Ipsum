@@ -102,7 +102,10 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	public HashMap<Integer, String> getNames(){
-		return nameList;
+		if(connections.size() == nameList.size()){
+			return nameList;
+		}
+		return null;
 	}
 
 	public boolean isThisTurn() {

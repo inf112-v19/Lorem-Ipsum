@@ -139,10 +139,13 @@ public class PlayerNameState extends State {
 			return;
 		}
 
-		//this should never happen
-		if (this.clientNames.size() != host.getHostHandler().getNumClients()){
+		//waiting
+		/*if (this.clientNames.size() != host.getHostHandler().getNumClients()){
+			System.out.println("det er her du venter??????????????????????????????????????????????????????????");
 			return;
 		}
+
+		 */
 
 		//adding connected clients to players queue and at last the host
 		for (int i = 0; i < clientNames.size(); i++){
@@ -174,7 +177,6 @@ public class PlayerNameState extends State {
 
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
-		System.out.println("playernames = " + playerNames);
 		if (playerNames!= null && clientHasSent){
 			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
@@ -213,7 +215,6 @@ public class PlayerNameState extends State {
 		super.update(dt);
 		if (this.host != null && this.clientNames == null){
 			this.clientNames = this.host.getHostHandler().getNames();
-			System.out.println(this.clientNames.size());
 		}
 
 	}
