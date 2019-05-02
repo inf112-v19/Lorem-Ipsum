@@ -68,6 +68,7 @@ public class ChooseBoardState extends State {
 					} else if (tempBoardNumber == 2) {
 						boardName = "Boards/BigBoard.txt";
 					}
+					System.out.println("Board " + boardName + " chosen!");
 				}
 			});
 			this.tableButton.add(button);

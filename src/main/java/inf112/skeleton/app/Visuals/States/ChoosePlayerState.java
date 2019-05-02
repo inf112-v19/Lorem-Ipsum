@@ -62,6 +62,7 @@ public class ChoosePlayerState extends State {
 				public void changed(ChangeEvent event, Actor actor) {
 					start = true;
 					playerAmount = tempPlayerAmount;
+					System.out.println(playerAmount + " player(s) chosen!");
 				}
 			});
 
