@@ -104,6 +104,7 @@ public class CardHandGUI {
         buttonTable.clearChildren();
         Label waitLabel = new Label("Waiting for other players", assetHandler.getSkin());
         table.add(waitLabel).padBottom(40).center();
+        stage.addActor(table);
     }
 
     /**
