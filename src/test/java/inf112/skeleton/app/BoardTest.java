@@ -384,5 +384,51 @@ public class BoardTest {
 	}
 
 
+	/**
+	 * Testing that the powerdown is changed from 2(requesting powerdown next round) to 1 (powerdown this round) after
+	 * a round is over
+	 */
+	@Test
+	public void powerDownChangedTo1() {
+		players[0].setPowerDown(2);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 1);
+	}
+
+
+	/**
+	 * Testing that the powerdown is changed from 2(requesting powerdown next round) to 3 (option to cancel powerdown)
+	 * when a player gets destroyed (walks off the board) during a round
+	 */
+	@Test
+	public void powerDownChangedTo3() {
+		players[0].setPowerDown(2);
+		testBoard.movePlayer(players[0], Direction.NORTH);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 3);
+	}
+
+
+	/**
+	 * Testing that the player damage was reset when in powerdown and that the powerdown was changed back to 0 after
+	 * the round
+	 */
+	@Test
+	public void powerDownRemovedDamage() {
+		players[0].setPowerDown(1);
+		players[0].increaseDamage();
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 0);
+		assertEquals(players[0].getDamage(), 0);
+	}
 
 }
