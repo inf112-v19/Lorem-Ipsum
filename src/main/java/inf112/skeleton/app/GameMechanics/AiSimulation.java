@@ -76,7 +76,6 @@ public class AiSimulation {
             lockedCards.add(cards.get(i+numLockedCards-5));
         }
 
-
         for(Card card : lockedCards){
             cards.remove(card);
         }
@@ -162,9 +161,10 @@ public class AiSimulation {
      * checks and updates what flag the player should go to next
      */
     private void checkNextFlag(){
-        while((originalPlayer.numberOfFlagsCollected() + flagTiles.size() + 1) > maxFlags){
+        if(originalPlayer.numberOfFlagsCollected() +flagTiles.size() < maxFlags){
             nextFlagTile = flagTiles.poll();
         }
+
     }
 
     /**
