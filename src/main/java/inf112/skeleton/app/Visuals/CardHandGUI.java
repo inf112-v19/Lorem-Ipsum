@@ -81,13 +81,10 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerName() + "'s turn";
             currentCards = currentPlayer.getCardHand();
-
-
             
-            if (currentPlayer.isControlledByAI()){
+            if (currentPlayer.isControlledByAI()) {
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
-            }
-            else {
+            } else {
                 if (currentPlayer.getPowerDown() == 3) {
                     table.clearChildren();
                     drawPowerDownOptions();
@@ -96,11 +93,8 @@ public class CardHandGUI {
                     draw(currentCards);
                 }
             }
-            }
         }
-
-
-
+    }
 
 
     /**
