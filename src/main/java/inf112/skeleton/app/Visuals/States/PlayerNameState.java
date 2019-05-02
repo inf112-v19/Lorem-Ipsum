@@ -1,11 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -18,7 +14,6 @@ import inf112.skeleton.app.Netcode.Client;
 import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -31,7 +26,6 @@ public class PlayerNameState extends State {
 	private Board board;
 	private Queue<Player> players;
 	private TextArea[] textAreas;
-	private Texture texture;
 	private TextureRegionDrawable background;
 	private Table table;
 	private boolean continueToNextState;
@@ -44,7 +38,7 @@ public class PlayerNameState extends State {
 	private Table lowerTable;
 	private Table tableButton;
 
-	//em
+	//hent denne for å få antall AI som er blitt valgt!!
     private int aiAmount;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
@@ -53,7 +47,7 @@ public class PlayerNameState extends State {
 		this.client = null;
 		this.board = board;
 		this.row = false;
-		//table
+
 		this.skin = assetHandler.getSkin();
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
@@ -73,9 +67,6 @@ public class PlayerNameState extends State {
 		this.table.row();
 		this.table.add(getSliderAndSubmit());
 
-		//DEBUG
-        //this.lowerTable.setDebug(true);
-
 		super.stage.addActor(this.table);
 	}
 
@@ -85,7 +76,7 @@ public class PlayerNameState extends State {
 		this.client = client;
 		this.board = board;
 		this.row = false;
-		//table
+
 		this.skin = assetHandler.getSkin();
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
@@ -144,21 +135,8 @@ public class PlayerNameState extends State {
 	}
 
 	private Table getSliderAndSubmit() {
-	    //submit
-		TextButton button = new TextButton("SUBMIT", this.skin);
-		button.getLabel().setFontScale(1.5f);
-		button.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				continueToNextState = true;
-				table.clearChildren();
-				table.add(waitingText);
-                System.out.println("You chose " + aiAmount + " AI(s)");
-            }
-		});
-
 		//slider
-        aiAmount = 6-this.numPlayers;
+        aiAmount = (6-this.numPlayers);
         final Slider slider = new Slider(0, aiAmount, 1, false, skin);
         Label aiAmounts = new Label("Max " + aiAmount + " AI(s)", skin);
         aiAmounts.setFontScale(1.5f);
@@ -169,7 +147,18 @@ public class PlayerNameState extends State {
             public void changed(ChangeEvent event, Actor actor) {
                 value[0] = (int) slider.getValue();
                 saveAIAmount(value);
-
+            }
+        });
+        //submit
+        TextButton button = new TextButton("SUBMIT", this.skin);
+        button.getLabel().setFontScale(1.5f);
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                continueToNextState = true;
+                table.clearChildren();
+                table.add(waitingText);
+                System.out.println("You chose " + aiAmount + " AI(s)");
             }
         });
         this.lowerTable.defaults().width(150).height(50).padLeft(25);
