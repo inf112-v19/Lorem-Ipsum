@@ -32,26 +32,4 @@ public enum CardType {
     public SpriteType getSprite() {
         return sprite;
     }
-
-    public CardType getCardTypeByString(String s) {
-        switch (s) {
-            case "BACKWARD_1":
-                return BACKWARD_1;
-            case "FORWARD_1":
-                return FORWARD_1;
-            case "FORWARD_2":
-                return FORWARD_2;
-            case "FORWARD_3":
-                return FORWARD_3;
-            case "ROTATE_180":
-                return ROTATE_180;
-            case "ROTATE_90_L":
-                return ROTATE_90_L;
-            case "ROTATE_90_R":
-                return ROTATE_90_R;
-            default:
-                System.out.println("Invalid input CardType");
-                return FORWARD_1;
-        }
-    }
 }

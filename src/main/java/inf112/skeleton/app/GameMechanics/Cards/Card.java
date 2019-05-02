@@ -13,7 +13,29 @@ public class Card implements Comparable<Card> {
 
     public Card(String cardType, int priority) {
         this.priority = priority;
-        this.type = type.getCardTypeByString(cardType);
+        this.type = getCardTypeByString(cardType);
+    }
+
+    public CardType getCardTypeByString(String s) {
+        switch (s) {
+            case "BACKWARD_1":
+                return CardType.BACKWARD_1;
+            case "FORWARD_1":
+                return CardType.FORWARD_1;
+            case "FORWARD_2":
+                return CardType.FORWARD_2;
+            case "FORWARD_3":
+                return CardType.FORWARD_3;
+            case "ROTATE_180":
+                return CardType.ROTATE_180;
+            case "ROTATE_90_L":
+                return CardType.ROTATE_90_L;
+            case "ROTATE_90_R":
+                return CardType.ROTATE_90_R;
+            default:
+                System.out.println("Invalid input CardType");
+                return CardType.FORWARD_1;
+        }
     }
 
     public CardType getCardType() {
