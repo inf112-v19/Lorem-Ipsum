@@ -1,6 +1,5 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -20,10 +19,9 @@ public class BoardTest {
 	/**
 	 * Setup method for creating a board to test with containing two players
 	 *
-	 * @throws Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		testBoard = new Board("Boards/ExampleBoard.txt");
 
 		Player player0 = new Player(0,"Player 0", Direction.EAST);
@@ -39,10 +37,9 @@ public class BoardTest {
 	/**
 	 * TearDown method that resets the position of the players
 	 *
-	 * @throws Exception
 	 */
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		players[0].setBackup(new Position(1, 4));
 		players[1].setBackup(new Position(1, 11));
 		testBoard.placePlayerOnPos(players[0], new Position(0, 4));
@@ -95,10 +92,9 @@ public class BoardTest {
 	 * Testing that it is possible to move player[0] east two times and then south - should move without
 	 * any collision or exception
 	 *
-	 * @throws PlayerNotFoundException
 	 */
 	@Test
-	public void movePlayer0SouthTest() throws PlayerNotFoundException {
+	public void movePlayer0SouthTest() {
 		testBoard.movePlayer(players[0], Direction.EAST);
 		testBoard.movePlayer(players[0], Direction.EAST);
 		testBoard.movePlayer(players[0], Direction.SOUTH);
@@ -111,10 +107,9 @@ public class BoardTest {
 	 * Testing that it is possible to move player[0] south - should move and collide with player[1] pushing
 	 * it to tile (0,2)
 	 *
-	 * @throws PlayerNotFoundException
 	 */
 	@Test
-	public void movePlayerCollisionTest() throws PlayerNotFoundException {
+	public void movePlayerCollisionTest() {
 		testBoard.movePlayer(players[0], Direction.SOUTH);
 		Position newPos = testBoard.getPlayerPos(players[1]);
 
@@ -125,10 +120,9 @@ public class BoardTest {
 	 * Testing that it is not possible to move a player where there is a wall - player[0] should still be
 	 * in its starting position (0,0)
 	 *
-	 * @throws PlayerNotFoundException
 	 */
 	@Test
-	public void movePlayerWallTest() throws PlayerNotFoundException {
+	public void movePlayerWallTest() {
 		testBoard.movePlayer(players[0], Direction.WEST);
 		Position newPos = testBoard.getPlayerPos(players[0]);
 
@@ -390,5 +384,51 @@ public class BoardTest {
 	}
 
 
+	/**
+	 * Testing that the powerdown is changed from 2(requesting powerdown next round) to 1 (powerdown this round) after
+	 * a round is over
+	 */
+	@Test
+	public void powerDownChangedTo1() {
+		players[0].setPowerDown(2);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 1);
+	}
+
+
+	/**
+	 * Testing that the powerdown is changed from 2(requesting powerdown next round) to 3 (option to cancel powerdown)
+	 * when a player gets destroyed (walks off the board) during a round
+	 */
+	@Test
+	public void powerDownChangedTo3() {
+		players[0].setPowerDown(2);
+		testBoard.movePlayer(players[0], Direction.NORTH);
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 3);
+	}
+
+
+	/**
+	 * Testing that the player damage was reset when in powerdown and that the powerdown was changed back to 0 after
+	 * the round
+	 */
+	@Test
+	public void powerDownRemovedDamage() {
+		players[0].setPowerDown(1);
+		players[0].increaseDamage();
+		players[0].setReady();
+
+		while (testBoard.doNextAction()){}
+
+		assertEquals(players[0].getPowerDown(), 0);
+		assertEquals(players[0].getDamage(), 0);
+	}
 
 }

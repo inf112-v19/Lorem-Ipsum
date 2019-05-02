@@ -20,10 +20,11 @@ public class SpawnPointState extends State {
 	private Queue<Player> players;
 	private BoardGUI boardGUI;
 	private Text text;
+
 	private Host host;
 	private Client client;
+	private INetCode net;
 	private int clientNumber;
-
 	private boolean hostShouldSend;
 
 	public SpawnPointState(GameStateManager gsm, Board board, Queue<Player> players, INetCode net) {
@@ -40,6 +41,7 @@ public class SpawnPointState extends State {
 
 		this.hostShouldSend = true;
 
+		this.net = net;
 		if (net instanceof Host){
 			this.host = (Host)net;
 			this.client = null;
@@ -107,7 +109,7 @@ public class SpawnPointState extends State {
 			System.out.println("setting PlaceFlagState");
 			CardManager cardManager = new CardManager(board);
 			boardGUI.removeAllListeners();
-			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager));
+			gsm.set(new PlaceFlagState(this.gsm, this.board, cardManager, this.net));
 		}
 	}
 

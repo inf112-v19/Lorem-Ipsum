@@ -88,6 +88,7 @@ public class CardHandGUI {
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
             }
             else {
+
                 if (currentPlayer.getPowerDown() == 3) {
                     table.clearChildren();
                     drawPowerDownOptions();
@@ -97,11 +98,10 @@ public class CardHandGUI {
                 }
             }
 
-            }
+
+
         }
-
-
-
+    }
 
 
     /**
@@ -129,7 +129,9 @@ public class CardHandGUI {
         table.clearChildren();
 
         Label infoField = new Label(playerTurn, assetHandler.getSkin());
-        table.add(infoField).top().left().colspan(3).expandY().row();
+        Label flagsCollected = new Label("Flags collected: " + currentPlayer.numberOfFlagsCollected(), assetHandler.getSkin());
+        table.add(infoField).top().left().colspan(3).row();
+        table.add(flagsCollected).top().left().colspan(3).expandY().row();
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
@@ -230,8 +232,9 @@ public class CardHandGUI {
         cancelPowerDownTable.bottom().padBottom(30);
         cancelPowerDownTable.setFillParent(true);
 
-        ImageButton cancel = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("cancelPowerDown.png")));
-        ImageButton proceed = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("proceed.png")));
+        Label powerDownInfo = new Label("Player: " + currentPlayer.getPlayerName() + " is destroyed before power down ", assetHandler.getSkin());
+        TextButton cancel = new TextButton("Cancel power down", assetHandler.getSkin());
+        TextButton proceed = new TextButton("Proceed with power down", assetHandler.getSkin());
 
         cancel.addListener(new InputListener() {
             @Override
@@ -254,9 +257,9 @@ public class CardHandGUI {
             }
         });
 
-        cancelPowerDownTable.add(proceed);
-        cancelPowerDownTable.row();
-        cancelPowerDownTable.add(cancel);
+        cancelPowerDownTable.add(powerDownInfo).center().padBottom(25).row();
+        cancelPowerDownTable.add(proceed).width(300).height(30).center().padBottom(10).row();
+        cancelPowerDownTable.add(cancel).width(300).height(30).center();
 
         stage.addActor(cancelPowerDownTable);
     }
