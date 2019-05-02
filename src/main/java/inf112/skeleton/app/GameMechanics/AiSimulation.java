@@ -45,6 +45,12 @@ public class AiSimulation {
 
     private PriorityQueue<Tile> flagTiles = new PriorityQueue<>(6,flagTileComparator);
 
+    /**
+     * Creates a simulation object for a given player on a given board.
+     * Used to find the best cards for the player
+     * @param board
+     * @param player
+     */
     public AiSimulation(Board board, Player player){
         this.originalBoard = board;
         this.originalPlayer = player;
@@ -87,6 +93,14 @@ public class AiSimulation {
         return bestCards;
     }
 
+
+    /**
+     * Method that will simulate a player to find cards that moves it closer to its next flag
+     * @param cards the AIs not-locked cards
+     * @param player the player to be simulated
+     * @param board a copy of the original board
+     * @return list cards to get the AI closest to the checkpoint
+     */
     private Card[] testCards(List<Card> cards, Player player, Board board){
         List<Card> bestCards = new ArrayList<>();
         Player tempPlayer = player;
@@ -127,6 +141,12 @@ public class AiSimulation {
         return bestCardsArray;
     }
 
+    /**
+     * Method used to simulate a card on a given board for a given player
+     * @param player
+     * @param board
+     * @param card
+     */
     private void useMovementCard(Player player, Board board, CardType card){
         if (card.getMovement() > 0) {
             board.movePlayer(player, player.getDirection(), card.getMovement());
@@ -138,12 +158,21 @@ public class AiSimulation {
         }
     }
 
+    /**
+     * checks and updates what flag the player should go to next
+     */
     private void checkNextFlag(){
         while((originalPlayer.numberOfFlagsCollected() + flagTiles.size() + 1) > maxFlags){
             nextFlagTile = flagTiles.poll();
         }
     }
 
+    /**
+     * Method that calculates the distance from a given position to another
+     * @param pos1
+     * @param flagPos
+     * @return distance from the flag
+     */
     public double distFromFlag(Position pos1, Position flagPos){
         double distanceToFlag = Integer.MAX_VALUE;
         if(pos1 == null || flagPos == null) return distanceToFlag;

@@ -2,6 +2,7 @@ package inf112.skeleton.app.Visuals;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -86,6 +87,7 @@ public class CardHandGUI {
             
             if (currentPlayer.isControlledByAI()){
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
+
             }
             else {
 
@@ -97,8 +99,6 @@ public class CardHandGUI {
                     draw(currentCards);
                 }
             }
-
-
 
         }
     }

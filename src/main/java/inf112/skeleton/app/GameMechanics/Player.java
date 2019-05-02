@@ -156,8 +156,7 @@ public class Player extends Image implements IPlayer {
     public Card[] chooseAICards(){
         Card[] cards;
         try {
-           cards = aiSimulation.findBestCards();
-
+            cards = aiSimulation.findBestCards();
         }
         catch (Exception e){
             cards = new Card[5];
