@@ -48,10 +48,6 @@ public class Board implements IBoard {
 	 * @param pos
 	 */
 	public void placePlayerOnPos(Player player, Position pos) {
-		if (!isValidPos(pos)) {
-			//TODO - handle invalid position exception
-		}
-
 		playerPositions.put(player, pos);
 	}
 
@@ -107,10 +103,6 @@ public class Board implements IBoard {
 	@Override
 	public boolean movePlayer(Player player, Direction dir) {
 		System.out.println("Tried to move player" + player.getPlayerName() + " " + dir);
-		if(!playerPositions.containsKey(player)) {
-			// TODO - Handle custom PLayerNotFoundException
-			//throw new PlayerNotFoundException("Tried to move player that was not found in playerPositions");
-		}
 
 		//if the player has fallen off the board no movement happens - should not happen
 		if (!player.onBoardCheck()) {
@@ -154,10 +146,6 @@ public class Board implements IBoard {
 
 	@Override
 	public Tile getTile(Position pos) {
-		if (!isValidPos(pos)) {
-			//TODO - handle invalid position exception
-		}
-
 		return tileMap.get(pos);
 	}
 

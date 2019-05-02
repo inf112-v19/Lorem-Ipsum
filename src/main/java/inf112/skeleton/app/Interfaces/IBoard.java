@@ -1,6 +1,5 @@
 package inf112.skeleton.app.Interfaces;
 
-import inf112.skeleton.app.Exceptions.PlayerNotFoundException;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.Player;
@@ -46,9 +45,8 @@ public interface IBoard<T> {
 	 *            direction to be moved
 	 * @param numberOfMoves
 	 *            number of times to be tried to move
-	 * @throws PlayerNotFoundException
 	 */
-	void movePlayer(Player player, Direction dir, int numberOfMoves) throws PlayerNotFoundException;
+	void movePlayer(Player player, Direction dir, int numberOfMoves);
 
     /**
 	 * Tries to move the player once in the given direction, may start recursive call if player collision occurs.
@@ -60,7 +58,7 @@ public interface IBoard<T> {
 	 *            direction to be moved
      * @return true if movement happened and the player did not fell off the board
      */
-    boolean movePlayer(Player player, Direction dir) throws PlayerNotFoundException;
+    boolean movePlayer(Player player, Direction dir);
 
 
     /**

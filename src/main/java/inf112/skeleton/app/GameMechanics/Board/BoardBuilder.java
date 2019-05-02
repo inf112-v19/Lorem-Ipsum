@@ -60,7 +60,7 @@ public class BoardBuilder {
 
 	/**
 	 * Maps the tileNumber to the corresponding Tile with the rotation and any related GameObjects
-	 * TODO - add the rest of the tiles
+	 * 
 	 * @param tileNumber
 	 * @return
 	 */
