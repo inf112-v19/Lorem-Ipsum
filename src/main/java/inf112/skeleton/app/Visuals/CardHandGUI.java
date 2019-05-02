@@ -85,7 +85,7 @@ public class CardHandGUI {
 
             
             if (currentPlayer.isControlledByAI()){
-                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
+                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
             }
             else {
                 if (currentPlayer.getPowerDown() == 3) {
@@ -96,6 +96,7 @@ public class CardHandGUI {
                     draw(currentCards);
                 }
             }
+
             }
         }
 
