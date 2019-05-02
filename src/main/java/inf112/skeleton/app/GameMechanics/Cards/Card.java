@@ -11,6 +11,11 @@ public class Card implements Comparable<Card> {
         this.priority = priority;
     }
 
+    public Card(String cardType, int priority) {
+        this.priority = priority;
+        this.type = type.getCardTypeByString(cardType);
+    }
+
     public CardType getCardType() {
         return this.type;
     }
