@@ -62,9 +62,9 @@ public class ChooseBoardState extends State {
 				public void  changed(ChangeEvent event, Actor actor) {
 					start = true;
 					if (tempBoardNumber == 0) {
-						boardName = "Boards/BigBoard.txt";
+						boardName = "Boards/SmallBoard.txt";
 					} else if (tempBoardNumber == 1) {
-						boardName = "Boards/BigBoard.txt";
+						boardName = "Boards/MediumBoard.txt";
 					} else if (tempBoardNumber == 2) {
 						boardName = "Boards/BigBoard.txt";
 					}

@@ -60,7 +60,7 @@ public class BoardBuilder {
 
 	/**
 	 * Maps the tileNumber to the corresponding Tile with the rotation and any related GameObjects
-	 * TODO - add the rest of the tiles
+	 * 
 	 * @param tileNumber
 	 * @return
 	 */
@@ -113,7 +113,6 @@ public class BoardBuilder {
 		switch (type){
 			case 0: return new Wall(direction);
 			case 1: return new Laser(direction);
-			//TODO - remove flags from BoardBuilder, should only be placed by player and not spawn with map
 			case 2: return new Flag(direction, 0);
 			default:
 				System.err.println("Error while getting Game Object in BoardBuilder");
@@ -169,8 +168,7 @@ public class BoardBuilder {
 			String line = bufferedReader.readLine();
 			if (line != null){
 				String[] numbers = line.split(" ");
-
-
+				
 				for (int x=0; x<width; x++){
 					tileNumbers[y][x] = numbers[x];
 				}
