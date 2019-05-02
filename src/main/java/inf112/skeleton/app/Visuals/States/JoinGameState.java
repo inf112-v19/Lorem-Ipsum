@@ -38,6 +38,7 @@ public class JoinGameState extends State {
 	private TextArea textArea;
 	private Text status;
 	private boolean tryConnect;
+	private String buttonText;
 
 	public JoinGameState(GameStateManager gsm) {
 		super(gsm);
@@ -52,10 +53,10 @@ public class JoinGameState extends State {
 		this.status.setColor(Color.RED);
 
 		addStatusText();
-
 		addText("IP:");
 		addTextArea();
 		addSubmitButton();
+		findHosts();
 
 		super.stage.addActor(this.table);
 
@@ -63,6 +64,22 @@ public class JoinGameState extends State {
 
 		//checkHosts("127.0.0");
 
+	}
+
+	public void findHosts(){
+		table.row().padTop(30);
+		table.add(new Text("Searching for available hosts...", skin));
+		table.row();
+
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				table.add(new Text("Hostname    -    IP", skin));
+				table.row();
+				addHostsToTable();
+			}
+		});
+		thread.start();
 	}
 
 	private void addStatusText(){
@@ -80,7 +97,7 @@ public class JoinGameState extends State {
 
 	private void addText(String string){
 		Text text = new Text(string, skin);
-		this.table.add(text).align(Align.left);
+		this.table.add(text);
 		this.table.row();
 	}
 
@@ -110,6 +127,10 @@ public class JoinGameState extends State {
 
 		if (this.tryConnect){
 			String inputText = textArea.getText();
+			if (buttonText != null){
+				inputText = buttonText;
+			}
+
 			final int port = 6666;
 			final int timeout = 100000;
 			InetSocketAddress socketAddress = new InetSocketAddress(inputText, port);
@@ -134,34 +155,6 @@ public class JoinGameState extends State {
 				System.err.println("unable to connect to host");
 			}
 			this.tryConnect = false;
-		}
-	}
-
-
-	private void addHostsToTabel(){
-
-	}
-
-	public void checkHosts(String subnet){
-		try{
-			final ExecutorService es = Executors.newFixedThreadPool(20);
-			final String ip = "127.0.0.1";
-			final int timeout = 200;
-			final List<Future<Boolean>> futures = new ArrayList<>();
-			for (int port = 1; port <= 65535; port++) {
-				futures.add(portIsOpen(es, ip, port, timeout));
-			}
-			es.shutdown();
-			int openPorts = 0;
-			for (final Future<Boolean> f : futures) {
-				if (f.get()) {
-					openPorts++;
-				}
-			}
-			System.out.println("There are " + openPorts + " open ports on host " + ip + " (probed with a timeout of " + timeout + "ms)");
-
-		}catch (Exception e){
-			e.printStackTrace();
 		}
 	}
 
@@ -195,10 +188,9 @@ public class JoinGameState extends State {
 			}
 		});
 		thread.start();
-
 	}
 
-	private ArrayList<String> findHosts() {
+	private void addHostsToTable() {
 		final int port = 6666;
 		final int timeout = 1000;
 		final ExecutorService es = Executors.newFixedThreadPool(20);
@@ -213,8 +205,6 @@ public class JoinGameState extends State {
 		String subnet = getSubnet(localHost);
 		System.out.println(subnet);
 		HashMap<String, Future<Boolean>> addresses = new HashMap<>();
-		ArrayList<String> reachableAddresses = new ArrayList<>();
-
 
 		for (int i = 1; i < 256; i++) {
 			String ip = subnet+"."+i;
@@ -223,10 +213,23 @@ public class JoinGameState extends State {
 		}
 		es.shutdown();
 
-		for (HashMap.Entry<String, Future<Boolean>> entry : addresses.entrySet()) {
+		for (final HashMap.Entry<String, Future<Boolean>> entry : addresses.entrySet()) {
 			try {
 				if (entry.getValue().get()) {
-					reachableAddresses.add(entry.getKey());
+					InetAddress hostaddr = InetAddress.getByName(entry.getKey());
+					TextButton hostButton = new TextButton((hostaddr.getHostAddress() + " - " + entry.getKey()), skin);
+
+					hostButton.addListener(new InputListener() {
+						@Override
+						public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+							tryConnect = true;
+							buttonText = entry.getKey();
+							return true;
+						}
+					});
+
+					table.add(hostButton);
+					table.row();
 				}
 			}
 			catch (Exception e) {
@@ -234,8 +237,6 @@ public class JoinGameState extends State {
 			}
 
 		}
-
-		return reachableAddresses;
 	}
 
 	private String getSubnet(String ip) {
