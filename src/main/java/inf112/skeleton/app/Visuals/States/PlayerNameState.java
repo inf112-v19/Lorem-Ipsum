@@ -168,6 +168,7 @@ public class PlayerNameState extends State {
         return this.lowerTable;
     }
 
+
     private void saveAIAmount(int[] value) {
         aiAmount = value[0];
     }
@@ -223,8 +224,11 @@ public class PlayerNameState extends State {
 			System.out.println(textAreas[i].getText());
 			Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
 			players.addLast(player);
-			gsm.set(new SpawnPointState(gsm, board, players, null));
 		}
+		for(int i=0;i<aiAmount;i++){
+			players.addLast(new Player(i+numPlayers, "AI" + (i + 1), Direction.EAST, board, true));
+		}
+		gsm.set(new SpawnPointState(gsm, board, players, null));
 	}
 
 	@Override
