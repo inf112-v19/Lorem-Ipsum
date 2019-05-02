@@ -81,7 +81,7 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerName() + "'s turn";
             currentCards = currentPlayer.getCardHand();
-            
+
             if (currentPlayer.isControlledByAI()) {
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
             } else {
@@ -225,8 +225,9 @@ public class CardHandGUI {
         cancelPowerDownTable.bottom().padBottom(30);
         cancelPowerDownTable.setFillParent(true);
 
-        ImageButton cancel = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("cancelPowerDown.png")));
-        ImageButton proceed = new ImageButton(new TextureRegionDrawable(assetHandler.getTexture("proceed.png")));
+        Label powerDownInfo = new Label("Player: " + currentPlayer.getPlayerName() + " is destroyed before power down ", assetHandler.getSkin());
+        TextButton cancel = new TextButton("Cancel power down", assetHandler.getSkin());
+        TextButton proceed = new TextButton("Proceed with power down", assetHandler.getSkin());
 
         cancel.addListener(new InputListener() {
             @Override
@@ -249,9 +250,9 @@ public class CardHandGUI {
             }
         });
 
-        cancelPowerDownTable.add(proceed);
-        cancelPowerDownTable.row();
-        cancelPowerDownTable.add(cancel);
+        cancelPowerDownTable.add(powerDownInfo).center().padBottom(25).row();
+        cancelPowerDownTable.add(proceed).width(300).height(30).center().padBottom(10).row();
+        cancelPowerDownTable.add(cancel).width(300).height(30).center();
 
         stage.addActor(cancelPowerDownTable);
     }
