@@ -3,10 +3,13 @@ package inf112.skeleton.app.Visuals.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
@@ -31,99 +34,123 @@ public class PlayerNameState extends State {
 	private Table table;
 	private boolean continueToNextState;
 	private HashMap<Integer, String> clientNames;
-	private boolean clientHasSendt = false;
+	private boolean clientHasSent = false;
 
 	private Text waitingText;
+	private boolean row;
+
+	private Table tableSubmit;
+	private Table tableButton;
 
 	public PlayerNameState(GameStateManager gsm, Board board, int numPlayers, Host host) {
 		super(gsm);
 		this.host = host;
 		this.client = null;
+		this.board = board;
+		this.row = false;
+		//table
 		this.skin = assetHandler.getSkin();
-
+		this.table = new Table(this.skin);
+		this.table.setFillParent(true);
+		this.tableSubmit = new Table(this.skin);
+		this.tableButton = new Table(this.skin);
 		// should be one if host is null
 		this.numPlayers = numPlayers;
-
-		this.board = board;
 		this.players = new Queue<>();
-		this.textAreas = new TextArea[numPlayers];
-		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
-		this.background = new TextureRegionDrawable(texture);
-		this.waitingText = new Text("Waiting on clients", skin);
+		this.textAreas = new TextArea[this.numPlayers];
+		this.waitingText = new Text("Waiting on clients", this.skin);
 
-		this.table = new Table(skin);
-		this.table.setFillParent(true);
-		this.table.setBackground(background);
-		this.table.defaults().space(0, 40, 40, 40);
+		setBackground();
+		this.table.defaults().padBottom(60F);
+		this.table.add(getTopLabel());
+		this.table.row();
+		this.table.add(getTextFields());
+		this.table.row();
+		this.table.add(getSubmitButton());
 
-		creatTextFields();
-		creatSubmitButton();
-
-		stage.addActor(table);
+		super.stage.addActor(this.table);
 	}
 
 	public PlayerNameState(GameStateManager gsm, Board board, Client client) {
 		super(gsm);
-		super.camera.setToOrtho(false);
-
 		this.host = null;
 		this.client = client;
-
-		this.skin = assetHandler.getSkin();
-		this.numPlayers = 1;
 		this.board = board;
-		this.players = new Queue<>();
-		this.textAreas = new TextArea[numPlayers];
-		this.texture = super.assetHandler.getTexture("StateImages/secondBackground.png");
-		this.background = new TextureRegionDrawable(texture);
-
-		this.table = new Table(skin);
+		this.row = false;
+		//table
+		this.skin = assetHandler.getSkin();
+		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
-		this.table.setBackground(background);
-		this.table.defaults().space(0, 40, 40, 40);
+		this.tableSubmit = new Table(this.skin);
+		this.tableButton = new Table(this.skin);
+		// should be one if host is null
+		this.numPlayers = numPlayers;
+		this.players = new Queue<>();
+		this.textAreas = new TextArea[this.numPlayers];
+		this.waitingText = new Text("Waiting on clients", this.skin);
 
-		this.waitingText = new Text("Waiting on host", skin);
+		setBackground();
+		this.table.defaults().padBottom(60F);
+		this.table.add(getTopLabel());
+		this.table.row();
+		this.table.add(getTextFields());
+		this.table.row();
+		this.table.add(getSubmitButton());
 
-		creatTextFields();
-		creatSubmitButton();
-
-		stage.addActor(table);
+		super.stage.addActor(this.table);
 	}
 
-	private void creatTextFields() {
-		int numberOfTextAreas = 1;
+	private void setBackground() {
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
+		this.table.setBackground(this.background);
+	}
 
-		// if playing local
-		if (host == null){
-			numberOfTextAreas = numPlayers;
-		}
+	private Label getTopLabel() {
+		Label topLabel = new Label("NAME YOUR PLAYER", this.skin);
+		topLabel.setFontScale(2);
+		topLabel.setAlignment(Align.center);
+		return topLabel;
+	}
 
-		for (int i = 0; i < numberOfTextAreas; i++) {
-			textAreas[i] = new TextArea("", skin);
+	private Table getTextFields() {
+		for (int i = 0; i < this.numPlayers; i++) {
+			this.textAreas[i] = new TextArea("", this.skin);
 
-			Text text = new Text("Player " + (i + 1), skin);
+			Text text = new Text("Player " + (i + 1), this.skin);
 			text.setFontScale(1.5f);
 
-			table.add(text).width(100);
-			table.add(textAreas[i]).width(150);
-			table.row();
+			this.tableButton.defaults().pad(20,5,30,5);
+			if (i <= 2) {
+				this.tableButton.add(text).width(100);
+				this.tableButton.add(this.textAreas[i]).width(150);
+			} else {
+				if (!this.row) {
+					this.tableButton.row();
+					this.row = true;
+				}
+				this.tableButton.add(text).width(100);
+				this.tableButton.add(this.textAreas[i]).width(150);
+			}
 		}
+		return this.tableButton;
 	}
 
-	private void creatSubmitButton() {
-		TextureRegion textureRegion = assetHandler.getTextureRegion("submit.png");
-		Image submit = new Image(textureRegion);
-		submit.setPosition((Gdx.graphics.getWidth() / (float) 2) - (submit.getWidth() / (float) 2), 50);
-		submit.addListener(new InputListener() {
+	private Table getSubmitButton() {
+		TextButton button = new TextButton("SUBMIT", this.skin);
+		button.getLabel().setFontScale(1.5f);
+
+		button.addListener(new ChangeListener() {
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public void changed(ChangeEvent event, Actor actor) {
 				continueToNextState = true;
 				table.clearChildren();
 				table.add(waitingText);
-				return true;
+
 			}
 		});
-		table.add(submit);
+		this.tableSubmit.defaults().width(150).height(50);
+		this.tableSubmit.add(button);
+		return this.tableSubmit;
 	}
 
 	private synchronized void isHostHandling(){
@@ -155,15 +182,15 @@ public class PlayerNameState extends State {
 
 	private synchronized void isClientHandling(){
 		//clients should only send name one time
-		if (!clientHasSendt){
+		if (!clientHasSent){
 			String name = textAreas[0].getText();
 			this.client.send("NAME!" + name);
-			this.clientHasSendt = true;
+			this.clientHasSent = true;
 		}
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
 		System.out.println("playernames = " + playerNames);
-		if (playerNames!= null && clientHasSendt){
+		if (playerNames!= null && clientHasSent){
 			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));
