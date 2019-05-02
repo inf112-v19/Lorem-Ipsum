@@ -207,7 +207,7 @@ public class Player extends Image implements IPlayer {
 			playerDamage = 10;
 		}
         else {
-			playerDamage = 0;
+			playerDamage = 2;
 		}
     }
 
