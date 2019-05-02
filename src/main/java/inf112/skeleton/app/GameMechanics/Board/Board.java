@@ -396,6 +396,8 @@ public class Board implements IBoard {
 			player.setNotReady();
 		}
 
+		gameOver = checkForGameOver();
+
 		//round is over
 		return false;
 	}
