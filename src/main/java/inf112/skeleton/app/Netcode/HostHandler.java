@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Netcode;
 
+import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.LobbyState;
@@ -129,10 +130,26 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	public HashMap<Integer, String> getCards() {
-		if(connections.size() == cardList.size()){
+		if(connections.size()+1 == cardList.size()){
 			return cardList;
 		}
 		return null;
+	}
+
+	public Card[] getCardArray(int index){
+		String cardString = cardList.get(index);
+		Card[] cards = new Card[5];
+		for (int i = 0; i < cards.length; i++) {
+			String[] typeAndPriority = cardString.split("&");
+			int priority = Integer.parseInt(typeAndPriority[1]);
+			Card card = new Card(typeAndPriority[0], priority);
+			cards[i] = card;
+		}
+		return cards;
+	}
+
+	public void addHostCards(String cards){
+		cardList.put(index, cards);
 	}
 
 

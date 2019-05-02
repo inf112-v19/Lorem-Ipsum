@@ -51,10 +51,23 @@ public class CardState extends State {
 	private synchronized void isHostHandling(){
 		Host host = (Host)this.net;
 
-		if(host.getHostHandler().getCards() != null && this.shouldSend){
-			host.send("CARDS!" + host.getHostHandler().getCards().toString());
+		HashMap<Integer, String> cards = host.getHostHandler().getCards();
+		if(cards != null && this.shouldSend){
 			this.shouldSend = false;
+			host.send("CARDS!" + host.getHostHandler().getCards().toString());
+			for (int i = 0; i < players.length; i++) {
+				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
+			}
 		}
+
+		if(players[host.getIndex()].isReady()){
+			String cardString = "";
+			for(Card card : players[host.getIndex()].getCardSequence()){
+				cardString += card.getCardType() + "&" + card.getPriority() + ",";
+			}
+			host.getHostHandler().addHostCards(cardString);
+		}
+
 
 
 	}
