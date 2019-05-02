@@ -140,14 +140,12 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		String cardStrings = cardList.get(index);
 		System.out.println(cardStrings);
 		Card[] cards = new Card[5];
-		for (int i = 0; i < cards.length; i++) {
-			String[] cardString = cardStrings.split(",");
-			for (String s:cardString) {
-				String[] typeAndPriority = s.split("&");
-				int priority = Integer.parseInt(typeAndPriority[1]);
-				Card card = new Card(typeAndPriority[0], priority);
-				cards[i] = card;
-			}
+		String[] cardString = cardStrings.split(",");
+		for (int i = 0; i < cardString.length; i++) {
+			String[] typeAndPriority = cardString[i].split("&");
+			int priority = Integer.parseInt(typeAndPriority[1]);
+			Card card = new Card(typeAndPriority[0], priority);
+			cards[i] = card;
 		}
 		return cards;
 	}
