@@ -45,6 +45,7 @@ public class CardState extends State {
 		this.cardHandGUI = new CardHandGUI(cardManager, stage, super.assetHandler);
 
 		this.net = net;
+		this.net.resetCards();
 		this.shouldSend = true;
 	}
 
@@ -54,7 +55,7 @@ public class CardState extends State {
 		HashMap<Integer, String> cards = host.getHostHandler().getCards();
 		if(cards != null && this.shouldSend){
 			this.shouldSend = false;
-			host.send("CARDS!" + host.getHostHandler().getCards().toString());
+			host.send("CARDS!" + cards.toString());
 			for (int i = 0; i < players.length; i++) {
 				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
 			}

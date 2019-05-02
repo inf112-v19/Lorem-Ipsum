@@ -131,9 +131,13 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	public HashMap<Integer, String> getCards() {
 		if(connections.size()+1 == cardList.size()){
-			return cardList;
+			return this.cardList;
 		}
 		return null;
+	}
+
+	public void resetCards(){
+		this.cardList.clear();
 	}
 
 	public Card[] getCardArray(int index){

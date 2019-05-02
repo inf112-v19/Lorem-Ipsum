@@ -65,6 +65,11 @@ public class Client implements INetCode{
 		return this.clientHandler.getIndex();
 	}
 
+	@Override
+	public void resetCards() {
+
+	}
+
 	public String receive() {
 		return this.clientHandler.receive();
 	}

@@ -13,5 +13,7 @@ public interface INetCode {
 
 	int getIndex();
 
+	void resetCards();
+
 	//String receive();
 }

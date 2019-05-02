@@ -70,6 +70,11 @@ public class Host implements INetCode{
 		return this.hostHandler.getNumClients();
 	}
 
+	@Override
+	public void resetCards() {
+		this.hostHandler.resetCards();
+	}
+
 	/*
 	public ArrayList<String> receive() {
 		return this.hostHandler.receiveFromAll();
