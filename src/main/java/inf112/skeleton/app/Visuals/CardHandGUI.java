@@ -81,13 +81,10 @@ public class CardHandGUI {
             currentPlayer = cardManager.getPlayer();
             playerTurn = currentPlayer.getPlayerName() + "'s turn";
             currentCards = currentPlayer.getCardHand();
-
-
             
-            if (currentPlayer.isControlledByAI()){
+            if (currentPlayer.isControlledByAI()) {
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
-            }
-            else {
+            } else {
                 if (currentPlayer.getPowerDown() == 3) {
                     table.clearChildren();
                     drawPowerDownOptions();
@@ -96,11 +93,8 @@ public class CardHandGUI {
                     draw(currentCards);
                 }
             }
-            }
         }
-
-
-
+    }
 
 
     /**
@@ -128,7 +122,9 @@ public class CardHandGUI {
         table.clearChildren();
 
         Label infoField = new Label(playerTurn, assetHandler.getSkin());
-        table.add(infoField).top().left().colspan(3).expandY().row();
+        Label flagsCollected = new Label("Flags collected: " + currentPlayer.numberOfFlagsCollected(), assetHandler.getSkin());
+        table.add(infoField).top().left().colspan(3).row();
+        table.add(flagsCollected).top().left().colspan(3).expandY().row();
 
         if (showGreetingText) {
             Label txt = new Label("Select 5 cards", assetHandler.getSkin());
