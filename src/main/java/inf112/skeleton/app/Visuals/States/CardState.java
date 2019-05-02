@@ -48,17 +48,18 @@ public class CardState extends State {
 		this.shouldSend = true;
 	}
 
-	private void isHostHandling(){
+	private synchronized void isHostHandling(){
 		Host host = (Host)this.net;
 
 		if(host.getHostHandler().getCards() != null && this.shouldSend){
-			host.send(host.getHostHandler().getCards().toString());
+			host.send("CARDS!" + host.getHostHandler().getCards().toString());
 			this.shouldSend = false;
 		}
 
+
 	}
 
-	private void isClientHandling(){
+	private synchronized void isClientHandling(){
 		Client client = (Client)this.net;
 		if(players[client.getIndex()].isReady() && this.shouldSend){
 			String sendString = "CARDS!";
@@ -71,6 +72,7 @@ public class CardState extends State {
 
 		HashMap<Integer, Card[]> cards = client.getClientHandler().getCards();
 		if(cards != null){
+			System.err.println("hello");
 			for (Player player : players) {
 				cardManager.setCardSeq(player, cards.get(player.getIndex()));
 			}
@@ -98,7 +100,6 @@ public class CardState extends State {
 		}else{
 			//local
 		}
-
 
 		for (Player player : players) {
 			if (!player.isReady()) {

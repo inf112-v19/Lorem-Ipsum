@@ -129,7 +129,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	public HashMap<Integer, String> getCards() {
-		if(connections.size()+1 == cardList.size()){
+		if(connections.size() == cardList.size()){
 			return cardList;
 		}
 		return null;
