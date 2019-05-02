@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.BoardGUI;
 import inf112.skeleton.app.GameMechanics.Cards.CardManager;
-import inf112.skeleton.app.Visuals.PendingCardsGUI;
 import inf112.skeleton.app.Visuals.PlayerInfoGUI;
+import inf112.skeleton.app.Visuals.PendingCardsGUI;
 
 
 public class ActionState extends State {
@@ -18,11 +19,13 @@ public class ActionState extends State {
 	private static final float UPDATE_LIMIT = 1;
 	private SpriteBatch batch;
 	private BoardGUI boardGUI;
-	private PlayerInfoGUI infoGUI;
+	private PlayerInfoGUI playerInfoGUI;
 	private PendingCardsGUI pendingCardsGUI;
 	private CardManager cardManager;
 
-	public ActionState(GameStateManager gsm, Board board, CardManager cardManager) {
+	private INetCode net;
+
+	public ActionState(GameStateManager gsm, Board board, CardManager cardManager, INetCode net) {
 		super(gsm);
 		this.board = board;
 		this.batch = new SpriteBatch();
@@ -31,14 +34,17 @@ public class ActionState extends State {
 		this.boardGUI.create();
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.infoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
 		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
 		this.cardManager = cardManager;
+
+		this.net = net;
 	}
 
 	@Override
 	public void update(float dt) {
 		super.update(dt);
+		playerInfoGUI.update();
 		updateCount += dt;
 		if (updateCount > UPDATE_LIMIT) {
 			updateCount = 0;
@@ -59,7 +65,7 @@ public class ActionState extends State {
 				boardGUI.update();
 			} else {
 				System.out.println("setting CardState");
-				gsm.set(new CardState(gsm, board, cardManager));
+				gsm.set(new CardState(gsm, board, cardManager, this.net));
 			}
 			pendingCardsGUI.update();
 		}
@@ -68,7 +74,6 @@ public class ActionState extends State {
 	@Override
 	public void render() {
 		super.render();
-		infoGUI.render();
 		pendingCardsGUI.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");
@@ -79,13 +84,12 @@ public class ActionState extends State {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		infoGUI.dispose();
+		playerInfoGUI.dispose();
 		pendingCardsGUI.dispose();
 	}
 
 	@Override
 	public void resize() {
 		super.resize();
-		infoGUI.resize();
 	}
 }

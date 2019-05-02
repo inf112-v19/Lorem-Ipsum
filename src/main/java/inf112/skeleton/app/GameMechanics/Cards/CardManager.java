@@ -3,6 +3,7 @@ package inf112.skeleton.app.GameMechanics.Cards;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Interfaces.ICardDeck;
+import inf112.skeleton.app.Netcode.INetCode;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,10 +14,12 @@ public class CardManager {
     private ICardDeck cardDeck;
     private Player[] players;
     private HashSet<Card> lockedCards;
+    private INetCode net;
 
-    public CardManager(Board board) {
+    public CardManager(Board board, INetCode net) {
         players = board.getAllPlayers();
         cardDeck = new ProgramCardDeck();
+        this.net = net;
     }
 
     /**
@@ -36,7 +39,10 @@ public class CardManager {
     public Player getPlayer() {
         Player currentPlayer = null;
         for (Player player : players) {
-            if (!player.isReady() && !player.isDead()){
+            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && net == null){
+                currentPlayer = player;
+                break;
+            }else if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && player.getIndex() == net.getIndex()){
                 currentPlayer = player;
                 break;
             }
@@ -51,6 +57,20 @@ public class CardManager {
      */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
+            if(net != null){
+                if(player.getIndex() != net.getIndex()){
+                    continue;
+                }
+            }
+            if (player.getPowerDown() == 1) {
+                Card[] cards = new Card[5];
+                for (int i = 0; i < cards.length; i++) {
+                    cards[i] = new Card(CardType.FORWARD_1, 10);
+                }
+                player.setCardSequence(cards);
+                player.setReady();
+                continue;
+            }
             if (player.isDead()) {
                 player.setReady();
             }
@@ -111,19 +131,19 @@ public class CardManager {
         for (int i = 0; i < players.length; i++) {
             if (players[i].getCardSequence() != null) {
                 Card[] tempCards = players[i].getCardSequence();
-                int playerHP = players[i].getHealth();
-                if (playerHP < 6) {
+                int playerDamage = players[i].getDamage();
+                if (playerDamage > 4) {
                     lockedCards.add(tempCards[4]);
-                    if (playerHP < 5) {
+                    if (playerDamage > 5) {
                         lockedCards.add(tempCards[3]);
                     }
-                    if (playerHP < 4) {
+                    if (playerDamage > 6) {
                         lockedCards.add(tempCards[2]);
                     }
-                    if (playerHP < 3) {
+                    if (playerDamage > 7) {
                         lockedCards.add(tempCards[1]);
                     }
-                    if (playerHP < 2) {
+                    if (playerDamage > 8) {
                         lockedCards.add(tempCards[0]);
                     }
                 }
@@ -148,8 +168,8 @@ public class CardManager {
                 newCardHand.add(cardDeck.drawCard());
             }
 
-            int playerHealth = players[i].getHealth();
-            int cardsToRemove = 10 - playerHealth;
+            int playerDamage = players[i].getDamage();
+            int cardsToRemove = playerDamage;
             if (cardsToRemove > 0) {
                 for (int j = 0; j < cardsToRemove; j++) {
                     if (j > 3) {

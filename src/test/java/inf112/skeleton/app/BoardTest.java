@@ -202,7 +202,7 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerTakingLaserDamage() {
-		int originHealth = players[1].getHealth();
+		int originHealth = players[1].getDamage();
 
 		testBoard.movePlayer(players[1], Direction.SOUTH);
 		testBoard.movePlayer(players[1], Direction.EAST);
@@ -210,7 +210,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(originHealth-1, players[1].getHealth());
+		assertEquals(originHealth+1, players[1].getDamage());
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class BoardTest {
 
 	/**
 	 * Testing player getting rotated by left rotation tile - original player direction is EAST and therefore the new
-	 * player direction should be NORTH
+	 * player direction should be WEST (since there are 2 players on the board it will trigger the doTileAction twice
 	 */
 	@Test
 	public void playerStandingOnLeftRotationTile() {
@@ -299,13 +299,13 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerStandingOnRepairTileWhenDamaged() {
-		players[0].decreaseHealth();
-		players[0].decreaseHealth();
+		players[0].increaseDamage();
+		players[0].increaseDamage();
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(0, players[0].getDamage());
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class BoardTest {
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(0, players[0].getDamage());
 	}
 
 	/**
@@ -354,34 +354,36 @@ public class BoardTest {
 	 */
 	@Test
 	public void playerHealthIncreasedByOptionTile() {
-		players[0].decreaseHealth();
+		players[0].increaseDamage();
 		testBoard.placePlayerOnPos(players[0], new Position(4, 2));
 		players[0].setReady();
 
 		while (testBoard.doNextAction()){}
 
-		assertEquals(10, players[0].getHealth());
+		assertEquals(0, players[0].getDamage());
 	}
 
 
 	/**
 	 * Testing that players shooting each other both take damage - both players should have equal health and their combined
-	 * health should be 18 (9+9)
+	 * health should be 2 (1+1). Places player both players on NormalTiles facing each other so they both will get hit.
 	 */
 	@Test
 	public void playersShootingEachOther() {
 		players[0].setPlayerDirection(Direction.SOUTH);
 		players[1].setPlayerDirection(Direction.NORTH);
+		testBoard.placePlayerOnPos(players[0], new Position(0,3));
+		testBoard.placePlayerOnPos(players[1], new Position(0,2));
 		players[0].setReady();
 		players[1].setReady();
 
 		while (testBoard.doNextAction()){}
 
-		int player0Health = players[0].getHealth();
-		int player1Health = players[0].getHealth();
+		int player0Health = players[0].getDamage();
+		int player1Health = players[0].getDamage();
 
 		if (player0Health == player1Health) {
-			assertEquals(18, player0Health+player1Health);
+			assertEquals(2, player0Health+player1Health);
 		}else{
 			assert false;
 		}

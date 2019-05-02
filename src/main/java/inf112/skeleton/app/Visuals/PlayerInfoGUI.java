@@ -1,161 +1,94 @@
 package inf112.skeleton.app.Visuals;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Player;
 
 public class PlayerInfoGUI {
-	private BitmapFont[] fonts;
-	private String[] playerNames;
 
-	private Stage stage;
-	private AssetHandler assetHandler;
+    private final Batch batch;
+    private final Stage stage;
+    private final AssetHandler assetHandler;
 
-	private Player[] players;
-	private Batch batch;
+    private Player[] players;
+    private Label[] playerLabels;
 
-	public PlayerInfoGUI(Board board, Batch batch, Stage stage, AssetHandler assetHandler) {
-		this.batch = batch;
-		this.stage = stage;
+    private Table table;
 
-		this.assetHandler = assetHandler;
+    public PlayerInfoGUI(Board board, Batch batch, Stage stage, AssetHandler assetHandler) {
+        this.batch = batch;
+        this.stage = stage;
 
-		players = board.getAllPlayers();
-		playerNames = new String[players.length];
-		fonts = new BitmapFont[players.length];
-		for (int i = 0; i < fonts.length; i++) {
-			fonts[i] = new BitmapFont();
-		}
-		for (int i = 0; i < players.length; i++) {
-			playerNames[i] = players[i].getPlayerID();
-		}
-		update();
-	}
+        this.assetHandler = assetHandler;
 
-	/**
-	 * Updates health and lives of each player
-	 */
-	public void update() {
-		for (int i = 0; i < players.length; i++) {
-			int lives = players[i].getLives();
-			int health = players[i].getHealth();
-			drawLives(i, lives);
-			drawHealthPoint(i, health);
-			drawPlayerImage(i, players[i].getSpriteType());
-		}
-		render();
-	}
+        players = board.getAllPlayers();
+        playerLabels = new Label[players.length];
 
-	/**
-	 * renders fonts on screen
-	 */
-	public void render() {
-		renderNames();
-	}
+        for (int i = 0; i < players.length; i++) {
+            playerLabels[i] = new Label(players[i].getPlayerName(), assetHandler.getSkin());
+        }
 
-	/**
-	 * removes font from screen
-	 */
-	public void dispose() {
-		for (BitmapFont font : fonts) {
-			font.dispose();
-		}
-	}
+        table = new Table();
+        table.top().right().padRight(30);
+        table.setFillParent(true);
+    }
 
-	public void resize() {
-		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	}
+    public void update() {
+        table.clearChildren();
 
-	private void drawPlayerImage(int row, SpriteType sprite) {
-		TextureRegion texture = assetHandler.getTexture(sprite);
-		int yDrawPos = playerYbyRow(row);
-		int xDrawPos = Gdx.graphics.getWidth() - 60;
-		createActor(texture, 30, 30, xDrawPos, yDrawPos);
-	}
+        for (int i = 0; i < playerLabels.length; i++) {
+            table.add(playerLabels[i]).colspan(5).left();
+            table.row();
 
-	private void drawHealthPoint(int row, int numberOfPoints) {
-		int yDrawPos = healthYbyRow(row);
-		int deltaX = 180;
+            int playerLives = players[i].getLives();
+            for (int j = 0; j < playerLives; j++) {
+                Image image = new Image(new TextureRegion(assetHandler.getTexture("heart.png")));
+                image.setSize(20, 20);
+                table.add(image).width(20).height(20);
+            }
 
-		for (int i = 0; i < numberOfPoints; i++) {
-			if (i == 5) {
-				deltaX = 180;
-				yDrawPos += 12;
-			}
-			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("healthbar.png"));
-			createActor(textureRegion, 10, 20, xDrawPos, yDrawPos);
-			deltaX -= 22;
-		}
-	}
+            table.add(getPlayerImage(players[i].getSpriteType())).width(30).height(30).colspan(4).spaceLeft(10).right();
 
-	private void drawLives(int row, int numberOfLives) {
-		int yDrawPos = lifeYbyRow(row);
-		int deltaX = 180;
+            table.row();
 
-		for (int i = 0; i < numberOfLives; i++) {
-			int xDrawPos = Gdx.graphics.getWidth() - deltaX;
-			TextureRegion textureRegion = new TextureRegion(assetHandler.getTexture("heart.png"));
-			createActor(textureRegion, 20, 20, xDrawPos, yDrawPos);
-			deltaX -= 25;
-		}
-	}
+            int playerDamage = players[i].getDamage();
+            for (int j = 0; j < 10; j++) {
+                if (j == 5) {
 
-	/**
-	 * creates an actor of type Image and adds on stage
-	 *
-	 * @param textureRegion
-	 * @param height
-	 * @param width
-	 * @param xpos
-	 * @param ypos
-	 */
-	private void createActor(TextureRegion textureRegion, int height, int width, int xpos, int ypos) {
-		TextureRegion texture = textureRegion;
-		Image image = new Image(texture);
-		image.setSize(width, height);
-		image.setPosition(xpos, ypos);
-		stage.addActor(image);
-	}
+                    table.row();
+                }
+                if (j <= playerDamage - 1) {
+                    table.add(getDamageTokenImage(assetHandler.getTexture("damageBar.png"))).width(20).height(10).spaceRight(2).spaceTop(2);
+                } else {
+                    table.add(getDamageTokenImage(assetHandler.getTexture("emptyDamageBar.png"))).width(20).height(10).spaceRight(2).spaceTop(2);
+                }
+            }
+            table.row();
+        }
+        stage.addActor(table);
+    }
 
-	private int lifeYbyRow(int row) {
-		if (row == 0) {
-			return Gdx.graphics.getHeight() - 40;
-		} else {
-			return Gdx.graphics.getHeight() - 40 - (row * 75);
-		}
-	}
+    public Image getDamageTokenImage(Texture texture) {
+        TextureRegion region = new TextureRegion(texture);
+        Image image = new Image(region);
+        image.setSize(20, 10);
+        return image;
+    }
 
-	private int healthYbyRow(int row) {
-		if (row == 0) {
-			return Gdx.graphics.getHeight()-70;
-		} else {
-			return Gdx.graphics.getHeight()-70 - (row * 75);
-		}
-	}
+    public Image getPlayerImage(SpriteType sprite) {
+        TextureRegion texture = assetHandler.getTexture(sprite);
+        Image image = new Image(texture);
+        image.setSize(30, 30);
+        return image;
+    }
 
-	private int playerYbyRow(int row) {
-		if (row == 0) {
-			return Gdx.graphics.getHeight()-70;
-		} else {
-			return Gdx.graphics.getHeight()-70 - (row * 75);
-		}
-	}
-
-	private void renderNames() {
-		batch.begin();
-		int xpos = Gdx.graphics.getWidth() - 180;
-		int ypos = Gdx.graphics.getHeight()-5;
-		for (int i = 0; i < playerNames.length; i++) {
-			fonts[i].draw(batch, playerNames[i], xpos, ypos);
-			ypos -= 75;
-		}
-		batch.end();
-	}
+    public void dispose() {
+        table.clearChildren();
+    }
 }

@@ -12,20 +12,6 @@ public class DoubleLaserBaseTile extends LaserBaseTile {
 		assignSpriteType();
 	}
 
-	/**
-	 * Call the toggleLaser method twice since there there will be 2 lasers on each tile
-	 *
-	 * @param pos
-	 * @param board
-	 * @param laserStatus
-	 */
-	@Override
-	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
-		super.toggleLaser(pos, board, laserStatus);
-		super.toggleLaser(pos, board, laserStatus);
-	}
-
-
 	private void assignSpriteType() {
 		switch (this.direction) {
 			case NORTH:

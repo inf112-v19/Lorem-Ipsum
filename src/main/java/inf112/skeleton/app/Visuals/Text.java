@@ -24,7 +24,7 @@ public class Text extends Label {
 		private float y;
 
 		TextPosition(float x, float y){
-			System.out.println(x+","+y);
+			//System.out.println(x+","+y);
 			this.x = x;
 			this.y = y;
 		}
@@ -66,7 +66,6 @@ public class Text extends Label {
 	 */
 	public Text(String text, Skin skin) {
 		super(text, skin);
-		super.setWrap(true);
 		super.setFontScale(fontSize);
 
 		this.text = new StringBuilder();
@@ -89,7 +88,6 @@ public class Text extends Label {
 		StringBuilder builder = new StringBuilder();
 		builder.append(this.text);
 		builder.append(dynamicText);
-		System.out.println("dynamic text: " + builder.toString());
 		super.setText(builder);
 	}
 
@@ -97,7 +95,6 @@ public class Text extends Label {
 		StringBuilder builder = new StringBuilder();
 		builder.append(dynamicText);
 		builder.append(this.text);
-		System.out.println("dynamic text: " + builder.toString());
 		super.setText(builder);
 	}
 

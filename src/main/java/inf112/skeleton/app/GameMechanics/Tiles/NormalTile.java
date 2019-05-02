@@ -18,7 +18,6 @@ public class NormalTile extends Tile {
 	public void checkTile(Board board, Player player){
 		for(GameObject object : gameObjects){
 			if(object instanceof Flag){
-				player.increaseHealth();
 				player.setBackup(board.getPlayerPos(player));
 				player.collectFlag((Flag)object);
 				break;

@@ -1,105 +1,89 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.GameMechanics.Board.Board;
-import inf112.skeleton.app.Visuals.RoboRally;
-
 
 public class ChoosePlayerState extends State {
 	private Board board;
-	private TextureRegion background;
-
-	//booleans
 	private boolean start;
-
-	//text bar
-	private Image textBar;
-
-	//player
-	private int spaceOverButtons;
-	private int halfButtonWidth;
-	private int halfButtonWidth1;
-	private int bigButtonWidth;
 	private int playerAmount;
+
+	private Table table;
+	private Table tableButton;
+	private TextureRegionDrawable background;
+	private Skin skin;
+
+	private boolean row;
 
 	public ChoosePlayerState(GameStateManager gsm, Board board) {
 		super(gsm);
 		this.board = board;
-		this.background = super.assetHandler.getTextureRegion("StateImages/secondBackground.png");
 		this.start = false;
+		this.row = false;
 
-		//text bar
-		this.textBar = new Image(assetHandler.getTextureRegion("StateImages/choosePlayerAmount.png"));
+		this.skin = assetHandler.getSkin();
+		this.table = new Table(this.skin);
+		this.table.setFillParent(true);
+		this.tableButton = new Table(skin);
+		//this.table.setDebug(true);
+		//this.tablebutton.setDebug(true);
 
-		//player buttons
-		this.spaceOverButtons = 49 * 2;
-		this.halfButtonWidth = 193 / 2;
-		this.halfButtonWidth1 = 193 / 2;
-		this.bigButtonWidth = this.halfButtonWidth + 193;
+		setBackground();
+		this.table.defaults().padBottom(100F);
+		this.table.add(getTopLabel());
+		this.table.row();
+		this.table.add(getButtons());
 
-		setTextbar();
-		setSixButtons();
+		super.stage.addActor(this.table);
 	}
 
-	/**
-	 * set the textbar "Choose player amount"
-	 */
-	private void setTextbar() {
-		this.textBar.setSize(1273 / 3, 102 / 3);
-		this.textBar.setPosition((RoboRally.WIDTH / 2) - ((1273 / 3) / 2), 102);
-		this.stage.addActor(this.textBar);
+	private void setBackground() {
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
+		this.table.setBackground(this.background);
 	}
 
-	/**
-	 * set up six players that you can choose
-	 */
-	private void setSixButtons() {
-		int nPlayers = 6;
-		Image nplayers;
-		for (int i = 1; i < nPlayers + 1; i++) {
-			String filename = "no" + i;
-			nplayers = new Image(assetHandler.getTextureRegion("StateImages/" + filename + ".png"));
-			nplayers.setSize(191, 49);
-			this.stage.addActor(nplayers);
-			if (i >= 1 && i <= 3) {
-				nplayers.setPosition(this.halfButtonWidth1, (RoboRally.HEIGHT / 2) - (49));
-				this.halfButtonWidth1 += bigButtonWidth;
-			} else {
-
-				nplayers.setPosition(this.halfButtonWidth, (RoboRally.HEIGHT / 2) + (49));
-				this.halfButtonWidth += bigButtonWidth;
-			}
-			this.playerAmount = i;
-			clickable(nplayers, this.playerAmount);
-		}
+	private Label getTopLabel() {
+		Label topLabel = new Label("CHOOSE PLAYER AMOUNT", this.skin);
+		topLabel.setFontScale(2);
+		topLabel.setAlignment(Align.center);
+		return topLabel;
 	}
 
+	private Table getButtons() {
+		this.tableButton.defaults().pad(20, 80, 30, 80).width(150).height(50);
+		for (int i = 0; i < 6; i++) {
+			TextButton button = new TextButton((i + 1) + " PLAYER", this.skin);
+			final int tempPlayerAmount = (i + 1);
 
-	private void clickable(Image button, final int playerNumber) {
-		button.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.print(playerNumber);
-				if (playerNumber == 1) {
-					System.out.println(" player was chosen!");
-					playerAmount = playerNumber;
-				} else {
-					System.out.println(" players was chosen!");
-					playerAmount = playerNumber;
+			button.addListener(new ChangeListener() {
+				@Override
+				public void changed(ChangeEvent event, Actor actor) {
+					start = true;
+					playerAmount = tempPlayerAmount;
 				}
-				start = true;
-				return true;
+			});
+
+			if (i <= 2) {
+				this.tableButton.add(button);
+			} else {
+				if (!this.row) {
+					this.tableButton.row();
+					this.row = true;
+				}
+				this.tableButton.add(button);
 			}
-		});
+		}
+		return this.tableButton;
 	}
 
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			gsm.set(new PlayerNameState(gsm, board, playerAmount));
+			this.gsm.set(new PlayerNameState(this.gsm, this.board, this.playerAmount, null));
 		}
 	}
 
@@ -111,10 +95,6 @@ public class ChoosePlayerState extends State {
 	@Override
 	public void render() {
 		super.render();
-		stage.getBatch().begin();
-		stage.getBatch().draw(this.background, 0, 0, RoboRally.WIDTH, RoboRally.HEIGHT);
-		stage.getBatch().end();
-		stage.draw();
 	}
 
 	@Override

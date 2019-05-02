@@ -1,5 +1,8 @@
 package inf112.skeleton.app.GameMechanics;
 
+import inf112.skeleton.app.GameMechanics.Tiles.Tile;
+import inf112.skeleton.app.Visuals.BoardGUI;
+
 import java.util.Objects;
 
 public class Position {
@@ -13,6 +16,26 @@ public class Position {
 	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * @param tile on stage
+	 * @param boardGUI
+	 */
+	public Position(Tile tile, BoardGUI boardGUI){
+		float x = (tile.getX() - boardGUI.getxOffset()) / (tile.getWidth());
+		float y = (tile.getY() - boardGUI.getyOffset()) / (tile.getHeight());
+		this.x = (int)x;
+		this.y = (int)y;
+	}
+
+	public Position(String positionToString){
+		String xandY = positionToString.substring(9);
+		String xs = xandY.split(", ")[0].split("=")[1];
+		String ys = xandY.split(", ")[1].split("=")[1].split("}")[0];
+		this.x = Integer.parseInt(xs);
+		this.y = Integer.parseInt(ys);
+
 	}
 
 	/**
