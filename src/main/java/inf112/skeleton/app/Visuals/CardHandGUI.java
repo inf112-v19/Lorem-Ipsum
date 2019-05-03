@@ -83,6 +83,7 @@ public class CardHandGUI {
             currentCards = currentPlayer.getCardHand();
 
             if (currentPlayer.isControlledByAI()) {
+                resetPlayerValues();
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
             } else {
                 if (currentPlayer.getPowerDown() == 3) {
