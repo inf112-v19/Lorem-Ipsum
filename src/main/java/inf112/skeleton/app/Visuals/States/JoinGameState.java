@@ -11,16 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Queue;
 import inf112.skeleton.app.GameMechanics.Board.Board;
+import inf112.skeleton.app.GameMechanics.Player;
 import inf112.skeleton.app.Netcode.Client;
+import inf112.skeleton.app.Netcode.ClientHandler;
+import inf112.skeleton.app.Netcode.MulticastPublisher;
+import inf112.skeleton.app.Netcode.MulticastReceiver;
 import inf112.skeleton.app.Visuals.Text;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +40,11 @@ public class JoinGameState extends State {
 	private Text status;
 	private boolean tryConnect;
 	private String buttonText;
+
 	private Thread findHostThread;
+	private ArrayList<String> hosts = new ArrayList<>();
+	private MulticastReceiver receiver = new MulticastReceiver(hosts);
+	private boolean exitFindHost = false;
 
 	private boolean clientFail;
 
@@ -61,10 +69,6 @@ public class JoinGameState extends State {
 
 		super.stage.addActor(this.table);
 
-		//this.client = new Client("localhost", 6666, "Testname");
-
-		//checkHosts("127.0.0");
-
 	}
 
 	public void findHosts(){
@@ -75,13 +79,50 @@ public class JoinGameState extends State {
 		findHostThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				table.add(new Text("Hostname    -    IP", skin));
 				table.row();
-				addHostsToTable();
+				receiver.start();
+
+				int i = 0;
+
+				while (true) {
+					if (exitFindHost) {
+						break;
+					}
+
+					System.out.println(hosts.size());
+					if (i < hosts.size()) {
+						addHostButton(hosts.get(i));
+						i++;
+					}
+					try {
+						Thread.sleep(1000);
+					}
+					catch (Exception e) {}
+				}
 			}
+
+
+
 		});
+
 		findHostThread.start();
 	}
+
+	private void addHostButton(final String host){
+		TextButton hostButton = new TextButton(host, skin);
+		hostButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				tryConnect = true;
+				buttonText = host;
+				return true;
+			}
+		});
+
+		table.add(hostButton);
+		table.row();
+	}
+
 
 	private void addStatusText(){
 		this.status = new Text("", skin, Text.TextPosition.TOP_LEFT);
@@ -121,7 +162,8 @@ public class JoinGameState extends State {
 		if(client != null){
 			String boardName = client.getClientHandler().getBoardName();
 			if (boardName != null){
-				findHostThread.interrupt();
+				exitFindHost = true;
+				receiver.interrupt();
 				gsm.set(new PlayerNameState(gsm, new Board(boardName), this.client));
 			}
 		}
@@ -161,21 +203,6 @@ public class JoinGameState extends State {
 	}
 
 
-	public static Future<Boolean> portIsOpen(final ExecutorService es, final String ip, final int port, final int timeout) {
-		return es.submit(new Callable<Boolean>() {
-			@Override public Boolean call() {
-				try {
-					Socket socket = new Socket();
-					socket.connect(new InetSocketAddress(ip, port), timeout);
-					socket.close();
-					return true;
-				} catch (Exception ex) {
-					return false;
-				}
-			}
-		});
-	}
-
 	private void startClient(){
 		System.out.println("Staring client... ");
 		Thread thread = new Thread(new Runnable() {
@@ -193,64 +220,6 @@ public class JoinGameState extends State {
 		thread.start();
 	}
 
-	private void addHostsToTable() {
-		final int port = 6666;
-		final int timeout = 1000;
-		final ExecutorService es = Executors.newFixedThreadPool(20);
-		String localHost = "192.168.1.1";
-		try {
-			localHost = InetAddress.getLocalHost().getHostAddress();
-		}
-		catch (UnknownHostException e) {
-			System.err.println("UnknownHostException was thrown - assumed localHost was 192.168.1.1");
-		}
-
-		//test if a security manager is blocking the getLocalHost() operation - will return loopback address
-		if (localHost.substring(0, 3).equals("127")) {
-			table.add(new Text("A security manager on the machine is blocking the search for hosts", skin));
-			return;
-		}
-
-		String subnet = getSubnet(localHost);
-
-		HashMap<String, Future<Boolean>> addresses = new HashMap<>();
-
-		for (int i = 1; i < 256; i++) {
-			String ip = subnet+"."+i;
-			Future<Boolean> isReachable = portIsOpen(es, ip, port, timeout);
-			addresses.put(ip, isReachable);
-		}
-		es.shutdown();
-
-		for (final HashMap.Entry<String, Future<Boolean>> entry : addresses.entrySet()) {
-			try {
-				if (entry.getValue().get()) {
-					InetAddress hostaddr = InetAddress.getByName(entry.getKey());
-					TextButton hostButton = new TextButton((hostaddr.getHostAddress() + " - " + entry.getKey()), skin);
-
-					hostButton.addListener(new InputListener() {
-						@Override
-						public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-							tryConnect = true;
-							buttonText = entry.getKey();
-							return true;
-						}
-					});
-
-					table.add(hostButton);
-					table.row();
-				}
-			}
-			catch (Exception e) {
-				System.err.println(e);
-			}
-		}
-	}
-
-	private String getSubnet(String ip) {
-		int indexEnd = ip.lastIndexOf(".");
-		return ip.substring(0, indexEnd);
-	}
 
 	@Override
 	public void render() {

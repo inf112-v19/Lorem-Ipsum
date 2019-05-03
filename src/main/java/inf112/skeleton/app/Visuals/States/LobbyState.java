@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Netcode.Host;
+import inf112.skeleton.app.Netcode.MulticastPublisher;
+import inf112.skeleton.app.Netcode.MulticastReceiver;
 import inf112.skeleton.app.Visuals.Text;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,6 +27,10 @@ public class LobbyState extends State {
 	private ArrayList<Channel> channels;
 	private Text status;
 	private boolean submit;
+	private MulticastPublisher publisher = new MulticastPublisher();
+	private Thread multicastThread;
+	private boolean exitMulticast = false;
+	private String hostIP;
 
 	public LobbyState(GameStateManager gsm) {
 		super(gsm);
@@ -46,17 +52,43 @@ public class LobbyState extends State {
 		super.stage.addActor(this.table);
 		super.stage.addActor(status);
 
+		multicastHostIP();
 		startServer();
 
+	}
+
+	private void multicastHostIP() {
+		System.out.println("test");
+		if (hostIP != null) {
+			multicastThread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while (true) {
+						if (exitMulticast) {
+							break;
+						}
+
+						publisher.multicast(hostIP);
+						try {
+							Thread.sleep(1000);
+						}
+						catch (InterruptedException e) { }
+					}
+
+				}
+			});
+			multicastThread.start();
+		}
 	}
 
 	private void displayHostIP() {
 		Text text;
 		try {
-			String hostIP = InetAddress.getLocalHost().getHostAddress();
+			hostIP = InetAddress.getLocalHost().getHostAddress();
 
 			if (hostIP.substring(0, 3).equals("127")) {
 				text = new Text("Security manager prevented application from retrieving host IP", skin);
+				hostIP = null;
 			}
 			else {
 				text = new Text("Host IP: "+hostIP, skin);
@@ -64,6 +96,7 @@ public class LobbyState extends State {
 		}
 		catch (Exception e) {
 			text = new Text("Security manager prevented application from retrieving host IP", skin);
+			hostIP = null;
 		}
 
 		this.table.add(text);
@@ -74,6 +107,7 @@ public class LobbyState extends State {
 	protected void handleInput() {
 		if (this.submit){
 			System.out.println("setting ChooseBoardState");
+			exitMulticast = true;
 			gsm.set(new ChooseBoardState(gsm, this.host));
 		}
 	}
@@ -133,6 +167,7 @@ public class LobbyState extends State {
 					System.err.println("Error while starting the server");
 					e.printStackTrace();
 				}
+
 			}
 		}).start();
 	}
