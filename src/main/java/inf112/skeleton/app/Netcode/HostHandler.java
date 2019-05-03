@@ -214,6 +214,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					}
 					break;
 				case "DISCONNECT":
+					/*
 					this.powerdownStatus.remove(connections.indexOf(ctx));
 					this.nameList.remove(connections.indexOf(ctx));
 					this.connections.remove(connections.indexOf(ctx));
@@ -225,6 +226,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					}catch (EmptyStackException e){
 						System.err.println("the GameStateManager stack is empty");
 					}
+					 */
 
 					ctx.close();
 					break;
