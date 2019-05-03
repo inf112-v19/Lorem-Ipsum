@@ -224,7 +224,6 @@ public class PlayerNameState extends State {
         }
         // listen to host
         String playerNames = this.client.getClientHandler().getNames();
-        System.out.println("playernames = " + playerNames);
         if (playerNames != null && clientHasSendt) {
             String[] playernames = playerNames.split(",");
             for (int i = 0; i < playernames.length; i++) {
