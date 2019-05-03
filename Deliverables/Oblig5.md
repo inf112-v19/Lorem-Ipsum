@@ -65,6 +65,9 @@ Dette er fordi vi i denne staten bruker en metode som hører etter inndata fra t
     * Antall Ai spillere + brukerstyrte spillere kan ikke være fler enn 6: Starter spillet med og velger ulike kombinasjoner av brukerstyrte spillere og Ai spillere. Finner at det ikke er mulig å starte spillet med en kombinasjon av Aier og brukerstyrte spillere hvor det tilsammen er flere enn 6 roboter. 
         
         Under testingen fant jeg en bug hvor antall ai spillere ble satt til max(utfra hvor mange brukerstyrte spillere som ble valgt først) hvis "slideren" for å velge ikke blir endret på(denne skal ha 0 som standard) før spillet starter. Etter litt leting fant vi at variablen som bestemmer hvor mange Aier som skal brukes er den samme som sier hvor mange Aier som er max og oppdateres når slideren endres. Dette løste vi ved å lage 2 forskjellige variabler som holder på de forskjellige verdiene.
+
+## Klassediagram
+![](https://github.com/inf112-v19/Lorem-Ipsum/blob/master/Deliverables/classdiagramOblig5.png)
         
 # Møtereferat
 
