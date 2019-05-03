@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -151,6 +153,7 @@ public class PlayerNameState extends State {
 
         TextButton submit = new TextButton("SUBMIT", this.skin);
         submit.getLabel().setFontScale(1.5f);
+		submit.setColor(Color.TEAL);
         submit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -253,6 +256,7 @@ public class PlayerNameState extends State {
 		super.update(dt);
 		if (this.host != null && this.clientNames == null){
 			this.clientNames = this.host.getHostHandler().getNames();
+			System.out.println(this.clientNames.size());
 		}
 	}
 }
