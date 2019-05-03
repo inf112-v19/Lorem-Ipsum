@@ -86,6 +86,7 @@ public class SpawnPointState extends State {
 
 	@Override
 	public synchronized void update(float dt) {
+		Gdx.input.setInputProcessor(stage);
 		if (this.host != null){
 			isHostHandle();
 		}else if(this.client != null){

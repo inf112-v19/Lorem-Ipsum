@@ -94,6 +94,7 @@ public class PlaceFlagState extends State {
 
 	@Override
 	public synchronized void update(float dt) {
+		Gdx.input.setInputProcessor(stage);
 		if(players.length > flagCount){
 			this.text.prependDynamicsText(players[flagCount].getPlayerName());
 		}
