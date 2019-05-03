@@ -253,7 +253,6 @@ public class PlayerNameState extends State {
 		super.update(dt);
 		if (this.host != null && this.clientNames == null){
 			this.clientNames = this.host.getHostHandler().getNames();
-			System.out.println(this.clientNames.size());
 		}
 	}
 }
