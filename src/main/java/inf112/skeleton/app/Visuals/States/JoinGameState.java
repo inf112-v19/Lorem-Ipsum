@@ -233,7 +233,7 @@ public class JoinGameState extends State {
 	public void update(float dt) {
 		super.update(dt);
 		if(this.clientFail){
-			gsm.set(new MenuState(gsm, "an error occurred while starting the client"));
+			gsm.set(new MenuState(gsm, "An error occurred while starting the client"));
 		}
 
 	}
