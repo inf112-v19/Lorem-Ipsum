@@ -342,6 +342,7 @@ public class Board implements IBoard {
 
 		//toggles off the lasers after 1 update
 		toggleLasers();
+		flagsAndRepair();
 
 		gameOver = checkForGameOver();
 		phaseCardCount = 0;
@@ -368,7 +369,6 @@ public class Board implements IBoard {
 
 		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
 			Player player = playerPositionEntry.getKey();
-			Position playerPos = playerPositionEntry.getValue();
 
 			//respawn dead players
 			if (!player.onBoardCheck() && !player.isDead()){
@@ -379,18 +379,6 @@ public class Board implements IBoard {
 				//if power down was requested for next round and player was destroyed - set power down to 3(cancel option)
 				if (player.getPowerDown() == 2) {
 					player.setPowerDown(3);
-				}
-			}
-
-			//handle checkpoints for player on the board
-			else {
-				Tile playerTile = tileMap.get(playerPos);
-
-				if (playerTile instanceof NormalTile ||
-					playerTile instanceof OptionsTile ||
-					playerTile instanceof RepairTile) {
-
-					playerTile.checkTile(this, player);
 				}
 			}
 
@@ -410,6 +398,27 @@ public class Board implements IBoard {
 
 		//round is over
 		return false;
+	}
+
+
+	/**
+	 * Handles players collecting flags, checkpoints and decrease in damage from option or repair tile
+	 */
+	private void flagsAndRepair() {
+		for (Map.Entry<Player,Position> playerPositionEntry : playerPositions.entrySet()) {
+			Player player = playerPositionEntry.getKey();
+			Position playerPos = playerPositionEntry.getValue();
+
+			Tile playerTile = tileMap.get(playerPos);
+
+			if (playerTile instanceof NormalTile ||
+				playerTile instanceof OptionsTile ||
+				playerTile instanceof RepairTile) {
+
+				playerTile.checkTile(this, player);
+			}
+
+		}
 	}
 
 
