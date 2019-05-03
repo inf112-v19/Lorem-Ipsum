@@ -1,6 +1,5 @@
 package inf112.skeleton.app.Visuals;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,8 +12,7 @@ import inf112.skeleton.app.GameMechanics.Player;
 import java.util.HashMap;
 
 public class PendingCardsGUI {
-
-    private SpriteBatch batch;
+    
     private Board board;
     private AssetHandler assetHandler;
     private Stage stage;
@@ -29,12 +27,11 @@ public class PendingCardsGUI {
     private Label playingCard;
     private Label pendingCard;
 
-    public PendingCardsGUI(SpriteBatch batch, Board board, Stage stage, AssetHandler assetHandler) {
+    public PendingCardsGUI(Board board, Stage stage, AssetHandler assetHandler) {
         table = new Table();
         table.top().left();
         table.setFillParent(true);
 
-        this.batch = batch;
         this.board = board;
         this.assetHandler = assetHandler;
         this.stage = stage;

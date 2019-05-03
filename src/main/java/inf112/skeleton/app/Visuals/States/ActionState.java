@@ -35,7 +35,7 @@ public class ActionState extends State {
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
 		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, assetHandler);
-		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, assetHandler);
+		this.pendingCardsGUI = new PendingCardsGUI(board, stage, assetHandler);
 		this.cardManager = cardManager;
 
 		this.net = net;
