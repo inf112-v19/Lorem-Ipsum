@@ -113,6 +113,6 @@ public class CardManagerTest {
 
         cardManager.newRound();
 
-        assertTrue(cardManager.isLocked(validCardSeq[4]));
+        assertTrue(cardManager.isLocked(validCardSeq[4], testPlayer.getIndex()));
     }
 }

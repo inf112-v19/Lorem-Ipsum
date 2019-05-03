@@ -6,6 +6,7 @@ import inf112.skeleton.app.Interfaces.ICardDeck;
 import inf112.skeleton.app.Netcode.INetCode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class CardManager {
 
     private ICardDeck cardDeck;
     private Player[] players;
-    private HashSet<Card> lockedCards;
+    private HashMap<Integer, HashSet<Card>> lockedCards;
     private INetCode net;
 
     public CardManager(Board board, INetCode net) {
@@ -39,15 +40,15 @@ public class CardManager {
     public Player getPlayer() {
         Player currentPlayer = null;
         for (Player player : players) {
-            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && net == null){
+            if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && net == null) {
                 currentPlayer = player;
                 break;
-            }else if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && player.getIndex() == net.getIndex()){
+            } else if (!player.isReady() && !player.isDead() && player.getPowerDown() != 1 && player.getIndex() == net.getIndex()) {
                 currentPlayer = player;
                 break;
             }
         }
-		return currentPlayer;
+        return currentPlayer;
     }
 
     /**
@@ -57,8 +58,8 @@ public class CardManager {
      */
     public boolean hasNotReadyPlayers() {
         for (Player player : players) {
-            if(net != null){
-                if(player.getIndex() != net.getIndex()){
+            if (net != null) {
+                if (player.getIndex() != net.getIndex()) {
                     continue;
                 }
             }
@@ -105,9 +106,9 @@ public class CardManager {
         }
     }
 
-    public boolean isLocked(Card c) {
-        if (lockedCards != null) {
-            return lockedCards.contains(c);
+    public boolean isLocked(Card c, int playerIndex) {
+        if (lockedCards.get(playerIndex) != null) {
+            return lockedCards.get(playerIndex).contains(c);
         } else {
             return false;
         }
@@ -118,33 +119,36 @@ public class CardManager {
             List<Card> cards = players[i].getCardHand();
             if (cards != null) {
                 for (int j = 0; j < cards.size(); j++) {
-                    if (!isLocked(cards.get(j))) {
+                    if (!isLocked(cards.get(j), players[i].getIndex())) {
                         cardDeck.addCard(cards.get(j));
                     }
+
                 }
             }
         }
     }
 
     private void lockCards() {
-        lockedCards = new HashSet<>();
+        lockedCards = new HashMap<>();
         for (int i = 0; i < players.length; i++) {
+            int playerIndex = players[i].getIndex();
+            lockedCards.put(playerIndex, new HashSet<Card>());
             if (players[i].getCardSequence() != null) {
                 Card[] tempCards = players[i].getCardSequence();
                 int playerDamage = players[i].getDamage();
                 if (playerDamage > 4) {
-                    lockedCards.add(tempCards[4]);
+                    lockedCards.get(playerIndex).add(tempCards[4]);
                     if (playerDamage > 5) {
-                        lockedCards.add(tempCards[3]);
+                        lockedCards.get(playerIndex).add(tempCards[3]);
                     }
                     if (playerDamage > 6) {
-                        lockedCards.add(tempCards[2]);
+                        lockedCards.get(playerIndex).add(tempCards[2]);
                     }
                     if (playerDamage > 7) {
-                        lockedCards.add(tempCards[1]);
+                        lockedCards.get(playerIndex).add(tempCards[1]);
                     }
                     if (playerDamage > 8) {
-                        lockedCards.add(tempCards[0]);
+                        lockedCards.get(playerIndex).add(tempCards[0]);
                     }
                 }
             }
@@ -159,7 +163,7 @@ public class CardManager {
             for (int j = 0; j < 9; j++) {
                 if (oldCardSeq != null && oldCardSeq.length > j) {
                     if (oldCardSeq[j] != null) {
-                        if (isLocked(oldCardSeq[j])) {
+                        if (isLocked(oldCardSeq[j], players[i].getIndex())) {
                             newCardHand.add(oldCardSeq[j]);
                             continue;
                         }

@@ -116,7 +116,7 @@ public class CardHandGUI {
         cardsToSelect = 5;
 
         for (int i = 0; i < 5; i++) {
-            if (cardManager.isLocked(currentCards.get(i))) {
+            if (cardManager.isLocked(currentCards.get(i), currentPlayer.getIndex())) {
                 tempCardSeq[i] = currentCards.get(i);
                 cardsToSelect--;
             }
@@ -143,7 +143,7 @@ public class CardHandGUI {
 
         //handle indicators over cards
         for (int i = 0; i < cards.size(); i++) {
-            if (cardManager.isLocked(cards.get(i))) {
+            if (cardManager.isLocked(cards.get(i), currentPlayer.getIndex())) {
                 addLockLabel();
             } else if (selectedCards.contains(cards.get(i))) {
                 addSelectLabel(i);
@@ -179,13 +179,13 @@ public class CardHandGUI {
         cardButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!selectedCards.contains(card) && cardsToSelect > 0 && !cardManager.isLocked(card)) {
+                if (!selectedCards.contains(card) && cardsToSelect > 0 && !cardManager.isLocked(card, currentPlayer.getIndex())) {
                     showGreetingText = false;
                     putInTempSeq(card);
                     swapCards(card);
                     cardsToSelect--;
                 }
-                if (cardManager.isLocked(card)) {
+                if (cardManager.isLocked(card, currentPlayer.getIndex())) {
                     System.out.println("CARD IS LOCKED IN HAND");
                 }
                 System.out.println("Card priority: " + card.getPriority() + ", card type: " + card.getCardType());
@@ -218,7 +218,7 @@ public class CardHandGUI {
             if (currentCards.get(i) == card) {
                 break;
             }
-            if (!selectedCards.contains(currentCards.get(i)) && !cardManager.isLocked(currentCards.get(i))) {
+            if (!selectedCards.contains(currentCards.get(i)) && !cardManager.isLocked(currentCards.get(i), currentPlayer.getIndex())) {
                 Card temp = currentCards.get(i);
                 int tempPos = currentCards.indexOf(temp);
                 int swapPos = currentCards.indexOf(card);
