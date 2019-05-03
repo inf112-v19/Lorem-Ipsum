@@ -85,6 +85,7 @@ public class CardHandGUI {
             if (currentPlayer.isControlledByAI()) {
                 resetPlayerValues();
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
+                selectCards();
             } else {
                 if (currentPlayer.getPowerDown() == 3) {
                     table.clearChildren();
