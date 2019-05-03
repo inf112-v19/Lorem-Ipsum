@@ -80,6 +80,11 @@ public class LobbyState extends State {
 		updateConnectedPlayers();
 	}
 
+	public void removeSocketChannel(Channel ch){
+		channels.remove(channels.indexOf(ch));
+		updateConnectedPlayers();
+	}
+
 	public void updateConnectedPlayers(){
 		this.table.clearChildren();
 		displayHostIP();

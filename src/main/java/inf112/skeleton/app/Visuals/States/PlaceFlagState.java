@@ -66,7 +66,7 @@ public class PlaceFlagState extends State {
 		super.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");
-			this.gsm.push(new PauseState(this.gsm));
+			this.gsm.push(new PauseState(this.gsm, this.net));
 		}
 	}
 

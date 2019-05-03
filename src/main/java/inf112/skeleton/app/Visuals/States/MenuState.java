@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import inf112.skeleton.app.Visuals.Text;
 
 public class MenuState extends State {
 	private TextureRegionDrawable background;
@@ -37,6 +39,32 @@ public class MenuState extends State {
 		setJoinGameButton();
 
 		super.stage.addActor(table);
+	}
+
+	public MenuState(GameStateManager gsm, Text status) {
+		super(gsm);
+
+		this.start = false;
+		this.isHostingGame = false;
+		this.isJoiningGame = false;
+
+		this.table = new Table();
+		this.table.setFillParent(true);
+		this.table.defaults().uniform();
+		this.table.center();
+
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
+		this.table.setBackground(this.background);
+
+		setStartButton();
+		setHostGameButton();
+		setJoinGameButton();
+
+		super.stage.addActor(table);
+
+		status.setAlignment(Align.topLeft);
+		status.setColor(Color.RED);
+		super.stage.addActor(status);
 	}
 
 	private void setStartButton() {

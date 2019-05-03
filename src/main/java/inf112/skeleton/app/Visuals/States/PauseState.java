@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+import inf112.skeleton.app.Netcode.INetCode;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 
@@ -26,8 +27,10 @@ public class PauseState extends State {
 	private Table table;
 	private Table tablebutton;
 
+	private INetCode net;
 
-	public PauseState(GameStateManager gsm) {
+
+	public PauseState(GameStateManager gsm, INetCode net) {
 		super(gsm);
 
 		//boolean
@@ -55,6 +58,8 @@ public class PauseState extends State {
 
 		table.add(tablebutton);
 
+
+		this.net = net;
 		super.stage.addActor(table);
 
 	}
@@ -148,6 +153,7 @@ public class PauseState extends State {
 				this.gsm.set(new MenuState(this.gsm));
 			} else if (this.exit) {
 				System.out.println("Exit Game!");
+				this.net.disconnect();
 				Gdx.app.exit();
 			}
 

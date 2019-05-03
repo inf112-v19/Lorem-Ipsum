@@ -217,6 +217,15 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					this.powerdownStatus.remove(connections.indexOf(ctx));
 					this.nameList.remove(connections.indexOf(ctx));
 					this.connections.remove(connections.indexOf(ctx));
+					try{
+						if (gsm.peek() instanceof LobbyState){
+							LobbyState lobby = (LobbyState)gsm.peek();
+							lobby.removeSocketChannel(ctx.channel());
+						}
+					}catch (EmptyStackException e){
+						System.err.println("the GameStateManager stack is empty");
+					}
+
 					ctx.close();
 					break;
 				case "NAME":

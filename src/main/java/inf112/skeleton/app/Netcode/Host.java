@@ -75,6 +75,11 @@ public class Host implements INetCode{
 		this.hostHandler.resetCards();
 	}
 
+	@Override
+	public void disconnect() {
+		send("DISCONNECT!");
+	}
+
 	/*
 	public ArrayList<String> receive() {
 		return this.hostHandler.receiveFromAll();

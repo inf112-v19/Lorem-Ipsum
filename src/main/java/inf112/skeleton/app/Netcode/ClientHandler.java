@@ -101,6 +101,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			String message = split[1];
 
 			switch (command){
+				case "DISCONNECT":
+					send("DISCONNECT!" + index);
+					break;
 				case "BOARD":
 					System.out.println(message);
 					this.boardName = message;

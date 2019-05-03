@@ -15,5 +15,7 @@ public interface INetCode {
 
 	void resetCards();
 
+	void disconnect();
+
 	//String receive();
 }

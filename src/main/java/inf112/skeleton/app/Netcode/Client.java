@@ -38,7 +38,7 @@ public class Client implements INetCode{
 			});
 			ChannelFuture f = b.connect().sync();
 
-			
+
 			f.channel().closeFuture().sync();
 		} finally {
 			System.err.println("shutdown client");
@@ -66,8 +66,11 @@ public class Client implements INetCode{
 	}
 
 	@Override
-	public void resetCards() {
+	public void resetCards() { }
 
+	@Override
+	public void disconnect() {
+		this.send("DISCONNECT!");
 	}
 
 	public String receive() {

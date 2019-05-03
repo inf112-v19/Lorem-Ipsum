@@ -97,9 +97,5 @@ public class ChoosePlayerState extends State {
 		super.render();
 	}
 
-	@Override
-	public void resize() {
-		super.resize();
-	}
 
 }

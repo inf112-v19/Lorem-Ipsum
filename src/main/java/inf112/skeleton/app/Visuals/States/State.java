@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
+import inf112.skeleton.app.Visuals.Text;
 
 public abstract class State {
 	protected static final AssetHandler assetHandler = new AssetHandler();
@@ -28,22 +29,30 @@ public abstract class State {
 	}
 
 	public void update(float dt){
-		handleInput();
-		this.stage.act(dt);
+		try{
+			handleInput();
+			this.stage.act(dt);
+		}catch (Exception e){
+			gsm.set(new MenuState(gsm, new Text("Something unexpected happend! Try again", assetHandler.getSkin())));
+		}
 	}
 
 	public void render() {
-		this.stage.draw();
+		try{
+			this.stage.draw();
+		}catch (Exception e){
+			gsm.set(new MenuState(gsm, new Text("Something unexpected happend! Try again", assetHandler.getSkin())));
+		}
 	}
 
 	public void dispose() {
 		this.stage.dispose();
 	}
 
+
 	public void resize() {
 		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
-
 	/**
 	 * Method that handles the clicking of tiles on the board.
 	 * This method is GameStateManager when the current stage is active

@@ -61,8 +61,12 @@ public class CardState extends State {
 			for (int i = 0; i < players.length; i++) {
 				HashMap<Integer,Integer> powerdownStatusMap = host.getHostHandler().getPowerdownStatus();
 				if(powerdownStatusMap != null){
-					int powerdownStatus = powerdownStatusMap.get(players[i].getIndex());
-					players[i].setPowerDown(powerdownStatus);
+					try{
+						int powerdownStatus = powerdownStatusMap.get(players[i].getIndex());
+						players[i].setPowerDown(powerdownStatus);
+					}catch (NullPointerException e){
+						gsm.set(new MenuState(gsm, new Text("Something unexpected happend try to host a new game", assetHandler.getSkin())));
+					}
 				}
 				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
 			}
@@ -93,8 +97,13 @@ public class CardState extends State {
 			for (Player player : players) {
 				HashMap<Integer,Integer> powerdownStatusMap = client.getClientHandler().getPowerdownStatus();
 				if(powerdownStatusMap != null){
-					int powerdownStatus = powerdownStatusMap.get(player.getIndex());
-					player.setPowerDown(powerdownStatus);
+					try{
+						int powerdownStatus = powerdownStatusMap.get(player.getIndex());
+						player.setPowerDown(powerdownStatus);
+					}catch (NullPointerException e){
+						gsm.set(new MenuState(gsm, new Text("Something unexpected happend try to host a new game", assetHandler.getSkin())));
+
+					}
 				}
 				cardManager.setCardSeq(player, cards.get(player.getIndex()));
 			}
@@ -131,7 +140,7 @@ public class CardState extends State {
 	public void render() {
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");
-			this.gsm.push(new PauseState(this.gsm));
+			this.gsm.push(new PauseState(this.gsm, this.net));
 		}
 		super.render();
 	}
