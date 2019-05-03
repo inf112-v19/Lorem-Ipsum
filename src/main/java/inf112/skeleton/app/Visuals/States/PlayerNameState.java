@@ -30,7 +30,7 @@ public class PlayerNameState extends State {
 	private Table table;
 	private boolean continueToNextState;
 	private HashMap<Integer, String> clientNames;
-	private boolean clientHasSent = false;
+	private boolean clientHasSendt = false;
 
 	private Text waitingText;
 	private boolean row;
@@ -61,9 +61,12 @@ public class PlayerNameState extends State {
 
 		setBackground();
 		this.table.defaults().padBottom(60F);
+
 		this.table.add(getTopLabel());
 		this.table.row();
+
 		this.table.add(getTextFields());
+
 		this.table.row();
 		this.table.add(getSliderAndSubmit());
 
@@ -83,7 +86,7 @@ public class PlayerNameState extends State {
 		this.lowerTable = new Table(this.skin);
 		this.tableButton = new Table(this.skin);
 		// should be one if host is null
-		this.numPlayers = numPlayers;
+		this.numPlayers = 1;
 		this.players = new Queue<>();
 		this.textAreas = new TextArea[this.numPlayers];
 		this.waitingText = new Text("Waiting on clients", this.skin);
@@ -92,6 +95,7 @@ public class PlayerNameState extends State {
 		this.table.defaults().padBottom(60F);
 		this.table.add(getTopLabel());
 		this.table.row();
+
 		this.table.add(getTextFields());
 		this.table.row();
         this.table.add(getSliderAndSubmit());
@@ -162,8 +166,10 @@ public class PlayerNameState extends State {
             }
         });
         this.lowerTable.defaults().width(150).height(50).padLeft(25);
-        this.lowerTable.add(aiAmounts);
-        this.lowerTable.add(slider);
+        if (this.host == null && this.client == null) {
+			this.lowerTable.add(aiAmounts);
+			this.lowerTable.add(slider);
+		}
         this.lowerTable.add(button);
         return this.lowerTable;
     }
@@ -173,22 +179,22 @@ public class PlayerNameState extends State {
         aiAmount = value[0];
     }
 
-    private synchronized void isHostHandling(){
-        if (this.clientNames == null){
-            return;
-        }
-        //this should never happen
-        if (this.clientNames.size() != host.getHostHandler().getNumClients()){
-            return;
-        }
-        //adding connected clients to players queue and at last the host
-        for (int i = 0; i < clientNames.size(); i++){
-            players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
-        }
-        players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
-        //checking if correct amount of players are in the queue
-        if (players.size == host.getHostHandler().getNumClients() + 1){
-            System.out.println("Players: " + players.toString());
+	private synchronized void isHostHandling(){
+		if (this.clientNames == null){
+			return;
+		}
+		//this should never happen
+		if (this.clientNames.size() != host.getHostHandler().getNumClients()){
+			return;
+		}
+		//adding connected clients to players queue and at last the host
+		for (int i = 0; i < clientNames.size(); i++){
+			players.addLast(new Player(i, clientNames.get(i), Direction.EAST));
+		}
+		players.addLast(new Player(clientNames.size(), textAreas[0].getText(), Direction.EAST));
+		//checking if correct amount of players are in the queue
+		if (players.size == host.getHostHandler().getNumClients() + 1){
+			System.out.println("Players: " + players.toString());
 
 			String playernames = "";
 			for (Player player : players){
@@ -202,15 +208,15 @@ public class PlayerNameState extends State {
 
 	private synchronized void isClientHandling(){
 		//clients should only send name one time
-		if (!clientHasSent){
+		if (!clientHasSendt){
 			String name = textAreas[0].getText();
 			this.client.send("NAME!" + name);
-			this.clientHasSent = true;
+			this.clientHasSendt = true;
 		}
 		// listen to host
 		String playerNames = this.client.getClientHandler().getNames();
 		System.out.println("playernames = " + playerNames);
-		if (playerNames!= null && clientHasSent){
+		if (playerNames!= null && clientHasSendt){
 			String[] playernames = playerNames.split(",");
 			for (int i = 0; i < playernames.length; i++){
 				players.addLast(new Player(i, playernames[i], Direction.EAST));

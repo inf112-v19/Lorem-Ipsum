@@ -493,7 +493,7 @@ public class Board implements IBoard {
 			Position playerPos = playerPositionEntry.getValue();
 
 			//only calls the toggleLaser if the player is alive or if toggling off the laser
-			if (!player.isDead() || !laserStatus){
+			if (player.onBoardCheck() || !laserStatus){
 				player.toggleLaser(playerPos, this, laserStatus);
 			}
 		}
