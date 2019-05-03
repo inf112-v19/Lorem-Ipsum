@@ -141,7 +141,7 @@ public class PlayerTest {
         for(int i=0;i<10;i++){
             player.increaseDamage();
         }
-        assertEquals(0, player.getDamage());
+        assertEquals(2, player.getDamage());
     }
 
     @Test
