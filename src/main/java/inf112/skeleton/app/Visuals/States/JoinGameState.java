@@ -175,7 +175,7 @@ public class JoinGameState extends State {
 			}
 
 			final int port = 6666;
-			final int timeout = 100000;
+			final int timeout = 1000;
 			InetSocketAddress socketAddress = new InetSocketAddress(inputText, port);
 			boolean isReachable = false;
 			try{
@@ -195,7 +195,8 @@ public class JoinGameState extends State {
 				this.table.reset();
 				addText("Waiting for host");
 			}else{
-				System.err.println("unable to connect to host");
+				this.status.setText("Unable to connect to host");
+				System.err.println("Unable to connect to host");
 			}
 			this.tryConnect = false;
 		}
