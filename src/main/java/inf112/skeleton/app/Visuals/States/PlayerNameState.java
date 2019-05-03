@@ -19,7 +19,6 @@ import inf112.skeleton.app.Visuals.Text;
 
 import java.util.HashMap;
 
-
 public class PlayerNameState extends State {
     private Client client;
     private Host host;
@@ -183,7 +182,6 @@ public class PlayerNameState extends State {
         return this.lowerTable;
     }
 
-
     private void saveAIAmount(int value) {
         aiAmount = value;
     }
@@ -246,7 +244,6 @@ public class PlayerNameState extends State {
         gsm.set(new SpawnPointState(gsm, board, players, null));
     }
 
-
     public void makePauseButton() {
         TextButton textButton = new TextButton("Pause", this.skin);
         textButton.setColor(Color.TEAL);
@@ -283,5 +280,4 @@ public class PlayerNameState extends State {
             this.clientNames = this.host.getHostHandler().getNames();
         }
     }
-
 }

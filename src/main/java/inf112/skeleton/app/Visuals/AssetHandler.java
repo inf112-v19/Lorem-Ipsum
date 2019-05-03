@@ -58,24 +58,10 @@ public final class AssetHandler {
         manager.load("heart.png", Texture.class);
 
         //stateimages
-        manager.load("StateImages/board.png", Texture.class);
-        manager.load("StateImages/board1.png", Texture.class);
-        manager.load("StateImages/board2.png", Texture.class);
-        manager.load("StateImages/board3.png", Texture.class);
         manager.load("StateImages/chooseBoardType.png", Texture.class);
         manager.load("StateImages/choosePlayerAmount.png", Texture.class);
-        manager.load("StateImages/exit.png", Texture.class);
         manager.load("StateImages/gameOver.png", Texture.class);
-        manager.load("StateImages/mainMenu.png", Texture.class);
-        manager.load("StateImages/no1.png", Texture.class);
-        manager.load("StateImages/no2.png", Texture.class);
-        manager.load("StateImages/no3.png", Texture.class);
-        manager.load("StateImages/no4.png", Texture.class);
-        manager.load("StateImages/no5.png", Texture.class);
-        manager.load("StateImages/no6.png", Texture.class);
-        manager.load("StateImages/resume.png", Texture.class);
         manager.load("StateImages/secondBackground.png", Texture.class);
-        manager.load("StateImages/start.png", Texture.class);
         manager.load("StateImages/menuBackground.jpg", Texture.class);
 
         manager.update();
