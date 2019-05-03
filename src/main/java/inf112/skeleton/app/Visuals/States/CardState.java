@@ -68,7 +68,9 @@ public class CardState extends State {
 						gsm.set(new MenuState(gsm, "Something unexpected happened! Try to host again"));
 					}
 				}
-				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
+				if (net.getIndex() != players[i].getIndex()) {
+					cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
+				}
 			}
 		}
 
@@ -105,7 +107,9 @@ public class CardState extends State {
 
 					}
 				}
-				cardManager.setCardSeq(player, cards.get(player.getIndex()));
+				if (net.getIndex() != player.getIndex()) {
+					cardManager.setCardSeq(player, cards.get(player.getIndex()));
+				}
 			}
 		}
 	}
