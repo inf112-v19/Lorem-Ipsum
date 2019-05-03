@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Netcode;
 
 import inf112.skeleton.app.Visuals.States.GameStateManager;
-import inf112.skeleton.app.Visuals.States.LobbyState;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -9,8 +8,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Host implements INetCode{
 

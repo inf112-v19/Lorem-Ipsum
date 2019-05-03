@@ -1,16 +1,12 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
 import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
-import inf112.skeleton.app.Visuals.Text;
 
 public abstract class State {
 	protected static final AssetHandler assetHandler = new AssetHandler();

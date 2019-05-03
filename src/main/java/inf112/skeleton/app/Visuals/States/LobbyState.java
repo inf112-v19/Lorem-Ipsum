@@ -14,7 +14,6 @@ import inf112.skeleton.app.Visuals.Text;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 

@@ -3,7 +3,6 @@ package inf112.skeleton.app.GameMechanics.Board;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Direction;
-import inf112.skeleton.app.GameMechanics.GameObjects.Flag;
 import inf112.skeleton.app.GameMechanics.Tiles.*;
 import inf112.skeleton.app.Interfaces.IBoard;
 import inf112.skeleton.app.GameMechanics.Player;

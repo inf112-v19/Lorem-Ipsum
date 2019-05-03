@@ -1,14 +1,12 @@
 package inf112.skeleton.app.Netcode;
 
 import inf112.skeleton.app.GameMechanics.Cards.Card;
-import inf112.skeleton.app.GameMechanics.Cards.CardType;
 import inf112.skeleton.app.GameMechanics.Position;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 //@ChannelHandler.Sharable
