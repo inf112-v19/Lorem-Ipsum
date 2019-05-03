@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -88,6 +90,15 @@ public class ChooseBoardState extends State {
 			}else{
 				gsm.set(new ChoosePlayerState(this.gsm, this.board));
 			}
+		}
+	}
+
+	@Override
+	public void render() {
+		super.render();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm, null));
 		}
 	}
 
