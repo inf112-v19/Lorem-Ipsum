@@ -115,7 +115,7 @@ public class CardState extends State {
 	public void update(float dt) {
 		super.update(dt);
 		playerInfoGUI.update();
-		Gdx.input.setInputProcessor(stage);
+
 
 		if(this.net instanceof Client){
 			//client

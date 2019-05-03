@@ -2,7 +2,12 @@ package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -67,6 +72,8 @@ public class PlayerNameState extends State {
 		this.table.add(getTopLabel()).row();
 		this.table.add(getTextFields()).row();
 		this.table.add(getSliderAndSubmit());
+
+		makePauseButton();
 		super.stage.addActor(this.table);
 	}
 
@@ -95,6 +102,7 @@ public class PlayerNameState extends State {
 		this.table.add(getTextFields()).row();
         this.table.add(getSliderAndSubmit());
 
+		makePauseButton();
         super.stage.addActor(this.table);
 	}
 
@@ -238,6 +246,23 @@ public class PlayerNameState extends State {
 		gsm.set(new SpawnPointState(gsm, board, players, null));
 	}
 
+
+	public void makePauseButton(){
+		TextButton textButton = new TextButton("Pause", this.skin);
+		textButton.setColor(Color.TEAL);
+		textButton.setHeight(textButton.getWidth());
+		textButton.setPosition(Gdx.graphics.getWidth()-textButton.getWidth(), Gdx.graphics.getHeight() - textButton.getWidth());
+		textButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("PAUSE!");
+				gsm.push(new PauseState(gsm, null));
+				return true;
+			}
+		});
+		this.table.addActor(textButton);
+	}
+
 	@Override
 	protected void handleInput() {
 		if (this.continueToNextState){
@@ -258,4 +283,5 @@ public class PlayerNameState extends State {
 			this.clientNames = this.host.getHostHandler().getNames();
 		}
 	}
+
 }

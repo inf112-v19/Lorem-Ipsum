@@ -100,7 +100,9 @@ public class PauseState extends State {
 				this.gsm.set(new MenuState(this.gsm));
 			} else if (this.exit) {
 				System.out.println("Exit Game!");
-				this.net.disconnect();
+				if(this.net != null){
+					this.net.disconnect();
+				}
 				Gdx.app.exit();
 			}
 		}

@@ -1,5 +1,7 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -140,4 +142,12 @@ public class LobbyState extends State {
 		}).start();
 	}
 
+	@Override
+	public void resize() {
+		super.resize();
+		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+			System.out.println("PAUSE!");
+			this.gsm.push(new PauseState(this.gsm, this.host));
+		}
+	}
 }

@@ -35,6 +35,8 @@ public abstract class State {
 		}catch (Exception e){
 			gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
 		}
+
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	public void render() {
