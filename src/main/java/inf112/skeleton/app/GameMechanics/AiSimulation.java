@@ -62,31 +62,16 @@ public class AiSimulation {
         cards = originalPlayer.getCardHand();
         lockedCards = new ArrayList<>();
         int numLockedCards = originalPlayer.getDamage()+4;
+        int numUnlockedCards = 5-numLockedCards;
 
         lockedCards = new ArrayList<>();
-        lockedCards = cards.subList(cards.size()-numLockedCards, cards.size());
 
-
-
-        ArrayList<Card> toRemove = new ArrayList<>();
-
-        for (Card c : lockedCards) {
-            if(cards.contains(c)) {
-                toRemove.add(c);
-            }
+        for(int i=0;i<numLockedCards;i++){
+            lockedCards.add(cards.get(numUnlockedCards + i));
         }
-        cards.removeAll(toRemove);
-
-        List<Card> testList = new ArrayList<>();
-        for(Card c : lockedCards){
-            testList.add(c);
+        for(int i=0;i<numUnlockedCards;i++){
+            cards.remove(lockedCards.get(i));
         }
-
-        lockedCards = testList;
-
-        //for(Card card : lockedCards){
-        //    cards.remove(card);
-       // }
 
         Board testBoard = originalBoard;
         Player testPlayer = originalPlayer;
