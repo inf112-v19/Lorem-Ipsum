@@ -17,7 +17,6 @@ public class MulticastPublisher {
 
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4321);
 			socket.send(packet);
-			System.out.println("Multicasted the ip: " + multicastMessage);
 			socket.close();
 		}
 
