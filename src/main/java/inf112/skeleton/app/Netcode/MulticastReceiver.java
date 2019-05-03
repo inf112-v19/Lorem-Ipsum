@@ -67,7 +67,6 @@ public class MulticastReceiver extends Thread {
 					break;
 				}
 
-				System.out.println("Waiting for message...");
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				socket.receive(packet);
 				String received = new String(packet.getData(), 0, packet.getLength());
