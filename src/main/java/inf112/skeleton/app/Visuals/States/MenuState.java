@@ -37,6 +37,7 @@ public class MenuState extends State {
 		setStartButton();
 		setHostGameButton();
 		setJoinGameButton();
+		addInfoText();
 
 		super.stage.addActor(this.table);
 	}
@@ -104,6 +105,13 @@ public class MenuState extends State {
 				return true;
 			}
 		});
+	}
+
+	private void addInfoText(){
+		Text text = new Text("Press P to pause during the game", skin);
+		text.setAlignment(Align.center);
+		this.table.add(text);
+		this.table.row();
 	}
 
 	private void clickable(Image button) {
