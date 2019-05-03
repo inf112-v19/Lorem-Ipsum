@@ -59,7 +59,7 @@ public class MulticastReceiver extends Thread {
 	public void run() {
 		try {
 			group = InetAddress.getByName("230.0.0.0");
-			System.out.println(socket.getNetworkInterface());
+
 			socket.joinGroup(group);
 
 			while (true) {
