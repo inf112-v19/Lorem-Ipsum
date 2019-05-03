@@ -83,7 +83,6 @@ public class CardHandGUI {
             currentCards = currentPlayer.getCardHand();
 
             if (currentPlayer.isControlledByAI()) {
-                resetPlayerValues();
                 cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
                 selectCards();
             } else {
@@ -116,7 +115,7 @@ public class CardHandGUI {
         selectedCards = new HashSet<>();
         cardsToSelect = 5;
 
-        for (int i = 0; i < currentCards.size(); i++) {
+        for (int i = 0; i < 5; i++) {
             if (cardManager.isLocked(currentCards.get(i))) {
                 tempCardSeq[i] = currentCards.get(i);
                 cardsToSelect--;
