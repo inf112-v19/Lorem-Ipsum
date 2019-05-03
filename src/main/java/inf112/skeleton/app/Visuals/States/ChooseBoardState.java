@@ -1,6 +1,5 @@
 package inf112.skeleton.app.Visuals.States;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -8,16 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.Netcode.Host;
-import inf112.skeleton.app.Visuals.RoboRally;
-
 
 public class ChooseBoardState extends State {
 	private boolean start;
-
 	private Host host;
-
-	private Image textBar;
-
 	private Board board;
 	private String boardName;
 
@@ -27,20 +20,16 @@ public class ChooseBoardState extends State {
 	private TextureRegionDrawable background;
 
 	public ChooseBoardState(GameStateManager gsm, Host host) {
-
 		super(gsm);
+		this.start = false;
 
 		//Only hosts should ba able to choose board. can be null.
 		this.host = host;
-
-		this.start = false;
 
 		this.skin = assetHandler.getSkin();
 		this.table = new Table(this.skin);
 		this.table.setFillParent(true);
 		this.tableButton = new Table(this.skin);
-		//this.table.setDebug(true);
-		//this.tablebutton.setDebug(true);
 
 		setBackground();
 		this.table.defaults().padBottom(170F);
@@ -73,12 +62,13 @@ public class ChooseBoardState extends State {
 				public void  changed(ChangeEvent event, Actor actor) {
 					start = true;
 					if (tempBoardNumber == 0) {
-						boardName = "Boards/BigBoard.txt";
+						boardName = "Boards/SmallBoard.txt";
 					} else if (tempBoardNumber == 1) {
-						boardName = "Boards/BigBoard.txt";
+						boardName = "Boards/MediumBoard.txt";
 					} else if (tempBoardNumber == 2) {
 						boardName = "Boards/BigBoard.txt";
 					}
+					System.out.println("Board " + boardName + " chosen!");
 				}
 			});
 			this.tableButton.add(button);
@@ -91,7 +81,6 @@ public class ChooseBoardState extends State {
 		if (this.start) {
 			this.board = new Board(this.boardName);
 			if (this.host != null){
-				System.out.println("hello??????????");
 				this.host.send("BOARD!" + boardName);
 				gsm.set(new PlayerNameState(gsm, this.board, 1, this.host));
 			}else{

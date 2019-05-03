@@ -26,7 +26,6 @@ public class Player extends Image implements IPlayer {
     private boolean isOnTheBoard = true;
     private ArrayList<Flag> collectedFlags = new ArrayList<>();
     private boolean controlledByAI;
-
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
 
@@ -44,8 +43,6 @@ public class Player extends Image implements IPlayer {
         setPlayerDirection(direction);
         spriteType = SpriteType.PLAYER1;
     }
-
-
 
 
     /**
@@ -74,6 +71,7 @@ public class Player extends Image implements IPlayer {
         this.controlledByAI = controlledByAI;
         assignSpriteType();
         setPlayerDirection(direction);
+
     }
 
     /**
@@ -148,11 +146,11 @@ public class Player extends Image implements IPlayer {
 
     public boolean isControlledByAI(){ return controlledByAI; }
 
-    public Card[] chooseAICards(CardManager cardManager){
+    public Card[] chooseAICards(){
         Card[] cards = new Card[5];
-        for(int i=0;i<5;i++){
-           cards[i] = playerHand.get(i);
-        }
+            for (int i = 0; i < 5; i++) {
+                cards[i] = playerHand.get(i);
+            }
         return cards;
     }
 
@@ -194,7 +192,7 @@ public class Player extends Image implements IPlayer {
 			playerDamage = 10;
 		}
         else {
-			playerDamage = 0;
+			playerDamage = 2;
 		}
     }
 

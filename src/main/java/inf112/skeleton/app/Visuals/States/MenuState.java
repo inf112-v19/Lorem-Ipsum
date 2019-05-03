@@ -1,9 +1,11 @@
 package inf112.skeleton.app.Visuals.States;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.skeleton.app.Visuals.Text;
@@ -14,6 +16,7 @@ public class MenuState extends State {
 	private TextButton hostGameButton;
 	private TextButton joinGameButton;
 	private Table table;
+	private Skin skin;
 
 	private boolean start;
 	private boolean isHostingGame;
@@ -26,14 +29,12 @@ public class MenuState extends State {
 		this.isHostingGame = false;
 		this.isJoiningGame = false;
 
+		this.skin = assetHandler.getSkin();
 		this.table = new Table();
 		this.table.setFillParent(true);
-		this.table.defaults().uniform();
-		this.table.center();
+		this.table.padTop(70);
 
-		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
-		this.table.setBackground(this.background);
-
+		setBackground();
 		setStartButton();
 		setHostGameButton();
 		setJoinGameButton();
@@ -68,16 +69,29 @@ public class MenuState extends State {
 		super.stage.addActor(statusText);
 	}
 
+	private void setBackground() {
+		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
+		this.table.setBackground(this.background);
+	}
+
 	private void setStartButton() {
-		this.startButton = new Image(assetHandler.getTextureRegion("StateImages/start.png"));
+		TextButton startButton = new TextButton("Local game", this.skin);
+		this.table.defaults().padTop(10).width(150).height(50);
+		startButton.getLabel().setFontScale(1.5F);
 		this.table.add(startButton);
 		this.table.row();
 
-		clickable(this.startButton);
+		startButton.addListener(new ChangeListener() {
+			@Override
+			public void  changed(ChangeEvent event, Actor actor) {
+				System.out.println("Start game!");
+				start = true;
+			}
+		});
 	}
 
 	private void setHostGameButton(){
-		this.hostGameButton = new TextButton("Host a game", assetHandler.getSkin());
+		this.hostGameButton = new TextButton("Host a game", this.skin);
 		this.hostGameButton.getLabel().setFontScale(1.5f);
 		this.hostGameButton.getLabel().setColor(Color.WHITE);
 		this.hostGameButton.setColor(Color.BROWN);
@@ -95,7 +109,7 @@ public class MenuState extends State {
 	}
 
 	private void setJoinGameButton(){
-		this.joinGameButton = new TextButton("Join a game", assetHandler.getSkin());
+		this.joinGameButton = new TextButton("Join a game", this.skin);
 		this.joinGameButton.getLabel().setFontScale(1.5f);
 		this.joinGameButton.getLabel().setColor(Color.WHITE);
 		this.joinGameButton.setColor(Color.BROWN);
@@ -127,10 +141,10 @@ public class MenuState extends State {
 	public void handleInput() {
 		if (this.start) {
 			gsm.set(new ChooseBoardState(gsm, null));
-		}else if(this.isHostingGame){
+		} else if(this.isHostingGame){
 			System.out.println("Hosting a game!");
 			gsm.set(new LobbyState(gsm));
-		}else if(this.isJoiningGame){
+		} else if(this.isJoiningGame){
 			System.out.println("Joining a game");
 			gsm.set(new JoinGameState(gsm));
 		}

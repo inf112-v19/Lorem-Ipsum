@@ -52,7 +52,7 @@ public class BoardGUI {
 		this.boardWidth = board.getWidth();
 		this.boardHeight = board.getHeight();
 
-		this.tilesize = Math.min((int)stage.getHeight()-PAD_BOTTOM, (int)stage.getWidth()-PAD_LEFT) / (Math.min(boardWidth, boardHeight));
+		this.tilesize = Math.min((int)Math.ceil(stage.getHeight()-PAD_BOTTOM), (int)Math.ceil(stage.getWidth()-PAD_LEFT)) / (Math.min(boardWidth, boardHeight));
 
 		this.boardPixelWidth = (boardWidth-1) * tilesize;
 		this.boardPixelHeight = (boardHeight-1) * tilesize;

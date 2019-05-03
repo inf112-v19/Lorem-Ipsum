@@ -82,9 +82,10 @@ public class CardHandGUI {
             playerTurn = currentPlayer.getPlayerName() + "'s turn";
             currentCards = currentPlayer.getCardHand();
 
-
             if (currentPlayer.isControlledByAI()) {
-                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards(cardManager));
+                resetPlayerValues();
+                cardManager.setCardSeq(currentPlayer, currentPlayer.chooseAICards());
+                selectCards();
             } else {
                 if (currentPlayer.getPowerDown() == 3) {
                     table.clearChildren();
@@ -302,7 +303,6 @@ public class CardHandGUI {
                     for (int i = 0; i < tempCardSeq.length; i++) {
                         System.out.print(tempCardSeq[i].toString() + ", ");
                     }
-                    //TODO - send cards to host
                     System.out.println();
                     selectCards();
                 } else {
