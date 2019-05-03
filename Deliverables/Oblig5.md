@@ -4,20 +4,20 @@
 
 * Gruppedynamikken i teamet er god. Vi jobber godt sammen og er flinke til å hjelpe hverandre når det trengs. Under møtene er som regel alle med på planlegging og har forslag til videre arbeid på prosjektet. 
 
-* Komunikasjonen i gruppen fungerer greit. Vi har funnet ut at et fast møte hver onsdag og muligheten til et møte på fredager når det er behov for det fungerer best for oss. Mellom møtene kommuniserer vi jevnlig over slack. Vi jobber også veldig mye sammen, som for eksempel da vi skulle teste networking. Det var Henrik (gruppeleder) som endret koden for hver test og endring, men vi var sammen om det med å diskutere, komme med forslag og teste networkingen, for det hadde funket å bare teste den lokalt på egen pc. Derfor så har Henrik så mange commits, selv om flere av oss var med på det.
+* Komunikasjonen i gruppen fungerer greit. Vi har funnet ut at et fast møte hver onsdag og muligheten til et møte på fredager når det er behov for det fungerer best for oss. Mellom møtene kommuniserer vi jevnlig over slack. Vi jobber også veldig mye sammen, som for eksempel da vi skulle arbeide med networking. Det var Henrik (gruppeleder) som endret store deler av nettverkskoden da vi sammen testet og utviklet, i en viss grad siden dette krevde flere maskiner. Dette medførte at Henrik har en del fler commits, selv om vi arbeidet løsningene i felleskap. 
 
-* Til den siste obligatoriske innleveringen har medlemmene av teamet som har drevet mest med koding tatt på seg oppgaver som har med design å gøre og medlemmer som har drevet mer med design har tatt på seg opgaver med koding. Christoffer som hovedsaklig har jobbet med å kode spillbrettet med spillets logikk har blant annet designet og jobbet med lasere under den siste leveransen. Christoffer har i tilegg designet de nye spillbrettene som vi har laget til den siste leveransen. Kristoffer som har kodet minst og drevet mer med deign under de tidligere leveransene, har jobbet med å kode en AI. Henrik og Emily har tidligere drevet med design av states, under denne siste leveransen har Henrik tatt på seg hovedoppgaven med koding av LAN implementasjon i spillet. Emily har også tidligere kodet spillogikk men nå har hun gått tilbake til design av det visuelle til spillet. Øyvind har tidligere jobbet med GUI, under den siste leveransen har han hjulpet Henrik med nettverksimplementasjonen.  
+* Til den siste obligatoriske innleveringen har medlemmene av teamet som har drevet mest med koding tatt på seg oppgaver som har med design å gøre og medlemmer som har drevet mer med design har tatt på seg opgaver med koding. Christopher som hovedsaklig har jobbet med å kode spillbrettet med spillets logikk har blant annet designet og jobbet med lasere under den siste leveransen. Christopher har i tilegg designet de nye spillbrettene som vi har laget til den siste leveransen. Kristoffer som har kodet minst og drevet mer med design under de tidligere leveransene, har jobbet med å kode en AI. Henrik og Emily har tidligere drevet med design av states, under denne siste leveransen har Henrik tatt på seg hovedoppgaven med koding av LAN implementasjon i spillet. Emily har også tidligere kodet spillogikk men nå har hun gått tilbake til design av det visuelle til spillet. Øyvind har tidligere jobbet med GUI, under den siste leveransen har han hjulpet Henrik med nettverksimplementasjonen.  
 
 * Møtereferater ligger vedlagt nederst
 
 ### Retrospektiv med fokus på hele prosjektet
-* Vi har justert en del ting underveis, og det meste av det har gitt gode resultater. Ting vi har fikset er blant annet å endre rundelogikken til spillet. Vi fant ut at vi ikke hadde faser i spillet men bare runder, så det har vi justert, og nå funker spillrundene slik vi ønsker det. Etter hvert fant vi også ut at vi lagde veldig mange Stages under spillet, dette førte til at spillet vårt kjørte veldig tregt, så vi løste det ved å kun lage én Stage og at det er kun den som blir brukt gjennom hele spillet. Vi fant også senere ut at det var mye lurere å lage én AssetHandler (tidligere kalt Spritesheets), så det har vi også justert. Vi fant så ut at Table var ekstremt praktisk å bruke hvis vi skulle sette ting visuelt på brettet uten å måtte styre så veldig mye med koordinater og posisjoner, dermed ble Table brukt til å styre det visuelle i spillet. Vi har også blitt bedre på å klare å bryte store oppgaver ned til mindre mer spesifikke oppgaver, dette gjør at vi får mindre omfattende oppgaver og det er mer framgang siden vi ikke sitter lenge fast på store oppgaver. 
+* Vi har justert en del ting underveis, og det meste av det har gitt gode resultater. Ting vi har fikset er blant annet å endre rundelogikken til spillet. Vi fant ut av at vi hadde mistolket reglene for spillet anngående rundelogikken og hvordan/når fasene i spillet skulle utføres. Dette har vi nå fått endret slik at det samsvarer riktig med reglene. Vi erfarte også at vi hadde dårlig minnehåndtering som medførte at spillet kjørte tregt. Dette løste vi hovedsakelig ved å implmentere en Assethandler klasse som laster inn alle "assetst" for spillet en gang, og blir brukt videre gjennom spillet. Et annet tiltak for bedre minnehåndtering var å bli flinkere på å dispose ulike elementer da de ikke lenger "var i bruk". Vi fant så ut at Table var ekstremt praktisk å bruke hvis vi skulle sette ting visuelt på brettet uten å måtte styre så veldig mye med koordinater og posisjoner, dermed ble Table brukt til å possisjonere det visuelle i spillet. Vi har også blitt bedre på å klare å bryte store oppgaver ned til mindre mer spesifikke oppgaver, dette gjør at vi får mindre omfattende oppgaver og det er mer framgang siden vi ikke sitter lenge fast på store oppgaver. 
 
-* Det som har fungert best er blant annet hvor bra vi jobber sammen som et lag. Uten den gode kommunikasjonen mellom oss, og de produktive dagene hvor vi frivillig møter opp sammen for å kode og diskutere, så hadde vi ikke vært der vi er nå. Vi setter veldig pris på at alle har til enhver tid satt litt av sin fritid for å jobbe med dette prosjektet, selv med forskjellige timeplaner og fag, slik at vi kan komme i mål sammen. I tillegg er vi veldig fornøyd med hvordan vi har kommet sammen og løst prosjektmetodikken vår.
+* Det som har fungert best er blant annet hvor bra vi jobber sammen som et lag. Uten den gode kommunikasjonen mellom oss, og de produktive dagene hvor vi frivillig møter opp sammen for å kode og diskutere, så hadde vi ikke vært der vi er nå. Vi verdsetter hverandres arbeidsinnsats og mener vi har vært flinke til å finne tid til å arbeide sammen, selv med forskjellige timeplaner og fag. I tilegg syntes vi at vi har vært tro til vår arbeismetodikk som har hjulpet veldig i å strukturere arbeidet.
 
-* Hvis vi skulle ha fortsatt med prosjektet, så tror vi ikke at vi ville ha justert så mye. Vi har allerede justert det meste vi mener burde justeres. Likevel er det selvfølgelig alltid noe vi kunne ha justert for å få laget et langt bedre spill, og det er som for eksempel å fikse spillogikken fra starten igjen slik at vi kunne ha unngått flest mulige edge cases. Et annet eksempel er å justere spillet sånn at den er mer optimalisert for networking.
+* Hvis vi skulle ha fortsatt med prosjektet, ville vi ikke ha justert så mye. Vi har allerede justert det meste vi mener burde justeres. Likevell ser vi at en del uforutsette aspekter/utfordringer ved spillet medførte at mye kode måtte refaktureres og tilpasses for å opfylle nye krav. En mer helhetlig forståelse av spillet fra start ville også gjort arbeidet lettere for vår egen del. 
 
-* Vi fått innsikt i systemkonstruksjonsmetoder og -arbeidsprosesser ved et lagarbeid. Vi har altså fått erfart hvordan det er å organisere et prosjekt sammen med et lag du ikke har dannet selv, og å modellere livssyklusen til et programvare. I tillegg til å ha blitt bedre på kommunisere og skildre koder til andre i teamet, så har vi også begynt å forstå mer av teorien bak vanlig notasjon for analyse og design. Vi har lært en del om LibGDX, og om hvordan du kan bruke det til å lage et spill fra bunnen av ved hjelp av objektorienterte metoder.
+* Vi fått innsikt i systemkonstruksjonsmetoder og -arbeidsprosesser ved et lagarbeid. Vi har altså fått erfart hvordan det er å organisere et prosjekt sammen med et lag du ikke har dannet selv, og å modellere livssyklusen til et programvare. I tillegg til å ha blitt bedre på kommunisere og skildre koder til andre i teamet, så har vi også begynt å forstå mer av teorien bak vanlig notasjon for analyse og design. Vi har lært en del om LibGDX, og om hvordan du kan bruke det til å lage et spill fra bunnen av ved hjelp av objektorienterte metoder. Vi har også erfart utfordringene ved å arbeide på et så stort prosjekt, noe vi ikke hadde gjort før.
 
 ## Deloppgave2: Krav
 * MVP krav vi har fullført:
@@ -43,9 +43,8 @@
 
 * Kjente feil/svakheter
     * Laseranimasjonen tegnes av og til før roboten er ferdig med flyttet sitt. Dette har ikke innvirkning på logikken til spillet, men kan oppfattes som litt merkelig i GUIen.
-    * Pauseknapp (P) fungerer ikke i menyvinduet hvor man skriver inn navn til spillere for "local game"
-Dette er fordi vi i denne staten bruker en metode som hører etter inndata fra tastaturet som skal brukes til å skrive inn navnene. Her har vi laget en knapp som har samme funksjon som pausekanppen.
-    * For noen brukere, som har nettverksinstillinger som stopper aplikasjonen fra å se deres ip-adresse vil ikke deres ip-adresse komme opp når man prøver å velge "host". Dette endrer ikke annet enn at man må finne fram ip-adressen sin selv. Man kan fortsatt være både host og klient selv om man har disse innstillingene. Ip-adressen sin kan man finne under nettverksinstillinger
+    * For noen brukere, som har nettverksinstillinger som stopper aplikasjonen fra å se deres ip-adresse vil ikke deres ip-adresse komme opp når man prøver å velge "host". Dette endrer ikke annet enn at man må finne fram ip-adressen sin selv. Man kan fortsatt være både host og klient selv om man har disse innstillingene. Ip-adressen sin kan man finne under nettverksinstillinger.
+    * Nettverksdelen kunne også vært mer robust da det ikke var tistrekkelig med tid til å finne/håndtere alle spesialtilfeller, selvom programmet ikke skal kræsje og det alltid skal være mulig å komme tilbake til menyen via pause knappen *P*.
 
 ### Build instructions
 
@@ -175,13 +174,16 @@ Dette er fordi vi i denne staten bruker en metode som hører etter inndata fra t
 * Emily
 * Henrik
 * Christopher
+* Kristoffer
 
 ### Resultater siden sist møte
 * Random AI ferdig. Støtter bare offline
  
 ### Diskusjon / problemer / løsninger
-* Problemer med networkingen, funksjonen funker midlertidig bare lokalt
+* Problemer med networkingen, funksjonen funker midlertidig bare lokalt (i flere instanser av applikasjonen)
 
 ### Nye oppgaver / plan til neste møte
 * Implementere fungerende LAN modus
+* Finskirve kodebasen
+* Lete etter flere spesialtilfeller som "breaker" applikasjonen
 * Ferdigstille Oblig
