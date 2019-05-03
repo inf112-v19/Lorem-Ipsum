@@ -1,9 +1,7 @@
 package inf112.skeleton.app.GameMechanics.Tiles;
 
-import inf112.skeleton.app.GameMechanics.Board.Board;
 import inf112.skeleton.app.GameMechanics.Direction;
 import inf112.skeleton.app.GameMechanics.GameObjects.GameObject;
-import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.SpriteType;
 
 public class DoubleLaserBaseTile extends LaserBaseTile {
