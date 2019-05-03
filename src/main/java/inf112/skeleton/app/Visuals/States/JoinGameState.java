@@ -202,8 +202,13 @@ public class JoinGameState extends State {
 			System.err.println("UnknownHostException was thrown - assumed localHost was 192.168.1.1");
 		}
 
+		if (localHost == InetAddress.getLoopbackAddress().getHostAddress()) {
+			table.add(new Text("A security manager on the machine is blocking the search for hosts", skin));
+			return;
+		}
+
 		String subnet = getSubnet(localHost);
-		System.out.println(subnet);
+
 		HashMap<String, Future<Boolean>> addresses = new HashMap<>();
 
 		for (int i = 1; i < 256; i++) {
@@ -235,7 +240,6 @@ public class JoinGameState extends State {
 			catch (Exception e) {
 				System.err.println(e);
 			}
-
 		}
 	}
 
