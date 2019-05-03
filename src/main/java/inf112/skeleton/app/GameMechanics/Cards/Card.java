@@ -62,12 +62,4 @@ public class Card implements Comparable<Card> {
             return this.priority > other.priority ? -1 : 1;
         }
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 53 * hash + this.priority;
-        return hash;
-    }
 }
