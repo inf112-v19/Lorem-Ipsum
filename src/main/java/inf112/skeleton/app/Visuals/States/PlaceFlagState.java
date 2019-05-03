@@ -111,8 +111,6 @@ public class PlaceFlagState extends State {
 		}
 	}
 
-
-	//TODO make this boolean
 	private synchronized boolean placeFlag(Tile tile){
 		Flag flag = new Flag(Direction.NORTH, flagCount);
 		if (tile.placeFlagOnTile(flag)) {

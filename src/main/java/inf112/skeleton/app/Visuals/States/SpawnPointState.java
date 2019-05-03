@@ -107,8 +107,6 @@ public class SpawnPointState extends State {
 		return new Position((int) x, (int) y);
 	}
 
-
-	//TODO - make this boolean
 	private synchronized boolean putPlayerOnStage(Tile tile){
 		if (!players.isEmpty()) {
 			Position playerPos = calcTilePosition(tile);
