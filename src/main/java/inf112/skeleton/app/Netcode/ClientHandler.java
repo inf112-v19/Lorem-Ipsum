@@ -55,7 +55,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			e.printStackTrace();
 		}
 		send(msg);
-		
+
 		 */
 	}
 
