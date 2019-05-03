@@ -17,7 +17,6 @@ import java.util.HashMap;
 @ChannelHandler.Sharable
 public class HostHandler extends ChannelInboundHandlerAdapter {
 
-	private GameStateManager gsm;
 	private ArrayList<ChannelHandlerContext> connections;
 	private HashMap<Integer, String> nameList;
 	private HashMap<Integer, String> cardList;
@@ -33,8 +32,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	private HashMap<Integer,Integer> powerdownStatus;
 	private boolean cardsAlreadyAdded;
 
-	public HostHandler(GameStateManager gsm) {
-		this.gsm = gsm;
+	public HostHandler() {
 		this.connections = new ArrayList<>();
 		this.nameList = new HashMap<>();
 		this.cardList = new HashMap<>();

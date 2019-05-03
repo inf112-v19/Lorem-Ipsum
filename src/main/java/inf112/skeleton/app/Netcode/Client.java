@@ -22,7 +22,7 @@ public class Client implements INetCode{
 	public Client(final String host, final int port) {
 		this.host = host;
 		this.port = port;
-		this.clientHandler = new ClientHandler(this);
+		this.clientHandler = new ClientHandler();
 	}
 
 	public void start() throws Exception {

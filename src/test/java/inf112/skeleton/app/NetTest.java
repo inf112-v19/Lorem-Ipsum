@@ -40,7 +40,7 @@ public class NetTest {
 
 	@Test
 	public void connectToHostTest() throws InterruptedException{
-		host = new Host(gsm);
+		host = new Host();
 		client = new Client(ip, port);
 		startHost();
 		startClient();
@@ -49,7 +49,7 @@ public class NetTest {
 
 	@Test
 	public void wrongPortFailsTest() {
-		host = new Host(gsm);
+		host = new Host();
 		client = new Client(ip, 1234);
 		startHost();
 		startClient();

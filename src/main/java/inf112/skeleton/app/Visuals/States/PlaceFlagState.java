@@ -28,8 +28,6 @@ public class PlaceFlagState extends State {
 	private INetCode net;
 	private Host host;
 	private Client client;
-	private int clientNumber;
-	private boolean hostShouldSend;
 
 
 	public PlaceFlagState(GameStateManager gsm, Board board, CardManager cardManager, INetCode net) {
@@ -57,8 +55,6 @@ public class PlaceFlagState extends State {
 			this.host = null;
 		}
 
-		//this.clientNumber = 0;
-		//this.hostShouldSend = true;
 	}
 
 	@Override
@@ -134,18 +130,7 @@ public class PlaceFlagState extends State {
 				}
 			}
 			return;
-		}/*else if(this.client != null){
-			//client
-			if(this.client.getClientHandler().isThisTurn()){
-				if(placeFlag(tile)){
-					this.client.send("PLACE_FLAG!" + new Position(tile, this.boardGUI));
-				}
-			}
-		}else{
-			//local
-			placeFlag(tile);
 		}
-		/*/
 		placeFlag(tile);
 	}
 }

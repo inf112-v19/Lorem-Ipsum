@@ -22,14 +22,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	private Position flagPosition;
 
 	private boolean thisTurn;
-	private String received;
 
 	private HashMap<Integer, Card[]> playerCards;
 	private HashMap<Integer, Integer> powerdownStatus;
 	private boolean cardsReady;
 
 
-	public ClientHandler(Client client) {
+	public ClientHandler() {
 		this.playerCards = new HashMap<>();
 		this.powerdownStatus = new HashMap<>();
 		this.cardsReady = false;
@@ -160,7 +159,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 					break;
 				default:
-					this.received = string;
 					System.err.println(command + " has no handling CLIENT");
 			}
 		}

@@ -35,7 +35,7 @@ public class LobbyState extends State {
 	public LobbyState(GameStateManager gsm) {
 		super(gsm);
 		this.submit = false;
-		this.host = new Host(gsm);
+		this.host = new Host();
 		this.skin = assetHandler.getSkin();
 		this.channels = new ArrayList<>();
 

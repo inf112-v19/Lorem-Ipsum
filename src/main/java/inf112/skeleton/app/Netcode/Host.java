@@ -13,14 +13,12 @@ import java.util.EventListener;
 public class Host implements INetCode{
 
 	private static final int PORT = 6666;
-	private GameStateManager gsm;
 	private HostHandler hostHandler;
 	private ServerBootstrap b;
 	private ChannelFuture f;
 
-	public Host(GameStateManager gsm) {
-		this.gsm = gsm;
-		this.hostHandler = new HostHandler(gsm);
+	public Host() {
+		this.hostHandler = new HostHandler();
 	}
 
 	public void start() throws Exception {
