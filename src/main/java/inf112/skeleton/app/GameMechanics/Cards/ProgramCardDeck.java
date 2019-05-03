@@ -95,11 +95,6 @@ public class ProgramCardDeck implements ICardDeck {
     }
 
     @Override
-    public CardType getCardType(Card card) {
-        return card.getCardType();
-    }
-
-    @Override
     public void addCard(Card card) {
         deck.add(card);
     }
