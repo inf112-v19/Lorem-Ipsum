@@ -3,19 +3,15 @@ package inf112.skeleton.app.Netcode;
 import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
-import inf112.skeleton.app.Visuals.States.LobbyState;
 import inf112.skeleton.app.Visuals.States.MenuState;
-import inf112.skeleton.app.Visuals.Text;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.HashMap;
 
 @ChannelHandler.Sharable
@@ -23,7 +19,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	private GameStateManager gsm;
 	private ArrayList<ChannelHandlerContext> connections;
-	private ArrayList<String> received;
 	private HashMap<Integer, String> nameList;
 	private HashMap<Integer, String> cardList;
 
@@ -41,7 +36,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	public HostHandler(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.connections = new ArrayList<>();
-		this.received = new ArrayList<>();
 		this.nameList = new HashMap<>();
 		this.cardList = new HashMap<>();
 		this.powerdownStatus = new HashMap<>();
@@ -153,6 +147,10 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return cards;
 	}
 
+	public ArrayList<ChannelHandlerContext> getConnections() {
+		return connections;
+	}
+
 	public HashMap<Integer, Integer> getPowerdownStatus() {
 		return powerdownStatus;
 	}
@@ -194,22 +192,16 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				case "CONNECT":
 					this.connections.add(ctx);
 					this.index = this.connections.size();
-
-					//updating connected client list in LobbyState
-					try{
-						if (gsm.peek() instanceof LobbyState){
-							LobbyState lobby = (LobbyState)gsm.peek();
-							lobby.addSocketChannel(ctx.channel());
-						}
-					}catch (EmptyStackException e){
-						System.err.println("the GameStateManager stack is empty");
-					}
 					break;
 				case "DISCONNECT":
+					int i = this.connections.indexOf(ctx);
+					this.nameList.remove(i);
+					this.cardList.remove(i);
+					this.connections.remove(i);
+					this.index = this.connections.size();
 					ctx.close();
 					break;
 				case "NAME":
-					//System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
 					this.nameList.put(connections.indexOf(ctx), message);
 					System.out.println(nameList);
 					break;
@@ -227,11 +219,8 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					this.cardList.put(connections.indexOf(ctx), message);
 					break;
 				default:
-					received.add(string);
 					System.err.println(command + " has no handling HOST");
-		}
-
-
+			}
 
 		}
 	}
@@ -244,7 +233,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		cause.printStackTrace();
-		gsm.set(new MenuState(gsm, "Something unexpected happend! Try again"));
+		gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
 		ctx.close();
 	}
 

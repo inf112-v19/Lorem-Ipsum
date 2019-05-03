@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -47,6 +48,7 @@ public class LobbyState extends State {
 		super.stage.addActor(status);
 
 		startServer();
+
 	}
 
 	private void displayHostIP() {
@@ -77,25 +79,25 @@ public class LobbyState extends State {
 		}
 	}
 
+	/*
 	public void addSocketChannel(Channel ch){
 		channels.add(ch);
 		updateConnectedPlayers();
 	}
-
-	public void removeSocketChannel(Channel ch){
-		channels.remove(channels.indexOf(ch));
-		updateConnectedPlayers();
-	}
+	 */
 
 	public void updateConnectedPlayers(){
 		this.table.clearChildren();
 		displayHostIP();
 		addTableHeader();
 
-		for (Channel ch : channels) {
-			this.table.add(new Text(ch.toString(), this.skin));
+		ArrayList<ChannelHandlerContext> chctx = host.getHostHandler().getConnections();
+		for (ChannelHandlerContext ctx : chctx) {
+			channels.add(ctx.channel());
+			this.table.add(new Text(ctx.channel().toString(), this.skin));
 			this.table.row();
 		}
+
 		addSubmitButton();
 		this.status.setText("");
 	}
@@ -143,11 +145,17 @@ public class LobbyState extends State {
 	}
 
 	@Override
-	public void resize() {
-		super.resize();
+	public void render() {
+		super.render();
 		if (Gdx.input.isKeyPressed(Input.Keys.P)) {
 			System.out.println("PAUSE!");
 			this.gsm.push(new PauseState(this.gsm, this.host));
 		}
+	}
+
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		updateConnectedPlayers();
 	}
 }
