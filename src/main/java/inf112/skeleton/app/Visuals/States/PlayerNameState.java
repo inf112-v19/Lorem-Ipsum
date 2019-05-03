@@ -104,7 +104,7 @@ public class PlayerNameState extends State {
     }
 
     private void setBackground() {
-        this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png"));
+        this.background = new TextureRegionDrawable(assetHandler.getTexture("StateImages/secondBackground.png"));
         this.table.setBackground(this.background);
     }
 

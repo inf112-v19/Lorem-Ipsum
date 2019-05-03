@@ -34,15 +34,15 @@ public class CardState extends State {
         super(gsm);
         this.board = board;
         this.batch = new SpriteBatch();
-        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, super.assetHandler);
+        this.boardGUI = new BoardGUI(board, this.camera, this.stage, this.gsm, assetHandler);
         this.boardGUI.create();
 
         this.players = board.getAllPlayers();
 
-        this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
+        this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, assetHandler);
         this.cardManager = cardManager;
 
-        this.cardHandGUI = new CardHandGUI(cardManager, stage, super.assetHandler);
+        this.cardHandGUI = new CardHandGUI(cardManager, stage, assetHandler);
 
         this.net = net;
         if (this.net != null) {

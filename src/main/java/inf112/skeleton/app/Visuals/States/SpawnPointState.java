@@ -29,7 +29,7 @@ public class SpawnPointState extends State {
         super(gsm);
         this.players = players;
         this.board = board;
-        this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, super.assetHandler);
+        this.boardGUI = new BoardGUI(board, super.camera, super.stage, gsm, assetHandler);
         this.boardGUI.create();
         this.boardGUI.addListenersToStage();
         this.text = new Text("'s turn to choose spawn", assetHandler.getSkin(), Text.TextPosition.TOP_LEFT);

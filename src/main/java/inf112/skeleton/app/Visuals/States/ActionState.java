@@ -30,12 +30,12 @@ public class ActionState extends State {
 		this.board = board;
 		this.batch = new SpriteBatch();
 		this.batch.setProjectionMatrix(camera.combined);
-		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, super.assetHandler);
+		this.boardGUI = new BoardGUI(board, camera, this.stage, this.gsm, assetHandler);
 		this.boardGUI.create();
 		this.updateCount = 0;
 		this.boardCanPlayCards = true;
-		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, super.assetHandler);
-		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, super.assetHandler);
+		this.playerInfoGUI = new PlayerInfoGUI(board, batch, stage, assetHandler);
+		this.pendingCardsGUI = new PendingCardsGUI(batch, board, stage, assetHandler);
 		this.cardManager = cardManager;
 
 		this.net = net;

@@ -43,7 +43,7 @@ public class JoinGameState extends State {
         this.table = new Table();
         this.table.center();
         this.table.setFillParent(true);
-        this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png")));
+        this.table.setBackground(new TextureRegionDrawable(assetHandler.getTexture("StateImages/secondBackground.png")));
         this.skin = assetHandler.getSkin();
         this.tryConnect = false;
         this.clientFail = false;

@@ -113,11 +113,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 					break;
 				case "CLIENT_TURN":
 					System.out.println("din tur: " + (Integer.parseInt(message) == index));
-					if(Integer.parseInt(message) == index){
-						this.thisTurn = true;
-					}else{
-						this.thisTurn = false;
-					}
+					this.thisTurn = Integer.parseInt(message) == index;
 					break;
 				case "SPAWN":
 					this.spawnPosition = translateStringToPosition(message);

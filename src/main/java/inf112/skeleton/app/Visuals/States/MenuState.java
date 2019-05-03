@@ -52,7 +52,7 @@ public class MenuState extends State {
 	}
 
 	private void setBackground() {
-		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
+		this.background = new TextureRegionDrawable(assetHandler.getTexture("StateImages/menuBackground.jpg"));
 		this.table.setBackground(this.background);
 	}
 

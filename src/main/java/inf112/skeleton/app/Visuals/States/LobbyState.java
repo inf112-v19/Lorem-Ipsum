@@ -36,7 +36,7 @@ public class LobbyState extends State {
 		super(gsm);
 		this.submit = false;
 		this.host = new Host(gsm);
-		this.skin = super.assetHandler.getSkin();
+		this.skin = assetHandler.getSkin();
 		this.channels = new ArrayList<>();
 
 		this.status = new Text("", skin, Text.TextPosition.TOP_LEFT);
@@ -45,7 +45,7 @@ public class LobbyState extends State {
 		this.table = new Table();
 		this.table.center();
 		this.table.setFillParent(true);
-		this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png")));
+		this.table.setBackground(new TextureRegionDrawable(assetHandler.getTexture("StateImages/secondBackground.png")));
 
 		updateConnectedPlayers();
 
