@@ -12,7 +12,7 @@ import inf112.skeleton.app.GameMechanics.Player;
 import java.util.HashMap;
 
 public class PendingCardsGUI {
-    
+
     private Board board;
     private AssetHandler assetHandler;
     private Stage stage;
