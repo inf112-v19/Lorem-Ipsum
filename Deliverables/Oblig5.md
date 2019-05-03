@@ -53,7 +53,7 @@
 * Run the project
     * run Main.java located: `.../src/main/java/inf112/skeleton/app/Main.java`
 * Java 8 is recommended
-* Allow Parallel run in the run-config to test the hosting and joining of games on localhost.
+* Allow Parallel run in the run-config to be able to test running bot host an client on one machine
 * Testing of multiple machines may require you to manualy find the ip of the host. 
 ### Testing
 
