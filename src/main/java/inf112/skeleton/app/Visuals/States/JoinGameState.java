@@ -202,7 +202,9 @@ public class JoinGameState extends State {
 			System.err.println("UnknownHostException was thrown - assumed localHost was 192.168.1.1");
 		}
 
-		if (localHost == InetAddress.getLoopbackAddress().getHostAddress()) {
+		//test if a security manager is blocking the getLocalHost() operation - will return loopback address
+		String localhostSubnet = getSubnet(getSubnet(getSubnet(localHost)));
+		if (localhostSubnet.equals("127")) {
 			table.add(new Text("A security manager on the machine is blocking the search for hosts", skin));
 			return;
 		}
