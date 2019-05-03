@@ -50,8 +50,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		this.clientNumber = 0;
 
 		cardsAlreadyAdded = false;
-
-
 	}
 
 	public synchronized void requireSend(){
@@ -87,14 +85,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		return true;
 	}
 
-	/*
-	public synchronized void sendToClient(String msg, int clientNumber){
-		if (clientNumber == connections.size()){
-			return;
-		}
-		send(msg, connections.get(clientNumber), clientNumber);
-	}
-	 */
 
 	public synchronized void sendToAll(String s){
 		for(int i = 0; i < connections.size(); i++){
@@ -214,20 +204,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					}
 					break;
 				case "DISCONNECT":
-					/*
-					this.powerdownStatus.remove(connections.indexOf(ctx));
-					this.nameList.remove(connections.indexOf(ctx));
-					this.connections.remove(connections.indexOf(ctx));
-					try{
-						if (gsm.peek() instanceof LobbyState){
-							LobbyState lobby = (LobbyState)gsm.peek();
-							lobby.removeSocketChannel(ctx.channel());
-						}
-					}catch (EmptyStackException e){
-						System.err.println("the GameStateManager stack is empty");
-					}
-					 */
-
 					ctx.close();
 					break;
 				case "NAME":
@@ -268,13 +244,5 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		cause.printStackTrace();
 		ctx.close();
 	}
-
-
-	/*
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) {
-		ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
-	}
-	 */
 
 }

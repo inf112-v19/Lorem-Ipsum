@@ -31,9 +31,6 @@ public class Host implements INetCode{
 			b.group(boss, worker);
 			b.channel(NioServerSocketChannel.class);
 			b.localAddress(new InetSocketAddress(PORT));
-			//b.childOption(ChannelOption.TCP_NODELAY, true);
-			//b.option(ChannelOption.SO_BACKLOG, 128);
-			//b.childOption(ChannelOption.SO_KEEPALIVE, true);
 			b.childHandler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
@@ -80,20 +77,4 @@ public class Host implements INetCode{
 		send("DISCONNECT!");
 	}
 
-	/*
-	public ArrayList<String> receive() {
-		return this.hostHandler.receiveFromAll();
-	}
-	 */
-
-
-
-	/*public static void main(String[] args) throws Exception {
-		if(PORT < 0) {
-			System.err.println("Usage: " + Host.class.getSimpleName() + " <port>");
-			return;
-		}
-		new Host().start();
-	}
-	 */
 }

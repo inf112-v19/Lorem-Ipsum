@@ -17,5 +17,4 @@ public interface INetCode {
 
 	void disconnect();
 
-	//String receive();
 }

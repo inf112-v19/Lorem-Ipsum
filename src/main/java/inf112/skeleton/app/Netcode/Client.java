@@ -28,7 +28,6 @@ public class Client implements INetCode{
 			Bootstrap b = new Bootstrap();
 			b.group(group);
 			b.channel(NioSocketChannel.class);
-			//b.option(ChannelOption.SO_KEEPALIVE, true);
 			b.remoteAddress(new InetSocketAddress(host, port));
 			b.handler(new ChannelInitializer<SocketChannel>() {
 				@Override
@@ -71,10 +70,6 @@ public class Client implements INetCode{
 	@Override
 	public void disconnect() {
 		this.send("DISCONNECT!");
-	}
-
-	public String receive() {
-		return this.clientHandler.receive();
 	}
 
 	public static void main(String[] args) throws Exception {

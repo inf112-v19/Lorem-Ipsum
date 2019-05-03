@@ -14,12 +14,10 @@ import java.util.HashMap;
 //@ChannelHandler.Sharable
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-	private Client client;
 	private ChannelHandlerContext ctx;
 	private int index;
 	private String boardName;
 	private String clientNames;
-	private String cardString;
 	private Position spawnPosition;
 	private Position flagPosition;
 
@@ -32,7 +30,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 
 	public ClientHandler(Client client) {
-		this.client = client;
 		this.playerCards = new HashMap<>();
 		this.powerdownStatus = new HashMap<>();
 		this.cardsReady = false;
@@ -176,9 +173,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		return thisTurn;
 	}
 
-	public void setThisTurn(boolean thisTurn) {
-		this.thisTurn = thisTurn;
-	}
 
 	public String getBoardName() {
 		return boardName;
