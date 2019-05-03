@@ -58,7 +58,7 @@ public class MulticastReceiver extends Thread {
 	@Override
 	public void run() {
 		try {
-			group = InetAddress.getByName("230.0.0.0");
+			group = InetAddress.getByName("224.0.0.3");
 
 			socket.joinGroup(group);
 
