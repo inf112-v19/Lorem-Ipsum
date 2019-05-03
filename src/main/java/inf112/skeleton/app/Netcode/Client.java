@@ -38,7 +38,7 @@ public class Client implements INetCode{
 			});
 			ChannelFuture f = b.connect().sync();
 
-
+			
 			f.channel().closeFuture().sync();
 		} finally {
 			System.err.println("shutdown client");

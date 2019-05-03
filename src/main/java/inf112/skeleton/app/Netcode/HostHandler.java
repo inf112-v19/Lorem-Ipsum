@@ -191,7 +191,12 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		for (String string :oneMessageAtATime) {
 			String[] split = string.split("!");
 			String command = split[0];
-			String message = split[1];
+			String message;
+			try{
+				message = split[1];
+			}catch (IndexOutOfBoundsException e){
+				message = "";
+			}
 
 			switch (command){
 				case "CONNECT":
