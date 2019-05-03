@@ -39,6 +39,7 @@ public class JoinGameState extends State {
 	private Text status;
 	private boolean tryConnect;
 	private String buttonText;
+	private Thread findHostThread;
 
 	public JoinGameState(GameStateManager gsm) {
 		super(gsm);
@@ -71,7 +72,7 @@ public class JoinGameState extends State {
 		table.add(new Text("Searching for available hosts...", skin));
 		table.row();
 
-		Thread thread = new Thread(new Runnable() {
+		findHostThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				table.add(new Text("Hostname    -    IP", skin));
@@ -79,7 +80,7 @@ public class JoinGameState extends State {
 				addHostsToTable();
 			}
 		});
-		thread.start();
+		findHostThread.start();
 	}
 
 	private void addStatusText(){
@@ -120,6 +121,7 @@ public class JoinGameState extends State {
 		if(client != null){
 			String boardName = client.getClientHandler().getBoardName();
 			if (boardName != null){
+				findHostThread.interrupt();
 				gsm.set(new PlayerNameState(gsm, new Board(boardName), this.client));
 			}
 		}
