@@ -56,25 +56,11 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card other) {
-        if (this.equals(other)) {
+        if (this.priority == other.priority) {
             return 0;
         } else {
             return this.priority > other.priority ? -1 : 1;
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof Card)) {
-            return false;
-        }
-
-        Card c = (Card) o;
-
-        return this.priority == c.priority;
     }
 
     @Override
