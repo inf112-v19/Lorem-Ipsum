@@ -89,7 +89,6 @@ public class JoinGameState extends State {
 						break;
 					}
 
-					System.out.println(hosts.size());
 					if (i < hosts.size()) {
 						addHostButton(hosts.get(i));
 						i++;

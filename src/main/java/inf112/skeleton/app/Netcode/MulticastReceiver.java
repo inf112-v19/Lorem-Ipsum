@@ -22,6 +22,7 @@ public class MulticastReceiver extends Thread {
 
 		try {
 			NetworkInterface ni = findCorrectNetworkInterface();
+
 			socket = new MulticastSocket(4321);
 			socket.setNetworkInterface(ni);
 		}
@@ -50,6 +51,7 @@ public class MulticastReceiver extends Thread {
 		catch (Exception e) {
 			System.err.println("Error while finding correct network interface: " + e);
 		}
+
 		return ni;
 	}
 
