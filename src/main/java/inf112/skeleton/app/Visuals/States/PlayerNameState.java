@@ -226,7 +226,7 @@ public class PlayerNameState extends State {
 			players.addLast(player);
 		}
 		for(int i=0;i<aiAmount;i++){
-			players.addLast(new Player(i+numPlayers, "AI" + (i + 1), Direction.EAST, board, true));
+			players.addLast(new Player(i+numPlayers, "AI" + (i + 1), Direction.EAST, true));
 		}
 		gsm.set(new SpawnPointState(gsm, board, players, null));
 	}

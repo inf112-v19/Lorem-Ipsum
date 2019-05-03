@@ -26,10 +26,8 @@ public class Player extends Image implements IPlayer {
     private boolean isOnTheBoard = true;
     private ArrayList<Flag> collectedFlags = new ArrayList<>();
     private boolean controlledByAI;
-    private Board board;
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
-    private AiSimulation aiSimulation;
 
 	private int powerDown = 0;
 
@@ -45,8 +43,6 @@ public class Player extends Image implements IPlayer {
         setPlayerDirection(direction);
         spriteType = SpriteType.PLAYER1;
     }
-
-
 
 
     /**
@@ -69,16 +65,13 @@ public class Player extends Image implements IPlayer {
      * @param direction Direction the player is facing
      * @param controlledByAI sets player to be controlled by a user or AI
      */
-    public Player(int index, String playerID, Direction direction, Board board, boolean controlledByAI){
+    public Player(int index, String playerID, Direction direction, boolean controlledByAI){
         this.index = index;
         this.playerName = playerID;
         this.controlledByAI = controlledByAI;
-        this.board = board;
         assignSpriteType();
         setPlayerDirection(direction);
-        if(controlledByAI){
-            aiSimulation = new AiSimulation(board, this);
-        }
+
     }
 
     /**
@@ -154,17 +147,10 @@ public class Player extends Image implements IPlayer {
     public boolean isControlledByAI(){ return controlledByAI; }
 
     public Card[] chooseAICards(){
-        Card[] cards;
-        //try {
-            cards = aiSimulation.findBestCards();
-       // }
-       // catch (Exception e){
-        //    cards = new Card[5];
-        //    for (int i = 0; i < 5; i++) {
-        //        cards[i] = playerHand.get(i);
-         //   }
-         //   System.out.println("Feil i chooseAiCards i Player");
-       // }
+        Card[] cards = new Card[5];
+            for (int i = 0; i < 5; i++) {
+                cards[i] = playerHand.get(i);
+            }
         return cards;
     }
 
