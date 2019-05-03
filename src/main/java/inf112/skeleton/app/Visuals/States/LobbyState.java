@@ -78,12 +78,6 @@ public class LobbyState extends State {
 		}
 	}
 
-	/*
-	public void addSocketChannel(Channel ch){
-		channels.add(ch);
-		updateConnectedPlayers();
-	}
-	 */
 
 	public void updateConnectedPlayers(){
 		this.table.clearChildren();
@@ -108,7 +102,7 @@ public class LobbyState extends State {
 		textButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (channels.size() > 0){
+				if (host.getHostHandler().getNumClients() > 0){
 					submit = true;
 					return true;
 				}

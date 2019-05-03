@@ -8,12 +8,15 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.EventListener;
 
 public class Host implements INetCode{
 
 	private static final int PORT = 6666;
 	private GameStateManager gsm;
 	private HostHandler hostHandler;
+	private ServerBootstrap b;
+	private ChannelFuture f;
 
 	public Host(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -24,7 +27,7 @@ public class Host implements INetCode{
 		EventLoopGroup boss = new NioEventLoopGroup(1);
 		EventLoopGroup worker = new NioEventLoopGroup(6);
 		try {
-			ServerBootstrap b = new ServerBootstrap();
+			b = new ServerBootstrap();
 			b.group(boss, worker);
 			b.channel(NioServerSocketChannel.class);
 			b.localAddress(new InetSocketAddress(PORT));
@@ -34,7 +37,7 @@ public class Host implements INetCode{
 					ch.pipeline().addLast(hostHandler);
 				}
 			});
-			ChannelFuture f = b.bind().sync().await();
+			f = b.bind().sync().await();
 
 			f.channel().closeFuture().sync();
 		} finally {
@@ -72,6 +75,8 @@ public class Host implements INetCode{
 	@Override
 	public void disconnect() {
 		send("DISCONNECT!");
+		f.addListener(ChannelFutureListener.CLOSE);
+
 	}
 
 }

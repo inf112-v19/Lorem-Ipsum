@@ -117,7 +117,7 @@ public class PlayerNameState extends State {
 
     private Table getTextFields() {
         for (int i = 0; i < this.numPlayers; i++) {
-            this.textAreas[i] = new TextArea("", this.skin);
+            this.textAreas[i] = new TextArea("Player " + i, this.skin);
 
             Text text = new Text("Player " + (i + 1), this.skin);
             text.setFontScale(1.5f);
@@ -168,6 +168,7 @@ public class PlayerNameState extends State {
                 continueToNextState = true;
                 table.clearChildren();
                 table.add(waitingText);
+                makePauseButton();
                 System.out.println("You chose " + aiAmount + " AI(s)");
             }
         });
@@ -248,7 +249,7 @@ public class PlayerNameState extends State {
         TextButton textButton = new TextButton("Pause", this.skin);
         textButton.setColor(Color.TEAL);
         textButton.setHeight(textButton.getWidth());
-        textButton.setPosition(Gdx.graphics.getWidth() - textButton.getWidth(), Gdx.graphics.getHeight() - textButton.getWidth());
+        textButton.setPosition(stage.getWidth() - textButton.getWidth(), stage.getHeight() - textButton.getWidth());
         textButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

@@ -12,6 +12,8 @@ import java.util.HashMap;
 //@ChannelHandler.Sharable
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
+	private boolean isActiv;
+
 	private ChannelHandlerContext ctx;
 	private int index;
 	private String boardName;
@@ -31,6 +33,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		this.playerCards = new HashMap<>();
 		this.powerdownStatus = new HashMap<>();
 		this.cardsReady = false;
+		this.isActiv = true;
 	}
 
 	public synchronized void send(String msg){
@@ -93,11 +96,17 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			string = extractIndex(string);
 			String[] split = string.split("!");
 			String command = split[0];
-			String message = split[1];
+			String message = "";
+			try{
+				message = split[1];
+			}catch (ArrayIndexOutOfBoundsException e){
+				ctx.close();
+			}
 
 			switch (command){
 				case "DISCONNECT":
-					send("DISCONNECT!" + index);
+					//send("DISCONNECT!" + index);
+					this.isActiv = false;
 					break;
 				case "BOARD":
 					System.out.println(message);
@@ -165,6 +174,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			}
 		}
 
+	}
+
+	public boolean isActiv() {
+		return isActiv;
 	}
 
 	public boolean isThisTurn() {

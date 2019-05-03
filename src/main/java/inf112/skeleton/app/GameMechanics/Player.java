@@ -340,6 +340,7 @@ public class Player extends Image implements IPlayer {
 	 * 	1 - power down this round
 	 * 	2 - power down next round
 	 * 	3 - was destroyed round power down was requested, player gets chance to cancel power down
+     * 	4 - client disconnected, handle player as power down and kill
 	 *
 	 * @param powerDown
 	 */
@@ -387,5 +388,14 @@ public class Player extends Image implements IPlayer {
 			}
 		}
 	}
+
+
+	public void killPlayer() {
+	    setOnTheBoard(false);
+
+	    while (!isDead()) {
+	        destroyPlayer();
+        }
+    }
 
 }

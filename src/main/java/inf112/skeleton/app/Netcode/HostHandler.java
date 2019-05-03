@@ -195,10 +195,8 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 					break;
 				case "DISCONNECT":
 					int i = this.connections.indexOf(ctx);
-					this.nameList.remove(i);
-					this.cardList.remove(i);
 					this.connections.remove(i);
-					this.index = this.connections.size();
+					this.powerdownStatus.put(i, 4);
 					ctx.close();
 					break;
 				case "NAME":
@@ -233,7 +231,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		cause.printStackTrace();
-		gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
 		ctx.close();
 	}
 

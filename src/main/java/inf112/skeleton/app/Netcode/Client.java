@@ -15,6 +15,7 @@ public class Client implements INetCode{
 	private String host;
 	private int port;
 	private ClientHandler clientHandler;
+	private Bootstrap b;
 
 	public Client(final String host, final int port) {
 		this.host = host;
@@ -25,7 +26,7 @@ public class Client implements INetCode{
 	public void start() throws Exception {
 		EventLoopGroup group = new NioEventLoopGroup(1);
 		try {
-			Bootstrap b = new Bootstrap();
+			b = new Bootstrap();
 			b.group(group);
 			b.channel(NioSocketChannel.class);
 			b.remoteAddress(new InetSocketAddress(host, port));
@@ -69,7 +70,9 @@ public class Client implements INetCode{
 
 	@Override
 	public void disconnect() {
-		this.send("DISCONNECT!");
+		if(this.clientHandler.isActiv()){
+			this.send("DISCONNECT!");
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

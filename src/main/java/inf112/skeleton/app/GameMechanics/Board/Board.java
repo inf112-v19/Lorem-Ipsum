@@ -173,6 +173,10 @@ public class Board implements IBoard {
 		}
 
 		for (Player player : playerPositions.keySet()) {
+			//client disconnect
+			if (player.getPowerDown() == 4) {
+				player.killPlayer();
+			}
 
 			//players in power down gets health reset and skips cards
 			if (player.getPowerDown() == 1) {
@@ -378,6 +382,8 @@ public class Board implements IBoard {
 			else if (player.getPowerDown() == 2) {
 				player.setPowerDown(1);
 			}
+
+
 
 			//finally set player to not ready - boolean is used in the card state (players choosing cards)
 			player.setNotReady();
