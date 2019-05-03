@@ -11,20 +11,12 @@ public class Text extends Label {
 	 * TOP_LEFT is default
 	 */
 	public enum TextPosition {
-		//TODO - make positioning better and correct
-		TOP_LEFT(5, Gdx.graphics.getHeight()-(Text.fontSize * 35)),
-		TOP_RIGHT(Gdx.graphics.getWidth() - DEFAULT_WIDTH - 20,Gdx.graphics.getHeight()-(Text.fontSize * 35)),
-		BOTTOM_LEFT(20,20),
-		BOTTOM_RIGHT(20,20),
-		CENTER(0,0),
-		TOP_CENTER(0,0),
-		BOTTOM_CENTER(0,0);
+		TOP_LEFT(5, Gdx.graphics.getHeight()-(Text.fontSize * 35));
 
 		private float x;
 		private float y;
 
 		TextPosition(float x, float y){
-			//System.out.println(x+","+y);
 			this.x = x;
 			this.y = y;
 		}
@@ -32,7 +24,6 @@ public class Text extends Label {
 
 	private static final float fontSize = 1;
 	private static final float DEFAULT_WIDTH = 190;
-	private static final TextPosition DEFAULT_TEXT_POSITION = TextPosition.TOP_LEFT;
 	private StringBuilder text;
 
 	/**
@@ -72,24 +63,6 @@ public class Text extends Label {
 		this.text.append(text);
 	}
 
-
-	public void appendText(String text) {
-		this.text.append(text);
-		this.setText(this.text);
-
-	}
-
-	public void prependText(String text) {
-		this.text.insert(0, text);
-		super.setText(this.text);
-	}
-
-	public void appendDynamicsText(String dynamicText) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(this.text);
-		builder.append(dynamicText);
-		super.setText(builder);
-	}
 
 	public void prependDynamicsText(String dynamicText) {
 		StringBuilder builder = new StringBuilder();
