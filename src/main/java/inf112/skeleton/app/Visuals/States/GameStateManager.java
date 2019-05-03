@@ -1,7 +1,6 @@
 package inf112.skeleton.app.Visuals.States;
 
 import inf112.skeleton.app.GameMechanics.Tiles.Tile;
-
 import java.util.EmptyStackException;
 import java.util.Stack;
 
@@ -37,7 +36,6 @@ public class GameStateManager {
 
 	public void update(float dt) {
 		states.peek().update(dt);
-
 	}
 
 	public void render() {

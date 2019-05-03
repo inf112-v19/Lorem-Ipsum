@@ -24,7 +24,5 @@ public class Wall extends GameObject {
 				System.err.println("No valid Direction in Wall!");
 				break;
 		}
-
 	}
-
 }

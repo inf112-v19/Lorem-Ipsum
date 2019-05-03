@@ -116,19 +116,15 @@ public class CardState extends State {
         }
     }
 
-
     @Override
     public void update(float dt) {
         super.update(dt);
         playerInfoGUI.update();
 
-
         if (this.net instanceof Client) {
-            //client
             isClientHandling();
         } else if (this.net instanceof Host) {
             isHostHandling();
-            //host
         } else {
             //local
         }

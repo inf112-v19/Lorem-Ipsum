@@ -9,55 +9,54 @@ import inf112.skeleton.app.Visuals.AssetHandler;
 import inf112.skeleton.app.Visuals.RoboRally;
 
 public abstract class State {
-	protected static final AssetHandler assetHandler = new AssetHandler();
-	protected GameStateManager gsm;
-	protected OrthographicCamera camera = new OrthographicCamera();
-	protected Stage stage = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
+    protected static final AssetHandler assetHandler = new AssetHandler();
+    protected GameStateManager gsm;
+    protected OrthographicCamera camera = new OrthographicCamera();
+    protected Stage stage = new Stage(new FitViewport(RoboRally.WIDTH, RoboRally.HEIGHT, camera));
 
 
-	protected State(GameStateManager gsm) {
-		this.gsm = gsm;
-		Gdx.input.setInputProcessor(this.stage);
-	}
+    protected State(GameStateManager gsm) {
+        this.gsm = gsm;
+        Gdx.input.setInputProcessor(this.stage);
+    }
 
-	protected void handleInput() {
+    protected void handleInput() {
 
-	}
+    }
 
-	public void update(float dt){
-		try{
-			handleInput();
-			this.stage.act(dt);
-		}catch (Exception e){
-			gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
-		}
+    public void update(float dt) {
+        try {
+            handleInput();
+            this.stage.act(dt);
+        } catch (Exception e) {
+            gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
+        }
 
-		Gdx.input.setInputProcessor(stage);
-	}
+        Gdx.input.setInputProcessor(stage);
+    }
 
-	public void render() {
-		try{
-			this.stage.draw();
-		}catch (Exception e){
-			gsm.set(new MenuState(gsm,"Something unexpected happened! Try again"));
-		}
-	}
+    public void render() {
+        try {
+            this.stage.draw();
+        } catch (Exception e) {
+            gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
+        }
+    }
 
-	public void dispose() {
-		this.stage.dispose();
-	}
+    public void dispose() {
+        this.stage.dispose();
+    }
 
+    public void resize() {
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
 
-	public void resize() {
-		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	}
-	/**
-	 * Method that handles the clicking of tiles on the board.
-	 * This method is GameStateManager when the current stage is active
-	 */
-	public void tileEventHandle(Tile tile) {
+    /**
+     * Method that handles the clicking of tiles on the board.
+     * This method is GameStateManager when the current stage is active
+     */
+    public void tileEventHandle(Tile tile) {
 
-	}
-
+    }
 
 }

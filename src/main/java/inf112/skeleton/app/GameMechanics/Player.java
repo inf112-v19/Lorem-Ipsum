@@ -28,14 +28,14 @@ public class Player extends Image implements IPlayer {
     private Direction playerDirection; //Direction the player is facing
     private int directionNumber = 0;  //number used to turn player around
 
-	private int powerDown = 0;
+    private int powerDown = 0;
 
 
     /**
      * Create a player object
      *
      * @param playerName Name to be displayed for the player
-     * @param direction Direction the player is facing
+     * @param direction  Direction the player is facing
      */
     public Player(String playerName, Direction direction) {
         this.playerName = playerName;
@@ -45,12 +45,13 @@ public class Player extends Image implements IPlayer {
 
 
     /**
-     *  Create Player object
-     * @param index number used to order players
+     * Create Player object
+     *
+     * @param index      number used to order players
      * @param playerName Name to be displayed for the player
-     * @param direction Direction the player is facing
+     * @param direction  Direction the player is facing
      */
-   public Player(int index, String playerName, Direction direction) {
+    public Player(int index, String playerName, Direction direction) {
         this.index = index;
         this.playerName = playerName;
         setPlayerDirection(direction);
@@ -59,12 +60,13 @@ public class Player extends Image implements IPlayer {
 
     /**
      * Create a player object, used to create AI controlled players
-     * @param index number used to order players
-     * @param playerID Name to be displayed for the player
-     * @param direction Direction the player is facing
+     *
+     * @param index          number used to order players
+     * @param playerID       Name to be displayed for the player
+     * @param direction      Direction the player is facing
      * @param controlledByAI sets player to be controlled by a user or AI
      */
-    public Player(int index, String playerID, Direction direction, boolean controlledByAI){
+    public Player(int index, String playerID, Direction direction, boolean controlledByAI) {
         this.index = index;
         this.playerName = playerID;
         this.controlledByAI = controlledByAI;
@@ -143,16 +145,17 @@ public class Player extends Image implements IPlayer {
         return playerDirection;
     }
 
-    public boolean isControlledByAI(){ return controlledByAI; }
-
-    public Card[] chooseAICards(){
-        Card[] cards = new Card[5];
-            for (int i = 0; i < 5; i++) {
-                cards[i] = playerHand.get(i);
-            }
-        return cards;
+    public boolean isControlledByAI() {
+        return controlledByAI;
     }
 
+    public Card[] chooseAICards() {
+        Card[] cards = new Card[5];
+        for (int i = 0; i < 5; i++) {
+            cards[i] = playerHand.get(i);
+        }
+        return cards;
+    }
 
 
     @Override
@@ -185,14 +188,13 @@ public class Player extends Image implements IPlayer {
      */
     public void destroyPlayer() {
         playerlives--;
-		isOnTheBoard = false;
+        isOnTheBoard = false;
 
         if (this.isDead()) {
-			playerDamage = 10;
-		}
-        else {
-			playerDamage = 2;
-		}
+            playerDamage = 10;
+        } else {
+            playerDamage = 2;
+        }
     }
 
     /**
@@ -334,67 +336,67 @@ public class Player extends Image implements IPlayer {
         }
     }
 
-	/**
-	 * Method used to set power down status:
-	 * 	0 - no power down
-	 * 	1 - power down this round
-	 * 	2 - power down next round
-	 * 	3 - was destroyed round power down was requested, player gets chance to cancel power down
-     * 	4 - client disconnected, handle player as power down and kill
-	 *
-	 * @param powerDown
-	 */
-	public void setPowerDown(int powerDown) {
-		this.powerDown = powerDown;
-	}
+    /**
+     * Method used to set power down status:
+     * 0 - no power down
+     * 1 - power down this round
+     * 2 - power down next round
+     * 3 - was destroyed round power down was requested, player gets chance to cancel power down
+     * 4 - client disconnected, handle player as power down and kill
+     *
+     * @param powerDown
+     */
+    public void setPowerDown(int powerDown) {
+        this.powerDown = powerDown;
+    }
 
-	public int getPowerDown() {
-		return powerDown;
-	}
+    public int getPowerDown() {
+        return powerDown;
+    }
 
-	public void resetDamage() {
-		playerDamage = 0;
-	}
+    public void resetDamage() {
+        playerDamage = 0;
+    }
 
-	/**
-	 * Method for shooting or removing laser in the player direction - cast curTile to LaserBaseTile and uses the
-	 * toggleLaser method, skips first tile since this is the tile the player shooting is standing on
-	 *
-	 * @param pos
-	 * @param board
-	 */
-	public void toggleLaser(Position pos, Board board, boolean laserStatus) {
-		Tile curTile = board.getTile(pos);
-		Position nextPos = pos.getNeighbour(this.playerDirection);
+    /**
+     * Method for shooting or removing laser in the player direction - cast curTile to LaserBaseTile and uses the
+     * toggleLaser method, skips first tile since this is the tile the player shooting is standing on
+     *
+     * @param pos
+     * @param board
+     */
+    public void toggleLaser(Position pos, Board board, boolean laserStatus) {
+        Tile curTile = board.getTile(pos);
+        Position nextPos = pos.getNeighbour(this.playerDirection);
 
-		//curTile could be null if the player is not on the board - no laser should be added/removed
-		if (curTile != null) {
-			switch (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
-				//laser is able to proceed to next tile
-				case 0:
-					Tile nextTile = board.getTile(nextPos);
-					nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection, false);
-					break;
+        //curTile could be null if the player is not on the board - no laser should be added/removed
+        if (curTile != null) {
+            switch (curTile.isPossibleToMoveDir(pos, board, this.playerDirection)) {
+                //laser is able to proceed to next tile
+                case 0:
+                    Tile nextTile = board.getTile(nextPos);
+                    nextTile.toggleLaser(nextPos, board, laserStatus, this.playerDirection, false);
+                    break;
 
-				//hit player on next tile - damage player if laserStatus is true
-				case 2:
-					Player playerOnNextTile = board.posToPlayer(nextPos);
+                //hit player on next tile - damage player if laserStatus is true
+                case 2:
+                    Player playerOnNextTile = board.posToPlayer(nextPos);
 
-					if (laserStatus) {
-						System.out.println("Player: " + playerOnNextTile.getPlayerName() + " took laser damage");
-						playerOnNextTile.increaseDamage();
-					}
-					break;
-			}
-		}
-	}
+                    if (laserStatus) {
+                        System.out.println("Player: " + playerOnNextTile.getPlayerName() + " took laser damage");
+                        playerOnNextTile.increaseDamage();
+                    }
+                    break;
+            }
+        }
+    }
 
 
-	public void killPlayer() {
-	    setOnTheBoard(false);
+    public void killPlayer() {
+        setOnTheBoard(false);
 
-	    while (!isDead()) {
-	        destroyPlayer();
+        while (!isDead()) {
+            destroyPlayer();
         }
     }
 
