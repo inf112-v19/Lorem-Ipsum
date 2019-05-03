@@ -11,6 +11,8 @@ import inf112.skeleton.app.Netcode.Host;
 import inf112.skeleton.app.Visuals.Text;
 import io.netty.channel.Channel;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class LobbyState extends State {
@@ -36,12 +38,27 @@ public class LobbyState extends State {
 		this.table.center();
 		this.table.setFillParent(true);
 		this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png")));
+
 		updateConnectedPlayers();
 
 		super.stage.addActor(this.table);
 		super.stage.addActor(status);
 
 		startServer();
+	}
+
+	private void displayHostIP() {
+		Text text;
+		try {
+			String hostIP = InetAddress.getLocalHost().getHostAddress();
+			text = new Text("Host IP: "+hostIP, skin);
+		}
+		catch (Exception e) {
+			text = new Text("Security manager prevented application from retrieving host IP", skin);
+		}
+
+		this.table.add(text);
+		this.table.row();
 	}
 
 	@Override
@@ -59,7 +76,9 @@ public class LobbyState extends State {
 
 	public void updateConnectedPlayers(){
 		this.table.clearChildren();
+		displayHostIP();
 		addTableHeader();
+
 		for (Channel ch : channels) {
 			this.table.add(new Text(ch.toString(), this.skin));
 			this.table.row();
@@ -109,7 +128,5 @@ public class LobbyState extends State {
 			}
 		}).start();
 	}
-
-
 
 }
