@@ -41,7 +41,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public synchronized void send(String msg){
 		if (this.ctx != null){
 			try{
-				ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync();
+				ctx.writeAndFlush(Unpooled.copiedBuffer(msg + "¨¨¨", CharsetUtil.UTF_8)).sync();
 				System.out.println("Client sent " + msg + "-------------------------###");
 				return;
 			}catch (Exception e){
@@ -90,77 +90,81 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		ByteBuf in = (ByteBuf) msg;
 		System.out.println("Client received: " + in.toString(CharsetUtil.UTF_8));
 		String inString = in.toString(CharsetUtil.UTF_8);
-		System.out.println("client inString = " + inString + "---------------- ");
 
-		inString = extractIndex(inString);
-		String[] split = inString.split("!");
-		String command = split[0];
-		String message = split[1];
+		String[] oneMessageAtATime = inString.split("¨¨¨");
 
-		switch (command){
-			case "BOARD":
-				System.out.println(message);
-				this.boardName = message;
-				break;
-			case "PLAYER_NAMES":
-				System.out.println("dette er playernamene " + message);
-				this.clientNames = message;
-				break;
-			case "CLIENT_TURN":
-				System.out.println("din tur: " + (Integer.parseInt(message) == index));
-				if(Integer.parseInt(message) == index){
-					this.thisTurn = true;
-				}else{
-					this.thisTurn = false;
-				}
-				break;
-			case "SPAWN":
-				this.spawnPosition = translateStringToPosition(message);
-				break;
-			case "PLACE_FLAG":
-				this.flagPosition = translateStringToPosition(message);
-				break;
-			case "POWERDOWN_HOST":
-				String[] splitKeyAndPowerdown = message.split("%");
-				int key = Integer.parseInt(splitKeyAndPowerdown[0]);
-				int value = Integer.parseInt(splitKeyAndPowerdown[1]);
-				this.powerdownStatus.put(key, value);
-				break;
-			case "CARDS":
-				message = message.replace("{", "").replace("}", "");
-				String[] playerCardStrings = message.split(",, ");
-				for (String cardString : playerCardStrings) {
+		for (String string : oneMessageAtATime) {
 
-					String[] splitIndexFromCard = cardString.split("=");
-					String indexString = splitIndexFromCard[0];
-					int playerIndex = Integer.parseInt(indexString);
-					String restString = splitIndexFromCard[1];
+			string = extractIndex(string);
+			String[] split = string.split("!");
+			String command = split[0];
+			String message = split[1];
 
-					String[] splitPowerdownFromCards = restString.split("%");
-					int powerdown = Integer.parseInt(splitPowerdownFromCards[0]);
-					this.powerdownStatus.put(playerIndex, powerdown);
-
-					restString = splitPowerdownFromCards[1];
-					String[] cardStringArray = restString.split(",");
-
-					System.out.println(restString);
-
-					Card[] cards = new Card[5];
-					for (int i = 0; i < cardStringArray.length; i++) {
-						String[] typeAndPriority = cardStringArray[i].split("&");
-						int priority = Integer.parseInt(typeAndPriority[1]);
-						Card card = new Card(typeAndPriority[0], priority);
-						cards[i] = card;
+			switch (command){
+				case "BOARD":
+					System.out.println(message);
+					this.boardName = message;
+					break;
+				case "PLAYER_NAMES":
+					System.out.println("dette er playernamene " + message);
+					this.clientNames = message;
+					break;
+				case "CLIENT_TURN":
+					System.out.println("din tur: " + (Integer.parseInt(message) == index));
+					if(Integer.parseInt(message) == index){
+						this.thisTurn = true;
+					}else{
+						this.thisTurn = false;
 					}
-					playerCards.put(playerIndex, cards);
-				}
-				this.cardsReady = true;
+					break;
+				case "SPAWN":
+					this.spawnPosition = translateStringToPosition(message);
+					break;
+				case "PLACE_FLAG":
+					this.flagPosition = translateStringToPosition(message);
+					break;
+				case "POWERDOWN_HOST":
+					String[] splitKeyAndPowerdown = message.split("%");
+					int key = Integer.parseInt(splitKeyAndPowerdown[0]);
+					int value = Integer.parseInt(splitKeyAndPowerdown[1]);
+					this.powerdownStatus.put(key, value);
+					break;
+				case "CARDS":
+					message = message.replace("{", "").replace("}", "");
+					String[] playerCardStrings = message.split(",, ");
+					for (String cardString : playerCardStrings) {
+
+						String[] splitIndexFromCard = cardString.split("=");
+						String indexString = splitIndexFromCard[0];
+						int playerIndex = Integer.parseInt(indexString);
+						String restString = splitIndexFromCard[1];
+
+						String[] splitPowerdownFromCards = restString.split("%");
+						int powerdown = Integer.parseInt(splitPowerdownFromCards[0]);
+						this.powerdownStatus.put(playerIndex, powerdown);
+
+						restString = splitPowerdownFromCards[1];
+						String[] cardStringArray = restString.split(",");
+
+						System.out.println(restString);
+
+						Card[] cards = new Card[5];
+						for (int i = 0; i < cardStringArray.length; i++) {
+							String[] typeAndPriority = cardStringArray[i].split("&");
+							int priority = Integer.parseInt(typeAndPriority[1]);
+							Card card = new Card(typeAndPriority[0], priority);
+							cards[i] = card;
+						}
+						playerCards.put(playerIndex, cards);
+					}
+					this.cardsReady = true;
 
 
-				break;
-			default:
-				this.received = inString;
-				System.err.println(command + " has no handling CLIENT");
+					break;
+				default:
+					this.received = string;
+					System.err.println(command + " has no handling CLIENT");
+			}
 		}
 
 	}
@@ -213,12 +217,14 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public synchronized void channelActive(ChannelHandlerContext ctx) {
 		System.out.println("CLIENT CONNECTED");
 		this.ctx = ctx;
+		send("CONNECT!try");
 
 	}
 
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		send("DISCONNECT!" + index);
 		cause.printStackTrace();
 		ctx.close();
 	}

@@ -75,8 +75,6 @@ public class CardState extends State {
 			}
 			host.getHostHandler().addHostCards(cardString);
 		}
-
-
 	}
 
 	private synchronized void isClientHandling(){
@@ -100,12 +98,7 @@ public class CardState extends State {
 				}
 				cardManager.setCardSeq(player, cards.get(player.getIndex()));
 			}
-
-
 		}
-
-
-
 	}
 
 

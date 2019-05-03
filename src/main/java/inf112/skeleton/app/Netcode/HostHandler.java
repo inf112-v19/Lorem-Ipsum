@@ -6,6 +6,7 @@ import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.LobbyState;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -75,7 +76,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	private synchronized boolean send(String msg, ChannelHandlerContext ctx, int index){
-		msg = index + "#" + msg;
+		msg = index + "#" + msg + "¨¨¨";
 		System.out.println("host at index: " + this.index + " is sending: " + msg + " to client" + index);
 		try{
 			ctx.writeAndFlush(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8)).sync().await(100);
@@ -144,7 +145,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	public void resetCards(){
 		this.cardList.clear();
-		cardsAlreadyAdded = false;
+		this.cardsAlreadyAdded = false;
 	}
 
 	public Card[] getCardArray(int index){
@@ -184,32 +185,59 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		System.out.println("Host received: " + in.toString(CharsetUtil.UTF_8));
 
 		String inString = in.toString(CharsetUtil.UTF_8);
-		String[] split = inString.split("!");
-		String command = split[0];
-		String message = split[1];
 
-		switch (command){
-			case "NAME":
-				//System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
-				this.nameList.put(connections.indexOf(ctx), message);
-				System.out.println(nameList);
-				break;
-			case "SPAWN":
-				this.spawnPosition = new Position(message);
-				sendToAll(inString);
-				break;
-			case "PLACE_FLAG":
-				this.flagPosition = new Position(message);
-				sendToAll(inString);
-				break;
-			case "CARDS":
-				String[] temp = message.split("%");
-				this.powerdownStatus.put(connections.indexOf(ctx), Integer.parseInt(temp[0]));
-				this.cardList.put(connections.indexOf(ctx), message);
-				break;
-			default:
-				received.add(inString);
-				System.err.println(command + " has no handling HOST");
+		String[] oneMessageAtATime = inString.split("¨¨¨");
+
+		for (String string :oneMessageAtATime) {
+			String[] split = string.split("!");
+			String command = split[0];
+			String message = split[1];
+
+			switch (command){
+				case "CONNECT":
+					this.connections.add(ctx);
+					this.index = this.connections.size();
+
+					//updating connected client list in LobbyState
+					try{
+						if (gsm.peek() instanceof LobbyState){
+							LobbyState lobby = (LobbyState)gsm.peek();
+							lobby.addSocketChannel(ctx.channel());
+						}
+					}catch (EmptyStackException e){
+						System.err.println("the GameStateManager stack is empty");
+					}
+					break;
+				case "DISCONNECT":
+					this.powerdownStatus.remove(connections.indexOf(ctx));
+					this.nameList.remove(connections.indexOf(ctx));
+					this.connections.remove(connections.indexOf(ctx));
+					ctx.close();
+					break;
+				case "NAME":
+					//System.out.println("client" + connections.indexOf(ctx) + "'s name is " + message);
+					this.nameList.put(connections.indexOf(ctx), message);
+					System.out.println(nameList);
+					break;
+				case "SPAWN":
+					this.spawnPosition = new Position(message);
+					sendToAll(string);
+					break;
+				case "PLACE_FLAG":
+					this.flagPosition = new Position(message);
+					sendToAll(string);
+					break;
+				case "CARDS":
+					String[] temp = message.split("%");
+					this.powerdownStatus.put(connections.indexOf(ctx), Integer.parseInt(temp[0]));
+					this.cardList.put(connections.indexOf(ctx), message);
+					break;
+				default:
+					received.add(string);
+					System.err.println(command + " has no handling HOST");
+		}
+
+
 
 		}
 	}
@@ -217,20 +245,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public synchronized void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("SERVER CONNECTED WITH CLIENT");
-
-		this.connections.add(ctx);
-		this.index = this.connections.size();
-
-
-		//updating connected client list in LobbyState
-		try{
-			if (gsm.peek() instanceof LobbyState){
-				LobbyState lobby = (LobbyState)gsm.peek();
-				lobby.addSocketChannel(ctx.channel());
-			}
-		}catch (EmptyStackException e){
-			System.err.println("the GameStateManager stack is empty");
-		}
 	}
 
 	@Override
@@ -239,10 +253,12 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		ctx.close();
 	}
 
+
 	/*
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) {
 		ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
 	}
 	 */
+
 }
