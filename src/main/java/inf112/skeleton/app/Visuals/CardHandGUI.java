@@ -188,7 +188,6 @@ public class CardHandGUI {
                 if (cardManager.isLocked(card, currentPlayer.getIndex())) {
                     System.out.println("CARD IS LOCKED IN HAND");
                 }
-                System.out.println("Card priority: " + card.getPriority() + ", card type: " + card.getCardType());
                 draw(currentCards);
                 return true;
             }
@@ -307,8 +306,6 @@ public class CardHandGUI {
                     }
                     System.out.println();
                     selectCards();
-                } else {
-                    System.out.println("Select 5 cards!");
                 }
                 return true;
             }
@@ -325,7 +322,6 @@ public class CardHandGUI {
                     powerDown.setText("Undo");
                     powerDownPressed = true;
                 }
-                System.out.println("Power Down");
                 return true;
             }
         });

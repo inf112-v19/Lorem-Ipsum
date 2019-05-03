@@ -234,7 +234,6 @@ public class PlayerNameState extends State {
 
     private void localGameHandling() {
         for (int i = 0; i < textAreas.length; i++) {
-            System.out.println(textAreas[i].getText());
             Player player = new Player(i, textAreas[i].getText(), Direction.EAST);
             players.addLast(player);
         }
