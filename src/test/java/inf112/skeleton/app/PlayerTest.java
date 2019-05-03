@@ -159,6 +159,9 @@ public class PlayerTest {
         Flag flag2 = new Flag(Direction.WEST, 1);
         player.collectFlag(flag2);
         assertEquals(0, player.numberOfFlagsCollected());
+        player.collectFlag(flag1);
+        player.collectFlag(flag2);
+        assertEquals(2, player.numberOfFlagsCollected());
     }
 
 }
