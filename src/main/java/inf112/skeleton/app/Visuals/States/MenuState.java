@@ -42,25 +42,7 @@ public class MenuState extends State {
 	}
 
 	public MenuState(GameStateManager gsm, String status) {
-		super(gsm);
-
-		this.start = false;
-		this.isHostingGame = false;
-		this.isJoiningGame = false;
-
-		this.table = new Table();
-		this.table.setFillParent(true);
-		this.table.defaults().uniform();
-		this.table.center();
-
-		this.background = new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/menuBackground.jpg"));
-		this.table.setBackground(this.background);
-
-		setStartButton();
-		setHostGameButton();
-		setJoinGameButton();
-
-		super.stage.addActor(table);
+		this(gsm);
 
 		Text statusText = new Text(status, assetHandler.getSkin());
 		statusText.setAlignment(Align.topLeft);

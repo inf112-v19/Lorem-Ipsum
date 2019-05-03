@@ -38,6 +38,8 @@ public class JoinGameState extends State {
 	private String buttonText;
 	private Thread findHostThread;
 
+	private boolean clientFail;
+
 	public JoinGameState(GameStateManager gsm) {
 		super(gsm);
 		this.table = new Table();
@@ -46,6 +48,7 @@ public class JoinGameState extends State {
 		this.table.setBackground(new TextureRegionDrawable(super.assetHandler.getTexture("StateImages/secondBackground.png")));
 		this.skin = assetHandler.getSkin();
 		this.tryConnect = false;
+		this.clientFail = false;
 
 		this.status = new Text("", skin, Text.TextPosition.TOP_LEFT);
 		this.status.setColor(Color.RED);
@@ -181,6 +184,7 @@ public class JoinGameState extends State {
 				try{
 					client.start();
 				}catch (Exception e){
+					clientFail = true;
 					System.err.println("Error while starting the client");
 					e.printStackTrace();
 				}
@@ -255,5 +259,14 @@ public class JoinGameState extends State {
 			System.out.println("PAUSE!");
 			this.gsm.push(new PauseState(this.gsm, this.client));
 		}
+	}
+
+	@Override
+	public void update(float dt) {
+		super.update(dt);
+		if(this.clientFail){
+			gsm.set(new MenuState(gsm, "an error occurred while starting the client"));
+		}
+
 	}
 }

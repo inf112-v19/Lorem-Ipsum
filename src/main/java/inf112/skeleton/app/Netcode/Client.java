@@ -3,6 +3,7 @@ package inf112.skeleton.app.Netcode;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -16,6 +17,7 @@ public class Client implements INetCode{
 	private int port;
 	private ClientHandler clientHandler;
 	private Bootstrap b;
+	private ChannelFuture f;
 
 	public Client(final String host, final int port) {
 		this.host = host;
@@ -36,7 +38,7 @@ public class Client implements INetCode{
 					ch.pipeline().addLast(clientHandler);
 				}
 			});
-			ChannelFuture f = b.connect().sync();
+			f = b.connect().sync();
 
 
 			f.channel().closeFuture().sync();
@@ -70,8 +72,9 @@ public class Client implements INetCode{
 
 	@Override
 	public void disconnect() {
-		if(this.clientHandler.isActiv()){
+		if(this.clientHandler.isActive()){
 			this.send("DISCONNECT!");
+			f.addListener(ChannelFutureListener.CLOSE);
 		}
 	}
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
 //@ChannelHandler.Sharable
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-	private boolean isActiv;
+	private boolean isActive;
 
 	private ChannelHandlerContext ctx;
 	private int index;
@@ -33,7 +33,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		this.playerCards = new HashMap<>();
 		this.powerdownStatus = new HashMap<>();
 		this.cardsReady = false;
-		this.isActiv = true;
+		this.isActive = true;
 	}
 
 	public synchronized void send(String msg){
@@ -56,14 +56,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		send(msg);
 	}
 
-	public String receive(){
-		if (received != null){
-			String s = received;
-			received = null;
-			return s;
-		}
-		return null;
-	}
 
 	private String extractIndex(String msg){
 		String[] split = msg.split("#");
@@ -106,7 +98,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 			switch (command){
 				case "DISCONNECT":
 					//send("DISCONNECT!" + index);
-					this.isActiv = false;
+					this.isActive = false;
 					break;
 				case "BOARD":
 					System.out.println(message);
@@ -176,8 +168,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	}
 
-	public boolean isActiv() {
-		return isActiv;
+	public boolean isActive() {
+		return isActive;
 	}
 
 	public boolean isThisTurn() {
@@ -234,7 +226,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		send("DISCONNECT!" + index);
 		cause.printStackTrace();
-		ctx.close();
+		//ctx.close();
 	}
 
 }
