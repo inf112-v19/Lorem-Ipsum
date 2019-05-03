@@ -33,7 +33,7 @@ public abstract class State {
 			handleInput();
 			this.stage.act(dt);
 		}catch (Exception e){
-			gsm.set(new MenuState(gsm, new Text("Something unexpected happend! Try again", assetHandler.getSkin())));
+			gsm.set(new MenuState(gsm, "Something unexpected happened! Try again"));
 		}
 	}
 
@@ -41,7 +41,7 @@ public abstract class State {
 		try{
 			this.stage.draw();
 		}catch (Exception e){
-			gsm.set(new MenuState(gsm, new Text("Something unexpected happend! Try again", assetHandler.getSkin())));
+			gsm.set(new MenuState(gsm,"Something unexpected happened! Try again"));
 		}
 	}
 

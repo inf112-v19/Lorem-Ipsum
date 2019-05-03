@@ -65,7 +65,7 @@ public class CardState extends State {
 						int powerdownStatus = powerdownStatusMap.get(players[i].getIndex());
 						players[i].setPowerDown(powerdownStatus);
 					}catch (NullPointerException e){
-						gsm.set(new MenuState(gsm, new Text("Something unexpected happend try to host a new game", assetHandler.getSkin())));
+						gsm.set(new MenuState(gsm, "Something unexpected happened! Try to host again"));
 					}
 				}
 				cardManager.setCardSeq(players[i], host.getHostHandler().getCardArray(i));
@@ -101,7 +101,7 @@ public class CardState extends State {
 						int powerdownStatus = powerdownStatusMap.get(player.getIndex());
 						player.setPowerDown(powerdownStatus);
 					}catch (NullPointerException e){
-						gsm.set(new MenuState(gsm, new Text("Something unexpected happend try to host a new game", assetHandler.getSkin())));
+						gsm.set(new MenuState(gsm, "Something unexpected happened! Try to join a game again"));
 
 					}
 				}

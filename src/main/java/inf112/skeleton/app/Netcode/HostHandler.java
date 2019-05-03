@@ -4,6 +4,8 @@ import inf112.skeleton.app.GameMechanics.Cards.Card;
 import inf112.skeleton.app.GameMechanics.Position;
 import inf112.skeleton.app.Visuals.States.GameStateManager;
 import inf112.skeleton.app.Visuals.States.LobbyState;
+import inf112.skeleton.app.Visuals.States.MenuState;
+import inf112.skeleton.app.Visuals.Text;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -242,6 +244,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		cause.printStackTrace();
+		gsm.set(new MenuState(gsm, "Something unexpected happend! Try again"));
 		ctx.close();
 	}
 

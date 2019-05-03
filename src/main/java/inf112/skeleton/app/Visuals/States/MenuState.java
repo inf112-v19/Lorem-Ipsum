@@ -41,7 +41,7 @@ public class MenuState extends State {
 		super.stage.addActor(table);
 	}
 
-	public MenuState(GameStateManager gsm, Text status) {
+	public MenuState(GameStateManager gsm, String status) {
 		super(gsm);
 
 		this.start = false;
@@ -62,9 +62,10 @@ public class MenuState extends State {
 
 		super.stage.addActor(table);
 
-		status.setAlignment(Align.topLeft);
-		status.setColor(Color.RED);
-		super.stage.addActor(status);
+		Text statusText = new Text(status, assetHandler.getSkin());
+		statusText.setAlignment(Align.topLeft);
+		statusText.setColor(Color.RED);
+		super.stage.addActor(statusText);
 	}
 
 	private void setStartButton() {
