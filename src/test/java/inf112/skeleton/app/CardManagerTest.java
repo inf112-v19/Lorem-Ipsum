@@ -115,4 +115,14 @@ public class CardManagerTest {
 
         assertTrue(cardManager.isLocked(validCardSeq[4], testPlayer.getIndex()));
     }
+
+    @Test
+    public void getPlayersShouldNotReturnPlayersInPowerDown() {
+        for (Player player : players) {
+            player.setPowerDown(1);
+        }
+        cardManager.newRound();
+        assertFalse(cardManager.hasNotReadyPlayers());
+    }
+
 }
