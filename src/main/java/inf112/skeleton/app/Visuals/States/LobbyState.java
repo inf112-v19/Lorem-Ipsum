@@ -51,7 +51,13 @@ public class LobbyState extends State {
 		Text text;
 		try {
 			String hostIP = InetAddress.getLocalHost().getHostAddress();
-			text = new Text("Host IP: "+hostIP, skin);
+
+			if (hostIP.substring(0, 3).equals("127")) {
+				text = new Text("Security manager prevented application from retrieving host IP", skin);
+			}
+			else {
+				text = new Text("Host IP: "+hostIP, skin);
+			}
 		}
 		catch (Exception e) {
 			text = new Text("Security manager prevented application from retrieving host IP", skin);

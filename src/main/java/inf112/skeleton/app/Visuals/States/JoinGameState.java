@@ -203,8 +203,7 @@ public class JoinGameState extends State {
 		}
 
 		//test if a security manager is blocking the getLocalHost() operation - will return loopback address
-		String localhostSubnet = getSubnet(getSubnet(getSubnet(localHost)));
-		if (localhostSubnet.equals("127")) {
+		if (localHost.substring(0, 3).equals("127")) {
 			table.add(new Text("A security manager on the machine is blocking the search for hosts", skin));
 			return;
 		}
