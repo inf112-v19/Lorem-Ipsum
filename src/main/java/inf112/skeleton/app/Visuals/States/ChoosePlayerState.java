@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -55,6 +56,7 @@ public class ChoosePlayerState extends State {
 		this.tableButton.defaults().pad(20, 80, 30, 80).width(150).height(50);
 		for (int i = 0; i < 6; i++) {
 			TextButton button = new TextButton((i + 1) + " PLAYER", this.skin);
+			button.setColor(Color.TEAL);
 			final int tempPlayerAmount = (i + 1);
 
 			button.addListener(new ChangeListener() {

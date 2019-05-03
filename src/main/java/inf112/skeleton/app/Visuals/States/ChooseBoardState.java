@@ -1,5 +1,6 @@
 package inf112.skeleton.app.Visuals.States;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -56,6 +57,7 @@ public class ChooseBoardState extends State {
 		this.tableButton.defaults().pad(0,80,0,80).width(150).height(50);
 		for (int i = 0; i < 3; i++) {
 			TextButton button = new TextButton("BOARD " + (i+1), this.skin);
+			button.setColor(Color.TEAL);
 			final int tempBoardNumber = i;
 			button.addListener(new ChangeListener() {
 				@Override

@@ -12,7 +12,6 @@ import inf112.skeleton.app.Visuals.Text;
 
 public class MenuState extends State {
 	private TextureRegionDrawable background;
-	private Image startButton;
 	private TextButton hostGameButton;
 	private TextButton joinGameButton;
 	private Table table;
@@ -39,7 +38,7 @@ public class MenuState extends State {
 		setHostGameButton();
 		setJoinGameButton();
 
-		super.stage.addActor(table);
+		super.stage.addActor(this.table);
 	}
 
 	public MenuState(GameStateManager gsm, String status) {
@@ -78,6 +77,7 @@ public class MenuState extends State {
 		TextButton startButton = new TextButton("Local game", this.skin);
 		this.table.defaults().padTop(10).width(150).height(50);
 		startButton.getLabel().setFontScale(1.5F);
+		startButton.setColor(Color.TEAL);
 		this.table.add(startButton);
 		this.table.row();
 
@@ -93,9 +93,8 @@ public class MenuState extends State {
 	private void setHostGameButton(){
 		this.hostGameButton = new TextButton("Host a game", this.skin);
 		this.hostGameButton.getLabel().setFontScale(1.5f);
-		this.hostGameButton.getLabel().setColor(Color.WHITE);
-		this.hostGameButton.setColor(Color.BROWN);
-		this.table.add(hostGameButton);
+		this.hostGameButton.setColor(Color.TEAL);
+		this.table.add(this.hostGameButton);
 		this.table.row();
 
 		this.hostGameButton.addListener(new InputListener() {
@@ -111,9 +110,8 @@ public class MenuState extends State {
 	private void setJoinGameButton(){
 		this.joinGameButton = new TextButton("Join a game", this.skin);
 		this.joinGameButton.getLabel().setFontScale(1.5f);
-		this.joinGameButton.getLabel().setColor(Color.WHITE);
-		this.joinGameButton.setColor(Color.BROWN);
-		this.table.add(joinGameButton);
+		this.joinGameButton.setColor(Color.TEAL);
+		this.table.add(this.joinGameButton);
 		this.table.row();
 
 		this.joinGameButton.addListener(new InputListener() {
@@ -140,13 +138,13 @@ public class MenuState extends State {
 	@Override
 	public void handleInput() {
 		if (this.start) {
-			gsm.set(new ChooseBoardState(gsm, null));
+			this.gsm.set(new ChooseBoardState(this.gsm, null));
 		} else if(this.isHostingGame){
 			System.out.println("Hosting a game!");
-			gsm.set(new LobbyState(gsm));
+			this.gsm.set(new LobbyState(this.gsm));
 		} else if(this.isJoiningGame){
 			System.out.println("Joining a game");
-			gsm.set(new JoinGameState(gsm));
+			this.gsm.set(new JoinGameState(this.gsm));
 		}
 	}
 
