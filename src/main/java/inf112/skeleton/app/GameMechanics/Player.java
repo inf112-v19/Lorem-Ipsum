@@ -155,16 +155,16 @@ public class Player extends Image implements IPlayer {
 
     public Card[] chooseAICards(){
         Card[] cards;
-        try {
+        //try {
             cards = aiSimulation.findBestCards();
-        }
-        catch (Exception e){
-            cards = new Card[5];
-            for (int i = 0; i < 5; i++) {
-                cards[i] = playerHand.get(i);
-            }
-            System.out.println("Feil i chooseAiCards i Player");
-        }
+       // }
+       // catch (Exception e){
+        //    cards = new Card[5];
+        //    for (int i = 0; i < 5; i++) {
+        //        cards[i] = playerHand.get(i);
+         //   }
+         //   System.out.println("Feil i chooseAiCards i Player");
+       // }
         return cards;
     }
 

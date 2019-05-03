@@ -43,7 +43,7 @@ public class AiSimulation {
         }
     };
 
-    private PriorityQueue<Tile> flagTiles = new PriorityQueue<>(6,flagTileComparator);
+    private PriorityQueue<Tile> flagTiles = new PriorityQueue<>(1,flagTileComparator);
 
     /**
      * Creates a simulation object for a given player on a given board.
@@ -54,31 +54,40 @@ public class AiSimulation {
     public AiSimulation(Board board, Player player){
         this.originalBoard = board;
         this.originalPlayer = player;
-
-        HashMap<Position, Tile> tiles = originalBoard.getTileMap();
-        for (Tile t : tiles.values()){
-            GameObject[] objectsOnTile = t.getGameObjects();
-            for (GameObject object : objectsOnTile) {
-                if(object instanceof Flag) flagTiles.add(t);
-            }
-        }
-        maxFlags = flagTiles.size();
-        nextFlagTile = flagTiles.poll();
     }
 
     public Card[] findBestCards(){
+        if(flagTiles.isEmpty()) findFlags();
         checkNextFlag();
         cards = originalPlayer.getCardHand();
         lockedCards = new ArrayList<>();
-        int numLockedCards = originalPlayer.getDamage()-4;
+        int numLockedCards = originalPlayer.getDamage()+4;
 
-        for (int i=0;i<numLockedCards;i++) {
-            lockedCards.add(cards.get(i+numLockedCards-5));
+        lockedCards = new ArrayList<>();
+        lockedCards = cards.subList(cards.size()-numLockedCards, cards.size());
+
+
+
+        ArrayList<Card> toRemove = new ArrayList<>();
+
+        for (Card c : lockedCards) {
+            if(cards.contains(c)) {
+                toRemove.add(c);
+            }
+        }
+        cards.removeAll(toRemove);
+
+        List<Card> testList = new ArrayList<>();
+        for(Card c : lockedCards){
+            testList.add(c);
         }
 
-        for(Card card : lockedCards){
-            cards.remove(card);
-        }
+        lockedCards = testList;
+
+        //for(Card card : lockedCards){
+        //    cards.remove(card);
+       // }
+
         Board testBoard = originalBoard;
         Player testPlayer = originalPlayer;
 
@@ -90,6 +99,21 @@ public class AiSimulation {
             bestCards[testedCards.length + i] = lockedCards.get(i);
         }
         return bestCards;
+    }
+
+    private void findFlags(){
+        HashMap<Position, Tile> tiles = originalBoard.getTileMap();
+        for (Tile t : tiles.values()){
+            GameObject[] objectsOnTile = t.getGameObjects();
+            for (GameObject object : objectsOnTile) {
+                if(object instanceof Flag) {
+                    flagTiles.add(t);
+                    break;
+                }
+            }
+        }
+        maxFlags = flagTiles.size();
+        nextFlagTile = flagTiles.poll();
     }
 
 
@@ -162,7 +186,7 @@ public class AiSimulation {
      * checks and updates what flag the player should go to next
      */
     private void checkNextFlag(){
-        if(originalPlayer.numberOfFlagsCollected() +flagTiles.size() < maxFlags){
+        if(originalPlayer.numberOfFlagsCollected() + flagTiles.size() < maxFlags){
             nextFlagTile = flagTiles.poll();
         }
 
